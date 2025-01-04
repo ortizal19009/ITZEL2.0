@@ -1,0 +1,13 @@
+
+CREATE TABLE estructura (
+	idestructura smallserial NOT NULL,
+	nivel int2 NOT NULL,
+	nombre varchar(50) NOT NULL,
+	longitud int2 NOT NULL,
+	CONSTRAINT estructura_pk PRIMARY KEY (idestructura)
+);
+
+INSERT INTO public.estructura (idestructura,nivel,nombre,longitud) VALUES
+	 (1,1,'PROCESOS',2),
+	 (2,2,'PROYECTO O GESTION',2),
+	 (3,3,'UNIDAD DE GESTION',2);

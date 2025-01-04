@@ -1,0 +1,19 @@
+
+CREATE TABLE estrfunc (
+	idestrfunc serial4 NOT NULL,
+	codigo varchar(20) NOT NULL,
+	nombre varchar(50) NOT NULL,
+	movimiento bool NOT NULL,
+	CONSTRAINT estrfunc_pk PRIMARY KEY (idestrfunc)
+);
+
+INSERT INTO public.estrfunc (idestrfunc,codigo,nombre,movimiento) VALUES
+	 (1,'01','PROCESOS GOBERNANTE',false),
+	 (2,'0101','GESTION GERENCIA GENERAL',false),
+	 (3,'010101','Unidad de Gestión Gerencia General',true),
+	 (4,'02','PROCESOS DE ASESORIA',false),
+	 (5,'0201','GESTIÓN GERENCIA GENERAL',false),
+	 (6,'020101','U.G Asesoria Juridica',true),
+	 (7,'020102','U.G. Comunicacion',true),
+	 (8,'020103','U.G. Planificacion',true),
+	 (9,'020104','U.G. Auditoria Interna',true);
