@@ -9,12 +9,8 @@ import java.util.List;
 
 @Service
 public class EstructuraService {
-    private final EstructuraR dao;
-
-    public EstructuraService(EstructuraR dao) {
-        this.dao = dao;
-    }
-
+    @Autowired
+    private EstructuraR dao;
 
     public List<Estructura> findAll(){
         return dao.findAll();

@@ -16,12 +16,8 @@ import java.util.List;
 @RequestMapping("/estructura")
 @CrossOrigin("*")
 public class EstructuraApi {
-    private final EstructuraService estructuraService;
-
-    public EstructuraApi(EstructuraService estructuraService) {
-        this.estructuraService = estructuraService;
-    }
-
+    @Autowired
+    private EstructuraService estructuraService;
     @GetMapping
     public ResponseEntity<List<Estructura>> getAll(){
         List<Estructura> estructuras = estructuraService.findAll();
