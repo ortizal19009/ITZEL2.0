@@ -3,6 +3,7 @@ package com.amon_ra.controlador.contabilidad;
 import com.amon_ra.modelo.contabilidad.Estrfunc;
 import com.amon_ra.servicio.contabilidad.EstrfuncService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,7 @@ public class EstrfuncApi {
 
     @GetMapping
     public ResponseEntity<List<Estrfunc>> getAll(){
-        List<Estrfunc> estrfuncs  = estrfuncService.findAll();
+        List<Estrfunc> estrfuncs  = estrfuncService.findAll(Sort.by(Sort.Order.asc("codigo")));
         if (estrfuncs != null){
             return ResponseEntity.ok(estrfuncs);
         }

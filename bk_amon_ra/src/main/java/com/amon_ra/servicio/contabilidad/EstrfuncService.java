@@ -3,6 +3,7 @@ package com.amon_ra.servicio.contabilidad;
 import com.amon_ra.modelo.contabilidad.Estrfunc;
 import com.amon_ra.repositorio.contabilidad.EstrfuncR;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -15,8 +16,8 @@ public class EstrfuncService {
     @Autowired
     private EstrfuncR dao;
 
-    public List<Estrfunc> findAll(){
-        return dao.findAll();
+    public List<Estrfunc> findAll(Sort sort){
+        return dao.findAll(sort);
     }
     public Optional<Estrfunc> findById(Long idestrfunc){
         return dao.findById(idestrfunc);
