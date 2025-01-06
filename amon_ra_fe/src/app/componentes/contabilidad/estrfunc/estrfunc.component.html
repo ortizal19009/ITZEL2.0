@@ -1,0 +1,36 @@
+<div class="container-fluid mt-2">
+    <div class="card">
+        <div class="card-body">
+            <h4>{{title}}</h4>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid mt-2">
+    <div class="card mb-0">
+        <div class="card-body">
+            <table class="table table-hover table-bordered table-sm">
+                <thead>
+                    <tr class="text-center">
+                        <th>N°</th>
+                        <th>Código</th>
+                        <th>Nombre</th>
+                        <th>Movimiento</th>
+                        <th>Nivel</th>
+                        <th>Estructura</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let estrfunc of _estrfunc; let i = index">
+                        <td class="col-sm text-center">{{i+1}}</td>
+                        <td class="text-center">{{estrfunc.codigo}}</td>
+                        <td>{{estrfunc.nombre}}</td>
+                        <td>{{estrfunc.movimiento}}</td>
+                        <td class="text-center">{{estrfunc.idestructura_estructura.nivel}}</td>
+                        <td>{{estrfunc.idestructura_estructura.nombre}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
