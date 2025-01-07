@@ -37,4 +37,9 @@ public class EstrfuncApi {
         _e.setIdestructura_estructura(e.getIdestructura_estructura());
         return ResponseEntity.ok(estrfuncService.update(_e));
     }
+    @GetMapping("/validar")
+    public ResponseEntity<Boolean> getByCodigo(@RequestParam String codigo){
+        Estrfunc estrfunc = estrfuncService.findByCodigo(codigo);
+        return ResponseEntity.ok(estrfunc != null);
+    }
 }

@@ -13,10 +13,10 @@ export class EstrfuncComponent implements OnInit {
   _estrfunc?: any;
   constructor(private estrfuncService: EstrfuncService) {}
   ngOnInit(): void {
-    this.estrfuncService.getAll().subscribe({
-      next: (_datos?: any) => {
-        console.log(_datos);
-        this._estrfunc = _datos;
+    this.estrfuncService.estrfuncGetAll().subscribe({
+      next: (estrfuncs: any) => {
+        console.table(estrfuncs);
+        this._estrfunc = estrfuncs;
       },
     });
   }

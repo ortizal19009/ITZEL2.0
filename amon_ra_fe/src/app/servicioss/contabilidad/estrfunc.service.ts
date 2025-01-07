@@ -4,12 +4,14 @@ import { environment } from '../../../environments/environment';
 const apiUrl = environment.API_URL;
 const baseUrl = `${apiUrl}/estrfunc`;
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EstrfuncService {
-
-  constructor(private http: HttpClient) { }
-  getAll(){
+  constructor(private http: HttpClient) {}
+  estrfuncGetAll() {
     return this.http.get(`${baseUrl}`);
+  }
+  validarCodigo(codigo: string) {
+    return this.http.get(`${baseUrl}/validar?codigo=${codigo}`);
   }
 }

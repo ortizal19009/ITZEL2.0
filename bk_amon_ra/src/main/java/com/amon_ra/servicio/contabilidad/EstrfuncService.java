@@ -22,6 +22,9 @@ public class EstrfuncService {
     public Optional<Estrfunc> findById(Long idestrfunc){
         return dao.findById(idestrfunc);
     }
+    public Estrfunc findByCodigo(String codigo){
+        return dao.findByCodigo(codigo);
+    }
     public Map<String, Object> save(Estrfunc e) {
         Map<String, Object> response = new HashMap<>();
         if (e == null || e.getCodigo() == null || e.getIdestructura_estructura() == null) {
