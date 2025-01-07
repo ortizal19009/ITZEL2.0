@@ -11,7 +11,7 @@ import {
 import { Router } from '@angular/router';
 import { EstructuraService } from '../../../../servicioss/contabilidad/estructura.service';
 import { EstrfuncService } from '../../../../servicioss/contabilidad/estrfunc.service';
-import { min } from 'rxjs';
+import { min, timeout } from 'rxjs';
 
 @Component({
   selector: 'app-add-estrfuc',
@@ -93,6 +93,9 @@ export class AddEstrfucComponent implements OnInit {
       next: (request: any) => {
         console.log(request);
         this._request = request.message;
+        setTimeout(() => {
+          this._request = '';
+        }, 3000);
         if (request.status === 'success') {
           this.router.navigate(['/estrfunc']);
         }
