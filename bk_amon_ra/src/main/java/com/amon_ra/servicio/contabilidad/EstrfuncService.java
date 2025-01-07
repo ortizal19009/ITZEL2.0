@@ -25,6 +25,9 @@ public class EstrfuncService {
     public Estrfunc findByCodigo(String codigo){
         return dao.findByCodigo(codigo);
     }
+    public Estrfunc findByNombre(String nombre){
+        return dao.findByNombre(nombre);
+    }
     public Map<String, Object> save(Estrfunc e) {
         Map<String, Object> response = new HashMap<>();
         if (e == null || e.getCodigo() == null || e.getIdestructura_estructura() == null) {

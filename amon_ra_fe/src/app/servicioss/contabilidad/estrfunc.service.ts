@@ -12,6 +12,12 @@ export class EstrfuncService {
     return this.http.get(`${baseUrl}`);
   }
   validarCodigo(codigo: string) {
-    return this.http.get(`${baseUrl}/validar?codigo=${codigo}`);
+    return this.http.get(`${baseUrl}/validar/codigo?codigo=${codigo}`);
+  }
+  validarNombre(nombre: string) {
+    return this.http.get(`${baseUrl}/validar/nombre?nombre=${nombre}`);
+  }
+  estrfuncSave(estfunc: any) {
+    return this.http.post(`${baseUrl}`, estfunc);
   }
 }
