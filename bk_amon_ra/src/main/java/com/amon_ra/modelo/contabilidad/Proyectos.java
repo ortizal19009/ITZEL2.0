@@ -1,16 +1,12 @@
 package com.amon_ra.modelo.contabilidad;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "proyectos")
 public class Proyectos {
     @Id
@@ -23,4 +19,43 @@ public class Proyectos {
     @JoinColumn(name = "idestructura_estructura")
     private Estructura idestructura_estructura;
 
+    public Long getIdproyecto() {
+        return idproyecto;
+    }
+
+    public void setIdproyecto(Long idproyecto) {
+        this.idproyecto = idproyecto;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public Boolean getMovimiento() {
+        return movimiento;
+    }
+
+    public void setMovimiento(Boolean movimiento) {
+        this.movimiento = movimiento;
+    }
+
+    public Estructura getIdestructura_estructura() {
+        return idestructura_estructura;
+    }
+
+    public void setIdestructura_estructura(Estructura idestructura_estructura) {
+        this.idestructura_estructura = idestructura_estructura;
+    }
 }

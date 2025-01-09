@@ -17,7 +17,7 @@
                                     <i class="bi bi-menu-button-wide-fill"></i>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="/add-estrfunc">Nuevo</a></li>
+                                    <li><a class="dropdown-item" [routerLink]="['/add-proyecto']">Nuevo</a></li>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
@@ -48,16 +48,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let estrfunc of _estrfunc; let i = index">
+                    <tr *ngFor="let proyecto of _proyectos; let i = index">
                         <td class="col-sm text-center">{{i+1}}</td>
-                        <td class="text-center">{{estrfunc.codigo}}</td>
-                        <td>{{estrfunc.nombre}}</td>
+                        <td class="text-center">{{proyecto.codigo}}</td>
+                        <td>{{proyecto.nombre}}</td>
                         <td class="text-center">
-                            <i class="bi bi-x-circle " [hidden]=estrfunc.movimiento></i>
-                            <i class="bi bi-check-circle" [hidden]=!estrfunc.movimiento></i>
+                            <i class="bi bi-x-circle " [hidden]=proyecto.movimiento></i>
+                            <i class="bi bi-check-circle" [hidden]=!proyecto.movimiento></i>
                         </td>
-                        <td class="text-center">{{estrfunc.idestructura_estructura.nivel}}</td>
-                        <td>{{estrfunc.idestructura_estructura.nombre}}</td>
+                        <td class="text-center">{{proyecto.idestructura_estructura.nivel}}</td>
+                        <td>
+                            {{proyecto.idestructura_estructura.nombre}}
+                            <span class="text-right m-2 editIcon ">
+                                <i class="bi bi-pencil-square " [routerLink]="['/modi-proyecto', proyecto.idproyecto]"></i>
+                            </span>
+                        </td>
                     </tr>
                 </tbody>
             </table>

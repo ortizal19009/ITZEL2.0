@@ -8,8 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+
 @RestController
-@RequestMapping("/estrfunc")
+@RequestMapping("/proyectos")
 @CrossOrigin("*")
 public class ProyectosApi {
     @Autowired
@@ -17,9 +19,9 @@ public class ProyectosApi {
 
     @GetMapping
     public ResponseEntity<List<Proyectos>> getAll(){
-        List<Proyectos> estrfuncs  = proyectosService.findAll(Sort.by(Sort.Order.asc("codigo")));
-        if (estrfuncs != null){
-            return ResponseEntity.ok(estrfuncs);
+        List<Proyectos> proyectos  = proyectosService.findAll(Sort.by(Sort.Order.asc("codigo")));
+        if (proyectos != null){
+            return ResponseEntity.ok(proyectos);
         }
         return  ResponseEntity.noContent().build();
     }
@@ -46,5 +48,14 @@ public class ProyectosApi {
     public ResponseEntity<Boolean> getByNombre(@RequestParam String nombre){
         Proyectos estrfunc = proyectosService.findByNombre(nombre);
         return ResponseEntity.ok(estrfunc != null);
+    }
+    @GetMapping("/{idproyecto}")
+    public ResponseEntity<Optional<Proyectos>> getById(@PathVariable Long idproyecto){
+        Proyectos proyecto = proyectosService.findById(idproyecto).orElse(null);
+        if(proyecto != null ){
+            return ResponseEntity.ok(Optional.of(proyecto));
+        }else {
+            return ResponseEntity.noContent().build();
+        }
     }
 }

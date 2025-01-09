@@ -1,7 +1,7 @@
 import { Estructura } from "./estructura";
 
-export class Estrfunc {
-  idestrfunc?: number;
+export class Proyectos {
+  idproyecto?: number;
   codig?: string;
   nombre?: string;
   movimiento?: boolean;

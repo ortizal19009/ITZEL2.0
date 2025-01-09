@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EstrfuncComponent } from './estrfunc.component';
+import { ModiProyectoComponent } from './modi-proyecto.component';
 
-describe('EstrfuncComponent', () => {
-  let component: EstrfuncComponent;
-  let fixture: ComponentFixture<EstrfuncComponent>;
+describe('ModiProyectoComponent', () => {
+  let component: ModiProyectoComponent;
+  let fixture: ComponentFixture<ModiProyectoComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EstrfuncComponent]
+      imports: [ModiProyectoComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(EstrfuncComponent);
+    fixture = TestBed.createComponent(ModiProyectoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

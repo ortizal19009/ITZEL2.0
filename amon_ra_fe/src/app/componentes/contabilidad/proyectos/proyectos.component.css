@@ -1,0 +1,7 @@
+/* .editIcon {
+  display: inline;
+} */
+.editIcon:hover {
+  cursor: pointer;
+  color: #fd0a0af1;
+}

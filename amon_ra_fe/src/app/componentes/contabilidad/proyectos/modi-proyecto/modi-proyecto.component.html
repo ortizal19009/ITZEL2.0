@@ -4,13 +4,14 @@
             <div class="card-title">{{title}}</div>
         </div>
         <div class="card-body">
-            <form [formGroup]="f_estrfunc">
+            <form [formGroup]="f_proyecto">
                 <div class="row">
                     <div class="col-sm">
                         <div class="input-group input-group-sm mb-3">
                             <span class="input-group-text" id="basic-addon1">Código</span>
-                            <input type="text" class="form-control form-control-sm" (change)="validarCodigo($event)"
-                                formControlName="codigo" aria-describedby="basic-addon1" />
+                            <input type="text" class="form-control form-control-sm"
+                                (change)="getValidacionCodigo($event)" formControlName="codigo"
+                                aria-describedby="basic-addon1" />
                             <div *ngIf="sw_codigo" class="error">
                                 <i class="bi bi-x-circle p-2 mt-auto"></i>
                             </div>
@@ -20,7 +21,7 @@
                         <div class="mb-3">
                             <div class="input-group input-group-sm mb3">
                                 <span class="input-group-text " id="basic-addon3">Nombre</span>
-                                <input type="text" class="form-control" (change)="validarNombre($event)"
+                                <input type="text" class="form-control" (change)="getValidarNombre($event)"
                                     formControlName="nombre" aria-describedby="basic-addon3 basic-addon4" />
                                 <div *ngIf="sw_nombre" class="error">
                                     <i class="bi bi-x-circle p-2 mt-auto"></i>
@@ -43,7 +44,8 @@
                     <div class="col-sm">
                         <div class="input-group input-group-sm mb-3">
                             <span class="input-group-text">Estructura</span>
-                            <select class="form-control" formControlName="idestructura_estructura">
+                            <select class="form-control" formControlName="idestructura_estructura"
+                                [compareWith]="compararEstructura">
                                 <option *ngFor="let estructura of _estructuras" [ngValue]=estructura>
                                     {{estructura.nombre}} -
                                     Nivel({{estructura.nivel}})</option>

@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { EstrfuncService } from './estrfunc.service';
+import { ProyectosService } from './proyectos.service';
 
-describe('EstrfuncService', () => {
-  let service: EstrfuncService;
+describe('ProyectosService', () => {
+  let service: ProyectosService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(EstrfuncService);
+    service = TestBed.inject(ProyectosService);
   });
 
   it('should be created', () => {

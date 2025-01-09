@@ -2,52 +2,49 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
-  FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ProyectosService } from '../../../../servicioss/contabilidad/proyectos.service';
 import { EstructuraService } from '../../../../servicioss/contabilidad/estructura.service';
-import { EstrfuncService } from '../../../../servicioss/contabilidad/estrfunc.service';
-import { min, timeout } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-add-estrfuc',
+  selector: 'app-add-proyecto',
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
-  templateUrl: './add-estrfuc.component.html',
-  styleUrl: './add-estrfuc.component.css',
+  templateUrl: './add-proyecto.component.html',
+  styleUrl: './add-proyecto.component.css',
 })
-export class AddEstrfucComponent implements OnInit {
-  title: string = 'Crear nueva funcion estructura';
+export class AddProyectoComponent implements OnInit {
+  title: string = 'Crear nuevo proyecto';
   _estructuras: any;
-  f_estrfunc!: FormGroup;
+  f_proyecto!: FormGroup;
   sw_codigo: boolean = false;
   sw_nombre: boolean = false;
   _request!: any;
-
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private estructuraService: EstructuraService,
-    private estrfuncService: EstrfuncService
+    private proyectoService: ProyectosService
   ) {}
   ngOnInit(): void {
-    this.f_estrfunc = this.fb.group({
+    this.f_proyecto = this.fb.group({
       codigo: ['', Validators.min(2)],
       nombre: ['', Validators.required],
       movimiento: [false, Validators.required],
       idestructura_estructura: '',
     });
-    this.estructuraGetAll();
+    this.getAllProyectos();
   }
-  estructuraGetAll() {
-    this.estructuraService.estructuraGetAll().subscribe({
+  getAllProyectos() {
+    this.proyectoService.proyectosGetAll().subscribe({
       next: (estructuras: any) => {
         console.table(estructuras);
         this._estructuras = estructuras;
-        this.f_estrfunc.patchValue({
+        this.f_proyecto.patchValue({
           idestructura_estructura: estructuras[0],
         });
       },
@@ -55,14 +52,11 @@ export class AddEstrfucComponent implements OnInit {
     });
   }
   regresar() {
-    this.router.navigate(['/estrfunc']);
+    this.router.navigate(['/proyectos']);
   }
-  validarCodigo(e: any) {
-    let codigo = e.target.value;
-    this.getValidacionCodigo(codigo);
-  }
-  getValidacionCodigo(codigo: string) {
-    this.estrfuncService.validarCodigo(codigo).subscribe({
+  getValidacionCodigo(codigo: any) {
+  let code = codigo.target.value;
+    this.proyectoService.validarCodigo(code).subscribe({
       next: (validador: any) => {
         if (codigo.length % 2 == 0) {
           this.sw_codigo = validador;
@@ -73,13 +67,9 @@ export class AddEstrfucComponent implements OnInit {
       error: (e: any) => console.error(e),
     });
   }
-  validarNombre(e: any) {
-    console.log(e.target.value);
-    let nombre: string = e.target.value;
-    this.validarNombre(nombre);
-  }
-  getValidarNombre(nombre: string) {
-    this.estrfuncService.validarNombre(nombre).subscribe({
+  getValidarNombre(nombre: any) {
+  let name = nombre.target.value; 
+    this.proyectoService.validarNombre(name).subscribe({
       next: (validador: any) => {
         console.log(validador);
         this.sw_nombre = validador;
@@ -88,8 +78,8 @@ export class AddEstrfucComponent implements OnInit {
     });
   }
   save() {
-    //console.log(this.f_estrfunc.value);
-    this.estrfuncService.estrfuncSave(this.f_estrfunc.value).subscribe({
+    //console.log(this.f_proyecto.value);
+    this.proyectoService.proyectoSave(this.f_proyecto.value).subscribe({
       next: (request: any) => {
         console.log(request);
         this._request = request.message;
@@ -97,7 +87,7 @@ export class AddEstrfucComponent implements OnInit {
           this._request = '';
         }, 3000);
         if (request.status === 'success') {
-          this.router.navigate(['/estrfunc']);
+          this.router.navigate(['/proyectos']);
         }
       },
       error: (e: any) => console.error(e),
