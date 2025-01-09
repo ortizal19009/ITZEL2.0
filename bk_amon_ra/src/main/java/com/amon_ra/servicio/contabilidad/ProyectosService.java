@@ -1,7 +1,7 @@
 package com.amon_ra.servicio.contabilidad;
 
-import com.amon_ra.modelo.contabilidad.Estrfunc;
-import com.amon_ra.repositorio.contabilidad.EstrfuncR;
+import com.amon_ra.modelo.contabilidad.Proyectos;
+import com.amon_ra.repositorio.contabilidad.ProyectosR;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -12,23 +12,23 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
-public class EstrfuncService {
+public class ProyectosService {
     @Autowired
-    private EstrfuncR dao;
+    private ProyectosR dao;
 
-    public List<Estrfunc> findAll(Sort sort){
+    public List<Proyectos> findAll(Sort sort){
         return dao.findAll(sort);
     }
-    public Optional<Estrfunc> findById(Long idestrfunc){
+    public Optional<Proyectos> findById(Long idestrfunc){
         return dao.findById(idestrfunc);
     }
-    public Estrfunc findByCodigo(String codigo){
+    public Proyectos findByCodigo(String codigo){
         return dao.findByCodigo(codigo);
     }
-    public Estrfunc findByNombre(String nombre){
+    public Proyectos findByNombre(String nombre){
         return dao.findByNombre(nombre);
     }
-    public Map<String, Object> save(Estrfunc e) {
+    public Map<String, Object> save(Proyectos e) {
         Map<String, Object> response = new HashMap<>();
         if (e == null || e.getCodigo() == null || e.getIdestructura_estructura() == null) {
             response.put("status", "error");
@@ -46,7 +46,7 @@ public class EstrfuncService {
             int d = 0;
             int h = 2;
             while (codigoLength > h){
-                Estrfunc existingEstrfunc = dao.findByCodigo(e.getCodigo().substring(d,h));
+                Proyectos existingEstrfunc = dao.findByCodigo(e.getCodigo().substring(d,h));
                 if (existingEstrfunc == null) {
                     response.put("status", "error");
                     response.put("message", "Error: Código "+e.getCodigo().substring(d,h)+" no existe.");
@@ -55,7 +55,7 @@ public class EstrfuncService {
                 h += 2;
             }
         }
-        Estrfunc existingEstrfunc = dao.findByCodigo(e.getCodigo());
+        Proyectos existingEstrfunc = dao.findByCodigo(e.getCodigo());
         if (existingEstrfunc != null) {
             response.put("status", "error");
             response.put("message", "Error: Código ya existe.");
@@ -77,7 +77,7 @@ public class EstrfuncService {
         }
         return response;
     }
-    public Map<String, Object> update(Estrfunc e) {
+    public Map<String, Object> update(Proyectos e) {
         Map<String, Object> response = new HashMap<>();
         if (e == null || e.getCodigo() == null || e.getIdestructura_estructura() == null) {
             response.put("status", "error");
@@ -95,7 +95,7 @@ public class EstrfuncService {
             int d = 0;
             int h = 2;
             while (codigoLength > h){
-                Estrfunc existingEstrfunc = dao.findByCodigo(e.getCodigo().substring(d,h));
+                Proyectos existingEstrfunc = dao.findByCodigo(e.getCodigo().substring(d,h));
                 if (existingEstrfunc == null) {
                     response.put("status", "error");
                     response.put("message", "Error: Código "+e.getCodigo().substring(d,h)+" no existe.");

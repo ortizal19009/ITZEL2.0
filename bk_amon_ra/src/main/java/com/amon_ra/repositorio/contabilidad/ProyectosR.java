@@ -1,17 +1,17 @@
 package com.amon_ra.repositorio.contabilidad;
 
-import com.amon_ra.modelo.contabilidad.Estrfunc;
+import com.amon_ra.modelo.contabilidad.Proyectos;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-public interface EstrfuncR extends JpaRepository<Estrfunc, Long> {
-    @Query(value = "SELECT * FROM estrfunc ef WHERE ef.codigo = ?1 ", nativeQuery = true)
-    Estrfunc findByCodigo(String codigo);
-    @Query(value = "SELECT * FROM estrfunc ef WHERE ef.nombre = ?1 ", nativeQuery = true)
-    Estrfunc findByNombre(String nombre);
-    @Query(value = "SELECT * FROM estrfunc ef WHERE ef.codigo = ?1 and ef.idestructura_estructura = ?2", nativeQuery = true)
-    Estrfunc findByCodigoAndEstructura(String codigo, Long estructura);
-    @Query(value = "SELECT * FROM estrfunc ef WHERE ef.idestructura_estructura = ?2", nativeQuery = true)
-    Estrfunc findByEstructura(String codigo, Long estructura);
+public interface ProyectosR extends JpaRepository<Proyectos, Long> {
+    @Query(value = "SELECT * FROM proyectos p WHERE p.codigo = ?1 ", nativeQuery = true)
+    Proyectos findByCodigo(String codigo);
+    @Query(value = "SELECT * FROM proyectos p WHERE p.nombre = ?1 ", nativeQuery = true)
+    Proyectos findByNombre(String nombre);
+    @Query(value = "SELECT * FROM proyectos p WHERE p.codigo = ?1 and ef.idestructura_estructura = ?2", nativeQuery = true)
+    Proyectos findByCodigoAndEstructura(String codigo, Long estructura);
+    @Query(value = "SELECT * FROM proyectos p WHERE p.idestructura_estructura = ?2", nativeQuery = true)
+    Proyectos findByEstructura(String codigo, Long estructura);
     
 }
