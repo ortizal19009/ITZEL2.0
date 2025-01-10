@@ -35,17 +35,17 @@ export class ModiProyectoComponent implements OnInit {
   ngOnInit(): void {
     let idproyecto = this._params.snapshot.paramMap.get('idproyecto');
     this.f_proyecto = this.fb.group({
+      idproyecto: '',
       codigo: ['', Validators.min(2)],
       nombre: ['', Validators.required],
       movimiento: [false, Validators.required],
       idestructura_estructura: '',
     });
-    console.log();
-    this.getAllProyectos();
+    this.getAllEstructuras();
     this.getByIdProyecto(+idproyecto!);
   }
-  getAllProyectos() {
-    this.proyectoService.proyectosGetAll().subscribe({
+  getAllEstructuras() {
+    this.estructuraService.estructuraGetAll().subscribe({
       next: (estructuras: any) => {
         console.table(estructuras);
         this._estructuras = estructuras;
@@ -63,6 +63,7 @@ export class ModiProyectoComponent implements OnInit {
     this.proyectoService.proyectoGetById(idproyecto).subscribe({
       next: (_proyecto: any) => {
         this.f_proyecto.patchValue({
+          idproyecto: _proyecto.idproyecto,
           codigo: _proyecto.codigo,
           nombre: _proyecto.nombre,
           movimiento: _proyecto.movimiento,
@@ -97,7 +98,7 @@ export class ModiProyectoComponent implements OnInit {
   }
   save() {
     //console.log(this.f_proyecto.value);
-    this.proyectoService.proyectoSave(this.f_proyecto.value).subscribe({
+    this.proyectoService.proyectosUpdate(this.f_proyecto.value).subscribe({
       next: (request: any) => {
         console.log(request);
         this._request = request.message;

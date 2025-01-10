@@ -30,8 +30,8 @@ public class ProyectosApi {
         return ResponseEntity.ok(proyectosService.save(e));
     }
     @PutMapping
-    public ResponseEntity<Object> update(@RequestParam Long idestrfunc, @RequestBody Proyectos e){
-        Proyectos _e = proyectosService.findById(idestrfunc).orElse(null);
+    public ResponseEntity<Object> update(@RequestParam Long idproyecto, @RequestBody Proyectos e){
+        Proyectos _e = proyectosService.findById(idproyecto).orElse(null);
         assert _e != null;
         _e.setCodigo(e.getCodigo());
         _e.setNombre(e.getNombre());
@@ -41,13 +41,13 @@ public class ProyectosApi {
     }
     @GetMapping("/validar/codigo")
     public ResponseEntity<Boolean> getByCodigo(@RequestParam String codigo){
-        Proyectos estrfunc = proyectosService.findByCodigo(codigo);
-        return ResponseEntity.ok(estrfunc != null);
+        Proyectos proyectos = proyectosService.findByCodigo(codigo);
+        return ResponseEntity.ok(proyectos != null);
     }
     @GetMapping("/validar/nombre")
     public ResponseEntity<Boolean> getByNombre(@RequestParam String nombre){
-        Proyectos estrfunc = proyectosService.findByNombre(nombre);
-        return ResponseEntity.ok(estrfunc != null);
+        Proyectos proyectos = proyectosService.findByNombre(nombre);
+        return ResponseEntity.ok(proyectos != null);
     }
     @GetMapping("/{idproyecto}")
     public ResponseEntity<Optional<Proyectos>> getById(@PathVariable Long idproyecto){

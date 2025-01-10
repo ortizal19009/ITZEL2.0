@@ -25,4 +25,10 @@ export class ProyectosService {
   proyectoGetById(idproyecto: number) {
     return this.http.get(`${baseUrl}/${idproyecto}`);
   }
+  proyectosUpdate(proyecto: any) {
+    return this.http.put(
+      `${baseUrl}?idproyecto=${proyecto.idproyecto}`,
+      proyecto
+    );
+  }
 }
