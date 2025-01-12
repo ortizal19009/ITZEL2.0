@@ -120,6 +120,36 @@ public class ProyectosService {
         }
         return response;
     }
+    public Map<String, Object> delete(Long idProyecto) {
+        Map<String, Object> response = new HashMap<>();
 
+        Optional<Proyectos> optionalProject = dao.findById(idProyecto);
+
+        if (optionalProject.isPresent()) {
+            Proyectos project = optionalProject.get();
+            System.out.println("Project Code: " + project.getCodigo());
+
+            // Fetch count directly instead of fetching the list
+            List<Proyectos> relatedProjectCount = dao.findByCodigoMayor(project.getCodigo());
+
+            if (relatedProjectCount.size() == 1) {
+                dao.deleteById(project.getIdproyecto());
+                response.put("status","success");
+                response.put("message", "Eliminado");
+            } else {
+                response.put("status","denied");
+                response.put("message", "No se puede eliminar registro");
+            }
+        } else {
+            response.put("status","denied");
+            response.put("message", "Proyecto no encontrado");
+        }
+
+        return response;
+    }
+
+    public List<Proyectos> findByCodigoMayor(String codigo){
+        return dao.findByCodigoMayor(codigo);
+    }
 
 }

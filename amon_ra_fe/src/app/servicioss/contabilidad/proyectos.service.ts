@@ -31,4 +31,7 @@ export class ProyectosService {
       proyecto
     );
   }
+  proyectoDelete(idproyecto: number) {
+    return this.http.delete(`${baseUrl}/${idproyecto}`);
+  }
 }

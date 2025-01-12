@@ -25,6 +25,7 @@ export class ModiProyectoComponent implements OnInit {
   sw_codigo: boolean = false;
   sw_nombre: boolean = false;
   _request!: any;
+  idproyecto?: number;
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -33,7 +34,7 @@ export class ModiProyectoComponent implements OnInit {
     private _params: ActivatedRoute
   ) {}
   ngOnInit(): void {
-    let idproyecto = this._params.snapshot.paramMap.get('idproyecto');
+    this.idproyecto = +this._params.snapshot.paramMap.get('idproyecto')!;
     this.f_proyecto = this.fb.group({
       idproyecto: '',
       codigo: ['', Validators.min(2)],
@@ -42,7 +43,7 @@ export class ModiProyectoComponent implements OnInit {
       idestructura_estructura: '',
     });
     this.getAllEstructuras();
-    this.getByIdProyecto(+idproyecto!);
+    this.getByIdProyecto(this.idproyecto);
   }
   getAllEstructuras() {
     this.estructuraService.estructuraGetAll().subscribe({
@@ -121,5 +122,22 @@ export class ModiProyectoComponent implements OnInit {
         ? false
         : o1.idestructura == o2.idestructura;
     }
+  }
+  delete() {
+    console.log(this.idproyecto);
+    this.proyectoService.proyectoDelete(this.idproyecto!).subscribe({
+      next: (datos: any) => {
+        console.log(datos);
+        if (datos.status == 'success') {
+          this.regresar();
+        } else {
+          this._request = datos.message;
+          setTimeout(() => {
+            this._request = '';
+          }, 3000);
+        }
+      },
+      error: (e: any) => console.error(e),
+    });
   }
 }

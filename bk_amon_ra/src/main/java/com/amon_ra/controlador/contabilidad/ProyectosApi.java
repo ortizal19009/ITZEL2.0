@@ -58,4 +58,12 @@ public class ProyectosApi {
             return ResponseEntity.noContent().build();
         }
     }
+    @DeleteMapping("/{idproyecto}")
+    public  ResponseEntity<Object> deleteProyecto(@PathVariable Long idproyecto){
+        return ResponseEntity.ok(proyectosService.delete(idproyecto));
+    }
+    @GetMapping("/cod-mayor")
+    public ResponseEntity<List<Proyectos>> getByCodigoMayor (@RequestParam String codigo){
+        return ResponseEntity.ok(proyectosService.findByCodigoMayor(codigo));
+    }
 }
