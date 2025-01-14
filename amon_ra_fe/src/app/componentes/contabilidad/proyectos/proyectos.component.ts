@@ -5,13 +5,14 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-proyectos',
-  imports: [CommonModule,RouterLink],
+  imports: [CommonModule,RouterLink ],
   templateUrl: './proyectos.component.html',
   styleUrl: './proyectos.component.css',
 })
 export class ProyectosComponent implements OnInit {
   title?: string = 'Estructura función';
   _proyectos?: any;
+  stringFilter?: string;
   constructor(private proyectosService: ProyectosService) {}
   ngOnInit(): void {
     this.getAllProyectos();

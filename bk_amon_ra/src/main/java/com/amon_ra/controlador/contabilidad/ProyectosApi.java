@@ -2,9 +2,10 @@ package com.amon_ra.controlador.contabilidad;
 
 import com.amon_ra.modelo.contabilidad.Proyectos;
 import com.amon_ra.servicio.contabilidad.ProyectosService;
+import com.amon_ra.servicio.jasperreport.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +17,8 @@ import java.util.Optional;
 public class ProyectosApi {
     @Autowired
     private ProyectosService proyectosService;
+    @Autowired
+    private ReportService reportService;
 
     @GetMapping
     public ResponseEntity<List<Proyectos>> getAll(){
@@ -65,5 +68,20 @@ public class ProyectosApi {
     @GetMapping("/cod-mayor")
     public ResponseEntity<List<Proyectos>> getByCodigoMayor (@RequestParam String codigo){
         return ResponseEntity.ok(proyectosService.findByCodigoMayor(codigo));
+    }
+
+    //GENERAR REPORTES DE JASPER REPORT
+    @GetMapping("/jasperReport/appProyectos")
+    public ResponseEntity<byte[]> reportAllProyectos(@RequestParam String nameReport){
+        try{
+            byte[] report = reportService.generarReportes(nameReport);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            headers.add("Content-Disposition", "inline; filename="+nameReport);
+            return new ResponseEntity<>(report, headers, HttpStatus.OK);
+        }
+        catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 }
