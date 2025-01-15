@@ -25,7 +25,6 @@
                                 </ul>
                             </li>
                         </ul>
-
                     </div>
                 </div>
             </nav>
@@ -48,7 +47,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let proyecto of _proyectos; let i = index ">
+                    <tr *ngFor="let proyecto of _proyectos | filter:stringFilter; let i = index ">
                         <td class="col-sm text-center">{{i+1}}</td>
                         <td class="text-center">{{proyecto.codigo}}</td>
                         <td>{{proyecto.nombre}}</td>
@@ -60,7 +59,8 @@
                         <td>
                             {{proyecto.idestructura_estructura.nombre}}
                             <span class="text-right m-2 editIcon ">
-                                <i class="bi bi-pencil-square " [routerLink]="['/modi-proyecto', proyecto.idproyecto]"></i>
+                                <i class="bi bi-pencil-square "
+                                    [routerLink]="['/modi-proyecto', proyecto.idproyecto]"></i>
                             </span>
                         </td>
                     </tr>

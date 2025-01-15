@@ -1,25 +1,40 @@
 package com.amon_ra.controlador.contabilidad;
 
+import com.amon_ra.config.jasperConfig.JasperInterface;
+import com.amon_ra.config.jasperConfig.JasperReportService;
+import com.amon_ra.config.jasperConfig.ReportModelDTO;
 import com.amon_ra.modelo.contabilidad.Proyectos;
 import com.amon_ra.servicio.contabilidad.ProyectosService;
-import com.amon_ra.servicio.jasperreport.ReportService;
+import jakarta.annotation.Resource;
+import net.sf.jasperreports.engine.JRException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/proyectos")
 @CrossOrigin("*")
 public class ProyectosApi {
+    private static final Logger logger = LoggerFactory.getLogger(ProyectosApi.class);
+
     @Autowired
     private ProyectosService proyectosService;
     @Autowired
-    private ReportService reportService;
-
+    private JasperInterface jasperInterface;
+    @Autowired
+    private JasperReportService jasperReportService;
     @GetMapping
     public ResponseEntity<List<Proyectos>> getAll(){
         List<Proyectos> proyectos  = proyectosService.findAll(Sort.by(Sort.Order.asc("codigo")));
@@ -71,17 +86,22 @@ public class ProyectosApi {
     }
 
     //GENERAR REPORTES DE JASPER REPORT
-    @GetMapping("/jasperReport/appProyectos")
-    public ResponseEntity<byte[]> reportAllProyectos(@RequestParam String nameReport){
-        try{
-            byte[] report = reportService.generarReportes(nameReport);
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_PDF);
-            headers.add("Content-Disposition", "inline; filename="+nameReport);
-            return new ResponseEntity<>(report, headers, HttpStatus.OK);
-        }
-        catch (Exception e){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
+    @GetMapping("/jasperReport/allProyectos")
+    public ResponseEntity<InputStreamResource> reportAllProyectos() throws JRException, IOException, SQLException {
+        logger.info("Request received to generate 'allProyectos' report.");
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("fileName", "listaProyectos");
+        ReportModelDTO dto = jasperReportService.GenerarReportes(params);
+        InputStreamResource streamResource = new InputStreamResource(dto.getStream());
+
+        logger.info("Report [{}] generated successfully. Returning response.", dto.getFileName());
+
+        return ResponseEntity.ok()
+                .header("Content-Disposition", "inline; filename=" + dto.getFileName() + ".pdf")
+                .contentLength(dto.getLength())
+                .contentType(MediaType.APPLICATION_PDF)
+                .body((InputStreamResource) streamResource);
+
     }
 }
