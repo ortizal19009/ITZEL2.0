@@ -7,5 +7,9 @@ import java.sql.SQLException;
 import java.util.Map;
 
 public interface JasperInterface {
+    /**
+     * @param params
+     * @return
+     */
     ReportModelDTO GenerarReportes(Map<String, Object> params) throws JRException, IOException, SQLException;
 }

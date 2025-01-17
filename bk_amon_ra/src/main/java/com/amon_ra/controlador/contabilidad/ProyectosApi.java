@@ -97,20 +97,13 @@ public class ProyectosApi {
     //GENERAR REPORTES DE JASPER REPORT
     @GetMapping("/jasperReport/allProyectos")
     public ResponseEntity<InputStreamResource> reportAllProyectos() throws JRException, IOException, SQLException {
-        logger.info("Request received to generate 'allProyectos' report.");
-
-        Map<String, Object> params = new HashMap<>();
-        params.put("fileName", "listaProyectos");
-        ReportModelDTO dto = jasperReportService.GenerarReportes(params);
-        InputStreamResource streamResource = new InputStreamResource(dto.getStream());
-
-        logger.info("Report [{}] generated successfully. Returning response.", dto.getFileName());
-
-        return ResponseEntity.ok()
-                .header("Content-Disposition", "inline; filename=" + dto.getFileName() + ".pdf")
-                .contentLength(dto.getLength())
-                .contentType(MediaType.APPLICATION_PDF)
-                .body((InputStreamResource) streamResource);
-
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("fileName","listaProyectos");
+        ReportModelDTO dto = jasperInterface.GenerarReportes(params);
+        InputStreamResource streamResource= new InputStreamResource(dto.getStream());
+        MediaType mediaType = null;
+        mediaType = MediaType.APPLICATION_PDF;
+        return ResponseEntity.ok().header("Content-Disposition", "inline; filename=\""+dto.getFileName()+"\"")
+                .contentLength(dto.getLength()).contentType(mediaType).body(streamResource);
     }
 }

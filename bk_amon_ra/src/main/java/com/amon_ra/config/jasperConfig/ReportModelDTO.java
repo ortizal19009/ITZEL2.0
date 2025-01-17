@@ -2,6 +2,15 @@ package com.amon_ra.config.jasperConfig;
 
 import java.io.ByteArrayInputStream;
 
+/**
+ *
+ * @author <a href="mailto:epmapat@gmail.com">Epmapa-T</a>
+ * @project demo-spring-boot-jasper
+ * @class ReportModelDTO
+ * @description
+ * @HU_CU_REQ
+ * @date 24 sep. 2021
+ */
 public class ReportModelDTO {
     private String fileName;
     private ByteArrayInputStream stream;
