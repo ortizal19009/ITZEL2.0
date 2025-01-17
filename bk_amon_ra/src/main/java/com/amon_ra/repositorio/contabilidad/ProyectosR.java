@@ -1,5 +1,6 @@
 package com.amon_ra.repositorio.contabilidad;
 
+import com.amon_ra.interfaces.contabilidad.Proyectos_rep_int;
 import com.amon_ra.modelo.contabilidad.Proyectos;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,6 +20,9 @@ public interface ProyectosR extends JpaRepository<Proyectos, Long> {
     Proyectos findByEstructura(Long estructura);
     @Query(value = "SELECT COUNT(p) FROM Proyectos p WHERE p.codigo > ?1", nativeQuery = true)
     int countByCodigoMayor(String codigo);
-
+    @Query(value = "SELECT p.codigo, p.nombre as nombreproyecto, p.movimiento, e.nivel, e.nombre as nombreestructura  FROM proyectos p JOIN estructura e ON p.idestructura_estructura = e.idestructura WHERE e.nivel = ?1 ORDER BY p.codigo ASC", nativeQuery = true)
+    List<Proyectos_rep_int> findByNivel(Long nivel);
+    @Query(value = "SELECT p.codigo, p.nombre as nombreproyecto, p.movimiento, e.nivel, e.nombre as nombreestructura  FROM proyectos p JOIN estructura e ON p.idestructura_estructura = e.idestructura WHERE p.codigo LIKE ?1% ORDER BY p.codigo ASC", nativeQuery = true)
+    List<Proyectos_rep_int> findByGrupo(String codigo);
 
 }

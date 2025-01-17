@@ -34,4 +34,10 @@ export class ProyectosService {
   proyectoDelete(idproyecto: number) {
     return this.http.delete(`${baseUrl}/${idproyecto}`);
   }
+  getProyectosByNivel(nivel: number) {
+    return this.http.get(`${baseUrl}/reportes/porniveles?nivel=${nivel}`);
+  }
+  getProyectosByGrupo(codigo: string) {
+    return this.http.get(`${baseUrl}/reportes/porgrupo?codigo=${codigo}`);
+  }
 }

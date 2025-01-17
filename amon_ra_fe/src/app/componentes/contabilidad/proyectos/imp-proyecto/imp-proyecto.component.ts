@@ -46,7 +46,7 @@ export class ImpProyectoComponent implements OnInit {
     this.f_reporte = this.fb.group({
       reporte: 0,
       nivel: 0,
-      grupo: 0,
+      grupo: '',
     });
     this.getEstructura();
   }
@@ -54,6 +54,9 @@ export class ImpProyectoComponent implements OnInit {
     this.estructuraService.estructuraGetAll().subscribe({
       next: (datos: any) => {
         this._estructura = datos;
+        this.f_reporte.patchValue({
+          nivel: datos[0],
+        });
       },
       error: (e: any) => console.error(e),
     });
@@ -61,7 +64,6 @@ export class ImpProyectoComponent implements OnInit {
   getAllProyectos(doc: any, header: any) {
     this.proyectoService.proyectosGetAll().subscribe({
       next: async (datos: any) => {
-        console.log(datos);
         datos.forEach(async (item: any) => {
           await this.datosImprimir.push([
             item.codigo,
@@ -76,13 +78,50 @@ export class ImpProyectoComponent implements OnInit {
       error: (e: any) => console.error(e),
     });
   }
+  getProyectosByNivel(doc: any, header: any) {
+    let nivel = this.f_reporte.value.nivel;
+    this.proyectoService.getProyectosByNivel(nivel.nivel).subscribe({
+      next: async (datos: any) => {
+        datos.forEach(async (item: any) => {
+          await this.datosImprimir.push([
+            item.codigo,
+            item.nombreproyecto,
+            item.movimiento,
+            item.nombreestructura,
+            item.nivel,
+          ]);
+        });
+        this.pdfService.pdfOneTable(doc, header, this.datosImprimir);
+      },
+      error: (e: any) => console.error(e),
+    });
+  }
+  getProyectosByGrupo(doc: any, header: any) {
+    let codigo = this.f_reporte.value.grupo;
+    this.proyectoService.getProyectosByGrupo(codigo).subscribe({
+      next: async (datos: any) => {
+        datos.forEach(async (item: any) => {
+          await this.datosImprimir.push([
+            item.codigo,
+            item.nombreproyecto,
+            item.movimiento,
+            item.nombreestructura,
+            item.nivel,
+          ]);
+        });
+        this.pdfService.pdfOneTable(doc, header, this.datosImprimir);
+      },
+      error: (e: any) => console.error(e),
+    });
+  }
   onSubmit() {
     let opt: number = this.f_reporte.value.reporte;
     let nombre: string = this.f_reporte.value.nombre;
     const doc = new jsPDF();
     switch (opt) {
       case 0:
-        let header: any[] = [
+        this.datosImprimir = [];
+        const header: any[] = [
           ['Lista proyectos'],
           ['Código', 'Nombre', 'Movimiento', 'Estructura', 'Nivel'],
         ];
@@ -93,10 +132,28 @@ export class ImpProyectoComponent implements OnInit {
         }
         break;
       case 1:
-        console.log('uno');
+        this.datosImprimir = [];
+        const header_1: any[] = [
+          ['Lista proyectos por nivel'],
+          ['Código', 'Nombre', 'Movimiento', 'Estructura', 'Nivel'],
+        ];
+        try {
+          this.getProyectosByNivel(doc, header_1);
+        } catch (e: any) {
+          console.error(e);
+        }
         break;
       case 2:
-        console.log('dos');
+        this.datosImprimir = [];
+        const header_2: any[] = [
+          ['Lista proyectos por Grupo'],
+          ['Código', 'Nombre', 'Movimiento', 'Estructura', 'Nivel'],
+        ];
+        try {
+          this.getProyectosByGrupo(doc, header_2);
+        } catch (e: any) {
+          console.error(e);
+        }
         break;
     }
   }

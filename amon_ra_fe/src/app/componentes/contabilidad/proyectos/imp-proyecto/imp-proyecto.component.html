@@ -30,27 +30,46 @@
                             <span class="input-group-text" id="addon-wrapping">Nivel</span>
                             <select type="text" class="form-select" aria-describedby="addon-wrapping"
                                 formControlName="nivel">
-                                <option value="" *ngFor="let estructura of _estructura">{{estructura.nombre}}
+                                <option [ngValue]="estructura" *ngFor="let estructura of _estructura">
+                                    {{estructura.nombre}}
                                     ({{estructura.nivel}})</option>
                             </select>
                         </div>
                         <div class="input-group input-group-sm flex-nowrap" *ngIf="f_reporte.value.reporte==2">
                             <span class="input-group-text" id="addon-wrapping">Grupo</span>
-                            <select type="text" class="form-control" aria-describedby="addon-wrapping"
+                            <input type="text" class="form-control" aria-describedby="addon-wrapping"
                                 formControlName="grupo">
-                                <option value=""></option>
-                            </select>
                         </div>
                     </div>
                 </div>
-                <div class="row mt-2">
-                    <div class="col-sm text-right">
-                        <button type="submit" class="btn btn-sm btn-success me-2">Cancelar</button>
-                        <button type="submit" class="btn btn-sm btn-outline-success"
-                            (click)="onSubmit()">Aceptar</button>
-                    </div>
-                </div>
             </form>
+        </div>
+        <div class="card-footer">
+            <div class="row mt-2">
+                <div class="col-sm text-right">
+                    <button type="submit" class="btn btn-sm btn-success me-2">Cancelar</button>
+                    <button type="submit" class="btn btn-sm btn-outline-success" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal" (click)="onSubmit()">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Visualizar reporte PDF</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <iframe id="pdfViewer" class="pdfViewer" frameborder="0"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-success" data-bs-dismiss="modal">Cancelar</button>
+            </div>
         </div>
     </div>
 </div>

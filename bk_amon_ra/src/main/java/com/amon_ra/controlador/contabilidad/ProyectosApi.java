@@ -3,6 +3,7 @@ package com.amon_ra.controlador.contabilidad;
 import com.amon_ra.config.jasperConfig.JasperInterface;
 import com.amon_ra.config.jasperConfig.JasperReportService;
 import com.amon_ra.config.jasperConfig.ReportModelDTO;
+import com.amon_ra.interfaces.contabilidad.Proyectos_rep_int;
 import com.amon_ra.modelo.contabilidad.Proyectos;
 import com.amon_ra.servicio.contabilidad.ProyectosService;
 import jakarta.annotation.Resource;
@@ -83,6 +84,14 @@ public class ProyectosApi {
     @GetMapping("/cod-mayor")
     public ResponseEntity<List<Proyectos>> getByCodigoMayor (@RequestParam String codigo){
         return ResponseEntity.ok(proyectosService.findByCodigoMayor(codigo));
+    }
+    @GetMapping("/reportes/porniveles")
+    public ResponseEntity<List<Proyectos_rep_int>> getByNivel(@RequestParam Long nivel){
+        return ResponseEntity.ok(proyectosService.findByNivel(nivel));
+    }
+    @GetMapping("/reportes/porgrupo")
+    public ResponseEntity<List<Proyectos_rep_int>> getByGrupo(@RequestParam String codigo){
+        return ResponseEntity.ok(proyectosService.findByGrupo(codigo));
     }
 
     //GENERAR REPORTES DE JASPER REPORT

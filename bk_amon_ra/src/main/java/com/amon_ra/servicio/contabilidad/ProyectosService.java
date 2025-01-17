@@ -1,5 +1,6 @@
 package com.amon_ra.servicio.contabilidad;
 
+import com.amon_ra.interfaces.contabilidad.Proyectos_rep_int;
 import com.amon_ra.modelo.contabilidad.Proyectos;
 import com.amon_ra.repositorio.contabilidad.ProyectosR;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -151,5 +152,10 @@ public class ProyectosService {
     public List<Proyectos> findByCodigoMayor(String codigo){
         return dao.findByCodigoMayor(codigo);
     }
-
+    public  List<Proyectos_rep_int> findByNivel(Long nivel){
+        return dao.findByNivel(nivel);
+    }
+    public  List<Proyectos_rep_int> findByGrupo(String codigo){
+        return dao.findByGrupo(codigo);
+    }
 }

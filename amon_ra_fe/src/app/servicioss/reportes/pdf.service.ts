@@ -24,6 +24,11 @@ export class PdfService {
       head: [header[1]],
       body: body,
     });
-    doc.save(`${header[0]}.pdf`);
+    //doc.save(`${header[0]}.pdf`);
+    const pdfDataUri = doc.output('datauristring');
+    const pdfViewer: any = document.getElementById(
+      'pdfViewer'
+    ) as HTMLIFrameElement;
+    return (pdfViewer.src = pdfDataUri);
   }
 }
