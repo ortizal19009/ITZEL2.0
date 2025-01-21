@@ -1,0 +1,73 @@
+<div class="container-fluid mt-2">
+    <div class="card">
+        <div class="card-body">
+            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                <div class="container-fluid">
+                    <h4 class="navbar-brand">{{title}}</h4>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item dropdown d-flex">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <i class="bi bi-menu-button-wide-fill"></i>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" [routerLink]="['/add-proyecto']">Nuevo</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" [routerLink]="['/imp-proyecto']">Exportar /
+                                            Imprimir</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="container-fluid mt-2">
+    <div class="card mb-0">
+        <div class="card-body">
+            <table class="table table-hover table-bordered table-sm sombra">
+                <thead class="cabecera">
+                   <tr class="pad0">
+                      <th class="text-center"></th>
+                      <th class="text-left">Nombre</th>
+                      <th class="text-center">Código</th>
+                      <th></th>
+                   </tr>
+                </thead>
+                <tbody class="detalle roboto small">
+                   <tr *ngFor="let ifinan of _ifinan | filter: stringFilter; let i=index" class="fila pad0"
+                      (click)="onCellClick($event, ifinan.idifinan )">
+                      <td class="text-center small font-weight-bold">{{i+1}}</td>
+                      <td>{{ ifinan.nomifinan }}</td>
+                      <td class="text-center">{{ ifinan.codifinan }}</td>
+                      <td class="text-center">
+                         <div class="btn-group py-0">
+                            <button type="button" class="btn btn-warning btn-xs dropdown-toggle py-0" data-toggle="dropdown"
+                               aria-expanded="false">
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right popLista">
+                               <button class="dropdown-item" type="button" (click)=" modificar( ifinan )"
+                                  data-toggle="collapse" data-target="#div1" [disabled]="ifinan.idifinan == 1">
+                                  <i class="bi bi-pencil"></i>&nbsp; Modificar</button>
+                               <button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalEliminar"
+                                  (click)="eliminar( ifinan )" [disabled]="ifinan.idifinan == 1">
+                                  <i class="bi bi-file-minus"></i>&nbsp; Eliminar</button>
+                            </div>
+                         </div>
+                      </td>
+                   </tr>
+                </tbody>
+             </table>
+        </div>
+    </div>
+</div>

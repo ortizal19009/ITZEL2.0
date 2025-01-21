@@ -1,0 +1,24 @@
+CREATE TABLE proyectos (
+	idproyecto serial4 NOT NULL,
+	codigo varchar(20) NOT NULL,
+	nombre varchar(50) NOT NULL,
+	movimiento bool NOT NULL,
+    idestructura_estructura bigint NOT NULL,
+
+	CONSTRAINT estrfunc_pk PRIMARY KEY (idproyecto),
+	    CONSTRAINT estrfunc_estructura_fk FOREIGN KEY (idestructura_estructura)
+        REFERENCES public.estructura (idestructura) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+
+INSERT INTO public.proyectos (idproyecto,codigo,nombre,movimiento,idestructura_estructura) VALUES
+	 (1,'01','PROCESOS GOBERNANTE',false,1),
+	 (2,'0101','GESTION GERENCIA GENERAL',false,2),
+	 (3,'010101','Unidad de Gestión Gerencia General',true,3),
+	 (4,'02','PROCESOS DE ASESORIA',false,1),
+	 (5,'0201','GESTIÓN GERENCIA GENERAL',false,2),
+	 (6,'020101','U.G Asesoria Juridica',true,3),
+	 (7,'020102','U.G. Comunicacion',true,3),
+	 (8,'020103','U.G. Planificacion',true,3),
+	 (9,'020104','U.G. Auditoria Interna',true,3);

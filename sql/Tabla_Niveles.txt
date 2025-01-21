@@ -1,0 +1,15 @@
+CREATE TABLE niveles (
+	idnivel smallserial NOT NULL,
+	nomniv varchar(50) NOT NULL,
+	longniv int2 NOT NULL,
+	CONSTRAINT niveles_pk PRIMARY KEY (idnivel)
+);
+
+INSERT INTO public.niveles (idnivel,nomniv,longniv) VALUES
+	 (1,'TITULO',1),
+	 (2,'GRUPO',2),
+	 (3,'SUBGRUPO',3),
+	 (4,'Cuenta de nivel 1',6),
+	 (5,'Cuenta de nivel 2',9),
+	 (6,'Cuenta de nivel 3',13),
+	 (7,'Cuenta de nivel 4',16);
