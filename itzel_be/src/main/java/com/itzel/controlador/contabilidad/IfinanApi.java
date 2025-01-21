@@ -3,6 +3,7 @@ package com.itzel.controlador.contabilidad;
 import com.itzel.modelo.contabilidad.Ifinan;
 import com.itzel.servicio.contabilidad.IfinanService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,10 @@ import java.util.List;
 public class IfinanApi {
     @Autowired
     IfinanService ifinanServicio;
+    @GetMapping("/getall")
+    public ResponseEntity<List<Ifinan>> getAllIfinan(){
+        return ResponseEntity.ok(ifinanServicio.findAll(Sort.by(Sort.Order.asc("codifinan"))));
+    }
 
     @GetMapping
     public List<Ifinan> getIfinan(@Param(value = "codifinan") String codifinan,

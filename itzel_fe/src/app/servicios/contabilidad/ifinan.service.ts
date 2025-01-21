@@ -12,7 +12,7 @@ export class IfinanService {
   constructor(private http: HttpClient) {}
   //Instituciones financieras: todas ordendas por nomifinan (con sort)
   getListaIfinans(): Observable<Ifinan[]> {
-    return this.http.get<Ifinan[]>(`${baseUrl}`);
+    return this.http.get<Ifinan[]>(`${baseUrl}/getall`);
   }
 
   valNomifinan(nomifinan: string): Observable<boolean> {
