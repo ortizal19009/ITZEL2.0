@@ -11,7 +11,6 @@ export class MainHeaderComponent implements OnInit {
   constructor(private serverConfigService: ServerConfigService) {}
   ngOnInit(): void {}
   onFilterChange(filterValue: any) {
-    console.log(filterValue);
     let dato: string = filterValue.target.value;
     this.serverConfigService.updateFilter(dato); // Enviar el valor al servicio
   }

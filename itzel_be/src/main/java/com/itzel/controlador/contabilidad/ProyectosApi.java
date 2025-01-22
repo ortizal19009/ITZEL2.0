@@ -30,10 +30,6 @@ public class ProyectosApi {
 
     @Autowired
     private ProyectosService proyectosService;
-    @Autowired
-    private JasperInterface jasperInterface;
-    @Autowired
-    private JasperReportService jasperReportService;
     @GetMapping
     public ResponseEntity<List<Proyectos>> getAll(){
         List<Proyectos> proyectos  = proyectosService.findAll(Sort.by(Sort.Order.asc("codigo")));
@@ -91,17 +87,24 @@ public class ProyectosApi {
     public ResponseEntity<List<Proyectos_rep_int>> getByGrupo(@RequestParam String codigo){
         return ResponseEntity.ok(proyectosService.findByGrupo(codigo));
     }
+private JasperReportService jasperReportService;
 
-    //GENERAR REPORTES DE JASPER REPORT
-    @GetMapping("/jasperReport/allProyectos")
-    public ResponseEntity<InputStreamResource> reportAllProyectos() throws JRException, IOException, SQLException {
-        Map<String, Object> params = new HashMap<String, Object>();
-        params.put("fileName","listaProyectos");
-        ReportModelDTO dto = jasperInterface.GenerarReportes(params);
-        InputStreamResource streamResource= new InputStreamResource(dto.getStream());
-        MediaType mediaType = null;
-        mediaType = MediaType.APPLICATION_PDF;
-        return ResponseEntity.ok().header("Content-Disposition", "inline; filename=\""+dto.getFileName()+"\"")
-                .contentLength(dto.getLength()).contentType(mediaType).body(streamResource);
+    public ProyectosApi(JasperReportService jasperReportService) {
+        this.jasperReportService = jasperReportService;
     }
+
+    @GetMapping("/jasperreport/all")
+    public ResponseEntity<byte[]> generarReporte(){
+        try{
+            byte[] report = jasperReportService.generarReporte("listaProyectos");
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            headers.add("Content-Disposition", "inline; fileName=report.pdf");
+            return new ResponseEntity<>(report, headers,HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+
 }

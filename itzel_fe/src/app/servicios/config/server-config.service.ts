@@ -10,7 +10,6 @@ export class ServerConfigService {
   currentFilter = this.filterSubject.asObservable();
 
   updateFilter(filterValue: string) {
-    console.log(filterValue);
     this.filterSubject.next(filterValue);
   }
 }
