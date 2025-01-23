@@ -12,6 +12,20 @@
 
                 </div>
                 <!-- Right navbar links -->
+                <ul class="navbar-nav ml-auto me-5 mt-0">
+                    <form action="">
+                        <div class="input-group input-goup-sm mb-3">
+                            <input type="text" class="form-control col-sm-4" placeholder="Cuenta" aria-label="Cuenta" aria-describedby="button-addon2">
+                            <input type="text" class="form-control col-sm-9" placeholder="Denominación" aria-label="Denominación" aria-describedby="button-addon2">
+                            <div class="input-group-append">
+                              <button class="btn btn-outline-primary" type="button" id="button-addon2"><i class="fa fa-search" aria-hidden="true"></i>
+                              </button>
+                            </div>
+                          </div>
+                    </form>
+
+                </ul>
+                <!-- Right navbar links -->
                 <ul class="navbar-nav ml-auto me-3 mt-1">
                     <li class="nav-item dropdown">
                         <p class="nav-link" data-toggle="dropdown" href="#">
@@ -51,35 +65,43 @@
 
 <div class="container-fluid mt-2">
     <div class="card mb-0">
-        <div class="card-body card-size">
+        <div class="card-body table-responsive  center-form card-size">
             <table class="table table-hover table-head-fixed text-nowrap table-striped table-bordered table-sm ">
                 <thead class="">
                     <tr class="text-center">
                         <th class="col-sm-1">N°</th>
-                        <th>Código</th>
-                        <th>Nombre</th>
-                        <th>Movimiento</th>
+                        <th>Cuenta</th>
+                        <th>Denominación</th>
+                        <th>Grupo</th>
+                        <th>Mov.</th>
                         <th>Nivel</th>
-                        <th>Estructura</th>
+                        <th>Sinafip</th>
+                        <th>Aso. Debe</th>
+                        <th>Aso. Haber</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let proyecto of _proyectos | filter:stringFilter; let i = index ">
+                    <tr *ngFor="let cuenta of _cuentas | filter:stringFilter; let i = index ">
                         <td class="col-sm-1 text-center">{{i+1}}</td>
-                        <td class="text-center">{{proyecto.codigo}}</td>
-                        <td>{{proyecto.nombre}}</td>
+                        <td class="text-center">{{cuenta.codcue}}</td>
+                        <td>{{cuenta.nomcue}}</td>
+                        <td class="col-sm-1">{{cuenta.grucue}}</td>
                         <td class="text-center">
                             <i class="fa fa-times-circle-o uncheck-circle" aria-hidden="true"
-                                [hidden]=proyecto.movimiento></i>
-                            <i class="fa fa-check-circle-o check-circle" aria-hidden="true"
-                                [hidden]=!proyecto.movimiento></i>
+                                [hidden]=cuenta.movcue></i>
+                            <i class="fa fa-check-circle-o check-circle" aria-hidden="true" [hidden]=!cuenta.movcue></i>
                         </td>
-                        <td class="text-center">{{proyecto.idestructura_estructura.nivel}}</td>
-                        <td>
-                            {{proyecto.idestructura_estructura.nombre}}
+                        <td class="text-center">{{cuenta.idnivel.nomniv}}</td>
+                        <td class="text-center">
+                            <i class="fa fa-times-circle-o uncheck-circle" aria-hidden="true" [hidden]=cuenta.sigef></i>
+                            <i class="fa fa-check-circle-o check-circle" aria-hidden="true" [hidden]=!cuenta.sigef></i>
+                        </td>
+                        <td>{{cuenta.asodebe}}</td>
+                        <td>{{cuenta.asohaber}}</td>
+                        <td class="text-center">
                             <span class="text-right m-2 editIcon ">
-                                <i class="fa fa-pencil-square-o warning" aria-hidden="true"
-                                    [routerLink]="['/modi-proyecto', proyecto.idproyecto]"></i>
+                                <i class="fa fa-pencil-square-o warning" aria-hidden="true"></i>
                             </span>
                         </td>
                     </tr>
@@ -88,3 +110,5 @@
         </div>
     </div>
 </div>
+
+<div class="searchForm"></div>

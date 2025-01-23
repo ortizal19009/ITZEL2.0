@@ -1,4 +1,7 @@
 package com.itzel.repositorio.contabilidad;
 
-public interface CuentasR {
+import com.itzel.modelo.contabilidad.Cuentas;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CuentasR extends JpaRepository<Cuentas, Long> {
 }

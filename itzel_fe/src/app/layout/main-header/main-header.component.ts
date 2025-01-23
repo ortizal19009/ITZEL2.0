@@ -14,4 +14,5 @@ export class MainHeaderComponent implements OnInit {
     let dato: string = filterValue.target.value;
     this.serverConfigService.updateFilter(dato); // Enviar el valor al servicio
   }
+
 }

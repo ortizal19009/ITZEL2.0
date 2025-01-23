@@ -5,6 +5,7 @@ import { ModiProyectoComponent } from './componentes/contabilidad/proyectos/modi
 import { ImpProyectoComponent } from './componentes/contabilidad/proyectos/imp-proyecto/imp-proyecto.component';
 import { AppWrapperComponent } from './layout/app-wrapper/app-wrapper.component';
 import { IfinanComponent } from './componentes/contabilidad/ifinan/ifinan.component';
+import { CuentasComponent } from './componentes/contabilidad/cuentas/cuentas.component';
 
 export const routes: Routes = [
     { path: 'inicio', component:  AppWrapperComponent },
@@ -13,4 +14,5 @@ export const routes: Routes = [
     { path: 'modi-proyecto/:idproyecto', component: ModiProyectoComponent },
     { path: 'imp-proyecto', component: ImpProyectoComponent},
     { path: 'ifinan', component: IfinanComponent},
+    { path: 'cuentas', component: CuentasComponent},
     { path: '', redirectTo: 'inicio', pathMatch: 'full' },];
