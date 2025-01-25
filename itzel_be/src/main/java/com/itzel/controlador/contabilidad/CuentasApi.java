@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/cuentas")
@@ -39,8 +40,11 @@ public class CuentasApi {
             System.out.println("nomcue: "+nomcue);
             cuentas = cuentasService.findByDenom(nomcue.toLowerCase(),page, size);
         }
-        
         return ResponseEntity.ok(cuentas);
 
+    }
+    @GetMapping("/byId")
+    public ResponseEntity<Optional<Cuentas>> getById(@RequestParam Long idcuenta){
+        return ResponseEntity.ok(cuentasService.findById(idcuenta));
     }
 }

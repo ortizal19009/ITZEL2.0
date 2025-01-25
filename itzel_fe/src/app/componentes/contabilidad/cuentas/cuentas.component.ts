@@ -9,10 +9,18 @@ import {
 } from '@angular/forms';
 import { FilterPipe } from '../../../pipes/filter.pipe';
 import { CuentasService } from '../../../servicios/contabilidad/cuentas.service';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-cuentas',
-  imports: [CommonModule, FormsModule, FilterPipe, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    FilterPipe,
+    ReactiveFormsModule,
+    RouterLink,
+    RouterLinkActive,
+  ],
   templateUrl: './cuentas.component.html',
   styleUrl: './cuentas.component.css',
 })

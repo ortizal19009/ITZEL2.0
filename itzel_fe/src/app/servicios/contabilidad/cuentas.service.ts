@@ -21,6 +21,9 @@ export class CuentasService {
       `${baseUrl}/bycodOrnom?codcue=${cod}&nomcue=${nom}&page=${page}&size=${size}`
     );
   }
+  getByIdCuenta(idcuenta: number) {
+    return this.http.get(`${baseUrl}/byId?idcuenta=${idcuenta}`);
+  }
   saveCuenta(cuenta: number) {
     return this.http.post(`${baseUrl}`, cuenta);
   }

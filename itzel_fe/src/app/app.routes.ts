@@ -6,13 +6,16 @@ import { ImpProyectoComponent } from './componentes/contabilidad/proyectos/imp-p
 import { AppWrapperComponent } from './layout/app-wrapper/app-wrapper.component';
 import { IfinanComponent } from './componentes/contabilidad/ifinan/ifinan.component';
 import { CuentasComponent } from './componentes/contabilidad/cuentas/cuentas.component';
+import { AddCuentaComponent } from './componentes/contabilidad/cuentas/add-cuenta/add-cuenta.component';
 
 export const routes: Routes = [
-    { path: 'inicio', component:  AppWrapperComponent },
-    { path: 'proyectos', component: ProyectosComponent },
-    { path: 'add-proyecto', component: AddProyectoComponent },
-    { path: 'modi-proyecto/:idproyecto', component: ModiProyectoComponent },
-    { path: 'imp-proyecto', component: ImpProyectoComponent},
-    { path: 'ifinan', component: IfinanComponent},
-    { path: 'cuentas', component: CuentasComponent},
-    { path: '', redirectTo: 'inicio', pathMatch: 'full' },];
+  { path: 'inicio', component: AppWrapperComponent },
+  { path: 'proyectos', component: ProyectosComponent },
+  { path: 'add-proyecto', component: AddProyectoComponent },
+  { path: 'modi-proyecto/:idproyecto', component: ModiProyectoComponent },
+  { path: 'imp-proyecto', component: ImpProyectoComponent },
+  { path: 'ifinan', component: IfinanComponent },
+  { path: 'cuentas', component: CuentasComponent },
+  { path: 'add-cuenta/:idcuenta', component: AddCuentaComponent },
+  { path: '', redirectTo: 'inicio', pathMatch: 'full' },
+];

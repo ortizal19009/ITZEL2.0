@@ -104,9 +104,23 @@
                         <td>{{cuenta.asodebe}}</td>
                         <td>{{cuenta.asohaber}}</td>
                         <td class="text-center">
-                            <span class="text-right m-2 editIcon ">
-                                <i class="fa fa-pencil-square-o warning" aria-hidden="true"></i>
-                            </span>
+                            <div class="btn-group py-0">
+                                <button type="button" class="btn btn-warning btn-badged dropdown-toggle py-0"
+                                    data-toggle="dropdown" aria-expanded="false">
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right popLista">
+                                    <button class="dropdown-item" type="button"
+                                        [routerLink]="['/add-cuenta',cuenta.idcuenta]"
+                                        routerLinkActive="router-link-active">
+                                        <i class="bi bi-pencil"></i>&nbsp; Nuevo</button>
+                                    <button class="dropdown-item" type="button" data-toggle="collapse"
+                                        data-target="#div1">
+                                        <i class="bi bi-pencil"></i>&nbsp; Modificar</button>
+                                    <button class="dropdown-item" type="button" data-toggle="modal"
+                                        data-target="#modalEliminar">
+                                        <i class="bi bi-file-minus"></i>&nbsp; Eliminar</button>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 </tbody>

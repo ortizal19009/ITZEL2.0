@@ -8,10 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 public class CuentasService {
@@ -47,5 +44,8 @@ public class CuentasService {
     public Page<Cuentas> findByDenom(String nomcue, int page, int size){
         Pageable pageable = PageRequest.of(page, size);
         return dao.findByDenom(nomcue, pageable);
+    }
+    public Optional<Cuentas> findById(Long idcuenta){
+        return dao.findById(idcuenta);
     }
 }
