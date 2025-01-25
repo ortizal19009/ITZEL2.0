@@ -11,6 +11,16 @@ export class CuentasService {
   getAllCuentas() {
     return this.http.get(`${baseUrl}`);
   }
+  getByPagesCuentas(page: number, size: number) {
+    return this.http.get(`${baseUrl}/byPages?page=${page}&size=${size}`);
+  }
+  getByCodOrNom(cod: any, nom: any, page: number, size: number) {
+    if (cod === '') cod = null;
+    if (nom === '') nom = null;
+    return this.http.get(
+      `${baseUrl}/bycodOrnom?codcue=${cod}&nomcue=${nom}&page=${page}&size=${size}`
+    );
+  }
   saveCuenta(cuenta: number) {
     return this.http.post(`${baseUrl}`, cuenta);
   }

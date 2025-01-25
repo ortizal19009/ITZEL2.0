@@ -3,6 +3,9 @@ package com.itzel.servicio.contabilidad;
 import com.itzel.modelo.contabilidad.Cuentas;
 import com.itzel.repositorio.contabilidad.CuentasR;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -32,5 +35,17 @@ public class CuentasService {
             response.put("body", cuentaSaved);
         }
         return response;
+    }
+    public Page<Cuentas> getCuentasByPage( int page, int size){
+        Pageable pageable = PageRequest.of(page, size);
+        return dao.findByCodcue( pageable);
+    }
+    public Page<Cuentas> findByCod(String codcue, int page, int size){
+        Pageable pageable = PageRequest.of(page, size);
+        return dao.findByCod(codcue, pageable);
+    }
+    public Page<Cuentas> findByDenom(String nomcue, int page, int size){
+        Pageable pageable = PageRequest.of(page, size);
+        return dao.findByDenom(nomcue, pageable);
     }
 }

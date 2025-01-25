@@ -42,7 +42,6 @@ export class AddProyectoComponent implements OnInit {
   getAllProyectos() {
     this.proyectoService.proyectosGetAll().subscribe({
       next: (estructuras: any) => {
-        console.table(estructuras);
         this._estructuras = estructuras;
         this.f_proyecto.patchValue({
           idestructura_estructura: estructuras[0],

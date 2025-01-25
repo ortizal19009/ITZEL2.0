@@ -13,15 +13,18 @@
                 </div>
                 <!-- Right navbar links -->
                 <ul class="navbar-nav ml-auto me-5 mt-0">
-                    <form action="">
+                    <form [formGroup]="f_buscar">
                         <div class="input-group input-goup-sm mb-3">
-                            <input type="text" class="form-control col-sm-4" placeholder="Cuenta" aria-label="Cuenta" aria-describedby="button-addon2">
-                            <input type="text" class="form-control col-sm-9" placeholder="Denominación" aria-label="Denominación" aria-describedby="button-addon2">
+                            <input type="text" class="form-control col-sm-4" placeholder="Cuenta"
+                                formControlName="codigo" aria-label="Cuenta" aria-describedby="button-addon2">
+                            <input type="text" class="form-control col-sm-9" formControlName="denominacion"
+                                placeholder="Denominación" aria-label="Denominación" aria-describedby="button-addon2">
                             <div class="input-group-append">
-                              <button class="btn btn-outline-primary" type="button" id="button-addon2"><i class="fa fa-search" aria-hidden="true"></i>
-                              </button>
+                                <button class="btn btn-outline-primary" (click)="getByCodOrNom()" type="button"
+                                    id="button-addon2"><i class="fa fa-search" aria-hidden="true"></i>
+                                </button>
                             </div>
-                          </div>
+                        </div>
                     </form>
 
                 </ul>
@@ -60,6 +63,7 @@
                 </ul>
             </nav>
         </div>
+
     </div>
 </div>
 
@@ -83,7 +87,7 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let cuenta of _cuentas | filter:stringFilter; let i = index ">
-                        <td class="col-sm-1 text-center">{{i+1}}</td>
+                        <td class="col-sm-1 text-center">{{i+1 + (page * size)}}</td>
                         <td class="text-center">{{cuenta.codcue}}</td>
                         <td>{{cuenta.nomcue}}</td>
                         <td class="col-sm-1">{{cuenta.grucue}}</td>
@@ -107,6 +111,28 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+        <div class="card-footer">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-end">
+                    <li class="page-item">
+                        <button class="btn btn-sm btn-primary" (click)="onPreviousPage()"> <span
+                                aria-hidden="true">&laquo;</span>
+                        </button>
+                    </li>
+                    <li class="page-item" *ngFor="let p of pages">
+                        <button class="btn btn-sm btn-outline-primary" (click)="onGoToPage(p)"
+                            [class.active]="p === page">
+                            {{ p + 1 }}
+                        </button>
+                    </li>
+                    <li class="page-item">
+                        <button class="btn btn-sm btn-primary" (click)="onNextPage()"> <span
+                                aria-hidden="true">&raquo;</span>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </div>
 </div>
