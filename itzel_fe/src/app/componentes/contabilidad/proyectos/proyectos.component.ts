@@ -18,7 +18,7 @@ import { FilterPipe } from '../../../pipes/filter.pipe';
   styleUrl: './proyectos.component.css',
 })
 export class ProyectosComponent implements OnInit {
-  title?: string = 'Estructura función';
+  title?: string = 'Proyectos';
   _proyectos?: any;
   stringFilter!: string;
   options: any = {};

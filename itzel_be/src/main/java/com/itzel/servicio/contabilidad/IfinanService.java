@@ -6,9 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -27,6 +30,26 @@ public class IfinanService {
     public <S extends Ifinan> S save(S entity) {
         return dao.save(entity);
     }
+     public Map<String, Object> saveIfinan(Ifinan ifinan){
+         Map<String, Object> response = new HashMap<>();
+         Ifinan bycode = dao.findCodifinan(ifinan.getCodifinan());
+         Ifinan bynom = dao.findNomifinan(ifinan.getNomifinan().toLowerCase());
+         if(ifinan.getCodifinan().length() != 8){
+             response.put("message", "Error en longitud del codigo");
+             response.put("status", "error");
+             return response;
+         }
+            if( bycode == null && bynom == null){
+                response.put("message", "Datos guardados con éxito");
+                response.put("status", "success");
+                response.put("body", dao.save(ifinan));
+            }else{
+                response.put("message", "Error al guardar datos");
+                response.put("status", "error");
+                response.put("body","Datos repetidos");
+            }
+         return response;
+     }
 
     public List<Ifinan> findAll(Sort sort) {
         return dao.findAll(sort);

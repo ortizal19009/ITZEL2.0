@@ -33,8 +33,10 @@ public class IfinanApi {
     }
 
     @PostMapping
-    public Ifinan updateOrSave(@RequestBody Ifinan x) {
-        return ifinanServicio.save(x);
+    public ResponseEntity<Object> updateOrSave(@RequestBody Ifinan x) {
+        System.out.println(x.getCodifinan());
+        System.out.println(x.getNomifinan());
+        return ResponseEntity.ok(ifinanServicio.saveIfinan(x));
     }
 
     @GetMapping("/{idifinan}")
@@ -48,9 +50,9 @@ public class IfinanApi {
     public ResponseEntity<Ifinan> update(@PathVariable Long idifinan, @RequestBody Ifinan x) {
         Ifinan y = ifinanServicio.findById(idifinan)
                 .orElse(null);
-        // y.setCodifinan(x.getCodifinan());
-        // y.setNomifinan(x.getNomifinan());
-        // y.setFoto(x.getFoto());
+        y.setCodifinan(x.getCodifinan());
+        y.setNomifinan(x.getNomifinan());
+        y.setFoto(x.getFoto());
 
         Ifinan actualizar = ifinanServicio.save(y);
         return ResponseEntity.ok(actualizar);

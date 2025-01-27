@@ -8,6 +8,8 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CuentasService } from '../../../../servicios/contabilidad/cuentas.service';
+import { Ifinan } from '../../../../modelos/contabilidad/ifinan';
+import { Cuentas } from '../../../../modelos/contabilidad/cuentas';
 
 @Component({
   selector: 'app-add-cuenta',
@@ -24,6 +26,7 @@ export class AddCuentaComponent implements OnInit {
   sw_nombre: Boolean = false;
   _niveles?: any;
   _request?: any;
+  tiptrans: any = [{ name: '(General)', key: 0 }];
   constructor(
     private _params: ActivatedRoute,
     private s_cuentas: CuentasService,
@@ -31,7 +34,21 @@ export class AddCuentaComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.idcuenta = +this._params.snapshot.paramMap.get('idcuenta')!;
-    this.f_cuenta = this.fb.group({});
+    this.f_cuenta = this.fb.group({
+      codcue: '',
+      nomcue: '',
+      movcue: false,
+      idnivel: '',
+      grucue: '',
+      nomgrup: '',
+      asodebe: '',
+      asohaber: '',
+      tiptran: '',
+      sigef: '',
+      grubalances: '',
+      grufluefec: '',
+      balancostos: '',
+    });
     this.getCuentaById(this.idcuenta);
   }
   getCuentaById(idcuenta: number) {
@@ -39,11 +56,24 @@ export class AddCuentaComponent implements OnInit {
       next: (datos: any) => {
         console.log(datos);
         this._cuenta = datos;
+        this.f_cuenta.patchValue({
+          grucue: datos.grucue,
+          nomcue: datos.nomcue,
+        });
       },
       error: (e: any) => console.error(e),
     });
   }
   getValidarNombre(e: any) {}
   getValidacionCodigo(e: any) {}
-  save() {}
+  save() {
+    let cuenta!: Cuentas;
+    let f = this.f_cuenta.value;
+    cuenta.codcue = f.cuenta;
+    cuenta.nomcue = f.nomcue;
+    cuenta.movcue = f.movcue;
+    cuenta.idnivel = f.idnivel;
+
+    console.log(this.f_cuenta.value);
+  }
 }

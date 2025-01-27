@@ -7,7 +7,7 @@ import {
   FormsModule,
   Validators,
 } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { FilterPipe } from '../../../pipes/filter.pipe';
 import { IfinanService } from '../../../servicios/contabilidad/ifinan.service';
 import { BeneficiariosService } from '../../../servicios/contabilidad/beneficiarios.service';
@@ -16,7 +16,7 @@ import { ServerConfigService } from '../../../servicios/config/server-config.ser
 
 @Component({
   selector: 'app-ifinan',
-  imports: [CommonModule, FormsModule, FilterPipe],
+  imports: [CommonModule, FormsModule, FilterPipe, RouterLink, RouterLinkActive],
   templateUrl: './ifinan.component.html',
   styleUrl: './ifinan.component.css',
 })
