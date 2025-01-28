@@ -44,7 +44,7 @@
                     <div class="col-sm">
                         <div class="input-group input-group-sm mb-3">
                             <span class="input-group-text">Estructura</span>
-                            <select class="form-control" formControlName="idestructura_estructura"
+                            <select class="form-control" formControlName="idestructura"
                                 [compareWith]="compararEstructura">
                                 <option *ngFor="let estructura of _estructuras" [ngValue]=estructura>
                                     {{estructura.nombre}} -

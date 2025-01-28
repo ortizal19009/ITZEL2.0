@@ -51,7 +51,7 @@
 
 <div class="container-fluid mt-2">
     <div class="card mb-0">
-        <div class="card-body card-size">
+        <div class="card-body table-responsive  center-form card-size">
             <table class="table table-hover table-head-fixed text-nowrap table-striped table-bordered table-sm ">
                 <thead class="">
                     <tr class="text-center">
@@ -74,9 +74,9 @@
                             <i class="fa fa-check-circle-o check-circle" aria-hidden="true"
                                 [hidden]=!proyecto.movimiento></i>
                         </td>
-                        <td class="text-center">{{proyecto.idestructura_estructura.nivel}}</td>
+                        <td class="text-center">{{proyecto.idestructura.nivel}}</td>
                         <td>
-                            {{proyecto.idestructura_estructura.nombre}}
+                            {{proyecto.idestructura.nombre}}
                             <span class="text-right m-2 editIcon ">
                                 <i class="fa fa-pencil-square-o warning" aria-hidden="true"
                                     [routerLink]="['/modi-proyecto', proyecto.idproyecto]"></i>

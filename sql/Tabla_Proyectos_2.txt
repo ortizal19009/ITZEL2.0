@@ -1,0 +1,64 @@
+CREATE TABLE proyectos (
+	idproyecto smallserial NOT NULL,
+	codigo varchar(20) NOT NULL,
+	nombre varchar(50) NOT NULL,
+	movimiento bool NOT NULL,
+	idestructura int2 NOT NULL,
+	usucrea int2 NOT NULL,
+	feccrea timestamp NOT NULL,
+	usumodi int2 NULL,
+	fecmodi timestamp NULL,
+	CONSTRAINT proyectos_pk PRIMARY KEY (idproyecto)
+);
+
+
+-- public.proyectos foreign keys
+
+ALTER TABLE public.proyectos ADD CONSTRAINT proyectos_estructura_fk FOREIGN KEY (idestructura) REFERENCES estructura(idestructura);
+
+INSERT INTO public.proyectos (idproyecto,codigo,nombre,movimiento,idestructura,usucrea,feccrea,usumodi,fecmodi) VALUES
+	 (2,'01','PROCESOS GOBERNANTE',false,1,1,'2025-01-27 19:31:12',NULL,NULL),
+	 (3,'0101','GESTION GERENCIA GENERAL',false,2,1,'2025-01-27 19:31:12',NULL,NULL),
+	 (4,'010101','Unidad de Gestión Gerencia General',true,3,1,'2025-01-27 19:31:12',NULL,NULL),
+	 (5,'02','PROCESOS DE ASESORIA',false,1,1,'2025-01-27 19:31:12',NULL,NULL),
+	 (6,'0201','GESTIÓN GERENCIA GENERAL',false,2,1,'2025-01-27 19:31:12',NULL,NULL),
+	 (7,'020101','U.G Asesoria Juridica',true,3,1,'2025-01-27 19:31:12',NULL,NULL),
+	 (8,'03','PROCESOS DE SOPORTE O APOYO',false,1,1,'2025-01-27 19:31:12',NULL,NULL),
+	 (9,'0301','GESTIÓN ADMINISTRATIVA',false,2,1,'2025-01-27 19:31:12',NULL,NULL),
+	 (10,'030101','U.G. Direccion Administrativa',true,3,1,'2025-01-27 19:31:12',NULL,NULL),
+	 (11,'030102','U.G de Talento Humano',true,3,1,'2025-01-27 19:31:12',NULL,NULL);
+INSERT INTO public.proyectos (idproyecto,codigo,nombre,movimiento,idestructura,usucrea,feccrea,usumodi,fecmodi) VALUES
+	 (12,'030103','U.G. Contratación Publica',true,3,1,'2025-01-27 19:31:12',NULL,NULL),
+	 (13,'030104','U.G Servicios Generales ',true,3,1,'2025-01-27 19:31:12',NULL,NULL),
+	 (14,'030105','U.G. Servicio Médico',true,3,1,'2025-01-27 19:31:12',NULL,NULL),
+	 (15,'0302','GESTION FINANCIERA',false,2,1,'2025-01-27 19:31:12',NULL,NULL),
+	 (16,'030201','U.G. Direccion Financiera',true,3,1,'2025-01-27 19:31:12',NULL,NULL),
+	 (17,'030202','U.G. Contabilidad',true,3,1,'2025-01-27 19:31:12',NULL,NULL),
+	 (18,'030203','U.G. Tesoreria',true,3,1,'2025-01-27 19:31:12',NULL,NULL),
+	 (19,'030204','U.G.  Presupuesto',true,3,1,'2025-01-27 19:31:12',NULL,NULL),
+	 (20,'030205','U.G. Administración de Bienes',true,3,1,'2025-01-27 19:31:12',NULL,NULL),
+	 (21,'04','PROCESOS AGREGADORES DE VALOR',false,1,1,'2025-01-27 19:31:12',NULL,NULL);
+INSERT INTO public.proyectos (idproyecto,codigo,nombre,movimiento,idestructura,usucrea,feccrea,usumodi,fecmodi) VALUES
+	 (22,'0401','GESTION DE INGENIERIA',false,2,1,'2025-01-27 19:31:12',NULL,NULL),
+	 (23,'040101','U.G. Direccion de Ingenieria',true,3,1,'2025-01-27 19:31:12',NULL,NULL),
+	 (24,'040102','U.G. Fiscalizacion Estudios y Diseño',true,3,1,'2025-01-27 19:31:12',NULL,NULL),
+	 (25,'040103','U.G. Laboratorio',true,3,1,'2025-01-27 19:31:12',NULL,NULL),
+	 (26,'0402','GESTION DE OPERACIONES',false,2,1,'2025-01-27 19:31:12',NULL,NULL),
+	 (27,'040201','U.G. Direccion de Operaciones',true,3,1,'2025-01-27 19:31:12',NULL,NULL),
+	 (28,'040202','U.G. Agua Potable',true,3,1,'2025-01-27 19:31:12',NULL,NULL),
+	 (29,'040203','U.G. Alcantarrillado',true,3,1,'2025-01-27 19:31:12',NULL,NULL),
+	 (30,'040204','U.G. Control de Perdidas',true,3,1,'2025-01-27 19:31:12',NULL,NULL),
+	 (31,'0403','GESTION COMERCIAL',false,2,1,'2025-01-27 19:31:12',NULL,NULL);
+INSERT INTO public.proyectos (idproyecto,codigo,nombre,movimiento,idestructura,usucrea,feccrea,usumodi,fecmodi) VALUES
+	 (32,'040301','U.G. Direccion Comercial',true,3,1,'2025-01-27 19:31:12',NULL,NULL),
+	 (33,'040302','U.G. Atencion al Cliente',true,3,1,'2025-01-27 19:31:12',NULL,NULL),
+	 (34,'040303','U.G. Catastro y Medicion',true,3,1,'2025-01-27 19:31:12',NULL,NULL),
+	 (35,'020102','U.G. Comunicacion',true,3,1,'2025-01-27 19:31:12',NULL,NULL),
+	 (36,'020103','U.G. Planificacion',true,3,1,'2025-01-27 19:31:12',NULL,NULL),
+	 (37,'020104','U.G. Auditoria Interna',true,3,1,'2025-01-27 19:31:12',NULL,NULL),
+	 (38,'0303','GESTION GERENCIA GENERAL',false,2,1,'2025-01-27 19:31:12',NULL,NULL),
+	 (39,'030301','U.G. Secretaria General',true,3,1,'2025-01-27 19:31:12',NULL,NULL),
+	 (40,'030302','U.G. Tecnologias de la Informacion',true,3,1,'2025-01-27 19:31:12',NULL,NULL),
+	 (41,'030303','U.G. Seguridad y Salud Ocupacional',true,3,1,'2025-01-27 19:31:12',NULL,NULL);
+INSERT INTO public.proyectos (idproyecto,codigo,nombre,movimiento,idestructura,usucrea,feccrea,usumodi,fecmodi) VALUES
+	 (1,'00','(Partidas de Ingreso)',false,1,1,'2025-01-28 00:00:00',NULL,NULL);

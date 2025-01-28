@@ -34,7 +34,7 @@ ngOnInit(): void {
     codigo: ['', Validators.min(2)],
     nombre: ['', Validators.required],
     movimiento: [false, Validators.required],
-    idestructura_estructura: '',
+    idestructura: '',
   });
   this.getAllEstructuras();
   this.getByIdProyecto(this.idproyecto);
@@ -46,7 +46,7 @@ getAllEstructuras() {
       console.table(estructuras);
       this._estructuras = estructuras;
       this.f_proyecto.patchValue({
-        idestructura_estructura: estructuras[0],
+        idestructura: estructuras[0],
       });
     },
     error: (e: any) => console.error(e),
@@ -63,7 +63,7 @@ getByIdProyecto(idproyecto: number) {
         codigo: _proyecto.codigo,
         nombre: _proyecto.nombre,
         movimiento: _proyecto.movimiento,
-        idestructura_estructura: _proyecto.idestructura_estructura,
+        idestructura: _proyecto.idestructura,
       });
     },
     error: (e: any) => console.error(e),

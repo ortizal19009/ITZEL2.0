@@ -31,13 +31,13 @@ public class ProyectosService {
     }
     public Map<String, Object> save(Proyectos e) {
         Map<String, Object> response = new HashMap<>();
-        if (e == null || e.getCodigo() == null || e.getIdestructura_estructura() == null) {
+        if (e == null || e.getCodigo() == null || e.getIdestructura() == null) {
             response.put("status", "error");
             response.put("message", "Dato de ingreso invalido.");
             return response;
         }
         Long codigoLength = (long) e.getCodigo().length();
-        Long expectedLength = e.getIdestructura_estructura().getLongitud() * e.getIdestructura_estructura().getNivel();
+        Long expectedLength = e.getIdestructura().getLongitud() * e.getIdestructura().getNivel();
         if (codigoLength % 2 != 0) {
             response.put("status", "error");
             response.put("message", "Longitud del código ingresado incorrecto.");
@@ -80,13 +80,13 @@ public class ProyectosService {
     }
     public Map<String, Object> update(Proyectos e) {
         Map<String, Object> response = new HashMap<>();
-        if (e == null || e.getCodigo() == null || e.getIdestructura_estructura() == null) {
+        if (e == null || e.getCodigo() == null || e.getIdestructura() == null) {
             response.put("status", "error");
             response.put("message", "Dato de ingreso invalido.");
             return response;
         }
         Long codigoLength = (long) e.getCodigo().length();
-        Long expectedLength = e.getIdestructura_estructura().getLongitud() * e.getIdestructura_estructura().getNivel();
+        Long expectedLength = e.getIdestructura().getLongitud() * e.getIdestructura().getNivel();
         if (codigoLength % 2 != 0) {
             response.put("status", "error");
             response.put("message", "Longitud del código ingresado incorrecto.");

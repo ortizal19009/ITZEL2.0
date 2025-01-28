@@ -24,6 +24,7 @@ export class AddProyectoComponent implements OnInit {
   sw_codigo: boolean = false;
   sw_nombre: boolean = false;
   _request!: any;
+  date: Date = new Date();
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -35,7 +36,9 @@ export class AddProyectoComponent implements OnInit {
       codigo: ['', Validators.min(2)],
       nombre: ['', Validators.required],
       movimiento: [false, Validators.required],
-      idestructura_estructura: '',
+      idestructura: '',
+      usucrea: 1,
+      feccrea: this.date,
     });
     this.getAllProyectos();
   }
@@ -44,7 +47,7 @@ export class AddProyectoComponent implements OnInit {
       next: (estructuras: any) => {
         this._estructuras = estructuras;
         this.f_proyecto.patchValue({
-          idestructura_estructura: estructuras[0],
+          idestructura: estructuras[0],
         });
       },
       error: (e: any) => console.error(e),

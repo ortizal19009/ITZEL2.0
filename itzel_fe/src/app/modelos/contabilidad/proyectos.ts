@@ -5,5 +5,9 @@ export class Proyectos {
   codig?: string;
   nombre?: string;
   movimiento?: boolean;
-  idestructura_estructura?: Estructura;
+  idestructura?: Estructura;
+  usucrea?: number;
+  feccrea?: Date;
+  usumodi?: number;
+  fecmodi?: Date;
 }

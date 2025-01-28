@@ -49,7 +49,9 @@ public class ProyectosApi {
         _e.setCodigo(e.getCodigo());
         _e.setNombre(e.getNombre());
         _e.setMovimiento(e.getMovimiento());
-        _e.setIdestructura_estructura(e.getIdestructura_estructura());
+        _e.setIdestructura(e.getIdestructura());
+        _e.setUsumodi(e.getUsumodi());
+        _e.setFecmodi(e.getFecmodi());
         return ResponseEntity.ok(proyectosService.update(_e));
     }
     @GetMapping("/validar/codigo")
