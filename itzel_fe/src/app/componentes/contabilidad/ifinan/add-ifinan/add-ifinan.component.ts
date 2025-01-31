@@ -9,6 +9,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { IfinanService } from '../../../../servicios/contabilidad/ifinan.service';
 import { Route, Router, RouterLink } from '@angular/router';
+import { timeout } from 'rxjs';
 
 @Component({
   selector: 'app-add-ifinan',
@@ -42,9 +43,12 @@ export class AddIfinanComponent implements OnInit {
     this.s_ifinan.saveIfinancieras(this.f_ifinan.value).subscribe({
       next: (data: any) => {
         console.log(data);
-        this._request = 'data.message';
+        this._request = data.message;
         this.f_ifinan.reset();
         this.route.navigate(['/ifinan']);
+        setTimeout(() => {
+          this._request = "";
+        }, 3000);
       },
       error: (e: any) => console.error(e),
     });

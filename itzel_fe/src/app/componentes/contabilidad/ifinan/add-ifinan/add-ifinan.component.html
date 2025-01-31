@@ -35,13 +35,14 @@
                     <div class="col-sm">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                              <span class="input-group-text" id="inputGroupFileAddon01">Foto</span>
+                                <span class="input-group-text" id="inputGroupFileAddon01">Foto</span>
                             </div>
                             <div class="custom-file">
-                              <input type="file" formControlName="foto" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-                              <label class="custom-file-label" for="inputGroupFile01">Buscar foto</label>
+                                <input type="file" formControlName="foto" class="custom-file-input"
+                                    id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                                <label class="custom-file-label" for="inputGroupFile01">Buscar foto</label>
                             </div>
-                          </div>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -51,8 +52,10 @@
 
         </div>
         <div class="card-footer text-right">
-            <button type="submit" [routerLink]="['/ifinan']" class="btn btn-sm btn-success me-2">Cancelar</button>
-            <button type="submit" class="btn btn-sm btn-outline-success" (click)="save()">Aceptar</button>
+            <button type="submit" [routerLink]="['/ifinan']" class="btn btn-sm btn-success me-2"
+                data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-sm btn-outline-success" (click)="save()"
+                data-bs-dismiss="modal">Aceptar</button>
         </div>
     </div>
 </div>

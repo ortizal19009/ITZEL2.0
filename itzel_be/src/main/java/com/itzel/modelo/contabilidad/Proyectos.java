@@ -25,18 +25,6 @@ public class Proyectos {
     private Long usumodi;
     private LocalDate fecmodi;
 
-    public Proyectos(Long idproyecto, String codigo, String nombre, Boolean movimiento, Estructura idestructura, Long usucrea, LocalDate feccrea, Long usumodi, LocalDate fecmodi) {
-        this.idproyecto = idproyecto;
-        this.codigo = codigo;
-        this.nombre = nombre;
-        this.movimiento = movimiento;
-        this.idestructura = idestructura;
-        this.usucrea = usucrea;
-        this.feccrea = feccrea;
-        this.usumodi = usumodi;
-        this.fecmodi = fecmodi;
-    }
-
     public Long getIdproyecto() {
         return idproyecto;
     }

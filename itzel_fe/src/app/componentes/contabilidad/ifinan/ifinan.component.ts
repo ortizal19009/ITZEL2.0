@@ -13,10 +13,11 @@ import { IfinanService } from '../../../servicios/contabilidad/ifinan.service';
 import { BeneficiariosService } from '../../../servicios/contabilidad/beneficiarios.service';
 import { map } from 'rxjs';
 import { ServerConfigService } from '../../../servicios/config/server-config.service';
+import { AddIfinanComponent } from "./add-ifinan/add-ifinan.component";
 
 @Component({
   selector: 'app-ifinan',
-  imports: [CommonModule, FormsModule, FilterPipe, RouterLink, RouterLinkActive],
+  imports: [CommonModule, FormsModule, FilterPipe, RouterLink, RouterLinkActive, AddIfinanComponent],
   templateUrl: './ifinan.component.html',
   styleUrl: './ifinan.component.css',
 })
@@ -40,9 +41,7 @@ export class IfinanComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.serverConfigService.currentFilter.subscribe((filterValue: any) => {
-      console.warn(filterValue);
       this.stringFilter = filterValue.toString();
-      console.log(this.stringFilter);
     });
     this.creaForm();
     this.listar();
