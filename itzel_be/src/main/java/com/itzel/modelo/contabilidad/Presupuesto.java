@@ -1,10 +1,12 @@
 package com.itzel.modelo.contabilidad;
 
 import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 @Entity
+@NoArgsConstructor
 @Table(name = "presupuesto")
 public class Presupuesto {
     @Id
@@ -31,27 +33,6 @@ public class Presupuesto {
     private LocalDate feccrea;
     private Long usumodi;
     private LocalDate fecmodi;
-
-    public Presupuesto(Long idpresupuesto, Long tippar, String codpar, String codigo, String nompar, BigDecimal inicia, BigDecimal totmod, BigDecimal totcerti, BigDecimal totmisos, BigDecimal totdeven, BigDecimal arrastre, BigDecimal arrastreaa, Proyectos idproyecto, Clasificador idclasificador, Long usucrea, LocalDate feccrea, Long usumodi, LocalDate fecmodi) {
-        this.idpresupuesto = idpresupuesto;
-        this.tippar = tippar;
-        this.codpar = codpar;
-        this.codigo = codigo;
-        this.nompar = nompar;
-        this.inicia = inicia;
-        this.totmod = totmod;
-        this.totcerti = totcerti;
-        this.totmisos = totmisos;
-        this.totdeven = totdeven;
-        this.arrastre = arrastre;
-        this.arrastreaa = arrastreaa;
-        this.idproyecto = idproyecto;
-        this.idclasificador = idclasificador;
-        this.usucrea = usucrea;
-        this.feccrea = feccrea;
-        this.usumodi = usumodi;
-        this.fecmodi = fecmodi;
-    }
 
     public Long getIdpresupuesto() {
         return idpresupuesto;

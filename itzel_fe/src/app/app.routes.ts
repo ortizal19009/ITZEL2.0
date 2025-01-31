@@ -10,6 +10,8 @@ import { AddCuentaComponent } from './componentes/contabilidad/cuentas/add-cuent
 import { AddIfinanComponent } from './componentes/contabilidad/ifinan/add-ifinan/add-ifinan.component';
 import { ModiIfinanComponent } from './componentes/contabilidad/ifinan/modi-ifinan/modi-ifinan.component';
 import { PresupuestoComponent } from './componentes/contabilidad/presupuesto/presupuesto.component';
+import { IngresosComponent } from './componentes/contabilidad/presupuesto/ingresos/ingresos.component';
+import { GastosComponent } from './componentes/contabilidad/presupuesto/gastos/gastos.component';
 
 export const routes: Routes = [
   { path: 'inicio', component: AppWrapperComponent },
@@ -23,5 +25,7 @@ export const routes: Routes = [
   { path: 'cuentas', component: CuentasComponent },
   { path: 'add-cuenta/:idcuenta', component: AddCuentaComponent },
   { path: 'presupuestos', component: PresupuestoComponent },
-  { path: '', redirectTo: 'inicio', pathMatch: 'full' },
+  { path: 'pingresos', component: IngresosComponent },
+  { path: 'pgastos', component: GastosComponent },
+  { path: '', redirectTo: 'inicio', pathMatch: 'full' }
 ];

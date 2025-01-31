@@ -17,4 +17,8 @@ public class PresupuestoApi {
     public ResponseEntity<Page<Presupuesto>> getdAllByPage(@RequestParam int page, @RequestParam int size){
         return ResponseEntity.ok(presupuestoService.findAllByPage(page, size));
     }
+    @GetMapping("/tippar")
+    public ResponseEntity<Page<Presupuesto>> getByTipparPageable(@RequestParam int tippar, @RequestParam int page, @RequestParam int size){
+        return ResponseEntity.ok(presupuestoService.findByTipparPageable(tippar, page, size));
+    }
 }

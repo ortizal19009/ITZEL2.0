@@ -1,10 +1,12 @@
 package com.itzel.modelo.contabilidad;
 
 import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 @Entity
+@NoArgsConstructor
 @Table(name="clasificador")
 public class Clasificador {
     @Id
@@ -27,25 +29,6 @@ public class Clasificador {
     private Long usumodi;
     private LocalDate fecmodi;
 
-    public Clasificador(Long idclasificador, String codpar, Long nivpar, String grupar, String nompar, String despar, String cueejepresu, BigDecimal presupuesto, BigDecimal ejecucion, BigDecimal devengado, BigDecimal reforma, BigDecimal asigna_ini, Long grupo, Long usucrea, LocalDate feccrea, Long usumodi, LocalDate fecmodi) {
-        this.idclasificador = idclasificador;
-        this.codpar = codpar;
-        this.nivpar = nivpar;
-        this.grupar = grupar;
-        this.nompar = nompar;
-        this.despar = despar;
-        this.cueejepresu = cueejepresu;
-        this.presupuesto = presupuesto;
-        this.ejecucion = ejecucion;
-        this.devengado = devengado;
-        this.reforma = reforma;
-        this.asigna_ini = asigna_ini;
-        this.grupo = grupo;
-        this.usucrea = usucrea;
-        this.feccrea = feccrea;
-        this.usumodi = usumodi;
-        this.fecmodi = fecmodi;
-    }
 
     public Long getIdclasificador() {
         return idclasificador;

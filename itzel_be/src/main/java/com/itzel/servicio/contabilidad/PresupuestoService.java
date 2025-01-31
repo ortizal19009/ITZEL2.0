@@ -19,4 +19,10 @@ public class PresupuestoService {
         return dao.findAll(pageable);
     }
 
+    public Page<Presupuesto> findByTipparPageable(int tippar, int page, int size){
+        Pageable pageable= PageRequest.of(page, size);
+        return dao.findByTipparPageable(tippar, pageable);
+
+    }
+
 }
