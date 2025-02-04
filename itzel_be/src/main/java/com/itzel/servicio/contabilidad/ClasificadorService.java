@@ -14,4 +14,7 @@ public class ClasificadorService {
     public List<Clasificador> findAll(){
         return dao.findAll();
     }
+    public List<Clasificador> findByCodOrNom(String dato){
+        return dao.findByCodOrNom(dato);
+    }
 }
