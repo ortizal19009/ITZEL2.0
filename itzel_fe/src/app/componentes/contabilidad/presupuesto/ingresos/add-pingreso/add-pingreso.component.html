@@ -1,0 +1,103 @@
+<div class="container-fluid mt-2">
+    <div class="card card-success card-outline mb-4">
+        <div class="card-header">
+            <div class="card-title">{{title}}</div>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="f_pingreso">
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text" id="basic-addon1">Cod.Partida</span>
+                            <input type="text" class="form-control form-control-sm" formControlName="codpar"
+                                aria-describedby="basic-addon1" />
+                            <div class="error">
+                                <i class="bi bi-x-circle p-2 mt-auto"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text" id="basic-addon1">Código</span>
+                            <input type="text" class="form-control form-control-sm" formControlName="codigo"
+                                aria-describedby="basic-addon1" />
+                            <div class="error">
+                                <i class="bi bi-x-circle p-2 mt-auto"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="mb-3">
+                            <div class="input-group input-group-sm mb3">
+                                <span class="input-group-text " id="basic-addon3">Nombre</span>
+                                <input type="text" class="form-control" formControlName="nompar"
+                                    aria-describedby="basic-addon3 basic-addon4" />
+                                <div class="error">
+                                    <i class="bi bi-x-circle p-2 mt-auto"></i>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="mb-3">
+                            <div class="input-group input-group-sm mb3">
+                                <span class="input-group-text " id="basic-addon3">Inicia</span>
+                                <input type="text" class="form-control" formControlName="inicia"
+                                    aria-describedby="basic-addon3 basic-addon4" />
+                                <div class="error">
+                                    <i class="bi bi-x-circle p-2 mt-auto"></i>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="mb-3">
+                            <div class="input-group input-group-sm mb3">
+                                <span class="input-group-text " id="basic-addon3">Clasificador</span>
+                                <select type="text" class="custom-select" formControlName="idclasificador"
+                                    aria-describedby="basic-addon3 basic-addon4">
+                                    <option value=""></option>
+                                </select>
+                                <div class="error">
+                                    <i class="bi bi-x-circle p-2 mt-auto"></i>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="col-sm">
+                        <div class="mb-3">
+                            <div class="input-group input-group-sm mb3">
+                                <span class="input-group-text " id="basic-addon3">Proyecto</span>
+                                <select type="text" class="custom-select" formControlName="idproyecto"
+                                    aria-describedby="basic-addon3 basic-addon4">
+                                    <option value=""></option>
+                                </select>
+                                <div class="error">
+                                    <i class="bi bi-x-circle p-2 mt-auto"></i>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+            <div class="form-text" id="basic-addon4">
+                {{_request}}
+            </div>
+
+        </div>
+        <div class="card-footer text-right">
+            <button type="submit" [routerLink]="['/ifinan']" class="btn btn-sm btn-success me-2"
+                data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-sm btn-outline-success" (click)="save()"
+                data-bs-dismiss="modal">Aceptar</button>
+        </div>
+    </div>
+</div>

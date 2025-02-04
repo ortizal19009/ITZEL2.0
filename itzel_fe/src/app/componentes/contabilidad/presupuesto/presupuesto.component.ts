@@ -12,14 +12,7 @@ import { PresupuestoService } from '../../../servicios/contabilidad/presupuesto.
 
 @Component({
   selector: 'app-presupuesto',
-  imports: [
-    CommonModule,
-    FormsModule,
-    FilterPipe,
-    ReactiveFormsModule,
-    RouterLink,
-    RouterLinkActive,
-  ],
+  imports: [CommonModule, FormsModule, FilterPipe, ReactiveFormsModule],
   templateUrl: './presupuesto.component.html',
   styleUrl: './presupuesto.component.css',
 })
@@ -49,7 +42,7 @@ export class PresupuestoComponent implements OnInit {
 
   getAllPresupuestos(page: number, size: number) {
     this.s_presupuestos
-      .getPresupuestoTipparP(1,page, size)
+      .getPresupuestoTipparP(1, page, size)
       .then((item: any) => {
         console.log(item);
         this._presupuestos = item.content;

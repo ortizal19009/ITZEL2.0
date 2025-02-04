@@ -12,6 +12,8 @@ import { ModiIfinanComponent } from './componentes/contabilidad/ifinan/modi-ifin
 import { PresupuestoComponent } from './componentes/contabilidad/presupuesto/presupuesto.component';
 import { IngresosComponent } from './componentes/contabilidad/presupuesto/ingresos/ingresos.component';
 import { GastosComponent } from './componentes/contabilidad/presupuesto/gastos/gastos.component';
+import { AddPingresoComponent } from './componentes/contabilidad/presupuesto/ingresos/add-pingreso/add-pingreso.component';
+import { AddPgastoComponent } from './componentes/contabilidad/presupuesto/gastos/add-pgasto/add-pgasto.component';
 
 export const routes: Routes = [
   { path: 'inicio', component: AppWrapperComponent },
@@ -27,5 +29,7 @@ export const routes: Routes = [
   { path: 'presupuestos', component: PresupuestoComponent },
   { path: 'pingresos', component: IngresosComponent },
   { path: 'pgastos', component: GastosComponent },
+  { path: 'add-pingresos', component: AddPingresoComponent },
+  { path: 'add-pgastos', component: AddPgastoComponent },
   { path: '', redirectTo: 'inicio', pathMatch: 'full' }
 ];
