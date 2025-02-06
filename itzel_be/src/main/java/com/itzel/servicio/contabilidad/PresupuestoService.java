@@ -24,5 +24,11 @@ public class PresupuestoService {
         return dao.findByTipparPageable(tippar, pageable);
 
     }
+    public Presupuesto save(Presupuesto presupuesto){
+        return dao.save(presupuesto);
+    }
+    public Presupuesto findByCodPar(String codpar){
+        return dao.findByCodpar(codpar);
+    }
 
 }

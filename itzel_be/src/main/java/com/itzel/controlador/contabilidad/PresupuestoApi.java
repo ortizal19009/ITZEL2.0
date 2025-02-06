@@ -21,4 +21,13 @@ public class PresupuestoApi {
     public ResponseEntity<Page<Presupuesto>> getByTipparPageable(@RequestParam int tippar, @RequestParam int page, @RequestParam int size){
         return ResponseEntity.ok(presupuestoService.findByTipparPageable(tippar, page, size));
     }
+    @PostMapping
+    public ResponseEntity<Presupuesto> savePresupuesto(@RequestBody Presupuesto presupuesto){
+        return  ResponseEntity.ok(presupuestoService.save(presupuesto));
+    }
+    @GetMapping("/codpar")
+    public ResponseEntity<Presupuesto> getByCodPar(@RequestParam String codpar){
+        return ResponseEntity.ok(presupuestoService.findByCodPar(codpar));
+
+    }
 }

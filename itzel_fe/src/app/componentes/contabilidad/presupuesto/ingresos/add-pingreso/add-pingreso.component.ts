@@ -13,6 +13,8 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { FilterPipe } from '../../../../../pipes/filter.pipe';
 import { ClasificadorService } from '../../../../../servicios/contabilidad/clasificador.service';
 import { Proyectos } from '../../../../../modelos/contabilidad/proyectos';
+import { PresupuestoService } from '../../../../../servicios/contabilidad/presupuesto.service';
+import { Presupuesto } from '../../../../../modelos/contabilidad/presupuesto';
 @Component({
   selector: 'app-add-pingreso',
   imports: [CommonModule, FormsModule, RouterLink, ReactiveFormsModule],
@@ -27,9 +29,11 @@ export class AddPingresoComponent implements OnInit {
   _clasificador: any;
   _request?: string;
   modalFiltrar: string = ''; // Inicializa la propiedad
+  date: Date = new Date();
   constructor(
     private fb: FormBuilder,
-    private s_clasificador: ClasificadorService
+    private s_clasificador: ClasificadorService,
+    private s_presupuesto: PresupuestoService
   ) {}
   ngOnInit(): void {
     this.f_pingreso = this.fb.group({
@@ -65,7 +69,29 @@ export class AddPingresoComponent implements OnInit {
       this.f_pingreso.invalid;
     }
     console.log(f);
-    console.log(this.f_clasificador.value);
+    let presupuesto: Presupuesto = new Presupuesto();
+    presupuesto.codigo = f.codigo;
+    presupuesto.tippar = f.tippar;
+    presupuesto.codpar = f.codpar;
+    presupuesto.inicia = f.inicia;
+    presupuesto.idproyecto = f.idproyecto;
+    presupuesto.idclasificador = f.idclasificador;
+    presupuesto.nompar = f.nompar;
+    presupuesto.usucrea = 1;
+    presupuesto.feccrea = this.date;
+    presupuesto.totmod = 0;
+    presupuesto.totcerti = 0;
+    presupuesto.totmisos = 0;
+    presupuesto.totdeven = 0;
+    presupuesto.arrastre = 0;
+    presupuesto.arrastreaa = 0;
+    console.log(presupuesto);
+    this.s_presupuesto.savePresupuesto(presupuesto).subscribe({
+      next: (presupuesto: any) => {
+        console.log(presupuesto);
+      },
+      error: (e: any) => console.error(e),
+    });
   }
   get f() {
     return this.f_pingreso.controls;
@@ -79,17 +105,12 @@ export class AddPingresoComponent implements OnInit {
     this.f_pingreso.patchValue({
       codigo: f.codpar,
     });
-    console.log(codparti);
-
     // Verifica si ambos valores existen
     if (codparti && clasificador) {
       // Compara los valores
       const find = codparti.slice(0, clasificador.length);
-      console.log('Clasificador:', clasificador);
-      console.log('Find:', find);
 
       if (clasificador != find) {
-        console.log('No son iguales');
         // Marca el control 'codparti' como inválido
         this.f_pingreso.get('codpar')?.setErrors({ mismatch: true });
       } else if (codparti.length < 14) {
@@ -102,25 +123,21 @@ export class AddPingresoComponent implements OnInit {
   }
   getClasificador() {
     let f = this.f_clasificador.value;
-    console.log(f);
     if (f == '' || f == null) {
       this.s_clasificador.getAllClasificador().subscribe({
         next: (datos: any) => {
-          console.log(datos);
           this._clasificador = datos;
         },
       });
     } else {
       this.s_clasificador.getAllClasificadorByCodNom(f.codnompar).subscribe({
         next: (datos: any) => {
-          console.log(datos);
           this._clasificador = datos;
         },
       });
     }
   }
   setClasificador(clasificador: any) {
-    console.log(clasificador);
     this.f_pingreso.patchValue({
       clasi_codpar: clasificador.codpar,
       clasi_nompar: clasificador.nompar,

@@ -27,4 +27,7 @@ export class PresupuestoService {
     );
     return presupuestos;
   }
+  savePresupuesto(presupuesto: any) {
+    return this.http.post(`${baseUrl}`, presupuesto);
+  }
 }

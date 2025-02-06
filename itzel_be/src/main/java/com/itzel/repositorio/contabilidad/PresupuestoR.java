@@ -9,4 +9,6 @@ import org.springframework.data.jpa.repository.Query;
 public interface PresupuestoR extends JpaRepository<Presupuesto, Long> {
     @Query(value = "SELECT * FROM presupuesto p WHERE p.tippar = ?1 ORDER BY p.codpar",nativeQuery = true)
     public Page<Presupuesto> findByTipparPageable(int tippar, Pageable pageable);
+    @Query(value = "SELECT * FROM presupuesto p WHERE p.codpar = ?1 ORDER BY p.codpar",nativeQuery = true)
+    public Presupuesto findByCodpar(String codpar);
 }
