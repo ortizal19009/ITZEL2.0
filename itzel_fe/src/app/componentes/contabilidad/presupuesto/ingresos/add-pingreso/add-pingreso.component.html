@@ -1,7 +1,7 @@
 <div class="container-fluid mt-2">
-    <div class="card card-success card-outline mb-4">
+    <div class="card card-success card-outline mb-4 cardsize center-form">
         <div class="card-header">
-            <div class="card-title">{{title}}</div>
+            <div class="card-title ">{{title}}</div>
         </div>
         <div class="card-body">
             <form [formGroup]="f_pingreso">
@@ -13,29 +13,43 @@
                                 <button class="btn btn-outline-primary" type="button" data-toggle="modal"
                                     data-target="#modalBuscar">Clasificador</button>
                             </div>
-                            <input class="form-control col-sm-2" readOnly  formControlName="clasi_codpar" id="inputGroupSelect03"
-                                aria-label="Example select with button addon" />
-                            <input class="form-control col-sm" readOnly formControlName="clasi_nompar" id="inputGroupSelect03"
-                                aria-label="Example select with button addon" />
+                            <input class="form-control col-sm-2" readOnly formControlName="clasi_codpar"
+                                id="inputGroupSelect03" aria-label="Example select with button addon" />
+                            <input class="form-control col-sm" readOnly formControlName="clasi_nompar"
+                                id="inputGroupSelect03" aria-label="Example select with button addon" />
 
                         </div>
                     </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-4">
                         <div class="input-group input-group-sm mb-3">
                             <span class="input-group-text" id="basic-addon1">Cod.Partida</span>
-                            <input type="text" class="form-control form-control-sm" formControlName="codpar"
-                                aria-describedby="basic-addon1" />
-                            <div class="error">
-                                <i class="bi bi-x-circle p-2 mt-auto"></i>
+                            <input type="text" class="form-control form-control-sm" 
+                                formControlName="codpar" aria-describedby="basic-addon1" [ngClass]="{
+                              'is-invalid': f['codpar'].invalid && (f['codpar'].touched || f['codpar'].dirty),
+                              'is-valid': f['codpar'].valid && (f['codpar'].touched || f['codpar'].dirty)
+                            }" />
+                            <div *ngIf="f['codpar'].invalid && (f['codpar'].touched || f['codpar'].dirty)"
+                                class="invalid-feedback">
+                                <!-- Mensajes de error específicos -->
+                                <div *ngIf="f['codpar'].errors?.['required']">El código de partida es obligatorio.</div>
+                                <div *ngIf="f['codpar'].errors?.['minlength']">El código debe tener al menos {{
+                                    f['codpar'].errors?.['minlength'].requiredLength }} caracteres.</div>
+                                <div *ngIf="f['codpar'].errors?.['maxlength']">El código no puede exceder {{
+                                    f['codpar'].errors?.['maxlength'].requiredLength }} caracteres.</div>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-sm">
                         <div class="mb-3">
                             <div class="input-group input-group-sm mb3">
                                 <span class="input-group-text " id="basic-addon3">Nombre</span>
                                 <input type="text" class="form-control" formControlName="nompar"
-                                    aria-describedby="basic-addon3 basic-addon4" />
+                                    aria-describedby="basic-addon3 basic-addon4" [ngClass]="{
+                                        'is-invalid': f['nompar'].invalid && (f['nompar'].touched || f['nompar'].dirty),
+                                        'is-valid': f['nompar'].valid && (f['nompar'].touched || f['nompar'].dirty)
+                                      }" />
                                 <div class="error">
                                     <i class="bi bi-x-circle p-2 mt-auto"></i>
                                 </div>
@@ -43,37 +57,21 @@
 
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-2">
+                    <div class="col-sm">
                         <div class="mb-3">
                             <div class="input-group input-group-sm mb3">
                                 <span class="input-group-text " id="basic-addon3">Inicia</span>
                                 <input type="text" class="form-control" formControlName="inicia"
-                                    aria-describedby="basic-addon3 basic-addon4" />
+                                    aria-describedby="basic-addon3 basic-addon4" [ngClass]="{
+                                        'is-invalid': f['inicia'].invalid && (f['inicia'].touched || f['inicia'].dirty),
+                                        'is-valid': f['inicia'].valid && (f['inicia'].touched || f['inicia'].dirty)
+                                      }" />
                                 <div class="error">
                                     <i class="bi bi-x-circle p-2 mt-auto"></i>
                                 </div>
                             </div>
 
                         </div>
-                    </div>
-
-                    <div class="col-sm">
-                        <div class="mb-3">
-                            <div class="input-group input-group-sm mb3">
-                                <span class="input-group-text " id="basic-addon3">Proyecto</span>
-                                <select type="text" class="custom-select" formControlName="idproyecto"
-                                    aria-describedby="basic-addon3 basic-addon4">
-                                    <option value=""></option>
-                                </select>
-                                <div class="error">
-                                    <i class="bi bi-x-circle p-2 mt-auto"></i>
-                                </div>
-                            </div>
-
-                        </div>
-
                     </div>
                 </div>
             </form>
@@ -85,7 +83,8 @@
         <div class="card-footer text-right">
             <button type="submit" [routerLink]="['/pingresos']" class="btn btn-sm btn-success me-2"
                 data-bs-dismiss="modal">Cancelar</button>
-            <button type="submit" class="btn btn-sm btn-outline-success" (click)="save()">Aceptar</button>
+            <button type="submit" class="btn btn-sm btn-outline-success" [disabled]="!f_pingreso.valid"
+                (click)="save()">Aceptar</button>
         </div>
     </div>
 </div>

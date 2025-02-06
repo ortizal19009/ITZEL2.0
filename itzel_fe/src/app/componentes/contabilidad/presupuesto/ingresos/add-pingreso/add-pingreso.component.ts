@@ -1,23 +1,21 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+
 import {
   FormBuilder,
   FormGroup,
   FormsModule,
+  MinLengthValidator,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { FilterPipe } from '../../../../../pipes/filter.pipe';
 import { ClasificadorService } from '../../../../../servicios/contabilidad/clasificador.service';
+import { Proyectos } from '../../../../../modelos/contabilidad/proyectos';
 @Component({
   selector: 'app-add-pingreso',
-  imports: [
-    CommonModule,
-    FormsModule,
-    RouterLink,
-    ReactiveFormsModule,
-    FilterPipe,
-  ],
+  imports: [CommonModule, FormsModule, RouterLink, ReactiveFormsModule],
   templateUrl: './add-pingreso.component.html',
   styleUrl: './add-pingreso.component.css',
 })
@@ -36,10 +34,10 @@ export class AddPingresoComponent implements OnInit {
   ngOnInit(): void {
     this.f_pingreso = this.fb.group({
       tippar: 1,
-      codpar: '',
+      codpar: ['', Validators.minLength(14)],
       codigo: '',
-      nompar: '',
-      inicia: 0.00,
+      nompar: ['', Validators.minLength(4)],
+      inicia: [0.0, Validators.required],
       idproyecto: '',
       idclasificador: '',
       clasi_codpar: '',
@@ -48,9 +46,59 @@ export class AddPingresoComponent implements OnInit {
     this.f_clasificador = this.fb.group({
       codnompar: '',
     });
+    let proyecto: Proyectos = new Proyectos();
+    proyecto.idproyecto = 1;
+    this.f_pingreso.patchValue({
+      idproyecto: proyecto,
+    });
+    // Suscríbete a los cambios en el control 'codparti'
+    this.f_pingreso.get('codpar')?.valueChanges.subscribe(() => {
+      this.validarCorPar();
+    });
   }
   save() {
+    let f = this.f_pingreso.value;
+    this.f_pingreso.patchValue({
+      codigo: f.codpar,
+    });
+    if (f.codigo != f.codpar) {
+      this.f_pingreso.invalid;
+    }
+    console.log(f);
     console.log(this.f_clasificador.value);
+  }
+  get f() {
+    return this.f_pingreso.controls;
+  }
+  validarCorPar() {
+    // Obtén los valores de los controles del formulario
+    let f = this.f_pingreso.value;
+    const codparti = this.f_pingreso.get('codpar')?.value;
+
+    const clasificador = this.f_pingreso.get('clasi_codpar')?.value;
+    this.f_pingreso.patchValue({
+      codigo: f.codpar,
+    });
+    console.log(codparti);
+
+    // Verifica si ambos valores existen
+    if (codparti && clasificador) {
+      // Compara los valores
+      const find = codparti.slice(0, clasificador.length);
+      console.log('Clasificador:', clasificador);
+      console.log('Find:', find);
+
+      if (clasificador != find) {
+        console.log('No son iguales');
+        // Marca el control 'codparti' como inválido
+        this.f_pingreso.get('codpar')?.setErrors({ mismatch: true });
+      } else if (codparti.length < 14) {
+        this.f_pingreso.get('codpar')?.setErrors({ mismatch: true });
+      } else {
+        // Limpia los errores si los valores coinciden
+        this.f_pingreso.get('codpar')?.setErrors(null);
+      }
+    }
   }
   getClasificador() {
     let f = this.f_clasificador.value;
