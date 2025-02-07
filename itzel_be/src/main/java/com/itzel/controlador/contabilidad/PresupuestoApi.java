@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/presupuesto")
 @CrossOrigin("*")
@@ -29,5 +31,9 @@ public class PresupuestoApi {
     public ResponseEntity<Presupuesto> getByCodPar(@RequestParam String codpar){
         return ResponseEntity.ok(presupuestoService.findByCodPar(codpar));
 
+    }
+    @GetMapping("/byId")
+    public ResponseEntity<Optional<Presupuesto>> findById(@RequestParam Long idpresupuesto){
+        return ResponseEntity.ok(presupuestoService.findById(idpresupuesto));
     }
 }

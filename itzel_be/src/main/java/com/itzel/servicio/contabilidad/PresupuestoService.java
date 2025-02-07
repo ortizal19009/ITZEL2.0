@@ -8,7 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PresupuestoService {
@@ -29,6 +29,9 @@ public class PresupuestoService {
     }
     public Presupuesto findByCodPar(String codpar){
         return dao.findByCodpar(codpar);
+    }
+    public Optional<Presupuesto> findById(Long idpresupuesto){
+        return dao.findById(idpresupuesto);
     }
 
 }

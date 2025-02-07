@@ -14,6 +14,8 @@ import { IngresosComponent } from './componentes/contabilidad/presupuesto/ingres
 import { GastosComponent } from './componentes/contabilidad/presupuesto/gastos/gastos.component';
 import { AddPingresoComponent } from './componentes/contabilidad/presupuesto/ingresos/add-pingreso/add-pingreso.component';
 import { AddPgastoComponent } from './componentes/contabilidad/presupuesto/gastos/add-pgasto/add-pgasto.component';
+import { ModiPingresoComponent } from './componentes/contabilidad/presupuesto/ingresos/modi-pingreso/modi-pingreso.component';
+import { ModiPgastoComponent } from './componentes/contabilidad/presupuesto/gastos/modi-pgasto/modi-pgasto.component';
 
 export const routes: Routes = [
   { path: 'inicio', component: AppWrapperComponent },
@@ -31,5 +33,7 @@ export const routes: Routes = [
   { path: 'pgastos', component: GastosComponent },
   { path: 'add-pingresos', component: AddPingresoComponent },
   { path: 'add-pgastos', component: AddPgastoComponent },
+  { path: 'modi-pingresos/:idpresupuesto', component: ModiPingresoComponent },
+  { path: 'modi-pgasto/:idpresupuesto', component: ModiPgastoComponent },
   { path: '', redirectTo: 'inicio', pathMatch: 'full' }
 ];

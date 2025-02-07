@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { FilterPipe } from '../../../../pipes/filter.pipe';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { PresupuestoService } from '../../../../servicios/contabilidad/presupuesto.service';
+import { Router } from 'express';
 
 @Component({
   selector: 'app-ingresos',
@@ -12,6 +13,7 @@ import { PresupuestoService } from '../../../../servicios/contabilidad/presupues
     FormsModule,
     FilterPipe,
     ReactiveFormsModule,
+    RouterLink
   ],
   templateUrl: './ingresos.component.html',
   styleUrl: './ingresos.component.css',

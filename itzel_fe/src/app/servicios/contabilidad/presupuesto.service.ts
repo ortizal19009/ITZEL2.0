@@ -30,4 +30,7 @@ export class PresupuestoService {
   savePresupuesto(presupuesto: any) {
     return this.http.post(`${baseUrl}`, presupuesto);
   }
+  findById(idpresupuesto: number) {
+    return this.http.get(`${baseUrl}/byId?idpresupuesto=${idpresupuesto}`);
+  }
 }
