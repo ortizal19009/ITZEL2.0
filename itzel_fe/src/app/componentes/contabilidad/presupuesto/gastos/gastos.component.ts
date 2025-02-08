@@ -1,6 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { FilterPipe } from '../../../../pipes/filter.pipe';
 import { PresupuestoService } from '../../../../servicios/contabilidad/presupuesto.service';
 
@@ -8,10 +13,10 @@ import { PresupuestoService } from '../../../../servicios/contabilidad/presupues
   selector: 'app-gastos',
   imports: [CommonModule, FormsModule, FilterPipe, ReactiveFormsModule],
   templateUrl: './gastos.component.html',
-  styleUrl: './gastos.component.css'
+  styleUrl: './gastos.component.css',
 })
 export class GastosComponent implements OnInit {
-title: string = 'Presupuestos gastos';
+  title: string = 'Presupuestos gastos';
   f_buscar!: FormGroup;
   _presupuestos!: any;
   stringFilter!: string;
@@ -22,9 +27,10 @@ title: string = 'Presupuestos gastos';
   totalPages: number = 0; // Total de páginas
   pages: number[] = []; // Lista de números de página
   maxPagesToShow: number = 5; // Máximo número de botones a mostrar
-  constructor(private s_presupuestos: PresupuestoService,
-      private fb: FormBuilder){
-  }
+  constructor(
+    private s_presupuestos: PresupuestoService,
+    private fb: FormBuilder
+  ) {}
   ngOnInit(): void {
     this.f_buscar = this.fb.group({
       codigo: '',
@@ -36,8 +42,11 @@ title: string = 'Presupuestos gastos';
     this.s_presupuestos
       .getPresupuestoTipparP(2, page, size)
       .then((item: any) => {
-        console.log(item);
         this._presupuestos = item.content;
+        this.size = item.size;
+        this.page = item.pageable.pageNumber;
+        this.totalPages = item.totalPages;
+        this.updatePages();
       });
   }
 
@@ -75,5 +84,4 @@ title: string = 'Presupuestos gastos';
     );
   }
   /* Fin de configuracion de paginacion */
-
 }

@@ -66,14 +66,14 @@ export class ModiPingresoComponent implements OnInit {
   }
   save() {
     let f = this.f_pingreso.value;
-    this.f_pingreso.patchValue({
+    let presupuesto: Presupuesto = new Presupuesto();
+    /*     this.f_pingreso.patchValue({
       codigo: f.codpar,
-    });
+    }); */
     if (f.codigo != f.codpar) {
       this.f_pingreso.invalid;
     }
-    console.log(f);
-    let presupuesto: Presupuesto = new Presupuesto();
+    presupuesto.idpresupuesto = f.idpresupuesto;
     presupuesto.codigo = f.codigo;
     presupuesto.tippar = f.tippar;
     presupuesto.codpar = f.codpar;
@@ -89,11 +89,9 @@ export class ModiPingresoComponent implements OnInit {
     presupuesto.totdeven = 0;
     presupuesto.arrastre = 0;
     presupuesto.arrastreaa = 0;
-    console.log(presupuesto);
+
     this.s_presupuesto.savePresupuesto(presupuesto).subscribe({
-      next: (presupuesto: any) => {
-        console.log(presupuesto);
-      },
+      next: (presupuesto: any) => {},
       error: (e: any) => console.error(e),
     });
   }
@@ -152,18 +150,22 @@ export class ModiPingresoComponent implements OnInit {
   getPresupuestoById(idpresupuesto: number) {
     this.s_presupuesto.findById(idpresupuesto).subscribe({
       next: (presupuesto: any) => {
+        this.title += ` -> ${presupuesto.nompar} ${presupuesto.codpar}`;
         let f = this.f_pingreso;
         f.patchValue({
-          idpresupuesto: presupuesto.idpresupuesto,
+          idpresupuesto: idpresupuesto,
           nompar: presupuesto.nompar,
           inicia: presupuesto.inicia,
           idclasificador: presupuesto.idclasificador,
           codigo: presupuesto.codigo,
           idproyecto: presupuesto.idproyecto,
           tippar: presupuesto.tippar,
-          codpar: presupuesto.codpar
+          codpar: presupuesto.codpar,
+          clasi_nompar: presupuesto.idclasificador.nompar,
+          clasi_codpar: presupuesto.idclasificador.codpar,
+          usumodi: 1,
+          fecmodi: this.date,
         });
-        console.log(presupuesto);
       },
       error: (e: any) => console.error(e),
     });

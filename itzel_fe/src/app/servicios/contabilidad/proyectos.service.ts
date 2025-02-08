@@ -4,11 +4,10 @@ import { environment } from '../../../environments/environment';
 const apiUrl = environment.API_URL;
 const baseUrl = `${apiUrl}/proyectos`;
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProyectosService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
   proyectosGetAll() {
     return this.http.get(`${baseUrl}`);
   }
@@ -39,5 +38,8 @@ export class ProyectosService {
   }
   getProyectosByGrupo(codigo: string) {
     return this.http.get(`${baseUrl}/reportes/porgrupo?codigo=${codigo}`);
+  }
+  getByCodNom(dato: string) {
+    return this.http.get(`${baseUrl}/codnom?dato=${dato}`);
   }
 }

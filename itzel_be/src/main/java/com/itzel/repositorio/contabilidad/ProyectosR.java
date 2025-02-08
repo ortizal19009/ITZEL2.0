@@ -14,6 +14,8 @@ public interface ProyectosR extends JpaRepository<Proyectos, Long> {
     List<Proyectos> findByCodigoMayor(String codigo);
     @Query(value = "SELECT * FROM proyectos p WHERE p.nombre = ?1 ", nativeQuery = true)
     Proyectos findByNombre(String nombre);
+    @Query(value = "SELECT * FROM proyectos p WHERE (p.codigo like ?1% or p.nombre like %?1%) and p.idestructura  = 3 ", nativeQuery = true)
+    List<Proyectos> findByCodNom(String dato);
     @Query(value = "SELECT * FROM proyectos p WHERE p.codigo = ?1 and ef.idestructura = ?2", nativeQuery = true)
     Proyectos findByCodigoAndEstructura(String codigo, Long estructura);
     @Query(value = "SELECT * FROM proyectos p WHERE p.idestructura = ?1", nativeQuery = true)

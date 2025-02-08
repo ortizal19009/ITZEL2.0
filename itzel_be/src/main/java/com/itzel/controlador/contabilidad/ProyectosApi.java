@@ -108,5 +108,10 @@ private JasperReportService jasperReportService;
         }
     }
 
+    @GetMapping("/codnom")
+    public ResponseEntity<List<Proyectos>> getByCodNom(@RequestParam String dato){
+        return ResponseEntity.ok(proyectosService.findByCodNom(dato));
+    }
+
 
 }

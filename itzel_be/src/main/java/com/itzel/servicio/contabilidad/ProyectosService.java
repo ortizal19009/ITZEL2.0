@@ -158,4 +158,7 @@ public class ProyectosService {
     public  List<Proyectos_rep_int> findByGrupo(String codigo){
         return dao.findByGrupo(codigo);
     }
+    public  List<Proyectos> findByCodNom(String dato){
+        return dao.findByCodNom(dato);
+    }
 }

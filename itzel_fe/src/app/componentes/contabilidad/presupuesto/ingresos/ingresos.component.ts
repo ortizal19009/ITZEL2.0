@@ -1,6 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { FilterPipe } from '../../../../pipes/filter.pipe';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { PresupuestoService } from '../../../../servicios/contabilidad/presupuesto.service';
@@ -13,7 +18,7 @@ import { Router } from 'express';
     FormsModule,
     FilterPipe,
     ReactiveFormsModule,
-    RouterLink
+    RouterLink,
   ],
   templateUrl: './ingresos.component.html',
   styleUrl: './ingresos.component.css',
@@ -25,7 +30,7 @@ export class IngresosComponent implements OnInit {
   stringFilter!: string;
   /* variables para hacer la paginación  */
   page: number = 0;
-  size: number = 20;
+  size: number = 10;
   _cuentasPageables?: any;
   totalPages: number = 0; // Total de páginas
   pages: number[] = []; // Lista de números de página
@@ -46,8 +51,11 @@ export class IngresosComponent implements OnInit {
     this.s_presupuestos
       .getPresupuestoTipparP(1, page, size)
       .then((item: any) => {
-        console.log(item);
         this._presupuestos = item.content;
+        this.size = item.size;
+        this.page = item.pageable.pageNumber;
+        this.totalPages = item.totalPages;
+        this.updatePages();
       });
   }
 

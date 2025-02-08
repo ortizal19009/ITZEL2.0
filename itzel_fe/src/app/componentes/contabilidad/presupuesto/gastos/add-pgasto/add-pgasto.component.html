@@ -1,1 +1,191 @@
-<p>add-pgasto works!</p>
+<div class="container-fluid mt-2">
+    <div class="card card-success card-outline mb-4 cardsize center-form">
+        <div class="card-header">
+            <div class="card-title ">{{title}}</div>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="f_pingreso">
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                                <button class="btn btn-outline-primary" (click)="selectForm('proyecto')" type="button"
+                                    data-toggle="modal" data-target="#modalBuscar">Proyecto</button>
+                            </div>
+                            <input class="form-control col-sm-2" readOnly formControlName="proy_codigo"
+                                id="inputGroupSelect03" aria-label="Example select with button addon" />
+                            <input class="form-control col-sm" readOnly formControlName="proy_nombre"
+                                id="inputGroupSelect03" aria-label="Example select with button addon" />
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text" id="basic-addon1">Código</span>
+                            <input type="text" class="form-control form-control-sm" readonly formControlName="codigo"
+                                aria-describedby="basic-addon1" />
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm">
+
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                                <button class="btn btn-outline-primary" type="button"
+                                    (click)="selectForm('clasificador')" data-toggle="modal"
+                                    data-target="#modalBuscar">Clasificador</button>
+                            </div>
+                            <input class="form-control col-sm-2" readOnly formControlName="clasi_codpar"
+                                id="inputGroupSelect03" aria-label="Example select with button addon" />
+                            <input class="form-control col-sm" readOnly formControlName="clasi_nompar"
+                                id="inputGroupSelect03" aria-label="Example select with button addon" />
+
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text" id="basic-addon1">Cod.Partida</span>
+                            <input type="text" class="form-control form-control-sm" formControlName="codpar"
+                                aria-describedby="basic-addon1" [ngClass]="{
+                              'is-invalid': f['codpar'].invalid && (f['codpar'].touched || f['codpar'].dirty),
+                              'is-valid': f['codpar'].valid && (f['codpar'].touched || f['codpar'].dirty)
+                            }" />
+                            <div *ngIf="f['codpar'].invalid && (f['codpar'].touched || f['codpar'].dirty)"
+                                class="invalid-feedback">
+                                <!-- Mensajes de error específicos -->
+                                <div *ngIf="f['codpar'].errors?.['required']">El código de partida es obligatorio.</div>
+                                <div *ngIf="f['codpar'].errors?.['minlength']">El código debe tener al menos {{
+                                    f['codpar'].errors?.['minlength'].requiredLength }} caracteres.</div>
+                                <div *ngIf="f['codpar'].errors?.['maxlength']">El código no puede exceder {{
+                                    f['codpar'].errors?.['maxlength'].requiredLength }} caracteres.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="mb-3">
+                            <div class="input-group input-group-sm mb3">
+                                <span class="input-group-text " id="basic-addon3">Nombre</span>
+                                <input type="text" class="form-control" formControlName="nompar"
+                                    aria-describedby="basic-addon3 basic-addon4" [ngClass]="{
+                                        'is-invalid': f['nompar'].invalid && (f['nompar'].touched || f['nompar'].dirty),
+                                        'is-valid': f['nompar'].valid && (f['nompar'].touched || f['nompar'].dirty)
+                                      }" />
+                                <div class="error">
+                                    <i class="bi bi-x-circle p-2 mt-auto"></i>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="mb-3">
+                            <div class="input-group input-group-sm mb3">
+                                <span class="input-group-text " id="basic-addon3">Inicia</span>
+                                <input type="text" class="form-control" formControlName="inicia"
+                                    aria-describedby="basic-addon3 basic-addon4" [ngClass]="{
+                                        'is-invalid': f['inicia'].invalid && (f['inicia'].touched || f['inicia'].dirty),
+                                        'is-valid': f['inicia'].valid && (f['inicia'].touched || f['inicia'].dirty)
+                                      }" />
+                                <div class="error">
+                                    <i class="bi bi-x-circle p-2 mt-auto"></i>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="form-text" id="basic-addon4">
+                {{_request}}
+            </div>
+
+        </div>
+        <div class="card-footer text-right">
+            <button type="submit" [routerLink]="['/pingresos']" class="btn btn-sm btn-success me-2"
+                data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-sm btn-outline-success" [disabled]="!f_pingreso.valid"
+                (click)="save()">Aceptar</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalBuscar" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    aria-labelledby="modalBuscarLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalBuscarLabel">{{modalTitle}}</h5>
+                <input type="text" class="form-control form-control-sm m-auto col-sm-2 m-auto"
+                    [(ngModel)]="modalFiltrar" placeholder="Filter..." required minlength="3">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" [ngSwitch]="formularios">
+                <div class="containar" *ngSwitchCase="'clasificador'">
+                    <form [formGroup]="f_clasificador">
+                        <div class="input-group mb-3">
+                            <input class="form-control" formControlName="codnompar" id="inputGroupSelect03" />
+                            <div class="input-group-prepend">
+                                <button class="btn btn-outline-primary" type="button" (click)="getClasificador()"><i
+                                        class="fa fa-search" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <table class="table table-sm table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Partida</th>
+                                <th>Nombre</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="hoverable-row selected " data-dismiss="modal"
+                                *ngFor="let clasificador of _clasificador ; let i = index"
+                                (click)="setClasificador(clasificador)">
+                                <td>{{i+1}}</td>
+                                <td>{{clasificador.codpar}}</td>
+                                <td>{{clasificador.nompar}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="container" *ngSwitchCase="'proyecto'">
+                    <form [formGroup]="f_proyecto">
+                        <div class="input-group mb-3">
+                            <input class="form-control" formControlName="codnompar" id="inputGroupSelect03" />
+                            <div class="input-group-prepend">
+                                <button class="btn btn-outline-primary" type="button" (click)="getProyecto()"><i
+                                        class="fa fa-search" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <table class="table table-sm table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Partida</th>
+                                <th>Nombre</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="hoverable-row selected " data-dismiss="modal"
+                                *ngFor="let proyecto of _proyectos ; let i = index" (click)="setProyecto(proyecto)">
+                                <td>{{i+1}}</td>
+                                <td>{{proyecto.codigo}}</td>
+                                <td>{{proyecto.nombre}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
