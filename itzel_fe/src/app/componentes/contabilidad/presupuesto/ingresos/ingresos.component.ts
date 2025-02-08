@@ -41,22 +41,34 @@ export class IngresosComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.f_buscar = this.fb.group({
-      codigo: '',
-      denominacion: '',
+      dato: '',
     });
     this.getAllPresupuestos(this.page, this.size);
   }
 
   getAllPresupuestos(page: number, size: number) {
-    this.s_presupuestos
-      .getPresupuestoTipparP(1, page, size)
-      .then((item: any) => {
-        this._presupuestos = item.content;
-        this.size = item.size;
-        this.page = item.pageable.pageNumber;
-        this.totalPages = item.totalPages;
-        this.updatePages();
-      });
+    let fb = this.f_buscar.value;
+    if (fb.dato != '') {
+      this.s_presupuestos
+        .getByParDenom(fb.dato, 1, page, size)
+        .then((item: any) => {
+          this._presupuestos = item.content;
+          this.size = item.size;
+          this.page = item.pageable.pageNumber;
+          this.totalPages = item.totalPages;
+          this.updatePages();
+        });
+    } else {
+      this.s_presupuestos
+        .getPresupuestoTipparP(1, page, size)
+        .then((item: any) => {
+          this._presupuestos = item.content;
+          this.size = item.size;
+          this.page = item.pageable.pageNumber;
+          this.totalPages = item.totalPages;
+          this.updatePages();
+        });
+    }
   }
 
   /* Inicio de configuracion de paginacion */

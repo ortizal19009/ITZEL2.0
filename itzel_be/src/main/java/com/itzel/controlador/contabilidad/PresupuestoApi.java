@@ -23,6 +23,10 @@ public class PresupuestoApi {
     public ResponseEntity<Page<Presupuesto>> getByTipparPageable(@RequestParam int tippar, @RequestParam int page, @RequestParam int size){
         return ResponseEntity.ok(presupuestoService.findByTipparPageable(tippar, page, size));
     }
+    @GetMapping("/codnom")
+    public ResponseEntity<Page<Presupuesto>> getByParDenom(@RequestParam String dato, @RequestParam int tippar, @RequestParam int page, @RequestParam int size){
+        return ResponseEntity.ok(presupuestoService.findByParDenom( dato.toLowerCase(), tippar, page, size));
+    }
     @PostMapping
     public ResponseEntity<Presupuesto> savePresupuesto(@RequestBody Presupuesto presupuesto){
         return  ResponseEntity.ok(presupuestoService.save(presupuesto));
@@ -36,4 +40,5 @@ public class PresupuestoApi {
     public ResponseEntity<Optional<Presupuesto>> findById(@RequestParam Long idpresupuesto){
         return ResponseEntity.ok(presupuestoService.findById(idpresupuesto));
     }
+
 }

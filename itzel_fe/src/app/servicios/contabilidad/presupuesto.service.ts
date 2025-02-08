@@ -27,6 +27,19 @@ export class PresupuestoService {
     );
     return presupuestos;
   }
+  async getByParDenom(
+    dato: string,
+    tippar: number,
+    page: number,
+    size: number
+  ): Promise<any[]> {
+    let presupuestos = await firstValueFrom(
+      this.http.get<any[]>(
+        `${baseUrl}/codnom?dato=${dato}&tippar=${tippar}&page=${page}&size=${size}`
+      )
+    );
+    return presupuestos;
+  }
   savePresupuesto(presupuesto: any) {
     return this.http.post(`${baseUrl}`, presupuesto);
   }

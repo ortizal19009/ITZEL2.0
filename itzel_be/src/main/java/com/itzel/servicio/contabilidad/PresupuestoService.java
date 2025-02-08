@@ -24,6 +24,11 @@ public class PresupuestoService {
         return dao.findByTipparPageable(tippar, pageable);
 
     }
+    public Page<Presupuesto> findByParDenom(String dato,int tippar, int page, int size){
+        Pageable pageable= PageRequest.of(page, size);
+        return dao.findByParDenom(dato, tippar, pageable);
+
+    }
     public Presupuesto save(Presupuesto presupuesto){
         return dao.save(presupuesto);
     }
