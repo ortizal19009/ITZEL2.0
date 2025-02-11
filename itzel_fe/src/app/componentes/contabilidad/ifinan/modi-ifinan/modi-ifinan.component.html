@@ -1,1 +1,65 @@
-<p>modi-ifinan works!</p>
+<div class="container-fluid mt-2">
+    <div class="card card-success card-outline mb-4">
+        <div class="card-header">
+            <div class="card-title">{{title}}</div>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="f_ifinan">
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text" id="basic-addon1">Código</span>
+                            <input type="text" class="form-control form-control-sm"
+                                (change)="getValidacionCodigo($event)" formControlName="codifinan" [ngClass]="{
+                                    'is-invalid': f['codifinan'].invalid && (f['codifinan'].touched || f['codifinan'].dirty),
+                                    'is-valid': f['codifinan'].valid && (f['codifinan'].touched || f['codifinan'].dirty)
+                                  }" aria-describedby="basic-addon1" />
+                            <div *ngIf="sw_codifinan" class="error">
+                                <i class="bi bi-x-circle p-2 mt-auto"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="mb-3">
+                            <div class="input-group input-group-sm mb3">
+                                <span class="input-group-text " id="basic-addon3">Nombre</span>
+                                <input type="text" class="form-control" (change)="getValidarNombre($event)"
+                                    formControlName="nomifinan" aria-describedby="basic-addon3 basic-addon4" [ngClass]="{
+                                        'is-invalid': f['nomifinan'].invalid && (f['nomifinan'].touched || f['nomifinan'].dirty),
+                                        'is-valid': f['nomifinan'].valid && (f['nomifinan'].touched || f['nomifinan'].dirty)
+                                      }" />
+                                <div *ngIf="sw_nomifinan" class="error">
+                                    <i class="bi bi-x-circle p-2 mt-auto"></i>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroupFileAddon01">Foto</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" formControlName="foto" class="custom-file-input"
+                                    id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                                <label class="custom-file-label" for="inputGroupFile01">Buscar foto</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="form-text" id="basic-addon4">
+                {{_request}}
+            </div>
+
+        </div>
+        <div class="card-footer text-right">
+            <button type="submit" [routerLink]="['/ifinan']" class="btn btn-sm btn-success me-2">Cancelar</button>
+            <button type="submit" class="btn btn-sm btn-outline-success" (click)="save()"
+                [disabled]="!f_ifinan.valid">Aceptar</button>
+        </div>
+    </div>
+</div>

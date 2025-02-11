@@ -34,8 +34,6 @@ public class IfinanApi {
 
     @PostMapping
     public ResponseEntity<Object> updateOrSave(@RequestBody Ifinan x) {
-        System.out.println(x.getCodifinan());
-        System.out.println(x.getNomifinan());
         return ResponseEntity.ok(ifinanServicio.saveIfinan(x));
     }
 

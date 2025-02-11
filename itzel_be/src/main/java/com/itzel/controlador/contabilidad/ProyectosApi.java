@@ -1,19 +1,23 @@
 package com.itzel.controlador.contabilidad;
 
-import com.itzel.config.jasperConfig.JasperInterface;
-import com.itzel.config.jasperConfig.JasperReportService;
-import com.itzel.config.jasperConfig.ReportModelDTO;
+import com.itzel.config.jasperConfig.ReportDTO;
+import com.itzel.config.jasperConfig.ReportService;
+import com.itzel.config.jasperConfig.Report_i;
 import com.itzel.interfaces.contabilidad.Proyectos_rep_int;
 import com.itzel.modelo.contabilidad.Proyectos;
 import com.itzel.servicio.contabilidad.ProyectosService;
 import net.sf.jasperreports.engine.JRException;
+import org.springframework.core.io.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Sort;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.core.io.InputStreamResource;
+
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -30,6 +34,15 @@ public class ProyectosApi {
 
     @Autowired
     private ProyectosService proyectosService;
+    @Autowired
+    private ReportService jasperReportService;
+
+   // public ProyectosApi(ReportService jasperReportService) {
+     //   this.jasperReportService = jasperReportService;
+    //}
+    @Autowired
+    private Report_i reportI;
+
     @GetMapping
     public ResponseEntity<List<Proyectos>> getAll(){
         List<Proyectos> proyectos  = proyectosService.findAll(Sort.by(Sort.Order.asc("codigo")));
@@ -89,23 +102,24 @@ public class ProyectosApi {
     public ResponseEntity<List<Proyectos_rep_int>> getByGrupo(@RequestParam String codigo){
         return ResponseEntity.ok(proyectosService.findByGrupo(codigo));
     }
-private JasperReportService jasperReportService;
 
-    public ProyectosApi(JasperReportService jasperReportService) {
-        this.jasperReportService = jasperReportService;
-    }
 
-    @GetMapping("/jasperreport/all")
-    public ResponseEntity<byte[]> generarReporte(){
-        try{
-            byte[] report = jasperReportService.generarReporte("listaProyectos");
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_PDF);
-            headers.add("Content-Disposition", "inline; fileName=report.pdf");
-            return new ResponseEntity<>(report, headers,HttpStatus.OK);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
+
+
+
+    @GetMapping("/reportes/findall")
+    public ResponseEntity<Resource> listAll()
+            throws JRException, IOException, SQLException {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("fileName", "listaProyectos");
+
+        ReportDTO dto = reportI.generateReport(params);
+        InputStreamResource streamResource = new InputStreamResource(dto.getStream());
+        MediaType mediaType = null;
+        mediaType = MediaType.APPLICATION_PDF;
+
+        return ResponseEntity.ok().header("Content-Disposition", "inline; filename=\"" + dto.getFileName() + "\"")
+                .contentLength(dto.getLength()).contentType(mediaType).body(streamResource);
     }
 
     @GetMapping("/codnom")

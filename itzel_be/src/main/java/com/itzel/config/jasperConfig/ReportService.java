@@ -1,30 +1,50 @@
 package com.itzel.config.jasperConfig;
 
-import net.sf.jasperreports.engine.*;
-import net.sf.jasperreports.engine.util.JRLoader;
+import com.itzel.commons.ReportManager;
+import net.sf.jasperreports.engine.JRException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.*;
+import javax.sql.DataSource;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Map;
 
 @Service
-public class JasperReportService {
-    public byte[] generarReporte(String reportName) throws JRException {
-        // Cargar el archivo .jasper
-        InputStream reportStream = getClass().getResourceAsStream("/reports/" +reportName+".jasper");
-        JasperReport jasperReport = (JasperReport) JRLoader.loadObject(reportStream);
+public class ReportService implements Report_i {
+    @Autowired
+    private ReportManager reportManager;
 
-        // Datos del reporte
-       // List<Empleado> datos = obtenerDatos();
-        //JRDataSource dataSource = new JRBeanCollectionDataSource(datos);
+    @Autowired
+    private DataSource dataSource;
 
-        // Parámetros (opcional)
-        // Map<String, Object> parametros = new HashMap<>();
-        // parametros.put("titulo", "Reporte de Empleados");
+    /**
+     * @param params
+     * @return
+     * @throws SQLException
+     * @throws IOException
+     * @throws JRException
+     * @see
+     */
+    @Override
+    public ReportDTO generateReport(Map<String, Object> params)
+            throws JRException, IOException, SQLException {
+        String fileName = params.get("fileName").toString();
+        ReportDTO dto = new ReportDTO();
+		/* String extension = params.get("tipo").toString().equalsIgnoreCase("EXCEL") ? ".xlsx"
+				: ".pdf"; */
+        dto.setFileName(fileName + ".pdf");
 
-        // Llenar el reporte
-        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null);
+        ByteArrayOutputStream stream = reportManager.export(fileName, params,
+                dataSource.getConnection());
 
-        // Exportar a PDF
-        return JasperExportManager.exportReportToPdf(jasperPrint);
+        byte[] bs = stream.toByteArray();
+        dto.setStream(new ByteArrayInputStream(bs));
+        dto.setLength(bs.length);
+
+        return dto;
     }
 }
+
