@@ -1,6 +1,4 @@
 package com.itzel.config.jasperConfig;
 
-
-public class ReportModelDTO {
-
+public interface Report_i {
 }

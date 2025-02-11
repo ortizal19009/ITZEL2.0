@@ -1,6 +1,4 @@
 package com.itzel.config.jasperConfig;
 
-
-public interface JasperInterface {
-
+public class ReporteDTO {
 }
