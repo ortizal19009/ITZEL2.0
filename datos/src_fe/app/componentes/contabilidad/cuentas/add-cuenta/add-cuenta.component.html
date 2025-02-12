@@ -1,0 +1,141 @@
+<div class="container-fluid mt-2">
+    <div class="card card-success card-outline mb-4">
+        <div class="card-header">
+            <div class="card-title">{{title}}</div>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="f_cuenta">
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text" id="basic-addon1">Grupo</span>
+                            <input type="text" class="form-control form-control-sm col-sm-4"
+                                (change)="getValidacionCodigo($event)" formControlName="grucue"
+                                aria-describedby="basic-addon1" />
+                            <input type="text" class="form-control form-control-sm col-sm"
+                                (change)="getValidacionCodigo($event)" formControlName="nomgrup"
+                                aria-describedby="basic-addon1" />
+                            <div *ngIf="sw_codigo" class="error">
+                                <i class="bi bi-x-circle p-2 mt-auto"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text" id="basic-addon1">Nivel</span>
+                            <input type="text" class="form-control form-control-sm"
+                                (change)="getValidacionCodigo($event)" formControlName="idnivel"
+                                aria-describedby="basic-addon1" />
+                            <div *ngIf="sw_codigo" class="error">
+                                <i class="bi bi-x-circle p-2 mt-auto"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text" id="basic-addon1">Código</span>
+                            <input type="text" class="form-control form-control-sm"
+                                (change)="getValidacionCodigo($event)" formControlName="codcue"
+                                aria-describedby="basic-addon1" />
+                            <div *ngIf="sw_codigo" class="error">
+                                <i class="bi bi-x-circle p-2 mt-auto"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="mb-3">
+                            <div class="input-group input-group-sm mb3">
+                                <span class="input-group-text " id="basic-addon3">Nombre</span>
+                                <input type="text" class="form-control" (change)="getValidarNombre($event)"
+                                    formControlName="nomcue" aria-describedby="basic-addon3 basic-addon4" />
+                                <div *ngIf="sw_nombre" class="error">
+                                    <i class="bi bi-x-circle p-2 mt-auto"></i>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="mb-3">
+                            <div class="input-group input-group-sm mb3">
+                                <span class="input-group-text " id="basic-addon3">Partida asociada al debe</span>
+                                <input type="text" class="form-control" formControlName="asodebe"
+                                    aria-describedby="basic-addon3 basic-addon4" />
+                                <div *ngIf="sw_nombre" class="error">
+                                    <i class="bi bi-x-circle p-2 mt-auto"></i>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="mb-3">
+                            <div class="input-group input-group-sm mb3">
+                                <span class="input-group-text " id="basic-addon3">Partida asosciada al haber</span>
+                                <input type="text" class="form-control" formControlName="asohaber"
+                                    aria-describedby="basic-addon3 basic-addon4" />
+                                <div *ngIf="sw_nombre" class="error">
+                                    <i class="bi bi-x-circle p-2 mt-auto"></i>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="addon-wrapping">Movimiento</span>
+                            </div>
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <input type="checkbox" formControlName="movcue"
+                                        aria-label="Checkbox for following text input">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="addon-wrapping">Sigef</span>
+                            </div>
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <input type="checkbox" formControlName="sigef"
+                                        aria-label="Checkbox for following text input">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text">Tipo de transacción</span>
+                            <select class="form-control" formControlName="idestructura_estructura">
+                                <option *ngFor="let tiptran of tiptrans" [ngValue]="tiptran.key">
+                                    {{tiptran.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+            <div class="form-text" id="basic-addon4">
+                {{_request}}
+            </div>
+
+        </div>
+        <div class="card-footer text-right">
+            <button type="submit" [routerLink]="['/cuentas']" class="btn btn-sm btn-success me-2">Cancelar</button>
+            <button type="submit" class="btn btn-sm btn-outline-success" (click)="save()"
+                [disabled]="sw_codigo">Aceptar</button>
+        </div>
+    </div>
+</div>

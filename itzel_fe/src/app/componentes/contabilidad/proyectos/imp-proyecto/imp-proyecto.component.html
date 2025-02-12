@@ -48,8 +48,10 @@
             <div class="row mt-2">
                 <div class="col-sm text-right">
                     <button type="submit" class="btn btn-sm btn-success me-2">Cancelar</button>
-                    <button type="submit" class="btn btn-sm btn-outline-success" data-bs-toggle="modal"
+                    <button type="submit" class="btn btn-sm btn-outline-success me-2" data-bs-toggle="modal"
                         data-bs-target="#exampleModal" (click)="onSubmit()">Aceptar</button>
+                    <button type="submit" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal" (click)="jasperReport()">JasperReport</button>
                 </div>
             </div>
         </div>
@@ -65,7 +67,9 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <iframe id="pdfViewer" class="pdfViewer" frameborder="0"></iframe>
+                <iframe id="pdfViewer" *ngIf="pdfViwer" class="pdfViewer" frameborder="0"></iframe>
+                <iframe *ngIf="pdfSrc" [src]="pdfSrc" width="100%" height="600px"></iframe>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-sm btn-success" data-bs-dismiss="modal">Cancelar</button>

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
+import { Observable } from 'rxjs';
 const apiUrl = environment.API_URL;
 const baseUrl = `${apiUrl}/proyectos`;
 @Injectable({
@@ -41,5 +42,27 @@ export class ProyectosService {
   }
   getByCodNom(dato: string) {
     return this.http.get(`${baseUrl}/codnom?dato=${dato}`);
+  }
+  /* OBTENER REPORTES JASPERREPORT */
+  getAllProyectosReport(): Observable<Blob> {
+    return this.http.get(`${baseUrl}/reportes/proyectos/findall`, {
+      responseType: 'blob',
+    });
+  }
+  getByNivelProyectosReport(nivel: number): Observable<Blob> {
+    return this.http.get(
+      `${baseUrl}/reportes/proyectos/bynivel?nivel=${nivel}`,
+      {
+        responseType: 'blob',
+      }
+    );
+  }
+  getCogigoProyectosReport(codigo: string): Observable<Blob> {
+    return this.http.get(
+      `${baseUrl}/reportes/proyectos/bycodigo?codigo=${codigo}`,
+      {
+        responseType: 'blob',
+      }
+    );
   }
 }

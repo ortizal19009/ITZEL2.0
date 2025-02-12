@@ -102,12 +102,17 @@ public class ProyectosApi {
     public ResponseEntity<List<Proyectos_rep_int>> getByGrupo(@RequestParam String codigo){
         return ResponseEntity.ok(proyectosService.findByGrupo(codigo));
     }
+    @GetMapping("/codnom")
+    public ResponseEntity<List<Proyectos>> getByCodNom(@RequestParam String dato){
+        return ResponseEntity.ok(proyectosService.findByCodNom(dato));
+    }
 
 
 
 
 
-    @GetMapping("/reportes/findall")
+    /*REPORTES DE JASPER REPORT*/
+    @GetMapping("/reportes/proyectos/findall")
     public ResponseEntity<Resource> listAll()
             throws JRException, IOException, SQLException {
         Map<String, Object> params = new HashMap<String, Object>();
@@ -121,11 +126,36 @@ public class ProyectosApi {
         return ResponseEntity.ok().header("Content-Disposition", "inline; filename=\"" + dto.getFileName() + "\"")
                 .contentLength(dto.getLength()).contentType(mediaType).body(streamResource);
     }
+    @GetMapping("/reportes/proyectos/bynivel")
+    public ResponseEntity<Resource> listByNivel(@RequestParam int nivel)
+            throws JRException, IOException, SQLException {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("nivel", nivel);
+        params.put("fileName", "listaProyectosByNivel");
 
-    @GetMapping("/codnom")
-    public ResponseEntity<List<Proyectos>> getByCodNom(@RequestParam String dato){
-        return ResponseEntity.ok(proyectosService.findByCodNom(dato));
+        ReportDTO dto = reportI.generateReport(params);
+        InputStreamResource streamResource = new InputStreamResource(dto.getStream());
+        MediaType mediaType = null;
+        mediaType = MediaType.APPLICATION_PDF;
+
+        return ResponseEntity.ok().header("Content-Disposition", "inline; filename=\"" + dto.getFileName() + "\"")
+                .contentLength(dto.getLength()).contentType(mediaType).body(streamResource);
     }
+    @GetMapping("/reportes/proyectos/bycodigo")
+    public ResponseEntity<Resource> listByGrupo(@RequestParam String codigo)
+            throws JRException, IOException, SQLException {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("codigo", codigo);
+        params.put("fileName", "listaProyectosBygrupo");
+        ReportDTO dto = reportI.generateReport(params);
+        InputStreamResource streamResource = new InputStreamResource(dto.getStream());
+        MediaType mediaType = null;
+        mediaType = MediaType.APPLICATION_PDF;
+
+        return ResponseEntity.ok().header("Content-Disposition", "inline; filename=\"" + dto.getFileName() + "\"")
+                .contentLength(dto.getLength()).contentType(mediaType).body(streamResource);
+    }
+
 
 
 }

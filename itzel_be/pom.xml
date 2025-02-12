@@ -38,26 +38,37 @@
 			<artifactId>mapstruct</artifactId>
 			<version>${org.mapstruct.version}</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports -->
+		<!-- JasperReports -->
 		<dependency>
 			<groupId>net.sf.jasperreports</groupId>
 			<artifactId>jasperreports</artifactId>
 			<version>6.21.4</version>
 		</dependency>
+
+		<!-- Funciones de JasperReports (DateTimeFunctions, etc.) -->
 		<dependency>
 			<groupId>net.sf.jasperreports</groupId>
 			<artifactId>jasperreports-functions</artifactId>
-			<version>6.21.4</version>  </dependency>
-		<!-- Para exportar a PDF -->
+			<version>6.21.4</version>
+		</dependency>
+
+		<!-- Fuentes (evita errores en PDF) -->
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports-fonts</artifactId>
+			<version>6.21.4</version>
+		</dependency>
+
+		<!-- Dependencias adicionales (para formatos de exportación) -->
 		<dependency>
 			<groupId>com.lowagie</groupId>
 			<artifactId>itext</artifactId>
+			<version>2.1.7</version> <!-- PDF -->
 		</dependency>
-
-		<!-- Para exportar a Excel (opcional) -->
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
+			<version>5.2.3</version> <!-- Excel -->
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa -->

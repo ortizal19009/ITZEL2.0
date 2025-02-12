@@ -1,11 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { EstructuraService } from '../../../../servicios/contabilidad/estructura.service';
 import { ProyectosService } from '../../../../servicios/contabilidad/proyectos.service';
 import { jsPDF } from 'jspdf';
 import { PdfService } from '../../../../servicios/reportes/pdf.service';
-
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-imp-proyecto',
@@ -15,6 +20,9 @@ import { PdfService } from '../../../../servicios/reportes/pdf.service';
 })
 export class ImpProyectoComponent implements OnInit {
   f_reporte!: FormGroup;
+  pdfSrc: SafeResourceUrl | null = null; // Cambia a SafeResourceUrl
+  pdfViwer: boolean = false;
+
   _estructura?: any;
   listaReportes: any[] = [
     {
@@ -35,7 +43,8 @@ export class ImpProyectoComponent implements OnInit {
     private fb: FormBuilder,
     private estructuraService: EstructuraService,
     private proyectoService: ProyectosService,
-    private pdfService: PdfService
+    private pdfService: PdfService,
+    private sanitizer: DomSanitizer
   ) {}
   ngOnInit(): void {
     this.f_reporte = this.fb.group({
@@ -64,8 +73,8 @@ export class ImpProyectoComponent implements OnInit {
             item.codigo,
             item.nombre,
             item.movimiento,
-            item.idestructura_estructura.nombre,
-            item.idestructura_estructura.nivel,
+            item.idestructura.nombre,
+            item.idestructura.nivel,
           ]);
         });
         this.pdfService.pdfOneTable(doc, header, this.datosImprimir);
@@ -110,6 +119,8 @@ export class ImpProyectoComponent implements OnInit {
     });
   }
   onSubmit() {
+    this.pdfSrc = '';
+    this.pdfViwer = true;
     let opt: number = this.f_reporte.value.reporte;
     let nombre: string = this.f_reporte.value.nombre;
     const doc = new jsPDF();
@@ -149,6 +160,49 @@ export class ImpProyectoComponent implements OnInit {
         } catch (e: any) {
           console.error(e);
         }
+        break;
+    }
+  }
+  jasperReport() {
+    this.pdfViwer = false;
+    let opt: number = this.f_reporte.value.reporte;
+    let nombre: string = this.f_reporte.value.nombre;
+    const doc = new jsPDF();
+    switch (opt) {
+      case 0:
+        this.proyectoService.getAllProyectosReport().subscribe({
+          next: (datos: any) => {
+            const blob = new Blob([datos], { type: 'application/pdf' });
+            const url = window.URL.createObjectURL(blob);
+            this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+          },
+          error: (e: any) => console.error(e),
+        });
+
+        break;
+      case 1:
+        this.proyectoService
+          .getByNivelProyectosReport(+this.f_reporte.value.nivel.nivel!)
+          .subscribe({
+            next: (datos: any) => {
+              const blob = new Blob([datos], { type: 'application/pdf' });
+              const url = window.URL.createObjectURL(blob);
+              this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+            },
+            error: (e: any) => console.error(e),
+          });
+        break;
+      case 2:
+        this.proyectoService
+          .getCogigoProyectosReport(this.f_reporte.value.grupo)
+          .subscribe({
+            next: (datos: any) => {
+              const blob = new Blob([datos], { type: 'application/pdf' });
+              const url = window.URL.createObjectURL(blob);
+              this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+            },
+            error: (e: any) => console.error(e),
+          });
         break;
     }
   }
