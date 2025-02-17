@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { FilterPipe } from '../../../../pipes/filter.pipe';
 import { PresupuestoService } from '../../../../servicios/contabilidad/presupuesto.service';
+import { ServerConfigService } from '../../../../servicios/config/server-config.service';
 
 @Component({
   selector: 'app-gastos',
@@ -29,9 +30,14 @@ export class GastosComponent implements OnInit {
   maxPagesToShow: number = 5; // Máximo número de botones a mostrar
   constructor(
     private s_presupuestos: PresupuestoService,
-    private fb: FormBuilder
+    private fb: FormBuilder, 
+    private serverConfigService: ServerConfigService
+
   ) {}
   ngOnInit(): void {
+    this.serverConfigService.currentFilter.subscribe((filterValue: any) => {
+      this.stringFilter = filterValue.toString();
+    });
     this.f_buscar = this.fb.group({
       dato: '',
     });

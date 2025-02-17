@@ -10,6 +10,7 @@ import { FilterPipe } from '../../../../pipes/filter.pipe';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { PresupuestoService } from '../../../../servicios/contabilidad/presupuesto.service';
 import { Router } from 'express';
+import { ServerConfigService } from '../../../../servicios/config/server-config.service';
 
 @Component({
   selector: 'app-ingresos',
@@ -37,9 +38,14 @@ export class IngresosComponent implements OnInit {
   maxPagesToShow: number = 5;
   constructor(
     private s_presupuestos: PresupuestoService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private serverConfigService: ServerConfigService
+
   ) {}
   ngOnInit(): void {
+    this.serverConfigService.currentFilter.subscribe((filterValue: any) => {
+      this.stringFilter = filterValue.toString();
+    });
     this.f_buscar = this.fb.group({
       dato: '',
     });

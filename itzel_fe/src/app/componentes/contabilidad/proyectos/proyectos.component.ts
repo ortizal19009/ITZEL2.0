@@ -30,6 +30,7 @@ export class ProyectosComponent implements OnInit {
   ngOnInit(): void {
     this.getAllProyectos();
     this.serverConfigService.currentFilter.subscribe((filterValue: any) => {
+      console.log(filterValue)
       this.stringFilter = filterValue;
     });
   }

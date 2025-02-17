@@ -10,6 +10,7 @@ import {
 import { FilterPipe } from '../../../pipes/filter.pipe';
 import { CuentasService } from '../../../servicios/contabilidad/cuentas.service';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { ServerConfigService } from '../../../servicios/config/server-config.service';
 
 @Component({
   selector: 'app-cuentas',
@@ -37,9 +38,13 @@ export class CuentasComponent implements OnInit {
   totalPages: number = 0; // Total de páginas
   pages: number[] = []; // Lista de números de página
   maxPagesToShow: number = 5; // Máximo número de botones a mostrar
-  constructor(private s_cuentas: CuentasService, private fb: FormBuilder) {}
+  constructor(private s_cuentas: CuentasService, private fb: FormBuilder, private serverConfigService: ServerConfigService
+  ) {}
 
   ngOnInit(): void {
+    this.serverConfigService.currentFilter.subscribe((filterValue: any) => {
+      this.stringFilter = filterValue.toString();
+    });
     this.f_buscar = this.fb.group({
       codigo: '',
       denominacion: '',
