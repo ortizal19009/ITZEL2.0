@@ -11,10 +11,12 @@ import { ProyectosService } from '../../../../servicios/contabilidad/proyectos.s
 import { jsPDF } from 'jspdf';
 import { PdfService } from '../../../../servicios/reportes/pdf.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-imp-proyecto',
-  imports: [FormsModule, CommonModule, ReactiveFormsModule],
+  imports: [FormsModule, CommonModule, RouterLink,
+ReactiveFormsModule],
   templateUrl: './imp-proyecto.component.html',
   styleUrl: './imp-proyecto.component.css',
 })

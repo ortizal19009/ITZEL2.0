@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, output } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -25,6 +25,7 @@ export class AddProyectoComponent implements OnInit {
   sw_nombre: boolean = false;
   _request!: any;
   date: Date = new Date();
+  @Output() messageEvent = new EventEmitter<string>();
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -41,9 +42,21 @@ export class AddProyectoComponent implements OnInit {
       feccrea: this.date,
     });
     this.getAllProyectos();
+    this.getAllEsctructuras();
   }
   getAllProyectos() {
     this.proyectoService.proyectosGetAll().subscribe({
+      next: (proyectos: any) => {
+        console.log(proyectos);
+      },
+      error: (e: any) => console.error(e),
+    });
+  }
+  regresar() {
+    this.router.navigate(['/proyectos']);
+  }
+  getAllEsctructuras() {
+    this.estructuraService.estructuraGetAll().subscribe({
       next: (estructuras: any) => {
         this._estructuras = estructuras;
         this.f_proyecto.patchValue({
@@ -53,14 +66,13 @@ export class AddProyectoComponent implements OnInit {
       error: (e: any) => console.error(e),
     });
   }
-  regresar() {
-    this.router.navigate(['/proyectos']);
-  }
   getValidacionCodigo(codigo: any) {
     let code = codigo.target.value;
+    console.log(code);
     this.proyectoService.validarCodigo(code).subscribe({
       next: (validador: any) => {
-        if (codigo.length % 2 == 0) {
+        console.log(validador);
+        if (code.length % 2 == 0) {
           this.sw_codigo = validador;
         } else {
           this.sw_codigo = true;
@@ -88,11 +100,13 @@ export class AddProyectoComponent implements OnInit {
         setTimeout(() => {
           this._request = '';
         }, 3000);
-        if (request.status === 'success') {
-          this.router.navigate(['/proyectos']);
-        }
+          this.messageEvent.emit(request.status);
+
       },
-      error: (e: any) => console.error(e),
+      error: (e: any) => {
+        console.error(e);
+        this.messageEvent.emit("error");
+      },
     });
   }
 }

@@ -18,11 +18,11 @@
                             <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
                         </p>
                         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                            <a href="/add-proyecto" class="dropdown-item">
+                            <a data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="dropdown-item">
                                 <!-- Message Start -->
                                 <div class="media">
                                     <div class="media-body">
-                                        <p type="submit" class="dropdown-item-title">
+                                        <p type="submit" class="dropdown-item-title" d>
                                             Nuevo
                                         </p>
                                     </div>
@@ -97,6 +97,21 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL ADD-PROYECTO -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <app-add-proyecto *ngIf="swAddProject; else swModiProject" (messageEvent)="receiveMessageAddProyect($event)"></app-add-proyecto>
+                <ng-template #swModiProject>
+                    <app-modi-proyecto></app-modi-proyecto>
+                </ng-template>
+            </div>
         </div>
     </div>
 </div>
