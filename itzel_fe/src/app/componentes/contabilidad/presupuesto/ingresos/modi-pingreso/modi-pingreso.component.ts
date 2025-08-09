@@ -37,7 +37,6 @@ export class ModiPingresoComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this._idpresupuesto = +this._params.snapshot.paramMap.get('idpresupuesto')!;
-    console.log(this._idpresupuesto);
     this.f_pingreso = this.fb.group({
       idpresupuesto: '',
       tippar: 1,

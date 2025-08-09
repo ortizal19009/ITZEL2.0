@@ -86,17 +86,14 @@ getValidarNombre(nombre: any) {
   let name = nombre.target.value;
   this.proyectoService.validarNombre(name).subscribe({
     next: (validador: any) => {
-      console.log(validador);
       this.sw_nombre = validador;
     },
     error: (e: any) => console.error(e),
   });
 }
 save() {
-  //console.log(this.f_proyecto.value);
   this.proyectoService.proyectosUpdate(this.f_proyecto.value).subscribe({
     next: (request: any) => {
-      console.log(request);
       this._request = request.message;
       setTimeout(() => {
         this._request = '';
@@ -119,10 +116,8 @@ compararEstructura(o1: Estructura, o2: Estructura): boolean {
   }
 }
 delete() {
-  console.log(this.idproyecto);
   this.proyectoService.proyectoDelete(this.idproyecto!).subscribe({
     next: (datos: any) => {
-      console.log(datos);
       if (datos.status == 'success') {
         this.regresar();
       } else {

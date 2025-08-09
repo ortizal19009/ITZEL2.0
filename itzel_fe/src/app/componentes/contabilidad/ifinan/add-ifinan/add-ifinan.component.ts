@@ -39,10 +39,8 @@ export class AddIfinanComponent implements OnInit {
   getValidarNombre(e: any) {}
   regresar() {}
   save() {
-    console.log(this.f_ifinan.value);
     this.s_ifinan.saveIfinancieras(this.f_ifinan.value).subscribe({
       next: (data: any) => {
-        console.log(data);
         this._request = data.message;
         this.f_ifinan.reset();
         this.route.navigate(['/ifinan']);

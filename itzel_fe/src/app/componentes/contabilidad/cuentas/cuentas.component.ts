@@ -66,7 +66,6 @@ export class CuentasComponent implements OnInit {
     });
   }
   getByCodOrNom() {
-    console.log(this.f_buscar.value);
     let f = this.f_buscar.value;
     if (f.codigo == '' && f.denominacion == '') {
       this.getByPagesCuentas(this.page, this.size);
@@ -75,7 +74,6 @@ export class CuentasComponent implements OnInit {
         .getByCodOrNom(f.codigo, f.denominacion, this.page, this.size)
         .subscribe({
           next: (datos: any) => {
-            console.log(datos);
             this.page = datos.pageable.pageNumber;
             this._cuentasPageables = datos;
             this._cuentas = datos.content;

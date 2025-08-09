@@ -49,7 +49,6 @@ export class BeneficiariosService {
  }
 
  findByGrupo(nomben: string, idgrupo: number) {
-    // console.log( `${baseUrl}/nombreygrupo?nomben=${nomben}&idgrupo=${idgrupo}}` )
     return this.http.get<Beneficiarios[]>( `${baseUrl}/nombreygrupo?nomben=${nomben}&idgrupo=${idgrupo}}` );
  }
 

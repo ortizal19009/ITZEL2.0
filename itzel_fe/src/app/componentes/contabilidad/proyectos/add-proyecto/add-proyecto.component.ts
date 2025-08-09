@@ -47,7 +47,6 @@ export class AddProyectoComponent implements OnInit {
   getAllProyectos() {
     this.proyectoService.proyectosGetAll().subscribe({
       next: (proyectos: any) => {
-        console.log(proyectos);
       },
       error: (e: any) => console.error(e),
     });
@@ -68,10 +67,8 @@ export class AddProyectoComponent implements OnInit {
   }
   getValidacionCodigo(codigo: any) {
     let code = codigo.target.value;
-    console.log(code);
     this.proyectoService.validarCodigo(code).subscribe({
       next: (validador: any) => {
-        console.log(validador);
         if (code.length % 2 == 0) {
           this.sw_codigo = validador;
         } else {
@@ -85,17 +82,14 @@ export class AddProyectoComponent implements OnInit {
     let name = nombre.target.value;
     this.proyectoService.validarNombre(name).subscribe({
       next: (validador: any) => {
-        console.log(validador);
         this.sw_nombre = validador;
       },
       error: (e: any) => console.error(e),
     });
   }
   save() {
-    //console.log(this.f_proyecto.value);
     this.proyectoService.proyectoSave(this.f_proyecto.value).subscribe({
       next: (request: any) => {
-        console.log(request);
         this._request = request.message;
         setTimeout(() => {
           this._request = '';

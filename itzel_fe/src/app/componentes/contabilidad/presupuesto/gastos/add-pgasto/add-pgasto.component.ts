@@ -74,10 +74,8 @@ export class AddPgastoComponent implements OnInit {
     const codparti = `${this.f_pingreso.get('proy_codigo')?.value}.${
       this.f_pingreso.get('clasi_codpar')?.value
     }`;
-    console.log(codparti);
 
     const clasificador = this.f_pingreso.get('clasi_codpar')?.value;
-    console.log(clasificador);
     this.f_pingreso.patchValue({
       codpar: codparti,
       codigo: clasificador,
@@ -112,7 +110,6 @@ export class AddPgastoComponent implements OnInit {
     } else {
       this.s_proyecto.getByCodNom(f.codnompar).subscribe({
         next: (datos: any) => {
-          console.log(datos);
           this._proyectos = datos;
         },
       });
@@ -158,7 +155,6 @@ export class AddPgastoComponent implements OnInit {
     if (f.codigo != f.codpar) {
       this.f_pingreso.invalid;
     }
-    console.log(f);
     let presupuesto: Presupuesto = new Presupuesto();
     presupuesto.codigo = f.codigo;
     presupuesto.tippar = f.tippar;
@@ -175,16 +171,13 @@ export class AddPgastoComponent implements OnInit {
     presupuesto.totdeven = 0;
     presupuesto.arrastre = 0;
     presupuesto.arrastreaa = 0;
-    console.log(presupuesto);
 /*     this.s_presupuesto.savePresupuesto(presupuesto).subscribe({
       next: (presupuesto: any) => {
-        console.log(presupuesto);
       },
       error: (e: any) => console.error(e),
     }); */
   }
   selectForm(form: string) {
-    console.log(form);
     this.modalTitle = 'Buscar ';
     this.modalTitle += form;
     this.formularios = form;

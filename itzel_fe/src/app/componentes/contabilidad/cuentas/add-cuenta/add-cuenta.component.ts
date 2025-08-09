@@ -54,7 +54,6 @@ export class AddCuentaComponent implements OnInit {
   getCuentaById(idcuenta: number) {
     this.s_cuentas.getByIdCuenta(idcuenta).subscribe({
       next: (datos: any) => {
-        console.log(datos);
         this._cuenta = datos;
         this.f_cuenta.patchValue({
           grucue: datos.grucue,
@@ -74,6 +73,5 @@ export class AddCuentaComponent implements OnInit {
     cuenta.movcue = f.movcue;
     cuenta.idnivel = f.idnivel;
 
-    console.log(this.f_cuenta.value);
   }
 }

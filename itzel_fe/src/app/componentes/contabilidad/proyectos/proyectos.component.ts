@@ -47,7 +47,6 @@ export class ProyectosComponent implements OnInit {
     });
   }
   receiveMessageAddProyect(message: string) {
-    console.log(message);
     if (message === 'success') {
       this.swal('success', 'Datos guardados conexito');
       this.getAllProyectos();

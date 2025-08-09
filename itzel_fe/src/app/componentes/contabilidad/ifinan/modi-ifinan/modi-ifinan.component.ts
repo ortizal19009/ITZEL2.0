@@ -77,7 +77,6 @@ export class ModiIfinanComponent implements OnInit {
       .update(this.f_ifinan.value.idifinan, this.f_ifinan.value)
       .subscribe({
         next: (data: any) => {
-          console.log(data);
           this._request = data.message;
           this.f_ifinan.reset();
           this.router.navigate(['/ifinan']);
