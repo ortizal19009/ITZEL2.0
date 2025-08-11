@@ -2,16 +2,32 @@ package com.itzel.jasperReports.DTO;
 import java.util.HashMap;
 import java.util.Map;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-
-@Data
-@Getter
-@Setter
 public class JasperDTO {
-    String reportName;
-    Map<String, Object> parameters = new HashMap<>();
-    String extencion;
+    private String reportName;
+    private Map<String, Object> parameters = new HashMap<>();
+    private String extencion;
 
+    public String getReportName() {
+        return reportName;
+    }
+
+    public void setReportName(String reportName) {
+        this.reportName = reportName;
+    }
+
+    public Map<String, Object> getParameters() {
+        return parameters;
+    }
+
+    public void setParameters(Map<String, Object> parameters) {
+        this.parameters = parameters;
+    }
+
+    public String getExtencion() {
+        return extencion;
+    }
+
+    public void setExtencion(String extencion) {
+        this.extencion = extencion;
+    }
 }

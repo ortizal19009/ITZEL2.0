@@ -4,10 +4,8 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.util.Map;
 
-import org.springframework.stereotype.Service;
-
 import com.itzel.jasperReports.DTO.JasperDTO;
-
+import org.springframework.stereotype.Service;
 
 import net.sf.jasperreports.engine.JRParameter;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -18,8 +16,6 @@ import net.sf.jasperreports.engine.JasperReport;
 
 @Service
 public class BuildReports {
-
-
     public ByteArrayOutputStream buildReport(JasperDTO jasperDTO, Connection conn) {
         Map<String, Object> parameters = jasperDTO.getParameters();
 
