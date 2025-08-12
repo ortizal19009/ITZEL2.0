@@ -160,8 +160,8 @@ export class AddPgastoComponent implements OnInit {
     presupuesto.tippar = f.tippar;
     presupuesto.codpar = f.codpar;
     presupuesto.inicia = f.inicia;
-    presupuesto.idproyecto = f.idproyecto;
-    presupuesto.idclasificador = f.idclasificador;
+    presupuesto.proyecto = f.idproyecto;
+    presupuesto.clasificador = f.idclasificador;
     presupuesto.nompar = f.nompar;
     presupuesto.usucrea = 1;
     presupuesto.feccrea = this.date;

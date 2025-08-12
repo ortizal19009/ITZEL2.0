@@ -7,7 +7,7 @@ import { ServerConfigService } from '../../../servicios/config/server-config.ser
 import { FilterPipe } from '../../../pipes/filter.pipe';
 import { AddProyectoComponent } from './add-proyecto/add-proyecto.component';
 import Swal from 'sweetalert2';
-import { ModiProyectoComponent } from "./modi-proyecto/modi-proyecto.component";
+import { ModiProyectoComponent } from './modi-proyecto/modi-proyecto.component';
 
 @Component({
   selector: 'app-proyectos',
@@ -16,9 +16,7 @@ import { ModiProyectoComponent } from "./modi-proyecto/modi-proyecto.component";
     RouterLink,
     FormsModule,
     FilterPipe,
-    AddProyectoComponent,
-    ModiProyectoComponent
-],
+  ],
   templateUrl: './proyectos.component.html',
   styleUrl: './proyectos.component.css',
 })
@@ -28,7 +26,7 @@ export class ProyectosComponent implements OnInit {
   stringFilter!: string;
   options: any = {};
   messageRecived: string = '';
-  swAddProject : Boolean = true;
+  swAddProject: Boolean = true;
   constructor(
     private proyectosService: ProyectosService,
     private serverConfigService: ServerConfigService
@@ -54,6 +52,14 @@ export class ProyectosComponent implements OnInit {
       alert('Datos no guardados');
       this.swal('error', 'No guardado');
     }
+  }
+  delete(idproyecto: any) {
+    this.proyectosService.proyectoDelete(idproyecto).subscribe({
+      next: (datos: any) => {
+        this.swal(datos.status, datos.message);
+      },
+      error: (e: any) => console.error(e),
+    });
   }
 
   swal(icon: any, mensaje: any) {

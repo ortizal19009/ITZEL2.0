@@ -1,7 +1,9 @@
 package com.itzel.servicio.contabilidad;
 
 import com.itzel.interfaces.contabilidad.Proyectos_rep_int;
+import com.itzel.modelo.contabilidad.Presupuesto;
 import com.itzel.modelo.contabilidad.Proyectos;
+import com.itzel.repositorio.contabilidad.PresupuestoR;
 import com.itzel.repositorio.contabilidad.ProyectosR;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -16,6 +18,8 @@ import java.util.Optional;
 public class ProyectosService {
     @Autowired
     private ProyectosR dao;
+    @Autowired
+    private PresupuestoR daoP;
 
     public List<Proyectos> findAll(Sort sort){
         return dao.findAll(sort);
@@ -123,7 +127,9 @@ public class ProyectosService {
     }
     public Map<String, Object> delete(Long idProyecto) {
         Map<String, Object> response = new HashMap<>();
-
+    List<Presupuesto> presupuestos = daoP.findByIdPresupuesto(idProyecto);
+    System.out.println("Número de presupuestos " + presupuestos.size());
+    if(presupuestos.isEmpty()) {
         Optional<Proyectos> optionalProject = dao.findById(idProyecto);
 
         if (optionalProject.isPresent()) {
@@ -135,17 +141,20 @@ public class ProyectosService {
 
             if (relatedProjectCount.size() == 1) {
                 dao.deleteById(project.getIdproyecto());
-                response.put("status","success");
+                response.put("status", "success");
                 response.put("message", "Eliminado");
             } else {
-                response.put("status","denied");
+                response.put("status", "denied");
                 response.put("message", "No se puede eliminar registro");
             }
         } else {
-            response.put("status","denied");
+            response.put("status", "denied");
             response.put("message", "Proyecto no encontrado");
         }
-
+    }else{
+        response.put("status", "error");
+        response.put("message", "No se puede eliminar porque se esta usanddo en "+presupuestos.size()+" partidas de gastos");
+    }
         return response;
     }
 

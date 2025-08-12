@@ -3,10 +3,10 @@ import { Proyectos } from './proyectos';
 
 export class Presupuesto {
   idpresupuesto?: number;
-  tippar?: number;
-  codpar?: string;
-  codigo?: string;
-  nompar?: string;
+  tippar!: number;
+  codpar!: string;
+  codigo!: string;
+  nompar!: string;
   inicia?: number;
   totmod?: number;
   totcerti?: number;
@@ -14,8 +14,8 @@ export class Presupuesto {
   totdeven?: number;
   arrastre?: number;
   arrastreaa?: number;
-  idproyecto?: Proyectos;
-  idclasificador?: Clasificador;
+  proyecto?: Proyectos;
+  clasificador?: Clasificador;
   usucrea?: number;
   feccrea?: Date;
   usumodi?: number;

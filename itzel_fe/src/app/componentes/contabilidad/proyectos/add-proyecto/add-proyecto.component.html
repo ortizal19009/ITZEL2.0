@@ -1,67 +1,75 @@
-<div class="container-fluid mt-2">
-    <div class="card card-success card-outline mb-4">
-        <div class="card-header">
-            <div class="card-title">{{title}}</div>
-        </div>
-        <div class="card-body">
-            <form [formGroup]="f_proyecto">
-                <div class="row">
-                    <div class="col-sm">
-                        <div class="input-group input-group-sm mb-3">
-                            <span class="input-group-text" id="basic-addon1">Código</span>
-                            <input type="text" class="form-control form-control-sm" (change)="getValidacionCodigo($event)"
-                                formControlName="codigo" aria-describedby="basic-addon1" />
-                            <div *ngIf="sw_codigo" class="error">
-                                <i class="bi bi-x-circle p-2 mt-auto"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm">
-                        <div class="mb-3">
-                            <div class="input-group input-group-sm mb3">
-                                <span class="input-group-text " id="basic-addon3">Nombre</span>
-                                <input type="text" class="form-control" (change)="getValidarNombre($event)"
-                                    formControlName="nombre" aria-describedby="basic-addon3 basic-addon4" />
-                                <div *ngIf="sw_nombre" class="error">
+<div class="container-fluid mt-2 d-flex justify-content-center">
+    <div class="col-md-6"> <!-- Mitad de ancho en pantallas medianas o más grandes -->
+        <div class="card card-success card-outline mb-1">
+            <div class="card-header">
+                <h1 class="card-title">{{title}}</h1>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="f_proyecto">
+                    <div class="row">
+                        <div class="col-sm">
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text" id="basic-addon1">Código</span>
+                                <input type="text" class="form-control form-control-sm"
+                                    (change)="getValidacionCodigo($event)" formControlName="codigo" [ngClass]="{'is-invalid': f['codigo'].invalid && f['codigo'].touched,
+                           'is-valid': f['codigo'].valid, '': f['codigo'].untouched}"
+                                    aria-describedby="basic-addon1" />
+                                <div *ngIf="sw_codigo" class="error">
                                     <i class="bi bi-x-circle p-2 mt-auto"></i>
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-sm">
+                            <div class="mb-3">
+                                <div class="input-group input-group-sm mb-3">
+                                    <span class="input-group-text" id="basic-addon3">Nombre</span>
+                                    <input type="text" class="form-control" (change)="getValidarNombre($event)"
+                                        formControlName="nombre" [ngClass]="{'is-invalid': f['nombre'].invalid && f['nombre'].touched,
+                           'is-valid': f['nombre'].valid, '': f['nombre'].untouched}"
+                                        aria-describedby="basic-addon3 basic-addon4" />
+                                    <div *ngIf="sw_nombre" class="error">
+                                        <i class="bi bi-x-circle p-2 mt-auto"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
+                    <div class="row">
+                        <div class="col-sm">
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text">Movimiento</span>
+                                <select class="form-select" [ngClass]="{'is-invalid': f['movimiento'].invalid && f['movimiento'].touched,
+                           'is-valid': f['movimiento'].valid, '': f['movimiento'].untouched}"
+                                    formControlName="movimiento">
+                                    <option value="false">No</option>
+                                    <option value="true">Si</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text">Estructura</span>
+                                <select class="form-select" [ngClass]="{'is-invalid': f['idestructura'].invalid && f['idestructura'].touched,
+                           'is-valid': f['idestructura'].valid, '': f['idestructura'].untouched}"
+                                    formControlName="idestructura">
+                                    <option *ngFor="let estructura of _estructuras" [ngValue]="estructura">
+                                        {{estructura.nombre}} - Nivel({{estructura.nivel}})
+                                    </option>
+                                </select>
+                            </div>
                         </div>
                     </div>
+                </form>
+                <div class="form-text" id="basic-addon4">
+                    {{_request}}
                 </div>
-                <div class="row">
-                    <div class="col-sm">
-                        <div class="input-group input-group-sm mb-3">
-                            <span class="input-group-text">Movimiento</span>
-                            <select class="form-control" formControlName="movimiento">
-                                <option value=false>No</option>
-                                <option value=true>Si</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-sm">
-                        <div class="input-group input-group-sm mb-3">
-                            <span class="input-group-text">Estructura</span>
-                            <select class="form-control" formControlName="idestructura">
-                                <option *ngFor="let estructura of _estructuras" [ngValue]=estructura>
-                                    {{estructura.nombre}} -
-                                    Nivel({{estructura.nivel}})</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-            </form>
-            <div class="form-text" id="basic-addon4">
-                {{_request}}
             </div>
-
-        </div>
-        <div class="card-footer text-right">
-            <button type="submit" (click)="regresar()" data-bs-dismiss="modal" class="btn btn-sm btn-success me-2">Cancelar</button>
-            <button type="submit" class="btn btn-sm btn-outline-success" (click)="save()"
-                [disabled]="sw_codigo"  data-bs-dismiss="modal">Aceptar</button>
+            <div class="card-footer text-right">
+                <button type="button" (click)="regresar()"
+                    class="btn btn-sm btn-success me-2">Cancelar</button>
+                <button type="submit" class="btn btn-sm btn-outline-success" (click)="save()" [disabled]="sw_codigo">Aceptar</button>
+            </div>
         </div>
     </div>
 </div>

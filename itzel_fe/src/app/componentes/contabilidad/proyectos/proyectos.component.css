@@ -1,0 +1,12 @@
+/* Cambia el color del icono al pasar el mouse */
+.nav-item.dropdown .nav-link:hover i {
+  color: #007bff; /* Azul Bootstrap */
+  transition: color 0.3s ease;
+}
+
+/* Cambia el fondo y texto de las opciones del dropdown */
+.dropdown-item:hover {
+  background-color: #007bff;
+  color: white !important;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}

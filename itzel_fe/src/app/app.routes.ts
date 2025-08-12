@@ -15,13 +15,17 @@ import { AddPingresoComponent } from './componentes/contabilidad/presupuesto/ing
 import { AddPgastoComponent } from './componentes/contabilidad/presupuesto/gastos/add-pgasto/add-pgasto.component';
 import { ModiPingresoComponent } from './componentes/contabilidad/presupuesto/ingresos/modi-pingreso/modi-pingreso.component';
 import { ModiPgastoComponent } from './componentes/contabilidad/presupuesto/gastos/modi-pgasto/modi-pgasto.component';
+import { InfoProyectoComponent } from './componentes/contabilidad/proyectos/info-proyecto/info-proyecto.component';
 
 export const routes: Routes = [
   { path: 'inicio', component: AppWrapperComponent },
+  /* ==========PROYECTOS========== */
   { path: 'proyectos', component: ProyectosComponent },
   { path: 'add-proyecto', component: AddProyectoComponent },
   { path: 'modi-proyecto/:idproyecto', component: ModiProyectoComponent },
   { path: 'imp-proyecto', component: ImpProyectoComponent },
+  { path: 'info-proyecto/:idproyecto', component: InfoProyectoComponent},
+    /* ==========IFINAN========== */
   { path: 'ifinan', component: IfinanComponent },
   { path: 'add-ifinan', component: AddIfinanComponent },
   { path: 'modi-ifinan/:idifinan', component: ModiIfinanComponent },
