@@ -7,6 +7,7 @@ import com.itzel.interfaces.contabilidad.Proyectos_rep_int;
 import com.itzel.modelo.contabilidad.Proyectos;
 import com.itzel.servicio.contabilidad.ProyectosService;
 import net.sf.jasperreports.engine.JRException;
+import org.apache.coyote.Response;
 import org.springframework.core.io.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -103,6 +104,21 @@ public class ProyectosApi {
     @GetMapping("/codnom")
     public ResponseEntity<List<Proyectos>> getByCodNom(@RequestParam String dato){
         return ResponseEntity.ok(proyectosService.findByCodNom(dato));
+    }
+
+    @GetMapping("/proyectosLike")
+    public ResponseEntity<Map<String, Object>> findByCodigoLike(@RequestParam String codigo){
+        List<Proyectos> proyectos = proyectosService.findByCodigoLike(codigo);
+        Map<String, Object> response = new HashMap<>();
+        if(proyectos.isEmpty()){
+            response.put("message", "Datos no encontrados");
+            response.put("status", "error");
+        }else{
+            response.put("message", "Datos encontrados");
+            response.put("status", "success");
+            response.put("body", proyectos);
+        }
+        return ResponseEntity.ok(response);
     }
 
 

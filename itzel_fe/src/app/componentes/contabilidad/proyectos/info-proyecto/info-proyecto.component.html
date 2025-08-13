@@ -1,15 +1,149 @@
-<div class="container-fluid mt-2 d-flex justify-content-center">
-    <div class="col-md-6">
-        <div class="card card-success card-outline mb-4">
-            <div class="card-header">
-                <div class="card-title">{{title}}</div>
-            </div>
-            <div class="card-body">
+<div class="container-fluid mt-2">
+    <div class="card">
+        <div class="card-body">
+            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                <div class="container-fluid">
+                    <h4 class="navbar-brand">{{title}}</h4>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
 
-            </div>
-            <div class="card-footer text-right">
-                <button type="submit" class="btn btn-sm btn-success me-2">Cancelar</button>
-                <button type="submit" class="btn btn-sm btn-outline-success me-2" >Aceptar</button>
+                </div>
+                <!-- Right navbar links -->
+                <ul class="navbar-nav ml-auto me-3 mt-1">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                            <a href="/add-proyecto" class="dropdown-item">
+                                <div class="media">
+                                    <div class="media-body">
+                                        <p class="dropdown-item-title mb-0">Nuevo</p>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="/imp-proyecto" class="dropdown-item">
+                                <div class="media">
+                                    <div class="media-body">
+                                        <p class="dropdown-item-title mb-0">Imprimir/Exportar</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid mt-2">
+    <div class="card mb-0">
+        <div class="card-body table-responsive  center-form card-size">
+            <div class="col-sm-9">
+                <div class="card mt-2">
+                    <div class="card-header cardTab">
+                        <ul class="nav nav-tabs card-header-tabs cardTab">
+                            <li class="nav-item"><a class="nav-link active cardTab" (click)="getProyectos(_codigo)"
+                                    href="#proyectos" data-toggle="tab">Proyectos</a>
+                            </li>
+                            <li class="nav-item"><a class="nav-link cardTab" href="#historialconsumo"
+                                    data-toggle="tab">Historial de
+                                    Consumo</a>
+                            </li>
+                            <li class="nav-item"><a class="nav-link cardTab" href="#conveniopago"
+                                    data-toggle="tab">Convenios de
+                                    pago</a>
+                            </li>
+                            <li class="nav-item"><a class="nav-link cardTab" href="#georeferencia"
+                                    data-toggle="tab">Ubicación</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="active tab-pane" id="proyectos">
+                                <div class="post">
+                                    <div class="user-block mb-0">
+                                        <div class="card-body table-responsive p-0 " style="height: 600px;">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="historialconsumo">
+                                <div class="post">
+                                    <div class="user-block mb-0">
+
+                                        <!-- <div  class="row col-sm-12"> -->
+                                        <div class="row col-sm-12 ml-1 mb-0">
+                                            <div class="row" id="divHistorial">
+                                                <canvas id="myChart"></canvas>
+                                            </div>
+                                        </div>
+                                        <!-- </div> -->
+                                        <div class="row col-sm-12">
+                                            <div class="col-sm-12 mx-0 px-0 text-right">
+                                                <button class="btn btn-sm theadHisconsumo sombra border">
+                                                    <i class="bi-x-octagon"></i></button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="conveniopago">
+                                <div class="post">
+                                    <div class="user-block mb-0">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="info-box bg-gradient-info">
+                                                    <span class="info-box-icon"><i class="far fa-bookmark"></i></span>
+                                                    <div class="info-box-content">
+                                                        <H5 class="info-box-text">Esta cuenta </H5>
+                                                        <h3>NO TIENE CONVEIOS</h3>
+                                                    </div>
+                                                    <!-- /.info-box-content -->
+                                                </div>
+                                                <!-- /.info-box -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="georeferencia">
+                                <div class="post">
+                                    <div class="user-block mb-0">
+                                        <div class="card text-center">
+                                            <!-- Sales Chart Canvas -->
+                                            <!--  <canvas id="salesChart" height="180" style="height: 180px;"></canvas> -->
+                                            <div class="card-body">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" id="historialconsumo1">
+                                <div class="col-sm-10 ml-5 mb-0">
+                                    <div class="row">
+                                        <div class="col-sm-11">
+                                        </div>
+                                        <div class="col-sm-1 mt-1 mx-0 px-0">
+                                            <button class="btn btn-sm theadHisconsumo sombra border">
+                                                <i class="bi-bar-chart"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

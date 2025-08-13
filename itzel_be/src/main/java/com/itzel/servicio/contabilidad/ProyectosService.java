@@ -170,4 +170,7 @@ public class ProyectosService {
     public  List<Proyectos> findByCodNom(String dato){
         return dao.findByCodNom(dato);
     }
+    public List<Proyectos> findByCodigoLike(String codigo){
+        return dao.findByCodigoLike(codigo);
+    }
 }

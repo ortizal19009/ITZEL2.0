@@ -4,6 +4,7 @@ import com.itzel.interfaces.contabilidad.Proyectos_rep_int;
 import com.itzel.modelo.contabilidad.Proyectos;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -26,5 +27,10 @@ public interface ProyectosR extends JpaRepository<Proyectos, Long> {
     List<Proyectos_rep_int> findByNivel(Long nivel);
     @Query(value = "SELECT p.codigo, p.nombre as nombreproyecto, p.movimiento, e.nivel, e.nombre as nombreestructura  FROM proyectos p JOIN estructura e ON p.idestructura = e.idestructura WHERE p.codigo LIKE ?1% ORDER BY p.codigo ASC", nativeQuery = true)
     List<Proyectos_rep_int> findByGrupo(String codigo);
+    @Query("SELECT p FROM Proyectos p WHERE p.codigo LIKE CONCAT(:codigo, '%')")
+    List<Proyectos> findByCodigoLike(@Param("codigo") String codigo);
+    List<Proyectos> findByCodigoStartingWith(String codigo);
+
+
 
 }

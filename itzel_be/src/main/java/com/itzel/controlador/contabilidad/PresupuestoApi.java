@@ -7,6 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -39,6 +42,21 @@ public class PresupuestoApi {
     @GetMapping("/byId")
     public ResponseEntity<Optional<Presupuesto>> findById(@RequestParam Long idpresupuesto){
         return ResponseEntity.ok(presupuestoService.findById(idpresupuesto));
+    }
+    @GetMapping("/presupuestosLike")
+    public ResponseEntity<Map<String, Object>> findByCodigoProyectoLike(@RequestParam String codigo){
+        List<Presupuesto> presupuestos = presupuestoService.findByCodigoProyectoLike(codigo);
+        Map<String, Object> response = new HashMap<>();
+        if(presupuestos.isEmpty()){
+            response.put("message", "Datos no encontrados");
+            response.put("status", "error");
+        }
+        else{
+            response.put("message", "Datos encontrados");
+            response.put("status", "success");
+            response.put("body", presupuestos);
+        }
+        return ResponseEntity.ok(response);
     }
 
 }

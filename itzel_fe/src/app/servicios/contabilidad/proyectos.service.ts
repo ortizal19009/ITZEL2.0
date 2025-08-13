@@ -43,6 +43,9 @@ export class ProyectosService {
   getByCodNom(dato: string) {
     return this.http.get(`${baseUrl}/codnom?dato=${dato}`);
   }
+  getByCodigoLike(codigo: string) {
+    return this.http.get(`${baseUrl}/proyectosLike?codigo=${codigo}`);
+  }
   /* OBTENER REPORTES JASPERREPORT */
   getAllProyectosReport(): Observable<Blob> {
     return this.http.get(`${baseUrl}/reportes/proyectos/findall`, {

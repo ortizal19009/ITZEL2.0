@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -38,5 +39,7 @@ public class PresupuestoService {
     public Optional<Presupuesto> findById(Long idpresupuesto){
         return dao.findById(idpresupuesto);
     }
-
+    public List<Presupuesto>findByCodigoProyectoLike(String codigo){
+        return dao.findByCodigoProyectoLike(codigo);
+    }
 }

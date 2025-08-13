@@ -46,4 +46,7 @@ export class PresupuestoService {
   findById(idpresupuesto: number) {
     return this.http.get(`${baseUrl}/byId?idpresupuesto=${idpresupuesto}`);
   }
+  getByCodigoProyectoLike(codigo: string) {
+    return this.http.get(`${baseUrl}/presupuestosLike?codigo=${codigo}`);
+  }
 }

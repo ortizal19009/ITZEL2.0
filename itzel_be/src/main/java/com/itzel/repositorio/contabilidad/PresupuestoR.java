@@ -1,10 +1,12 @@
 package com.itzel.repositorio.contabilidad;
 
 import com.itzel.modelo.contabilidad.Presupuesto;
+import jakarta.persistence.PreUpdate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -17,4 +19,15 @@ public interface PresupuestoR extends JpaRepository<Presupuesto, Long> {
     public Presupuesto findByCodpar(String codpar);
     @Query(value = "SELECT * FROM presupuesto where idproyecto = ?1", nativeQuery = true)
     public List<Presupuesto> findByIdPresupuesto(Long idpresupuesto);
+    @Query("""
+    SELECT p
+    FROM Presupuesto p
+    WHERE p.idproyecto.codigo LIKE CONCAT(:codigo, '%')
+    """)
+    List<Presupuesto> findByCodigoProyectoLike(@Param("codigo") String codigo);
+
+    List<Presupuesto> findByIdproyectoCodigoStartingWith(String codigo);
+
+
+
 }

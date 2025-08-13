@@ -5,9 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ProyectosService } from '../../../servicios/contabilidad/proyectos.service';
 import { ServerConfigService } from '../../../servicios/config/server-config.service';
 import { FilterPipe } from '../../../pipes/filter.pipe';
-import { AddProyectoComponent } from './add-proyecto/add-proyecto.component';
 import Swal from 'sweetalert2';
-import { ModiProyectoComponent } from './modi-proyecto/modi-proyecto.component';
 
 @Component({
   selector: 'app-proyectos',

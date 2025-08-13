@@ -24,7 +24,7 @@ export const routes: Routes = [
   { path: 'add-proyecto', component: AddProyectoComponent },
   { path: 'modi-proyecto/:idproyecto', component: ModiProyectoComponent },
   { path: 'imp-proyecto', component: ImpProyectoComponent },
-  { path: 'info-proyecto/:idproyecto', component: InfoProyectoComponent},
+  { path: 'info-proyecto/:codigo', component: InfoProyectoComponent},
     /* ==========IFINAN========== */
   { path: 'ifinan', component: IfinanComponent },
   { path: 'add-ifinan', component: AddIfinanComponent },
