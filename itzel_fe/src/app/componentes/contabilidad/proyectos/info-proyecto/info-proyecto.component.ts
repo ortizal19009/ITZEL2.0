@@ -30,6 +30,7 @@ export class InfoProyectoComponent implements OnInit {
     if (codigoParam) {
       console.log(codigoParam);
       this._codigo = codigoParam;
+      this.getGProyectos(codigoParam);
     } else {
       console.warn('No se encontró el parámetro "codigo" en la ruta.');
       this.swal('error', 'No se encontró el parámetro "codigo" en la ruta.');
@@ -38,14 +39,24 @@ export class InfoProyectoComponent implements OnInit {
       this.stringFilter = filterValue;
     });
   }
-  getProyectos(codigo: string) {
+  getGProyectos(codigo: string) {
     this.proyectoService.getByCodigoLike(codigo).subscribe({
-      next: (_proyectos: any) => {
-        console.log(_proyectos);
+      next: (pgastos: any) => {
+        console.log(pgastos);
+        this._pgastos = pgastos.body;
+        this.swal(pgastos.status, pgastos.message);
       },
       error: (e: any) => {
         console.error(e);
       },
+    });
+  }
+  getPartidasGastos(codigo: string) {
+    this.presupuestoService.getByCodigoProyectoLike(codigo).subscribe({
+      next: (datos: any) => {
+        console.log(datos);
+      },
+      error: (e: any) => console.error(e),
     });
   }
   swal(icon: any, mensaje: any) {

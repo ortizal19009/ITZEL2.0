@@ -49,11 +49,11 @@
                 <div class="card mt-2">
                     <div class="card-header cardTab">
                         <ul class="nav nav-tabs card-header-tabs cardTab">
-                            <li class="nav-item"><a class="nav-link active cardTab" (click)="getProyectos(_codigo)"
-                                    href="#proyectos" data-toggle="tab">Proyectos</a>
+                            <li class="nav-item"><a class="nav-link active cardTab" (click)="getGProyectos(_codigo)"
+                                    href="#proyectos" data-toggle="tab">G.Proyectos</a>
                             </li>
-                            <li class="nav-item"><a class="nav-link cardTab" href="#historialconsumo"
-                                    data-toggle="tab">Historial de
+                            <li class="nav-item"><a class="nav-link cardTab" (click)="getPartidasGastos(_codigo)"
+                                    href="#historialconsumo" data-toggle="tab">Historial de
                                     Consumo</a>
                             </li>
                             <li class="nav-item"><a class="nav-link cardTab" href="#conveniopago"
@@ -71,7 +71,26 @@
                                 <div class="post">
                                     <div class="user-block mb-0">
                                         <div class="card-body table-responsive p-0 " style="height: 600px;">
-
+                                            <table class="table table-striped table-sm table-hover table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Código</th>
+                                                        <th>Nombre</th>
+                                                        <th>Movimientos</th>
+                                                        <th>Estructura</th>
+                                                        <th>Fecha</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let pgasto of _pgastos">
+                                                        <td>{{pgasto.codigo}}</td>
+                                                        <td>{{pgasto.nombre}}</td>
+                                                        <td>{{pgasto.movimiento}}</td>
+                                                        <td>{{pgasto.idestructura.nombre}}</td>
+                                                        <td>{{pgasto.feccrea}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
