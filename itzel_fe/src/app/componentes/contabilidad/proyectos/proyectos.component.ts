@@ -9,12 +9,7 @@ import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-proyectos',
-  imports: [
-    CommonModule,
-    RouterLink,
-    FormsModule,
-    FilterPipe,
-  ],
+  imports: [CommonModule, RouterLink, FormsModule, FilterPipe],
   templateUrl: './proyectos.component.html',
   styleUrl: './proyectos.component.css',
 })

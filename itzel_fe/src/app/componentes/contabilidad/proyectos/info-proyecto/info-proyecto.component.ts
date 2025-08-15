@@ -3,21 +3,28 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ServerConfigService } from '../../../../servicios/config/server-config.service';
 import { FilterPipe } from '../../../../pipes/filter.pipe';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import Swal from 'sweetalert2';
 import { ProyectosService } from '../../../../servicios/contabilidad/proyectos.service';
 import { PresupuestoService } from '../../../../servicios/contabilidad/presupuesto.service';
 
 @Component({
   selector: 'app-info-proyecto',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, FilterPipe],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    FilterPipe,
+    RouterLink,
+  ],
   templateUrl: './info-proyecto.component.html',
   styleUrl: './info-proyecto.component.css',
 })
 export class InfoProyectoComponent implements OnInit {
-  title: string = 'Información de proyecto';
+  title: string = 'Detalles proyecto';
   stringFilter!: string;
   _pgastos?: any;
+  _gProyectos?: any;
   _codigo!: string;
   constructor(
     private serverConfigService: ServerConfigService,
@@ -28,9 +35,9 @@ export class InfoProyectoComponent implements OnInit {
   ngOnInit(): void {
     const codigoParam = this._params.snapshot.paramMap.get('codigo');
     if (codigoParam) {
-      console.log(codigoParam);
       this._codigo = codigoParam;
       this.getGProyectos(codigoParam);
+      this.title += ` ${codigoParam}`;
     } else {
       console.warn('No se encontró el parámetro "codigo" en la ruta.');
       this.swal('error', 'No se encontró el parámetro "codigo" en la ruta.');
@@ -41,10 +48,13 @@ export class InfoProyectoComponent implements OnInit {
   }
   getGProyectos(codigo: string) {
     this.proyectoService.getByCodigoLike(codigo).subscribe({
-      next: (pgastos: any) => {
-        console.log(pgastos);
-        this._pgastos = pgastos.body;
-        this.swal(pgastos.status, pgastos.message);
+      next: (proyectos: any) => {
+        if (proyectos.body) {
+          this._gProyectos = proyectos.body;
+          this.swal(proyectos.status, proyectos.message);
+        } else {
+          this.swal('warning', 'Proyecto sin datos ingresados');
+        }
       },
       error: (e: any) => {
         console.error(e);
@@ -54,7 +64,13 @@ export class InfoProyectoComponent implements OnInit {
   getPartidasGastos(codigo: string) {
     this.presupuestoService.getByCodigoProyectoLike(codigo).subscribe({
       next: (datos: any) => {
-        console.log(datos);
+        if (datos.body) {
+          console.log(datos);
+          this._pgastos = datos.body;
+          this.swal(datos.status, datos.message);
+        } else {
+          this.swal('warning', 'Proyecto no tiene partidas presupuestarias');
+        }
       },
       error: (e: any) => console.error(e),
     });

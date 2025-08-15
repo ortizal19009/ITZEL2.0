@@ -116,9 +116,9 @@ export class AddProyectoComponent implements OnInit {
   save() {
     this.proyectoService.proyectoSave(this.f_proyecto.value).subscribe({
       next: (request: any) => {
-        console.log(request);
         this._request = request.message;
         this.swal(request.status, request.message);
+        this.router.navigate(['/proyectos']);
       },
       error: (e: any) => {
         console.error(e);

@@ -144,11 +144,11 @@ public class ProyectosService {
                 response.put("status", "success");
                 response.put("message", "Eliminado");
             } else {
-                response.put("status", "denied");
+                response.put("status", "error");
                 response.put("message", "No se puede eliminar registro");
             }
         } else {
-            response.put("status", "denied");
+            response.put("status", "error");
             response.put("message", "Proyecto no encontrado");
         }
     }else{

@@ -16,6 +16,7 @@ import { AddPgastoComponent } from './componentes/contabilidad/presupuesto/gasto
 import { ModiPingresoComponent } from './componentes/contabilidad/presupuesto/ingresos/modi-pingreso/modi-pingreso.component';
 import { ModiPgastoComponent } from './componentes/contabilidad/presupuesto/gastos/modi-pgasto/modi-pgasto.component';
 import { InfoProyectoComponent } from './componentes/contabilidad/proyectos/info-proyecto/info-proyecto.component';
+import { InfoPgastoComponent } from './componentes/contabilidad/presupuesto/gastos/info-pgasto/info-pgasto.component';
 
 export const routes: Routes = [
   { path: 'inicio', component: AppWrapperComponent },
@@ -24,18 +25,24 @@ export const routes: Routes = [
   { path: 'add-proyecto', component: AddProyectoComponent },
   { path: 'modi-proyecto/:idproyecto', component: ModiProyectoComponent },
   { path: 'imp-proyecto', component: ImpProyectoComponent },
-  { path: 'info-proyecto/:codigo', component: InfoProyectoComponent},
-    /* ==========IFINAN========== */
+  { path: 'info-proyecto/:codigo', component: InfoProyectoComponent },
+  /* ==========IFINAN========== */
   { path: 'ifinan', component: IfinanComponent },
   { path: 'add-ifinan', component: AddIfinanComponent },
   { path: 'modi-ifinan/:idifinan', component: ModiIfinanComponent },
+  /* ==========CUENTAS========== */
   { path: 'cuentas', component: CuentasComponent },
   { path: 'add-cuenta/:idcuenta', component: AddCuentaComponent },
+  /* ==========PARTIDAS PRESUPUESTARIAS INGRESOS========== */
   { path: 'pingresos', component: IngresosComponent },
-  { path: 'pgastos', component: GastosComponent },
   { path: 'add-pingresos', component: AddPingresoComponent },
-  { path: 'add-pgastos', component: AddPgastoComponent },
   { path: 'modi-pingresos/:idpresupuesto', component: ModiPingresoComponent },
+  /* ==========PARTIDAS PRESUPUESTARIAS GASTOS========== */
+  { path: 'pgastos', component: GastosComponent },
+  { path: 'add-pgastos', component: AddPgastoComponent },
   { path: 'modi-pgasto/:idpresupuesto', component: ModiPgastoComponent },
-  { path: '', redirectTo: 'inicio', pathMatch: 'full' }
+  { path: 'info-pgasto/:idpresupuesto', component: InfoPgastoComponent },
+
+  //{ path: '', redirectTo: 'inicio', pathMatch: 'full' },
+  { path: '', redirectTo: '/proyectos', pathMatch: 'full' },
 ];

@@ -6,7 +6,7 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Route, Router, RouterLink } from '@angular/router';
 import { CuentasService } from '../../../../servicios/contabilidad/cuentas.service';
 import { Ifinan } from '../../../../modelos/contabilidad/ifinan';
 import { Cuentas } from '../../../../modelos/contabilidad/cuentas';
@@ -30,7 +30,8 @@ export class AddCuentaComponent implements OnInit {
   constructor(
     private _params: ActivatedRoute,
     private s_cuentas: CuentasService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {}
   ngOnInit(): void {
     this.idcuenta = +this._params.snapshot.paramMap.get('idcuenta')!;
@@ -72,6 +73,5 @@ export class AddCuentaComponent implements OnInit {
     cuenta.nomcue = f.nomcue;
     cuenta.movcue = f.movcue;
     cuenta.idnivel = f.idnivel;
-
   }
 }

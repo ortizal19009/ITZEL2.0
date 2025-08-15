@@ -124,7 +124,6 @@ export class ModiProyectoComponent implements OnInit {
   save() {
     this.proyectoService.proyectosUpdate(this.f_proyecto.value).subscribe({
       next: (request: any) => {
-        console.log(request);
         this.swal(request.status, request.message);
         setTimeout(() => {}, 3000);
         if (request.status === 'success') {
