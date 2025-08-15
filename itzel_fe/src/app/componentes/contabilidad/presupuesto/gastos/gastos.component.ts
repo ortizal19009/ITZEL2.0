@@ -9,10 +9,12 @@ import {
 import { FilterPipe } from '../../../../pipes/filter.pipe';
 import { PresupuestoService } from '../../../../servicios/contabilidad/presupuesto.service';
 import { ServerConfigService } from '../../../../servicios/config/server-config.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-gastos',
-  imports: [CommonModule, FormsModule, FilterPipe, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, FilterPipe, ReactiveFormsModule,RouterLink,
+],
   templateUrl: './gastos.component.html',
   styleUrl: './gastos.component.css',
 })

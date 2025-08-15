@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ServerConfigService } from '../../../../servicios/config/server-config.service';
@@ -30,7 +30,8 @@ export class InfoProyectoComponent implements OnInit {
     private serverConfigService: ServerConfigService,
     private _params: ActivatedRoute,
     private proyectoService: ProyectosService,
-    private presupuestoService: PresupuestoService
+    private presupuestoService: PresupuestoService,
+    private location: Location
   ) {}
   ngOnInit(): void {
     const codigoParam = this._params.snapshot.paramMap.get('codigo');
@@ -46,6 +47,10 @@ export class InfoProyectoComponent implements OnInit {
       this.stringFilter = filterValue;
     });
   }
+  volver(): void {
+    this.location.back();
+  }
+
   getGProyectos(codigo: string) {
     this.proyectoService.getByCodigoLike(codigo).subscribe({
       next: (proyectos: any) => {
@@ -65,7 +70,6 @@ export class InfoProyectoComponent implements OnInit {
     this.presupuestoService.getByCodigoProyectoLike(codigo).subscribe({
       next: (datos: any) => {
         if (datos.body) {
-          console.log(datos);
           this._pgastos = datos.body;
           this.swal(datos.status, datos.message);
         } else {
