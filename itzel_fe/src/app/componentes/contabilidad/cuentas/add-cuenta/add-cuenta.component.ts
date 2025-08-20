@@ -5,6 +5,7 @@ import {
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Route, Router, RouterLink } from '@angular/router';
 import { CuentasService } from '../../../../servicios/contabilidad/cuentas.service';
@@ -36,21 +37,24 @@ export class AddCuentaComponent implements OnInit {
   ngOnInit(): void {
     this.idcuenta = +this._params.snapshot.paramMap.get('idcuenta')!;
     this.f_cuenta = this.fb.group({
-      codcue: '',
-      nomcue: '',
-      movcue: false,
-      idnivel: '',
-      grucue: '',
-      nomgrup: '',
-      asodebe: '',
-      asohaber: '',
-      tiptran: '',
-      sigef: '',
-      grubalances: '',
-      grufluefec: '',
-      balancostos: '',
+      codcue: ['',Validators.required],
+      nomcue: ['',Validators.required],
+      movcue: [false,Validators.required],
+      nivel: ['',Validators.required],
+      grucue: ['',Validators.required],
+      nomgrup: ['',Validators.required],
+      asodebe: ['',Validators.required],
+      asohaber: ['',Validators.required],
+      tiptran: [0,Validators.required],
+      sigef: ['',Validators.required],
+      grubalances: ['',Validators.required],
+      grufluefec: ['',Validators.required],
+      balancostos: ['',Validators.required],
     });
     this.getCuentaById(this.idcuenta);
+  }
+  get f() {
+    return this.f_cuenta.controls;
   }
   getCuentaById(idcuenta: number) {
     this.s_cuentas.getByIdCuenta(idcuenta).subscribe({
@@ -72,6 +76,6 @@ export class AddCuentaComponent implements OnInit {
     cuenta.codcue = f.cuenta;
     cuenta.nomcue = f.nomcue;
     cuenta.movcue = f.movcue;
-    cuenta.idnivel = f.idnivel;
+    cuenta.nivel = f.nivel;
   }
 }

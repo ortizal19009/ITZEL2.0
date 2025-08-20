@@ -9,12 +9,14 @@
                     <div class="col-sm">
                         <div class="input-group input-group-sm mb-3">
                             <span class="input-group-text" id="basic-addon1">Grupo</span>
-                            <input type="text" class="form-control form-control-sm col-sm-4"
-                                (change)="getValidacionCodigo($event)" formControlName="grucue"
-                                aria-describedby="basic-addon1" />
-                            <input type="text" class="form-control form-control-sm col-sm"
-                                (change)="getValidacionCodigo($event)" formControlName="nomgrup"
-                                aria-describedby="basic-addon1" />
+                            <input type="text" [ngClass]="{'is-invalid': f['grucue'].invalid && f['grucue'].touched,
+                           'is-valid': f['grucue'].valid, '': f['grucue'].untouched}"
+                                class="form-control form-control-sm col-sm-4" (change)="getValidacionCodigo($event)"
+                                formControlName="grucue" aria-describedby="basic-addon1" />
+                            <input type="text" [ngClass]="{'is-invalid': f['nomgrup'].invalid && f['nomgrup'].touched,
+                           'is-valid': f['nomgrup'].valid, '': f['nomgrup'].untouched}"
+                                class="form-control form-control-sm col-sm" (change)="getValidacionCodigo($event)"
+                                formControlName="nomgrup" aria-describedby="basic-addon1" />
                             <div *ngIf="sw_codigo" class="error">
                                 <i class="bi bi-x-circle p-2 mt-auto"></i>
                             </div>
@@ -26,7 +28,8 @@
                         <div class="input-group input-group-sm mb-3">
                             <span class="input-group-text" id="basic-addon1">Nivel</span>
                             <input type="text" class="form-control form-control-sm"
-                                (change)="getValidacionCodigo($event)" formControlName="idnivel"
+                                (change)="getValidacionCodigo($event)" [ngClass]="{'is-invalid': f['nivel'].invalid && f['nivel'].touched,
+                           'is-valid': f['nivel'].valid, '': f['nivel'].untouched}" formControlName="nivel"
                                 aria-describedby="basic-addon1" />
                             <div *ngIf="sw_codigo" class="error">
                                 <i class="bi bi-x-circle p-2 mt-auto"></i>
@@ -37,7 +40,8 @@
                         <div class="input-group input-group-sm mb-3">
                             <span class="input-group-text" id="basic-addon1">Código</span>
                             <input type="text" class="form-control form-control-sm"
-                                (change)="getValidacionCodigo($event)" formControlName="codcue"
+                                (change)="getValidacionCodigo($event)"[ngClass]="{'is-invalid': f['codcue'].invalid && f['codcue'].touched,
+                           'is-valid': f['codcue'].valid, '': f['codcue'].untouched}" formControlName="codcue"
                                 aria-describedby="basic-addon1" />
                             <div *ngIf="sw_codigo" class="error">
                                 <i class="bi bi-x-circle p-2 mt-auto"></i>
@@ -50,7 +54,8 @@
                         <div class="mb-3">
                             <div class="input-group input-group-sm mb3">
                                 <span class="input-group-text " id="basic-addon3">Nombre</span>
-                                <input type="text" class="form-control" (change)="getValidarNombre($event)"
+                                <input type="text" class="form-control" [ngClass]="{'is-invalid': f['nomcue'].invalid && f['nomcue'].touched,
+                           'is-valid': f['nomcue'].valid, '': f['nomcue'].untouched}" (change)="getValidarNombre($event)"
                                     formControlName="nomcue" aria-describedby="basic-addon3 basic-addon4" />
                                 <div *ngIf="sw_nombre" class="error">
                                     <i class="bi bi-x-circle p-2 mt-auto"></i>
@@ -65,7 +70,8 @@
                         <div class="mb-3">
                             <div class="input-group input-group-sm mb3">
                                 <span class="input-group-text " id="basic-addon3">Partida asociada al debe</span>
-                                <input type="text" class="form-control" formControlName="asodebe"
+                                <input type="text" class="form-control"[ngClass]="{'is-invalid': f['asodebe'].invalid && f['asodebe'].touched,
+                           'is-valid': f['asodebe'].valid, '': f['asodebe'].untouched}" formControlName="asodebe"
                                     aria-describedby="basic-addon3 basic-addon4" />
                                 <div *ngIf="sw_nombre" class="error">
                                     <i class="bi bi-x-circle p-2 mt-auto"></i>
@@ -78,7 +84,8 @@
                         <div class="mb-3">
                             <div class="input-group input-group-sm mb3">
                                 <span class="input-group-text " id="basic-addon3">Partida asosciada al haber</span>
-                                <input type="text" class="form-control" formControlName="asohaber"
+                                <input type="text" class="form-control"[ngClass]="{'is-invalid': f['asohaber'].invalid && f['asohaber'].touched,
+                           'is-valid': f['asohaber'].valid, '': f['asohaber'].untouched}" formControlName="asohaber"
                                     aria-describedby="basic-addon3 basic-addon4" />
                                 <div *ngIf="sw_nombre" class="error">
                                     <i class="bi bi-x-circle p-2 mt-auto"></i>
@@ -96,7 +103,8 @@
                             </div>
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
-                                    <input type="checkbox" formControlName="movcue"
+                                    <input type="checkbox"[ngClass]="{'is-invalid': f['movcue'].invalid && f['movcue'].touched,
+                           'is-valid': f['movcue'].valid, '': f['movcue'].untouched}" formControlName="movcue"
                                         aria-label="Checkbox for following text input">
                                 </div>
                             </div>
@@ -109,7 +117,8 @@
                             </div>
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
-                                    <input type="checkbox" formControlName="sigef"
+                                    <input type="checkbox"[ngClass]="{'is-invalid': f['sigef'].invalid && f['sigef'].touched,
+                           'is-valid': f['sigef'].valid, '': f['sigef'].untouched}" formControlName="sigef"
                                         aria-label="Checkbox for following text input">
                                 </div>
                             </div>
@@ -118,7 +127,8 @@
                     <div class="col-sm">
                         <div class="input-group input-group-sm mb-3">
                             <span class="input-group-text">Tipo de transacción</span>
-                            <select class="form-control" formControlName="idestructura">
+                            <select class="form-control"[ngClass]="{'is-invalid': f['tiptran'].invalid && f['tiptran'].touched,
+                           'is-valid': f['tiptran'].valid, '': f['tiptran'].untouched}" formControlName="tiptran">
                                 <option *ngFor="let tiptran of tiptrans" [ngValue]="tiptran.key">
                                     {{tiptran.name}}</option>
                             </select>
@@ -131,7 +141,7 @@
         <div class="card-footer text-right">
             <button type="submit" [routerLink]="['/cuentas']" class="btn btn-sm btn-success me-2">Cancelar</button>
             <button type="submit" class="btn btn-sm btn-outline-success" (click)="save()"
-                [disabled]="sw_codigo">Aceptar</button>
+                [disabled]="sw_codigo || f_cuenta.invalid">Aceptar</button>
         </div>
     </div>
 </div>

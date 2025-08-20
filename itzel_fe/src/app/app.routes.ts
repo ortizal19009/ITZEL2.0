@@ -17,6 +17,8 @@ import { ModiPingresoComponent } from './componentes/contabilidad/presupuesto/in
 import { ModiPgastoComponent } from './componentes/contabilidad/presupuesto/gastos/modi-pgasto/modi-pgasto.component';
 import { InfoProyectoComponent } from './componentes/contabilidad/proyectos/info-proyecto/info-proyecto.component';
 import { InfoPgastoComponent } from './componentes/contabilidad/presupuesto/gastos/info-pgasto/info-pgasto.component';
+import { ModiCuentaComponent } from './componentes/contabilidad/cuentas/modi-cuenta/modi-cuenta.component';
+import { InfoCuentaComponent } from './componentes/contabilidad/cuentas/info-cuenta/info-cuenta.component';
 
 export const routes: Routes = [
   { path: 'inicio', component: AppWrapperComponent },
@@ -33,6 +35,8 @@ export const routes: Routes = [
   /* ==========CUENTAS========== */
   { path: 'cuentas', component: CuentasComponent },
   { path: 'add-cuenta/:idcuenta', component: AddCuentaComponent },
+  { path: 'modi-cuenta/:idcuenta', component: ModiCuentaComponent },
+  { path: 'info-cuenta/:idcuenta', component: InfoCuentaComponent },
   /* ==========PARTIDAS PRESUPUESTARIAS INGRESOS========== */
   { path: 'pingresos', component: IngresosComponent },
   { path: 'add-pingresos', component: AddPingresoComponent },

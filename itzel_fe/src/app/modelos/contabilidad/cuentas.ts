@@ -5,7 +5,7 @@ export class Cuentas {
   codcue?: string;
   nomcue?: string;
   movcue?: Boolean;
-  idnivel?: Niveles;
+  nivel?: Niveles;
   grucue?: string;
   asodebe?: string;
   asohaber?: string;
