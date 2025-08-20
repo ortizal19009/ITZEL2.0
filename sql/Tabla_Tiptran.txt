@@ -1,0 +1,21 @@
+CREATE TABLE tiptran (
+	numero int2 NULL,
+	nombre varchar(30) NOT NULL
+);
+
+INSERT INTO public.tiptran (numero,nombre) VALUES
+	 (0,'General'),
+	 (1,'Desde Trámite'),
+	 (2,'Anticipo'),
+	 (3,'Cuenta por Cobrar'),
+	 (4,'Cuenta por Cobrar Año Anterior'),
+	 (5,'Depósitos y Fondos de Terceros'),
+	 (6,'Cuenta por Pagar'),
+	 (7,'Cuenta por Pagar Año Anterior'),
+	 (8,'Liquidacion de Anticipo'),
+	 (9,'Cobro');
+INSERT INTO public.tiptran (numero,nombre) VALUES
+	 (10,'Cobro del Año Anterior'),
+	 (11,'Liquidacion Dep.Fon.Terceros'),
+	 (12,'Pago'),
+	 (13,'Pago del Año Anterior (Presup)');

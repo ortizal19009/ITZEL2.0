@@ -1,4 +1,7 @@
 package com.itzel.repositorio.contabilidad;
 
-public interface TiptranR {
+import com.itzel.modelo.contabilidad.Tiptran;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface TiptranR extends JpaRepository<Tiptran, Long> {
 }
