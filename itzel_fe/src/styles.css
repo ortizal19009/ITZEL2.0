@@ -31,3 +31,12 @@
 .selected {
   background-color: #cfe8fc;
 }
+
+.truncate-text {
+  max-width: 200px;     /* ajusta el ancho de la celda */
+  white-space: nowrap;  /* evita saltos de línea */
+  overflow: hidden;     /* oculta lo que no cabe */
+  text-overflow: ellipsis; /* agrega los ... */
+  display: inline-block;
+  vertical-align: middle;
+}

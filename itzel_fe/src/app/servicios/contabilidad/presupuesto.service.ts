@@ -49,4 +49,7 @@ export class PresupuestoService {
   getByCodigoProyectoLike(codigo: string) {
     return this.http.get(`${baseUrl}/presupuestosLike?codigo=${codigo}`);
   }
+  findTipparAndCodpar(tippar: number, codpar: string) {
+    return this.http.get(`${baseUrl}/debhab?tippar=${tippar}&codpar=${codpar}`);
+  }
 }

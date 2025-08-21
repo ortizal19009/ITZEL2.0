@@ -58,5 +58,19 @@ public class PresupuestoApi {
         }
         return ResponseEntity.ok(response);
     }
-
+    @GetMapping("/debhab")
+    public ResponseEntity<Map<String, Object>> findTipparAndCodpar(@RequestParam int tippar, @RequestParam String codpar){
+        List<Presupuesto> presupuestos = presupuestoService.findTipparAndCodpar(tippar, codpar);
+        Map<String, Object> response = new HashMap<>();
+        if(presupuestos.isEmpty()){
+            response.put("message", "Datos no encontrados");
+            response.put("status", "warning");
+        }
+        else{
+            response.put("message", "Datos encontrados");
+            response.put("status", "success");
+            response.put("body", presupuestos);
+        }
+        return ResponseEntity.ok(response);
+    }
 }

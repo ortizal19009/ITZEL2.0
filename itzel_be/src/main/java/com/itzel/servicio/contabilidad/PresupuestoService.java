@@ -42,4 +42,7 @@ public class PresupuestoService {
     public List<Presupuesto>findByCodigoProyectoLike(String codigo){
         return dao.findByCodigoProyectoLike(codigo);
     }
+    public List<Presupuesto> findTipparAndCodpar(int tippar , String codpar){
+        return dao.findByTipparAndCodparContainingOrderByCodpar(tippar, codpar);
+    }
 }

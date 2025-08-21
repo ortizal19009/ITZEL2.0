@@ -28,6 +28,5 @@ public interface PresupuestoR extends JpaRepository<Presupuesto, Long> {
 
     List<Presupuesto> findByIdproyectoCodigoStartingWith(String codigo);
 
-
-
+    List<Presupuesto> findByTipparAndCodparContainingOrderByCodpar(int tippar, String codpar);
 }

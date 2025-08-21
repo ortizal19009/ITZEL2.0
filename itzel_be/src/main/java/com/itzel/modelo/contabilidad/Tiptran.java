@@ -1,10 +1,7 @@
 package com.itzel.modelo.contabilidad;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
@@ -17,6 +14,9 @@ public class Tiptran {
     private Long numero;
     private String nombre;
 
+    public Tiptran() {
+    }
+
     public Tiptran(Long numero, String nombre) {
         this.numero = numero;
         this.nombre = nombre;
@@ -28,5 +28,13 @@ public class Tiptran {
 
     public void setNumero(Long numero) {
         this.numero = numero;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 }

@@ -5,7 +5,7 @@
 -- Dumped from database version 16.3
 -- Dumped by pg_dump version 16.3
 
--- Started on 2025-08-14 21:02:34
+-- Started on 2025-08-20 17:57:46
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -23,7 +23,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- TOC entry 224 (class 1259 OID 5732657)
+-- TOC entry 215 (class 1259 OID 5986407)
 -- Name: beneficiarios; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -57,7 +57,7 @@ CREATE TABLE public.beneficiarios (
 ALTER TABLE public.beneficiarios OWNER TO postgres;
 
 --
--- TOC entry 223 (class 1259 OID 5732656)
+-- TOC entry 216 (class 1259 OID 5986423)
 -- Name: beneficiarios_idbene_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -73,8 +73,8 @@ CREATE SEQUENCE public.beneficiarios_idbene_seq
 ALTER SEQUENCE public.beneficiarios_idbene_seq OWNER TO postgres;
 
 --
--- TOC entry 4941 (class 0 OID 0)
--- Dependencies: 223
+-- TOC entry 4957 (class 0 OID 0)
+-- Dependencies: 216
 -- Name: beneficiarios_idbene_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -82,7 +82,7 @@ ALTER SEQUENCE public.beneficiarios_idbene_seq OWNED BY public.beneficiarios.idb
 
 
 --
--- TOC entry 222 (class 1259 OID 5732641)
+-- TOC entry 217 (class 1259 OID 5986424)
 -- Name: clasificador; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -111,7 +111,7 @@ CREATE TABLE public.clasificador (
 ALTER TABLE public.clasificador OWNER TO postgres;
 
 --
--- TOC entry 221 (class 1259 OID 5732640)
+-- TOC entry 218 (class 1259 OID 5986434)
 -- Name: clasificador_idclasificador_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -127,8 +127,8 @@ CREATE SEQUENCE public.clasificador_idclasificador_seq
 ALTER SEQUENCE public.clasificador_idclasificador_seq OWNER TO postgres;
 
 --
--- TOC entry 4942 (class 0 OID 0)
--- Dependencies: 221
+-- TOC entry 4958 (class 0 OID 0)
+-- Dependencies: 218
 -- Name: clasificador_idclasificador_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -136,7 +136,60 @@ ALTER SEQUENCE public.clasificador_idclasificador_seq OWNED BY public.clasificad
 
 
 --
--- TOC entry 220 (class 1259 OID 5732634)
+-- TOC entry 232 (class 1259 OID 5986513)
+-- Name: cuentas; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.cuentas (
+    idcuenta bigint NOT NULL,
+    codcue character varying(35) NOT NULL,
+    nomcue character varying(60) NOT NULL,
+    movcue boolean NOT NULL,
+    idnivel smallint NOT NULL,
+    grucue character varying(30) NOT NULL,
+    asodebe character varying(35),
+    asohaber character varying(35),
+    tiptran smallint DEFAULT 0 NOT NULL,
+    sigef boolean NOT NULL,
+    grubalances integer,
+    grufluefec integer,
+    resulcostos smallint,
+    balancostos smallint,
+    usucrea integer NOT NULL,
+    feccrea timestamp without time zone NOT NULL,
+    usumodi integer,
+    fecmodi timestamp without time zone
+);
+
+
+ALTER TABLE public.cuentas OWNER TO postgres;
+
+--
+-- TOC entry 231 (class 1259 OID 5986512)
+-- Name: cuentas_idcuenta_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.cuentas_idcuenta_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.cuentas_idcuenta_seq OWNER TO postgres;
+
+--
+-- TOC entry 4959 (class 0 OID 0)
+-- Dependencies: 231
+-- Name: cuentas_idcuenta_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.cuentas_idcuenta_seq OWNED BY public.cuentas.idcuenta;
+
+
+--
+-- TOC entry 219 (class 1259 OID 5986435)
 -- Name: estructura; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -151,7 +204,7 @@ CREATE TABLE public.estructura (
 ALTER TABLE public.estructura OWNER TO postgres;
 
 --
--- TOC entry 219 (class 1259 OID 5732633)
+-- TOC entry 220 (class 1259 OID 5986438)
 -- Name: estructura_idestructura_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -167,8 +220,8 @@ CREATE SEQUENCE public.estructura_idestructura_seq
 ALTER SEQUENCE public.estructura_idestructura_seq OWNER TO postgres;
 
 --
--- TOC entry 4943 (class 0 OID 0)
--- Dependencies: 219
+-- TOC entry 4960 (class 0 OID 0)
+-- Dependencies: 220
 -- Name: estructura_idestructura_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -176,7 +229,7 @@ ALTER SEQUENCE public.estructura_idestructura_seq OWNED BY public.estructura.ide
 
 
 --
--- TOC entry 226 (class 1259 OID 5732675)
+-- TOC entry 221 (class 1259 OID 5986439)
 -- Name: gruposbene; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -196,7 +249,7 @@ CREATE TABLE public.gruposbene (
 ALTER TABLE public.gruposbene OWNER TO postgres;
 
 --
--- TOC entry 225 (class 1259 OID 5732674)
+-- TOC entry 222 (class 1259 OID 5986448)
 -- Name: gruposbene_idgrupo_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -212,8 +265,8 @@ CREATE SEQUENCE public.gruposbene_idgrupo_seq
 ALTER SEQUENCE public.gruposbene_idgrupo_seq OWNER TO postgres;
 
 --
--- TOC entry 4944 (class 0 OID 0)
--- Dependencies: 225
+-- TOC entry 4961 (class 0 OID 0)
+-- Dependencies: 222
 -- Name: gruposbene_idgrupo_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -221,7 +274,7 @@ ALTER SEQUENCE public.gruposbene_idgrupo_seq OWNED BY public.gruposbene.idgrupo;
 
 
 --
--- TOC entry 218 (class 1259 OID 5732629)
+-- TOC entry 223 (class 1259 OID 5986449)
 -- Name: ifinan; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -236,7 +289,7 @@ CREATE TABLE public.ifinan (
 ALTER TABLE public.ifinan OWNER TO postgres;
 
 --
--- TOC entry 217 (class 1259 OID 5732628)
+-- TOC entry 224 (class 1259 OID 5986452)
 -- Name: ifinan_idifinan_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -252,8 +305,8 @@ CREATE SEQUENCE public.ifinan_idifinan_seq
 ALTER SEQUENCE public.ifinan_idifinan_seq OWNER TO postgres;
 
 --
--- TOC entry 4945 (class 0 OID 0)
--- Dependencies: 217
+-- TOC entry 4962 (class 0 OID 0)
+-- Dependencies: 224
 -- Name: ifinan_idifinan_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -261,7 +314,7 @@ ALTER SEQUENCE public.ifinan_idifinan_seq OWNED BY public.ifinan.idifinan;
 
 
 --
--- TOC entry 216 (class 1259 OID 5732622)
+-- TOC entry 225 (class 1259 OID 5986453)
 -- Name: niveles; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -275,7 +328,7 @@ CREATE TABLE public.niveles (
 ALTER TABLE public.niveles OWNER TO postgres;
 
 --
--- TOC entry 215 (class 1259 OID 5732621)
+-- TOC entry 226 (class 1259 OID 5986456)
 -- Name: niveles_idnivel_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -291,8 +344,8 @@ CREATE SEQUENCE public.niveles_idnivel_seq
 ALTER SEQUENCE public.niveles_idnivel_seq OWNER TO postgres;
 
 --
--- TOC entry 4946 (class 0 OID 0)
--- Dependencies: 215
+-- TOC entry 4963 (class 0 OID 0)
+-- Dependencies: 226
 -- Name: niveles_idnivel_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -300,7 +353,7 @@ ALTER SEQUENCE public.niveles_idnivel_seq OWNED BY public.niveles.idnivel;
 
 
 --
--- TOC entry 230 (class 1259 OID 5732698)
+-- TOC entry 227 (class 1259 OID 5986457)
 -- Name: presupuesto; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -329,7 +382,7 @@ CREATE TABLE public.presupuesto (
 ALTER TABLE public.presupuesto OWNER TO postgres;
 
 --
--- TOC entry 229 (class 1259 OID 5732697)
+-- TOC entry 228 (class 1259 OID 5986467)
 -- Name: presupuesto_idpresupuesto_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -345,8 +398,8 @@ CREATE SEQUENCE public.presupuesto_idpresupuesto_seq
 ALTER SEQUENCE public.presupuesto_idpresupuesto_seq OWNER TO postgres;
 
 --
--- TOC entry 4947 (class 0 OID 0)
--- Dependencies: 229
+-- TOC entry 4964 (class 0 OID 0)
+-- Dependencies: 228
 -- Name: presupuesto_idpresupuesto_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -354,7 +407,7 @@ ALTER SEQUENCE public.presupuesto_idpresupuesto_seq OWNED BY public.presupuesto.
 
 
 --
--- TOC entry 228 (class 1259 OID 5732686)
+-- TOC entry 229 (class 1259 OID 5986468)
 -- Name: proyectos; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -374,7 +427,7 @@ CREATE TABLE public.proyectos (
 ALTER TABLE public.proyectos OWNER TO postgres;
 
 --
--- TOC entry 227 (class 1259 OID 5732685)
+-- TOC entry 230 (class 1259 OID 5986471)
 -- Name: proyectos_idproyecto_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -390,8 +443,8 @@ CREATE SEQUENCE public.proyectos_idproyecto_seq
 ALTER SEQUENCE public.proyectos_idproyecto_seq OWNER TO postgres;
 
 --
--- TOC entry 4948 (class 0 OID 0)
--- Dependencies: 227
+-- TOC entry 4965 (class 0 OID 0)
+-- Dependencies: 230
 -- Name: proyectos_idproyecto_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -399,7 +452,20 @@ ALTER SEQUENCE public.proyectos_idproyecto_seq OWNED BY public.proyectos.idproye
 
 
 --
--- TOC entry 4732 (class 2604 OID 5732660)
+-- TOC entry 233 (class 1259 OID 5986520)
+-- Name: tiptran; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.tiptran (
+    numero smallint,
+    nombre character varying(30) NOT NULL
+);
+
+
+ALTER TABLE public.tiptran OWNER TO postgres;
+
+--
+-- TOC entry 4732 (class 2604 OID 5986472)
 -- Name: beneficiarios idbene; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -407,7 +473,7 @@ ALTER TABLE ONLY public.beneficiarios ALTER COLUMN idbene SET DEFAULT nextval('p
 
 
 --
--- TOC entry 4726 (class 2604 OID 5732644)
+-- TOC entry 4746 (class 2604 OID 5986473)
 -- Name: clasificador idclasificador; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -415,7 +481,15 @@ ALTER TABLE ONLY public.clasificador ALTER COLUMN idclasificador SET DEFAULT nex
 
 
 --
--- TOC entry 4725 (class 2604 OID 5732637)
+-- TOC entry 4771 (class 2604 OID 5986516)
+-- Name: cuentas idcuenta; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cuentas ALTER COLUMN idcuenta SET DEFAULT nextval('public.cuentas_idcuenta_seq'::regclass);
+
+
+--
+-- TOC entry 4752 (class 2604 OID 5986474)
 -- Name: estructura idestructura; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -423,7 +497,7 @@ ALTER TABLE ONLY public.estructura ALTER COLUMN idestructura SET DEFAULT nextval
 
 
 --
--- TOC entry 4746 (class 2604 OID 5732678)
+-- TOC entry 4753 (class 2604 OID 5986475)
 -- Name: gruposbene idgrupo; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -431,7 +505,7 @@ ALTER TABLE ONLY public.gruposbene ALTER COLUMN idgrupo SET DEFAULT nextval('pub
 
 
 --
--- TOC entry 4724 (class 2604 OID 5732632)
+-- TOC entry 4760 (class 2604 OID 5986476)
 -- Name: ifinan idifinan; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -439,7 +513,7 @@ ALTER TABLE ONLY public.ifinan ALTER COLUMN idifinan SET DEFAULT nextval('public
 
 
 --
--- TOC entry 4723 (class 2604 OID 5732625)
+-- TOC entry 4761 (class 2604 OID 5986477)
 -- Name: niveles idnivel; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -447,7 +521,7 @@ ALTER TABLE ONLY public.niveles ALTER COLUMN idnivel SET DEFAULT nextval('public
 
 
 --
--- TOC entry 4754 (class 2604 OID 5732701)
+-- TOC entry 4762 (class 2604 OID 5986478)
 -- Name: presupuesto idpresupuesto; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -455,7 +529,7 @@ ALTER TABLE ONLY public.presupuesto ALTER COLUMN idpresupuesto SET DEFAULT nextv
 
 
 --
--- TOC entry 4753 (class 2604 OID 5732689)
+-- TOC entry 4770 (class 2604 OID 5986479)
 -- Name: proyectos idproyecto; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -463,8 +537,8 @@ ALTER TABLE ONLY public.proyectos ALTER COLUMN idproyecto SET DEFAULT nextval('p
 
 
 --
--- TOC entry 4929 (class 0 OID 5732657)
--- Dependencies: 224
+-- TOC entry 4933 (class 0 OID 5986407)
+-- Dependencies: 215
 -- Data for Name: beneficiarios; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -1500,8 +1574,8 @@ COPY public.beneficiarios (idbene, codben, nomben, tpidben, rucben, ciben, tlfbe
 
 
 --
--- TOC entry 4927 (class 0 OID 5732641)
--- Dependencies: 222
+-- TOC entry 4935 (class 0 OID 5986424)
+-- Dependencies: 217
 -- Data for Name: clasificador; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -2953,8 +3027,2031 @@ COPY public.clasificador (idclasificador, codpar, nivpar, grupar, nompar, despar
 
 
 --
--- TOC entry 4925 (class 0 OID 5732634)
--- Dependencies: 220
+-- TOC entry 4950 (class 0 OID 5986513)
+-- Dependencies: 232
+-- Data for Name: cuentas; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.cuentas (idcuenta, codcue, nomcue, movcue, idnivel, grucue, asodebe, asohaber, tiptran, sigef, grubalances, grufluefec, resulcostos, balancostos, usucrea, feccrea, usumodi, fecmodi) FROM stdin;
+1	1	ACTIVOS	f	1	0	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+2	11	OPERACIONALES	f	2	1	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+3	111	DISPONIBILIDADES	f	3	11	\N	\N	0	f	111	18	\N	\N	1	2025-01-20 17:14:10	\N	\N
+4	111.01	Cajas Recaudadoras	t	4	111	\N	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+5	111.03	Banco Central del Ecuador Moneda Nacional	f	4	111	\N	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+19	112	ANTICIPOS DE FONDOS	f	3	11	\N	\N	0	f	111	18	\N	\N	1	2025-01-20 17:14:10	\N	\N
+20	112.01	Anticipos a Servidores Publicos	f	4	112	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+21	112.03	Anticipos a Contratistas	f	4	112	\N	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+23	112.07	Anticipos por Obligaciones de otros Entes Publicos	f	4	112	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+26	112.13.03	Fondo Rotativo Institucional	f	5	112.13	\N	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+28	113	CUENTAS POR COBRAR	f	3	11	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+30	113.13	Cuentas por Cobrar Tasas y Contribuciones	f	4	113	\N	\N	0	t	111	11	\N	\N	1	2025-01-20 17:14:10	\N	\N
+31	113.14	Cuentas por Cobrar Venta de Bienes y Servicios	f	4	113	\N	\N	0	t	111	11	\N	\N	1	2025-01-20 17:14:10	\N	\N
+32	112.13	Fondos de Reposicion	f	4	112	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+33	113.17	Cuentas por Cobrar Rentas De Inversiones Y Multas	f	4	113	\N	\N	0	t	111	11	\N	\N	1	2025-01-20 17:14:10	\N	\N
+34	113.18	Cuentas por Cobrar Transferencias Corrientes	f	4	113	\N	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+35	113.19	Cuentas por Cobrar Otros Ingresos	f	4	113	\N	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+39	113.28	Cuentas por Cobrar Transferencia De Capital	f	4	113	\N	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+40	113.36	Cuentas por Cobrar Financiamiento Publico	f	4	113	\N	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+41	113.81	Cuentas por Cobrar Impuesto al Valor Agregado	f	4	113	\N	\N	0	f	111	17	\N	\N	1	2025-01-20 17:14:10	\N	\N
+43	113.98	Cuentas por Cobrar de Años Anteriores	f	4	113	\N	\N	0	t	111	15	\N	\N	1	2025-01-20 17:14:10	\N	\N
+44	12	INVERSIONES FINANCIERAS	f	2	1	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+56	112.13.01	Caja Chica Institucional	t	5	112.13			0	t	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+78	124	DEUDORES FINANCIEROS	f	3	12	\N	\N	0	f	122	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+86	124.98	Cuentas por Cobrar Años Anteriores	f	4	124	\N	\N	0	f	122	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+88	124.98.01	Cuentas Pendientes por Cobrar	f	5	124.98	\N		0	t	122	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+184	13	INVERSIONES EN EXISTENCIAS	f	2	1	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+185	131	EXISTENCIAS PARA CONSUMO	f	3	13	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+186	131.01	Existencias De Bienes De Usos Y Consumo Corriente	f	4	131	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+188	131.01.02	Inventario de Vestuario Lenceria, Prendas De Proteccion y Ac	t	5	131.01	53.08.02.000.000.001	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+190	131.01.04	Inventario de Materiales de Oficina	t	5	131.01	53.08.04.000.000.001	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+191	131.01.05	Inventario de Materiales de Aseo	t	5	131.01	53.08.05.000.000.001	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+193	131.01.07	Inventario de Materiales de Impresion, Fotografia, Reprodu y	t	5	131.01	53.08.07.000.000.001	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+197	131.01.11	Materiales de Insumos, Bienes, materiales y suministros cons	t	5	131.01	53.08.11.000.000.001	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+201	131.01.99	Existencias de Otros de Uso y Consumo Corriente	t	5	131.01	53.08.99.000.000.001	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+220	132	EXISTENCIAS PARA PRODUCCION Y VENTAS	f	3	13	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+234	132.08	Existencias De Bienes de Uso y Consumo para Produc	f	4	132	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+236	132.08.02	Vestuario Lenceria Y Prendas De Pr	t	5	132.08	63.08.02.000.000.001	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+237	132.08.03	Inventario de Combustibles Y Lubricantes	t	5	132.08	63.08.03.000.000.001	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+238	132.08.04	Inventario de Materiales De Oficina	t	5	132.08	63.08.04.000.000.001	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+239	132.08.05	Inventario de Materiales De Aseo	t	5	132.08	63.08.05.000.000.001	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+245	132.08.11	Inventario de insumos bienes materiales y suministros de con	t	5	132.08	63.08.11.000.000.001	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+247	132.08.13	Inventario de Repuestos Y Accesorios	t	5	132.08	63.08.13.000.000.001	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+248	132.08.99	Existencias de Otros Bienes de Uso y Consumo de P	t	5	132.08	63.08.99.000.000.001	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+253	132.92	Existencias De Produccion  en Proceso	t	4	132	\N	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+254	132.94	Existencias De Desechos Y Residuos	t	4	132	\N	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+255	133	INVERSIONES EN PRODUCTOS EN PROCESO	f	3	13	\N	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+256	133.11	Remuneraciones Basicas	f	4	133	\N	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+260	133.11.05	Remuneraciones Unificadas	t	5	133.11	61.01.05.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+261	133.11.06	Salarios Unificados	t	5	133.11	61.01.06.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+262	133.12	Remuneraciones Complementarias	f	4	133	\N	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+265	133.12.03	Decimotercer Sueldo	t	5	133.12	61.02.03.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+266	133.12.04	Decimocuarto Sueldo	t	5	133.12	61.02.04.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+308	133.15	Remuneraciones Temporales	f	4	133	\N	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+311	133.15.13	Encargos	t	5	133.15		\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+315	133.15.09	Horas Extraordianrias Y Suplementarias	t	5	133.15	61.05.09.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+316	133.15.10	Servicios Personales Por Contrato	t	5	133.15	61.05.10.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+317	133.16	Aportes Patronales A La Seguridad Social	f	4	133	\N	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+318	133.16.01	Aporte Patronal	t	5	133.16	61.06.01.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+319	133.16.02	Fondo De Reserva	t	5	133.16	61.06.02.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+336	133.31	Servicios Basicos	f	4	133	\N	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+339	133.31.04	Energia Electrica	t	5	133.31	63.01.04.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+342	133.32	Servicios Generales	f	4	133	\N	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+346	133.32.04	Impresion Reproduccin y Publicacin	t	5	133.32	63.02.04.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+347	133.32.07	Difusion Informacin y Publicidad	t	5	133.32	63.02.07.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+348	133.32.08	Servicio de Vigilancia	t	5	133.32	63.02.08.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+349	133.32.09	Servicio de Aseo	t	5	133.32		\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+351	133.32.12	Investigaciones Profesionales y Examenes de Labora	t	5	133.32	63.02.12.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+352	133.32.99	Otros Servicios Generales	t	5	133.32	63.02.99.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+353	133.33	Traslados Instalaciones Viaticos Subsistencias	f	4	133	\N	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+354	133.33.01	Pasajes Al Interior	t	5	133.33	63.03.01.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+356	133.33.03	Viaticos Y Subsistencias En El Interior	t	5	133.33	63.03.03.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+359	133.34	Instalacion Mantenimiento Y Reparacion	f	4	133	\N	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+361	133.34.02	Gastos en Edificios Locales y Residencias	t	5	133.34	63.04.02.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+362	133.34.03	Gastos En Mobiliarios	t	5	133.34	63.04.03.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+363	133.34.04	Gastos En Maquinarias Y Equipos	f	5	133.34		\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+364	133.34.05	Gastos En Vehiculos	t	5	133.34	63.04.05.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+366	133.34.99	Otros Gastos En Instalaciones Matenimiento Y Repa	t	5	133.34	63.04.99.000.000.001	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+367	133.35	Arrendamiento De Bienes	f	4	133	\N	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+372	133.35.05	Arrendamiento de Vehiculos	t	5	133.35		\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+376	133.36	Contrataciones De Estudios E Investigaciones	f	4	133	\N	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+377	133.36.01	Consultoria Asesoria E Investigacion Especializad	t	5	133.36	63.06.01.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+379	133.36.03	Servicios De Capacitacion	t	5	133.36	63.06.03.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+380	133.36.04	Fiscalizacion E Inspecciones Tecnicas	t	5	133.36		\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+381	133.36.05	Estudios Y Diseo De Proyecto	t	5	133.36		\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+382	133.37	Gastos En Informatica	f	4	133	\N	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+383	133.37.01	Desarrollo De Sistema Informaticos	t	5	133.37	63.07.01.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+386	133.37.04	Mantenimientos De Sistemas Informaticos	t	5	133.37	63.07.04.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+387	133.38	Bienes De Uso Y Consumo De Produccion	f	4	133	\N	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+388	133.38.01	Alimentos Y Bebidas	t	5	133.38		\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+389	133.38.02	Vestuario Lenceria Y Prendas De Proteccion	t	5	133.38		\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+390	133.38.03	Combustibles Y Lubricantes	t	5	133.38		\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+391	133.38.04	Materiales De Oficina	t	5	133.38	63.08.04.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+392	133.38.05	Materiales De Aseo	t	5	133.38		\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+393	133.38.06	Herramientas	t	5	133.38		\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+394	133.38.07	Materiales De Impresion Fotografia Reproduccion	t	5	133.38		\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+395	133.38.08	Instrumental Medico Menor	t	5	133.38		\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+396	133.38.09	Medicinas Y Productos Farmaceuticos	t	5	133.38		\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+397	133.38.10	Materiales Para Laboratorio Y Uso Medico	t	5	133.38		\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+398	133.38.11	Materiales De Cosntr Electricos Plomeria Y	t	5	133.38	63.08.11.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+399	133.38.12	Materiales Didacticos	t	5	133.38		\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+400	133.38.13	Repuestos Y Accesorios	t	5	133.38	63.08.13.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+401	133.38.99	Otros Bienes De Uso Y Consumo De Produccion	f	5	133.38		\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+411	133.91	Depreciacion Bienes De Produccion	f	4	133	\N	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+412	133.92	Costos Acumulados De Productos En Proceso	t	4	133	\N	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+413	133.93	Costos Acumulados De Productos Terminados	t	4	133	\N	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+414	14	INVERSIONES EN BIENES DE LARGA DURACION	f	2	1	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+415	141	PROPIEDAD, PLANTA Y EQUIPO DE ADMINISTRACION	f	3	14	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+416	141.01	Bienes Muebles	f	4	141	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+417	141.01.03	Mobiliarios	t	5	141.01	84.01.03.000.000.001	\N	0	t	124	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+418	141.01.04	Maquinarias Y Equipos	t	5	141.01	84.01.04.000.000.001	\N	0	t	124	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+419	141.01.05	Vehiculos	t	5	141.01	84.01.05.000.000.001	\N	0	t	124	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+420	141.01.06	Herramientas	t	5	141.01		\N	0	t	124	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+421	141.01.07	Equipos Sistemas Y Paquetes Informaticos	t	5	141.01	84.01.07.000.000.001	\N	0	t	124	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+423	141.01.09	Libros Y Colecciones	t	5	141.01		\N	0	t	124	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+425	141.01.11	Partes Y Respuestos	t	5	141.01		\N	0	t	124	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+426	141.03	Bienes Inmuebles	f	4	141	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+427	141.03.01	Terrenos	t	5	141.03		\N	0	t	124	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+428	141.03.02	Edificios Locales Y Residencias	t	5	141.03		\N	0	t	124	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+433	141.99	Depreciacion Acumulada	f	4	141	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+434	142	PROPIEDAD, PLANTA Y EQUIPO DE PRODUCCION	f	3	14	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+435	142.01	Bienes Muebles	f	4	142	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+436	142.01.03	Mobiliarios	t	5	142.01		\N	0	t	124	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+437	142.01.04	Maquinarias Y Equipos	t	5	142.01	84.01.04.000.000.001	\N	0	t	124	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+438	142.01.05	Vehiculos	t	5	142.01	84.01.05.000.000.001	\N	0	t	124	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+439	142.01.06	Herramientas	t	5	142.01		\N	0	t	124	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+440	142.01.07	Equipos Sistemas Y Paquetes Informaticos	t	5	142.01		\N	0	t	124	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+443	142.01.11	Partes Y Respuestos	t	5	142.01		\N	0	t	124	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+444	142.03	Bienes Inmuebles	f	4	142	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+445	142.03.01	Terrenos	t	5	142.03		\N	0	t	124	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+446	142.03.02	Edificios Locales Y Residencias	t	5	142.03		\N	0	t	124	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+448	142.03.99	Otros Bienes Inmuebles	f	5	142.03		\N	0	t	124	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+451	142.99	DEPRECIACION ACUMULADA	f	4	142	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+452	15	INVERSIONES EN PROYECTOS Y PROGRAMAS	f	2	1	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+453	151	INVERSIONES EN OBRAS EN PROCESO	f	3	15	\N	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+460	151.12	Remuneraciones Complementarias	f	4	151	\N	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+463	151.12.03	Decimotercer Sueldo	t	5	151.12		\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+464	151.12.04	Decimocuarto Sueldo	t	5	151.12		\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+507	151.15	Remuneraciones Temporales	f	4	151	\N	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+515	151.15.09	Horas Extraordinarias Y Suplementarias	t	5	151.15		\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+516	151.15.10	Servicios Personales Por Contratos	t	5	151.15		\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+557	151.34	Instalacion Mantenimiento Y Reparacion	f	4	151	\N	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+564	151.34.99	Otros Gastos En Instalaciones  Mantenimientos Y	t	5	151.34		\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+574	151.36	Contrataciones De Estudios E Investigaciones	f	4	151	\N	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+575	151.36.01	Consultoria Asesoria E Investigacion Especializad	t	5	151.36		\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+579	151.36.05	Estudio Y Diseños De Proyectos	t	5	151.36		\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+629	151.43	Bienes De Expropiaciones	f	4	151	\N	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+630	151.43.01	Terrenos	t	5	151.43		\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+631	151.43.02	Edificios Locales Y Residencias	t	5	151.43		\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+632	151.43.99	Otros Bienes Inmuebles	t	5	151.43		\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+633	151.45	Bienes Muebles No Depreciables	f	4	151	\N	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+634	151.45.03	Mobiliarios	t	5	151.45		\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+635	151.45.04	Maquinarias Y Equipos	t	5	151.45		\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+636	151.45.06	Herramientas	t	5	151.45		\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+637	151.45.07	Equipos Sistemas Y Paquetes Informaticos	t	5	151.45		\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+638	151.45.08	Bienes Artisticos y Culturales	t	5	151.45		\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+639	151.45.09	Libros Y Colecciones	t	5	151.45		\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+640	151.45.11	Partes Y Repuestos	t	5	151.45		\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+641	151.51	Obras De Infraestructura	f	4	151	\N	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+642	151.51.01	Infraestructura De Agua Potable	f	5	151.51		\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+644	151.51.03	Infraestructura De Alcantarillado	f	5	151.51		\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+648	151.51.07	Construcciones Y Edificaciones	f	5	151.51		\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+671	151.55	Mantenimiento Y Reparaciones Mayores De Obras	f	4	151	\N	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+676	151.55.99	Otros Mantenimientos Y Reparaciones De Obras	t	5	151.55	75.05.99.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+707	151.92	Acumulacion De Inversiones En Obras En Proceso	t	4	151	\N	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+708	151.98	Aplicacion A Gastos De Gestion	t	4	151	\N	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+938	2	PASIVOS	f	1	0	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+939	21	DEUDA FLOTANTE	f	2	2	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+940	212	DEPOSITOS DE TERCEROS	f	3	21	\N	\N	0	f	211	18	\N	\N	1	2025-01-20 17:14:10	\N	\N
+941	212.01	Depositos De Intermediacion	t	4	212	\N	\N	0	t	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+942	212.03	Fondos de Terceros	f	4	212	\N	\N	0	t	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+943	212.05	Anticipos Por Bienes Y Servicios	f	4	212	\N	\N	0	t	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+944	212.07	Obligaciones Por Otros Entes Pblicos	f	4	212	\N	\N	0	t	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+946	212.15	Notas de Credito Emitidas	t	4	212	\N	\N	0	t	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+950	212.55	Creditos Por Remanentes Iva	t	4	212	\N	\N	0	t	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+951	213	CUENTAS POR PAGAR	f	3	21	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+952	213.51	Cuentas por Pagar Gastos en el Personal	f	4	213	\N	\N	0	t	211	12	\N	\N	1	2025-01-20 17:14:10	\N	\N
+953	213.53	Cuentas Por Pagar Bienes Y Servicios De Consumo	f	4	213	\N	\N	0	t	211	12	\N	\N	1	2025-01-20 17:14:10	\N	\N
+954	213.55	Cuentas Por Pagar Aporte Fiscal Corriente	t	4	213	\N	\N	0	t	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+955	213.56	Cuentas Por Pagar Gastos Financieros	t	4	213	\N	\N	0	t	211	12	\N	\N	1	2025-01-20 17:14:10	\N	\N
+956	213.57	Cuentas Por Pagar Otros Gastos	f	4	213	\N	\N	0	t	211	12	\N	\N	1	2025-01-20 17:14:10	\N	\N
+957	213.58	Cuentas Por Pagar Transferencias Corrientes	t	4	213	\N	\N	0	t	211	12	\N	\N	1	2025-01-20 17:14:10	\N	\N
+958	213.61	Cuentas por Pagar Gastos En Personal De Producion	f	4	213	\N	\N	0	t	211	14	\N	\N	1	2025-01-20 17:14:10	\N	\N
+959	213.63	Cuentas Por Pagar Bienes Y Servicios De Produccion	f	4	213	\N	\N	0	t	211	14	\N	\N	1	2025-01-20 17:14:10	\N	\N
+960	213.67	Cuentas por Pagar Otros Gastos de Produccion	f	4	213			0	t	211	14	\N	\N	1	2025-01-20 17:14:10	\N	\N
+961	213.71	Cuentas Por Pagar Gastos En Personal De Inversion	f	4	213	\N	\N	0	t	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+962	213.73	Cuentas Por Pagar Bienes Y Servicios De Inversion	f	4	213	\N	\N	0	t	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+963	213.75	Cuentas Por Pagar Obras Publicas	f	4	213	\N	\N	0	t	211	14	\N	\N	1	2025-01-20 17:14:10	\N	\N
+964	213.77	Cuentas por Pagar Otros Gastos de Inversion	t	4	213			0	t	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+965	213.78	Cuentas Por Pagar Transferencias De Inversion	f	4	213	\N	\N	0	t	211	14	\N	\N	1	2025-01-20 17:14:10	\N	\N
+966	213.81	Cuentas Por Pagar Impuesto Al Valor Agregado	f	4	213	\N	\N	0	f	211	17	\N	\N	1	2025-01-20 17:14:10	\N	\N
+967	213.83.57	Cuentas Por Pagar Años Anteriores Otros Gastos	t	5	213.83	\N	\N	0	t	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+968	213.84	Cuentas Por Pagar Invers En Bienes De Larga Durac	f	4	213	\N	\N	0	t	211	14	\N	\N	1	2025-01-20 17:14:10	\N	\N
+969	213.83	Cuentas Por Pagar Años Anteriores	f	4	213	\N	\N	0	f	211	17	\N	\N	1	2025-01-20 17:14:10	\N	\N
+970	213.87	Cuentas Por Pagar Inversiones Fianancieras	t	4	213	\N	\N	0	t	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+971	213.88	Cuentas Por Pagar Transferencias De Capital	t	4	213	\N	\N	0	t	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+972	213.96	Cuentas Por Pagar Amortizacion De La Deuda Publica	t	4	213	\N	\N	0	t	211	16	\N	\N	1	2025-01-20 17:14:10	\N	\N
+973	213.97	Cuentas por Pagar de Años Anteriores	f	4	213			0	t	211	16	\N	\N	1	2025-01-20 17:14:10	\N	\N
+974	22	DEUDA PUBLICA-LARGO PLAZO	f	2	2	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+982	223	EMPRESTITOS	f	3	22	\N	\N	0	f	221	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+983	223.01	Creditos Internos	f	4	223	\N	\N	0	f	221	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+984	223.01.01	Creditos Del Sector Publico Financiero	f	5	223.01			0	t	221	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+994	224	FINANCIEROS	f	3	22	\N	\N	0	f	222	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1043	224.98	Cuentas por Pagar Años Anteriores	f	4	224		\N	0	f	222	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1046	224.98.01	Cuentas por Pagar Años Anteriores	f	5	224.98		\N	0	t	222	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1078	6	PATRIMONIO	f	1	0	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1079	61	PATRIMONIO ACUMULADO	f	2	6	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1080	611	PATRIMONIO PUBLICO	f	3	61	\N	\N	0	f	311	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1081	611.01	Patrimonio Gobierno Central	t	4	611	\N	\N	0	t	311	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1084	611.07	Patrimonio Empresas Publicas	t	4	611	\N	\N	0	t	311	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1092	618	RESULTADOS DE EJERCICIOS	f	3	61	\N	\N	0	f	313	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1093	618.01	Resultados De Ejercicios Anteriores	t	4	618	\N	\N	0	t	313	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1094	618.03	Resultado Del Ejercicio Vigente	t	4	618	\N	\N	0	t	315	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1100	62	INGRESOS DE GESTION	f	2	6	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1153	623	TASAS Y CONTRIBUCIONES	f	3	62	\N	\N	0	f	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1154	623.01	Tasas Generales	f	4	623	\N	\N	0	f	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1161	623.01.07	Venta de Bases	f	5	623.01	\N		0	t	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1171	623.01.99	Otras Tasas Generales	f	5	623.01	\N		0	t	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1196	623.04	Contribuciones	f	4	623	\N	\N	0	f	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1203	624	VENTA DE BIENES Y SERVICIOS	f	3	62	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1230	624.03	Ventas No Industriales	f	4	624	\N	\N	0	f	6621	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1231	624.03.01	Agua Potable	f	5	624.03	\N		0	t	6621	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1233	624.03.03	Alcantarillado	f	5	624.03	\N	\N	0	t	6621	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1243	624.03.99	Otros Servicios Tecnicos y Especializados	f	5	624.03	\N	\N	0	t	6621	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1280	625	RENTAS DE INVERSIONES Y OTROS	f	3	62	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1281	625.01	Rentas De Inversiones	f	4	625	\N	\N	0	f	6624	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1282	625.01.01	Intereses por Depositos a Plazo	t	5	625.01	\N		0	t	6624	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1305	625.03	Intereses Por Mora	f	4	625	\N	\N	0	f	6624	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1311	625.03.99	Otros Intereses por Mora	f	5	625.03	\N		0	t	6624	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1312	625.04	Multas	f	4	625	\N	\N	0	f	6624	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1320	625.04.99	Otras Multas	f	5	625.04	\N		0	t	6624	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1334	626	TRANFERENCIAS RECIBIDAS	f	3	62	\N	\N	0	f	6623	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1335	626.01	Transferencias Corrientes Del Sector Publico	f	4	626	\N	\N	0	f	6623	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1339	626.01.04	Transferencias del Gobierno Seccional	f	5	626.01	\N		0	t	6623	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1366	626.21	Transferencias De Capital Del Sector Publico	f	4	626	\N	\N	0	f	6623	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1367	626.21.01	Transferencias del Gobierno Central	f	5	626.21	\N		0	t	6623	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1368	626.21.02	Transferencias de Entidades Descentralizadas y Aut	f	5	626.21	\N		0	t	6623	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1370	626.21.04	Transferencias de Capital del Sector Publico	f	5	626.21	\N		0	t	6623	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1372	626.21.06	Transferencias de Cuentas o Fondos Especiales	f	5	626.21	\N		0	t	6623	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1378	626.23	Donaciones De Capital Del Sector Externo	f	4	626	\N	\N	0	f	6623	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1379	626.23.01	Donaciones de Organismos Multilaterales	t	5	626.23	\N		0	t	6623	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1392	629	ACTUALIZACIONES Y AJUSTES	f	3	62	\N	\N	0	f	6625	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1393	629.51	Actualizaciones De Activos	t	4	629	\N	\N	0	t	6625	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1395	63	GASTOS DE GESTION	f	2	6	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1400	633	REMUNERACIONES	f	3	63	\N	\N	0	f	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1401	633.01	Remuneraciones Basicas	f	4	633	\N	\N	0	f	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1406	633.01.06	Salarios Unificados	t	5	633.01	51.01.06.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1407	633.02	Remuneraciones Complementarias	f	4	633	\N	\N	0	f	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1410	633.02.03	Decimo Tercer Sueldo	t	5	633.02	51.02.03.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1411	633.02.04	Decimo Cuarto Sueldo	t	5	633.02	51.02.04.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1448	633.04	Subsidios	f	4	633	\N	\N	0	f	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1457	633.05	Remuneraciones Temporales	f	4	633	\N	\N	0	f	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1460	633.05.13	Encargos	t	5	633.05		\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1463	633.05.07	Honorarios	t	5	633.05	51.05.07.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1465	633.05.09	Horas Extraordinarias y Suplementarias	t	5	633.05	51.05.09.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1466	633.05.10	Servicios Personales por  Contrato	t	5	633.05	51.05.10.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1468	633.06	Aportes Patronales A La Seguridad Social	f	4	633	\N	\N	0	f	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1469	633.06.01	Aporte Patronal	t	5	633.06	51.06.01.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1470	633.06.02	Fondo de Reserva	t	5	633.06	51.06.02.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1474	633.07	Indemnizaciones	f	4	633	\N	\N	0	f	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1482	634	BIENES Y SERVICIOS DE CONSUMO	f	3	63	\N	\N	0	f	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1483	634.01	Servicios Basicos	f	4	634	\N	\N	0	f	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1486	634.01.04	Energia Electrica	t	5	634.01	53.01.04.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1487	634.01.05	Telecomunicaciones	t	5	634.01	53.01.05.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1489	634.02	Servicios Generales	f	4	634	\N	\N	0	f	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1493	634.02.04	Impresion Reproduccion Y Publicaciones	t	5	634.02	53.02.04.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1500	634.02.99	Otros Servicios Generales	t	5	634.02	53.02.99.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1501	634.03	Traslados Instalaciones Viaticos Y Subsistencias	f	4	634	\N	\N	0	f	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1502	634.03.01	Pasajes al Interior	t	5	634.03	53.03.01.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1504	634.03.03	Viaticos Y Subsistencias En El Interior	t	5	634.03	53.03.03.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1507	634.04	Instalacion Mantenimiento Y Reparaciones	f	4	634	\N	\N	0	f	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1509	634.04.02	Gastos en Edificios Locales y Residencias	t	5	634.04	53.04.02.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1510	634.04.03	Gastos en Mobiliarios	t	5	634.04	53.04.03.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1511	634.04.04	Gastos en Maquinarias y Equipos	t	5	634.04	53.04.04.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1512	634.04.05	Gastos en Vehiculos	t	5	634.04	53.04.05.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1527	634.06	Contratacion De Estudios E Investigaciones	f	4	634	\N	\N	0	f	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1528	634.06.01	Consultorias Asesoria e Investigacion Especializada	t	5	634.06	53.06.01.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1530	634.06.03	Servicios de Capacitacion	t	5	634.06	53.06.03.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1533	634.07	Gastos En Informatica	f	4	634	\N	\N	0	f	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1534	634.07.01	Desarrollo de Sistemas Informaticos	t	5	634.07	53.07.01.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1537	634.07.04	Mantenimiento de Sistemas Informaticos	t	5	634.07	53.07.04.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1538	634.08	Bienes De Uso Y Consumo Corriente	f	4	634	\N	\N	0	f	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1539	634.08.01	Alimentos y Bebidas	t	5	634.08		\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1540	634.08.02	Vestuario Lencera y Prendas de Proteccin	t	5	634.08		\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1541	634.08.03	Combustibles y Lubricantes	t	5	634.08	53.08.03.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1542	634.08.04	Materiales De Oficina	t	5	634.08	53.08.04.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1543	634.08.05	Materiales de Aseo	t	5	634.08		\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1545	634.08.07	Materiales de Impresión, Fotografía, Reproducción y Publicac	t	5	634.08		\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1549	634.08.11	Materiales de Construccin Elctricos Plomera y C	t	5	634.08	53.08.11.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1551	634.08.13	Repuestos y Accesorios	t	5	634.08	53.08.13.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1553	634.08.99	Otros Bienes de Usos y Consumo	t	5	634.08		\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1572	635	GASTOS FINANCIEROS Y OTROS	f	3	63	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1573	635.01	Impuestos Tasas Y Contribuciones	f	4	635	\N	\N	0	f	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1579	635.02	Intereses Deuda Publica Interna	f	4	635	\N	\N	0	f	6624	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1580	635.02.01	Intereses al Sector Publico Financiero (11268)	t	5	635.02	56.02.01.000.000.001	\N	0	t	6624	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1592	635.04	Seguros Comisiones Financieras Y Otros	f	4	635	\N	\N	0	f	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1593	635.04.01	Seguros	t	5	635.04	57.02.01.000.000.001		0	t	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1595	635.04.03	Comisiones Bancarias	t	5	635.04	57.02.03.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1598	635.04.06	Costas Judiciales	t	5	635.04	57.02.06.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1609	636	TRANSFERENCIAS ENTREGADAS	f	3	63	\N	\N	0	f	6623	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1610	636.01	Transferencias Corrientes Sector Publico	f	4	636	\N	\N	0	f	6623	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1612	636.01.02	Transferencias a Entidades Desentralizadas y Autonomas	t	5	636.01	58.01.02.000.000.001	\N	0	t	6623	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1678	638	COSTO DE VENTAS Y DEFERIDOS	f	3	63	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1681	638.03	Costo De Ventas No Industriales	t	4	638	\N	\N	0	t	6621	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1691	638.52	Depreciacion Bienes De Inversion	f	4	638	\N	\N	0	t	6625	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1697	639	ACTUALIZACIONES Y AJUSTES	f	3	63	\N	\N	0	f	6625	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1698	639.51	Actualizaciones De Pasivos	t	4	639	\N	\N	0	t	6625	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1704	633.01.05	Remuneraciones Unificadas	t	5	633.01	51.01.05.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1706	111.15	Bancos Comerciales Moneda Nacional	f	4	111	\N	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1708	111.15.02	Banco del Pacifico	f	5	111.15	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1710	111.03.02	BC TR ICE 79220119	t	5	111.03			0	f	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1713	112.01.01	Empleados	f	5	112.01	\N	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1714	112.01.02	Trabajadores	f	5	112.01	\N	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1716	112.01.01.002	Calderon Izurieta Liliana Patricia	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1717	112.01.01.003	Andrade Pino Fausto Marcelo	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1724	112.01.01.010	Sagñay Ashqui Giovany Edison	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1732	112.03.01	Sector Publico	f	5	112.03	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1733	112.03.02	Sector Privado	f	5	112.03	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1736	623.01.07.001	Venta de Bases	t	6	623.01.07	\N	13.01.07.01.001	0	f	6622	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1738	624.03.01.001	Agua Potable Suministros (cargo fijo)	t	6	624.03.01	\N	14.03.01.01.001	0	f	6621	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1739	624.03.01.002	Conexion y Reconexion de Agua Potable	t	6	624.03.01	\N	14.03.01.02.001	0	f	6621	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1740	624.03.01.003	Venta de Medidores	t	6	624.03.01	\N	14.03.01.03.001	0	f	6621	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1743	624.03.03.001	Alcantarillado y Servicios (cargo variable)	t	6	624.03.03	\N	14.03.03.01.001	0	f	6621	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1744	624.03.03.002	Conexion  y Reconexion de Alcantarillado	t	6	624.03.03	\N	14.03.03.02.001	0	f	6621	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1745	624.03.99.001	Servicios Tecnicos y Administrativos	t	6	624.03.99	\N	14.03.99.01.001	0	f	6621	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1749	625.03.99.001	Costo Emision Titulos de Credito en Computacion	t	6	625.03.99	\N	17.03.99.01.001	0	f	6624	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1751	625.03.99.003	Por costas judiciales	t	6	625.03.99	\N	17.03.99.03.001	0	f	6624	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1752	625.03.99.004	Intereses por mora	t	6	625.03.99	\N	17.03.99.04.001	0	f	6624	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1757	213.81.01	Cuentas por Pagar IVA Contribuyente Especial Proveedor	t	5	213.81	\N	\N	0	t	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1758	213.81.02	Cuentas por Pagar IVA Persona Natural  SRI	t	5	213.81	\N	\N	0	t	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1759	213.81.03	Cuentas por Pagar IVA Bienes  Proveedor	t	5	213.81	\N	\N	0	t	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1760	213.81.04	Cuentas por Pagar IVA Bienes  SRI	t	5	213.81	\N	\N	0	t	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1763	213.51.01	CxP Gastos en el Personal	f	5	213.51	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1764	213.51.02	Fondos de terceros	f	5	213.51	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1765	213.51.01.001	Sueldos y Salarios	t	6	213.51.01	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1766	213.51.01.002	Por Honorarios	t	6	213.51.01	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1767	213.51.01.003	Por Dietas	t	6	213.51.01	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1768	213.51.02.001	Aporte Personal Iess	t	6	213.51.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1769	213.51.02.002	Aporte Patronal Iess	t	6	213.51.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1770	213.51.02.003	Prestamos Iess	t	6	213.51.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1771	213.51.02.004	Impuesto a la Renta Rel Dependencia	t	6	213.51.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1773	213.53.01	Por Pagar Proveedores	f	5	213.53	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1774	213.53.02	Retenciones en la Fuente	f	5	213.53	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1775	213.53.02.001	Retencion en la Fuente 1%	t	6	213.53.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1778	213.53.02.004	Otras Retenciones	t	6	213.53.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1779	213.84.01	Proveedor	t	5	213.84	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1780	213.84.02	Retenciones en la Fuente	f	5	213.84	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1781	213.84.02.001	Retencin en la Fuente 1%	t	6	213.84.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1783	213.73.01	Proveedor	t	5	213.73	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1784	213.73.02	Retenciones en la Fuente	f	5	213.73	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1785	213.73.02.001	Retencin en la Fuente 1%	t	6	213.73.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1787	213.75.01	Proveedor	t	5	213.75	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1788	213.75.02	Retenciones en la Fuente	f	5	213.75	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1789	213.75.02.001	Retencin en la Fuente 1%	t	6	213.75.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1797	113.98.01	De Cuentas por Cobrar Años Anteriores	f	5	113.98	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1798	213.53.01.001	Proveedor	t	6	213.53.01	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1799	212.03.01	Servicio de Aseo Publico y Recoleccion de Basura	t	5	212.03	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1801	213.51.01.005	Contratos de personal	t	6	213.51.01	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1802	213.51.01.006	Encargos y Subrogaciones	t	6	213.51.01	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1809	151.51.01.006	Varias Obras del Canton	t	6	151.51.01	75.01.01.000.006.001	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1837	151.51.03.006	Varias Obras del Canton	t	6	151.51.03		\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1850	213.53.01.003	Viaticos y Subsistencias	t	6	213.53.01	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1889	113.81.01	CxC IVA Compras	t	5	113.81	\N	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1892	9	CUENTAS DE ORDEN	f	1	0	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1893	91	Cuentas de Orden Deudoras	f	2	9	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1894	911	Cuentas de Orden Deudoras	f	3	91	\N	\N	0	f	91	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1895	911.09	Garantias en Valores Bienes y Documentos	f	4	911	\N	\N	0	t	91	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1896	911.09.01	Fiel cumplimiento de Contratos	t	5	911.09	\N	\N	0	f	91	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1897	911.09.02	Buen Uso de Anticipos Contractuales	t	5	911.09	\N	\N	0	f	91	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1898	911.09.03	Buena Calidad de Materiales	t	5	911.09	\N	\N	0	f	91	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1899	92	CUENTAS DE ORDEN ACREEDORAS	f	2	9	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1900	921	Cuentas de orden Acreedoras	f	3	92	\N	\N	0	f	92	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1901	921.09	Responsabilidad por Garantias en Valores Bienes y Documentos	f	4	921	\N	\N	0	t	92	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1930	921.09.01	Fiel cumplimiento del contrato	t	5	921.09	\N	\N	0	f	92	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1931	921.09.02	Buen uso anticipos contractuales	t	5	921.09	\N	\N	0	f	92	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1932	921.09.03	Buena calidad de materiales	t	5	921.09	\N	\N	0	f	92	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1935	213.75.03	Colegio de Ingenieros Civiles	t	5	213.75	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1938	213.75.04	Fiscalizacion a Contratistas	t	5	213.75	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1941	213.57.01	Proveedor	t	5	213.57	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1942	213.57.02	Cuentas por pagar retencion en la fuente	f	5	213.57	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1943	213.57.02.001	Retencion en la Fuente 1%	t	6	213.57.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1947	213.75.99	Otros devengado Iva	t	5	213.75	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1962	151.51.01.038	Perforacion Pozo Cdla  de Abril	t	6	151.51.01		\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1967	213.75.05	Colegio de Arquitectos	t	5	213.75	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1981	213.63.01	Cuentas por pagar proveedores	f	5	213.63	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1982	213.63.02	Retenciones en la Fuente	f	5	213.63	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1983	213.63.02.001	Retencion en la Fuente 1%	t	6	213.63.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
+1987	112.07.01	Varios Anticipos	f	5	112.07	\N	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+1989	213.75.06	Servicios Tecnicos	t	5	213.75	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2011	213.61.01	CXP Gastos En Personal De Producion	f	5	213.61	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2014	213.63.01.001	Proveedor	t	6	213.63.01	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2015	213.63.01.003	Viaticos y Subsistencias	t	6	213.63.01	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2027	111.15.03	Banco de Guayaquil	f	5	111.15	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2035	111.15.02.002	 Rotativa de Ingresos 4846745 (129)	t	6	111.15.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2045	213.75.08	INEC Planillas de Reajustes	t	5	213.75	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2062	112.01.01.009	Bermeo  Moreno Jorge Renato	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2066	112.01.01.015	Noboa Tello Sandra LLaqueline	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2068	112.01.01.017	Ortiz Guerrero Jimmy Orlando	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2069	112.01.01.018	Mera Balseca Paola del Pilar	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2070	112.01.01.020	Gomez Maya Luis Geovany	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2079	112.01.01.028	Salazar Tenelanda Marlon Eduardo	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2080	112.01.01.029	Rosero Paz Cesar Eduardo	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2083	112.01.02.001	Guaman Pacheco Segundo Lauro	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2084	112.01.02.002	Mendoza Montalvo Raul Oswaldo	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2085	112.01.02.003	Silva Villafuerte Alfredo Ramiro	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2086	112.01.02.004	Guadalupe Aushay Jose	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2089	112.01.02.007	Almache Orna Marco Polo	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2090	112.01.02.008	Santillan Logroño Elicio  Rene	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2091	112.01.02.009	Becerra Coronel Segundo Luis	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2092	112.01.02.010	Guaño Guaño Angel Emiliano	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2093	112.01.02.011	Pilamunga Torres Elsa Piedad	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2094	112.01.02.012	Sagñay Ashqui Franklin Nelson	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2095	112.01.02.013	Valdez Colcha Segundo Manuel	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2096	112.01.02.014	Berrones Veloz Marco Gerardo	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2097	112.01.02.015	Garces Najera Segundo Florencio	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2099	112.01.02.017	Parra Coronel Hernan Alonso	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2100	112.01.02.018	Robalino Salas Manuel Fernando	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2101	112.01.02.019	Bonilla Espin Wilson Alcivar	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2102	112.01.02.020	Moreno Huilcapi Guillermo Enrique	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2103	112.01.02.021	Montesdeoca Parra Xavier Dario	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2104	112.01.02.022	Cobo Parra Christian Antonio	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2105	112.01.02.023	Sinaluisa Llangari Juan Guillermo	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2106	112.01.02.024	Caba Toabanda Arturo Patricio	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2107	112.01.02.025	Montalvo Mc Gregor Juan Eduardo	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2108	112.01.02.026	Alarcon Arevalo Nelson Mesias	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2109	112.01.02.027	Garces Bedoya Carlos Gilberto	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2110	112.01.02.028	Avalos Calderon  Hector Rodrigo	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2111	112.01.02.029	Guevara Avalos Bolivar Eduardo	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2113	112.01.02.031	Morocho Cuenca Pedro Benigno	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2115	112.01.02.033	Quinatoa Velata Carmen Gabriela	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2116	112.01.02.034	Acalo Pagalo Miguel Angel	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2117	112.01.02.035	Lozano Yepez Miguel Jose	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2118	112.01.02.036	Martinez Colcha Luis Enrique	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2120	112.01.02.038	Sisa Castro Pedro	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2121	112.01.02.039	Uvidia Flores Danny Rolando	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2122	112.01.02.040	Valle Sanchez Carlos Fabian	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2123	112.01.02.041	Villa Uvidia Carlos Eduardo	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2124	112.01.02.042	Villegas Insuaste Willian Enrique	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2126	112.01.02.044	Barahona Moyano Angel Raul	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2127	112.01.02.045	Ramos Veloz Manuel Segundo	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2128	112.01.02.046	Gusqui Gusqui Angel Alberto	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2129	112.01.02.047	Guapulema Diaz Angel Gerardo	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2130	112.01.02.048	Salas Yuqui Maria Eulalia	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2132	112.01.02.050	Garrido Bayas Jose Enrique	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2134	112.01.02.052	Haro Arteaga Luis Ricardo	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2135	112.01.02.053	Mejia Flores Luis Alberto	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2136	112.01.02.054	Benitez Lopez Leonardo Obidio	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2137	112.01.02.055	Chimbo Malan Segundo Francisco	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2138	112.01.02.056	Yuqui Granizo Maria Fanny	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2141	112.01.02.060	Sanchez Lopez Segundo Manuel	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2142	112.01.02.061	Bucay Iligama Mario Gonzalo	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2143	112.01.02.062	Carrillo Chavez Segundo Jorge	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2144	112.01.02.063	Majin Ilbay Jorge Luis	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2145	112.01.02.064	Sisa Aguagallo Segundo Jose	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2146	112.01.02.065	Tiama Guaman Angel Ramon	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2147	112.01.02.066	Calvopiña Andino Julio Antonio	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2148	112.01.02.067	Moyota Vazquez Luis Oswaldo	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2149	112.01.02.068	Shagñay Guaman David Cornelio	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2150	112.01.02.069	Concha Reinoso Milton Jhon	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2151	112.01.02.071	Coronel Aviles Hernan Alfonso	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2152	112.01.02.072	Guaillasaca Cajamarca Jose Luis	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2153	112.01.02.073	Jara Ramirez Themis Eduardo	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2154	112.01.01.032	Vacacela Tapia Maria Veronica	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2157	112.01.01.035	Cano Espin Adriana Catalina	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2163	213.61.02	Fondos de Terceros	f	5	213.61	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2164	213.61.02.001	Aporte Personal IESS	t	6	213.61.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2165	213.61.02.002	Aporte Patronal IESS	t	6	213.61.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2166	213.61.02.003	Prestamos IESS	t	6	213.61.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2167	213.61.02.004	Impuesto Renta Relacion de Dependencia	t	6	213.61.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2173	213.61.01.005	Servicios Personales por Contrato	t	6	213.61.01	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2174	213.61.01.001	Sueldos y Salarios	t	6	213.61.01	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2175	213.61.01.002	Horas Extras y Suplementarias	t	6	213.61.01	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2178	112.03.02.040	FIERRO HERRERA RAUL OSWALDO	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2181	213.84.02.003	Servicios Tecnicos	t	6	213.84.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2187	213.75.09	Contraloria General del Estado	t	5	213.75	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2188	213.75.10	Procuradura General del Estado	t	5	213.75	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2189	213.75.11	Senacyt	t	5	213.75	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2193	213.61.02.012	Otros Descuentos	t	6	213.61.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2194	112.01.02.074	Rodriguez Montenegro Alejandro Antonio	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2195	213.97.01	Cuentas por Pagar Depósitos y Fondos de Terceros	t	5	213.97			0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2204	213.75.07	Contraloria General del Estado Planillas de Reajustes	t	5	213.75	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2205	213.75.12	Senacyt Planillas de Reajustes	t	5	213.75	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2206	213.75.13	Procuradura General del Estado Planillas de Reajustes	t	5	213.75	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2209	213.61.01.003	Encargos y Subrogaciones	t	6	213.61.01	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2211	112.01.02.077	Andrade Jara Juan Pablo	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2212	213.51.02.012	Otros Descuentos	t	6	213.51.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2217	213.51.02.006	Fondos de Reserva	t	6	213.51.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2227	112.01.02.079	Morejon Genaro Eduardo	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2230	213.51.01.007	Horas Extras	t	6	213.51.01		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2245	213.51.02.014	Retencion en la Fuente 8%	t	6	213.51.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2247	213.53.02.002	Retencion en la Fuente 2%	t	6	213.53.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2248	213.63.02.002	Retencin en la Fuente 2%	t	6	213.63.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2249	213.73.02.002	Retencin en la Fuente 2%	t	6	213.73.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2250	213.75.02.002	Retencin en la Fuente 2%	t	6	213.75.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2251	213.84.02.002	Retencin en la Fuente 2%	t	6	213.84.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2270	213.73.02.003	Retencin en la Fuente 10%	t	6	213.73.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2271	213.73.02.004	Colegio de Ingenieros Civiles	t	6	213.73.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2272	213.73.02.005	Servicios Tecnicos	t	6	213.73.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2273	213.53.08	Retencion de la Fuente 10%	t	5	213.53	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2275	113.36.03	Cuentas por Cobrar Prestamos Sector Publico Financiero	t	5	113.36	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2276	213.57.02.003	Retencion en la Fuente 2%	t	6	213.57.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2292	112.01.02.080	Tapia Macias Holguer Francisco	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2313	141.99.03	Depreciacion acumulada mobiliarios	t	5	141.99	\N	\N	0	t	124	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2314	141.99.04	Depreciacin acumulada maquinarias y equipos	t	5	141.99	\N	\N	0	t	124	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2315	141.99.05	Depreciacion acumulada vehiculos	t	5	141.99	\N	\N	0	t	124	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2316	141.99.07	Depreciacion acumulada equipos sistemas y paquetes informtic	t	5	141.99	\N	\N	0	t	124	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2317	141.99.06	Depreciacion acumulada herramientas	t	5	141.99	\N	\N	0	t	124	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2318	141.99.11	Depreciacion acumulada partes y repuestos	t	5	141.99	\N	\N	0	t	124	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2319	142.99.04	Depreciacion acumulada maquinarias y equipos	t	5	142.99	\N	\N	0	t	124	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2320	142.99.05	Depreciacion acumulada vehiculos	t	5	142.99	\N	\N	0	t	124	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2321	142.99.06	Depreciacion acumulada herramientas	t	5	142.99	\N	\N	0	t	124	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2322	142.99.11	Depreciacion acumulada partes y repuestos	t	5	142.99	\N	\N	0	t	124	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2325	133.91.04	Depreciacion bienes de produccion maquinarias y equipos	t	5	133.91	\N	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2326	133.91.05	Depreciacion bienes de produccion vehculos	t	5	133.91	\N	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2327	133.91.06	Depreciacion bienes de produccion herramientas	t	5	133.91	\N	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2328	133.91.11	Depreciacion bienes de produccion partes y repuestos	t	5	133.91	\N	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2329	112.01.02.081	Urquizo Machado Angel Pablo	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2331	112.01.02.083	Urquizo Ramos Mario Tarquino	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2332	112.01.02.084	Caiza Barahona Victor Fabian	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2333	213.61.02.005	Fondos de Reserva	t	6	213.61.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2343	213.75.15	Otros Descuentos	t	5	213.75	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2344	213.84.02.004	Retencin en la Fuente 10%	t	6	213.84.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2347	213.63.02.008	Retencin en la Fuente 8%	t	6	213.63.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2349	213.63.02.010	Colegio de Ingenieros Civiles	t	6	213.63.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2350	213.63.02.011	Servicios Tcnicos	t	6	213.63.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2354	213.51.02.018	Atrasos	t	6	213.51.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2355	213.61.02.017	Atrasos	t	6	213.61.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2356	112.03.02.056	SALAZAR COLOMA JOSE LUIS	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2363	213.75.16	Retenciones la Fuente 10%	t	5	213.75	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2365	213.61.01.006	Remuneraciones Complementarias	t	6	213.61.01		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2366	213.51.01.008	Cuentas por pagar Remuneraciones Complementarias	t	6	213.51.01	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2374	213.63.02.012	Otros Descuentos	t	6	213.63.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2386	112.01.01.007	Quisnancela Miguel Olmedo	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2388	112.01.01.013	Parada Brito Angel Wilson	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2389	112.01.01.014	Ramirez Escorza Veronica Marlene	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2392	133.38.99.003	Materiales Accesorios Equipo Menor Agua Potable	t	6	133.38.99		\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2395	911.07	ESPECIES VALORADAS EMITIDAS	f	4	911	\N	\N	0	t	91	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2396	911.07.01	Solicitud de Servicio	t	5	911.07	\N	\N	0	f	91	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2397	911.07.02	Solicitud para Cambio de Tarifa	t	5	911.07	\N	\N	0	f	91	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2398	911.07.03	Solicitud Aplicacion Ley del Anciano	t	5	911.07	\N	\N	0	f	91	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2399	911.07.04	Solicitud por Consumos Elevados	t	5	911.07	\N	\N	0	f	91	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2400	911.07.05	Formulario para Solicitud	t	5	911.07	\N	\N	0	f	91	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2401	911.07.06	Solicitud de Cambio de Nombres	t	5	911.07	\N	\N	0	f	91	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2402	911.07.07	Servicios Tecnicos y Administrativos	t	5	911.07	\N	\N	0	f	91	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2403	921.07	EMISION DE ESPECIES VALORADAS	f	4	921	\N	\N	0	t	92	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2404	921.07.01	Solicitud de Servicios	t	5	921.07	\N	\N	0	f	92	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2405	921.07.02	Solicitud para Cambio de Tarifa	t	5	921.07	\N	\N	0	f	92	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2406	921.07.03	Solicitud Aplicacion Ley del Anciano	t	5	921.07	\N	\N	0	f	92	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2407	921.07.04	Solicitud por Consumos Elevados	t	5	921.07	\N	\N	0	f	92	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2408	921.07.05	Formulario para Solciitud	t	5	921.07	\N	\N	0	f	92	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2409	921.07.06	Solicitud para Cambio de Nombre	t	5	921.07	\N	\N	0	f	92	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2410	921.07.07	Servicios Tecnicos y Administrativos	t	5	921.07	\N	\N	0	f	92	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2413	112.01.02.016	Salas Yuqui Margarita del Socorro	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2414	112.01.02.051	Heredia Miñaca Washington Napoleon	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2415	112.01.01.016	Garcia Rojas Edwin Patricio	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2416	112.01.01.019	Deley Maldonado Maria Enriqueta	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2417	133.38.99.001	Otros de Uso y Consumo de Producción	t	6	133.38.99	63.08.99.000.000.001	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2432	113.13.01	TASAS GENERALES	f	5	113.13	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2433	113.13.01.007	VENTA DE BASES	f	6	113.13.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2434	113.13.01.007.01	Venta de Bases	t	7	113.13.01.007	\N		0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2435	113.13.01.099	NO ESPECIFICADOS	f	6	113.13.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2436	113.13.01.099.01	Por Mantenimiento e Incorporacion Predios Nuevo Catastro	t	7	113.13.01.099	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2437	113.13.01.099.03	No Especificados cajas	t	7	113.13.01.099	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2438	113.14.03	VENTA DE BIENES Y SERVICIOS	f	5	113.14	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2439	113.14.03.001	VENTAS NO INDUSTRIALES	f	6	113.14.03	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2440	113.14.03.001.01	Agua Potable y Suministros (Cargo Fijo)	t	7	113.14.03.001			0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2441	113.14.03.001.02	Conexion y Reconexion de Agua Potable	t	7	113.14.03.001	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2442	113.14.03.001.03	Venta de Medidores para Instalaciones	t	7	113.14.03.001	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2445	113.14.03.003	ALCANTARILLADO	f	6	113.14.03	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2446	113.14.03.003.01	Alcantarillado Servicios (Cargo Variable)	t	7	113.14.03.003	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2447	113.14.03.003.02	Conexion y Reconexion de Alcantarillado	t	7	113.14.03.003	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2449	113.14.03.099	OTROS SERVICIOS TECNICOS	f	6	113.14.03	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2450	113.14.03.099.01	Servicios Tecnicos y administrativos	t	7	113.14.03.099	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2451	113.17.03	RENTA DE INVERSIONESN Y OTROS	f	5	113.17	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2452	113.17.03.099	INTERESES POR MORA	f	6	113.17.03	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2453	113.17.03.099.01	Costo Emision Titulos de Credito en Computacion	t	7	113.17.03.099	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2454	113.17.03.099.03	Costas Judiciales	t	7	113.17.03.099	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2455	113.17.03.099.04	Intereses por Mora	t	7	113.17.03.099	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2456	113.17.04	OTRAS MULTAS	f	5	113.17	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2457	113.17.04.099	OTRAS MULTAS	f	6	113.17.04	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2458	113.17.04.099.01	Atrasos	t	7	113.17.04.099	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2462	113.17.01	RENTAS DE INVERSIONES	f	5	113.17	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2463	113.17.01.001	Intereses por Depositos a Plazo	t	6	113.17.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2464	113.28.01	TRANSFERENCIAS Y DONACIONES DE CAPITAL DEL SECTOR PUBLICO	f	5	113.28	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2466	113.28.01.001	DEL GOBIERNO CENTRAL	f	6	113.28.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2467	113.28.01.001.01	 Sobre el Valor de las Planillas de Telecomunicaciones ICE	t	7	113.28.01.001	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2468	112.01.01.036	Erazo Edison Patricio	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2469	112.01.01.062	Abad Garcia Patricio Benjamin	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2473	112.01.02.058	Buñay Calapiña Reinaldo	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2474	112.01.02.049	Flores Davila Hugo	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2478	112.01.02.070	Barbecho Ordoñez Gloria Beatriz	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2479	112.01.01.030	Cardoso Izurieta Soledad	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2480	112.01.01.031	Cisneros Sanchez Marco	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2481	112.01.01.033	Coba Olmedo Mayra Piedad	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2485	112.01.01.039	Gabela Gonzalez Luis	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2486	112.01.01.040	Guadalupe Diaz Angel Oswaldo	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2487	112.01.02.085	Martinez Tayupanda Miguel	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2488	112.01.01.041	Mejia Vinueza Dolores	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2489	112.01.01.042	Moreno Duran Geovany	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2492	112.01.02.086	Ramos Guaño Mayra Soledad	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2494	112.01.01.045	Ureña Moreno Veronica Gabriela	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2495	112.01.01.046	Urquizo Tello Jenny Angelita	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2496	112.01.02.087	Vega Jimenez Edison Fernando	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2497	112.01.02.088	Vimos Lema Cesar Pablo	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2498	112.01.01.047	Viñan Yanez Silvia	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2502	112.01.01.048	Berrones Valencia Mery Alexandra	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2503	112.01.02.078	Rodriguez Parreño Hector Anibal	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2504	112.01.02.089	Marcatoma Jurado Jose Daniel	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2505	112.01.02.090	Uvidia Sola William Orlando	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2506	112.01.02.091	Caceres Ambi Luis Alonso	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2508	112.01.02.093	Cuñez Paguay Julio Cesar	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2509	112.01.02.094	Yumi Paca Aurelio	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2510	112.01.02.095	Agualsaca Yuquilema Luis	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2511	112.01.02.096	Castro Guzman Segundo Francisco	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2512	112.01.02.097	Muquinche Usca Jorge Washington	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2513	112.01.02.098	Velastegui Vera Johanna Azucena	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2514	112.01.02.099	Guerrero Ordoñez Luis Alberto	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2515	112.01.02.100	Ortega Jimenez Rober William	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2516	112.01.02.101	Chagñay Jarrin Juan Segundo	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2517	112.01.02.102	Ramos Veloz Luis Humberto	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2518	112.01.02.103	Soria Andieta Juan Luis	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2519	112.01.02.104	Olmedo Berrones Edwin	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2520	112.01.02.105	Lozada Zabala Hugo Ramiro	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2522	112.01.02.107	Montesdeoca Abad Kleber	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2523	112.01.02.108	Lema Paredes Christian	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2524	112.01.02.109	Ormaza Guaranga Alvaro	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2525	112.01.02.110	Guadalupe Aushay Juan Gerardo	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2526	112.01.02.111	Sislema Uzhca Luis Florencio	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2527	112.01.02.112	Gomez Noriega Diego Armando	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2529	112.01.02.113	Miranda Guillen Luis	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2545	112.01.01.063	Cajamarca Chato Nelson Eduardo	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2567	112.03.02.070	GUTIERREZ RUIZ REMIGIO CESAR	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2577	626.21.01.001	 SOBRE PLANILLAS DE TELECOMUNICACIONES	t	6	626.21.01	\N		0	f	6623	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2580	112.01.02.115	Chafla Yungan Jose Lorenzo	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2582	112.01.02.116	Cuadrado Diaz  Henry Hugo	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2585	113.18.01	CxC Transferencias Corrientes Convenios Interinstitucionales	t	5	113.18	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2586	113.19.01	CxC Otros Ingresos Devolucion de IVA	t	5	113.19	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2587	626.01.04.001	Gobierno Seccional Concejo Provincial de Chimborazo	t	6	626.01.04	\N		0	f	6623	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2614	213.61.02.021	Cetemapar	t	6	213.61.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2615	213.61.02.022	Central Sindical	t	6	213.61.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2616	213.51.02.020	 Cetemapar	t	6	213.51.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2617	213.51.02.021	 Central Sindical	t	6	213.51.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2622	213.51.02.022	Asociacion de Empleados EP- EMAPAR	t	6	213.51.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2623	213.61.02.023	Asociacion de Empleados EMAPAR	t	6	213.61.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2624	213.51.02.023	Retenciones Judiciales	t	6	213.51.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2628	112.13.04	Fondos Rotativos en Proyectos y Programas	f	5	112.13	\N	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2629	112.13.04.001	Proyecto Inventario de Recursos Hidricos HCPCH Ing Nelson Ca	t	6	112.13.04	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2632	112.13.04.002	Construccion de la Camara para colocacion del Macro medidor	t	6	112.13.04	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2635	213.57.02.006	Retencion en la Fuente del 1% del 10%	t	6	213.57.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2636	112.03.02.097	CHAVEZ ACOSTA EDWIN ARMANDO	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2640	112.15	FONDOS A RENDIR  CUENTAS	f	4	112	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2641	112.15.01	Anticipo de Viaticos Pasajes y Otros de Viaje Instituc	t	5	112.15	\N	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2654	112.03.02.100	SANTILLAN ARIAS MARCO ANTONIO	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2657	112.01.02.120	Guaman  Geovanny	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2661	112.03.02.102	CASTILLO CAMPOVERDE TITO	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2662	112.03.02.102.01	Fiscalizacion construccion del sistema de alcantarillado san	t	7	112.03.02.102	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2665	113.28.01.005	DE ENTIDADES FINANCIERAS PUBLICAS	f	6	113.28.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2666	113.28.01.005.01	De entidades financieras publicas Banco del Estado	t	7	113.28.01.005	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2668	626.21.06.001	Fondos PROMADEC PDM Banco del Estado subprstamo  La Libertad	t	6	626.21.06	\N		0	f	6623	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2670	112.03.02.103	CONSTRUCPIEDRA CONSTRUCIONES CIA LTDA	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2671	112.03.02.103.01	Alcantarillado sanitario y pluvial La Libertad	t	7	112.03.02.103	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2673	112.07.01.001	Varios Beneficiarios	t	6	112.07.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2674	112.07.01.002	Instituciones Publicas	t	6	112.07.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2676	112.13.03.002	Coba Olmedo Mayra	t	6	112.13.03	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2681	112.03.02.104	CRESPO CRIOLLO EDUARDO VICENTE	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2682	112.03.02.104.01	Fiscalizacion de la Obra Construccion de la Ampliacion de la	t	7	112.03.02.104	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2691	112.03.02.106	ASUBSA AGUAS SUBTERRANEAS SA	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2692	112.03.02.106.01	Perforacion de un Pozo de  de diametro en el sector de Llio	t	7	112.03.02.106	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2693	911.17	BIENES NO DEPRECIABLES	f	4	911	\N	\N	0	t	91	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2694	911.17.01	Mobiliarios	t	5	911.17	\N	\N	0	f	91	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2698	112.03.02.107	TORRES GUANANGA EDGAR FABIAN	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2699	112.03.02.107.01	Construccion y Rehabilitacion de Sumideros en las Avenidas C	t	7	112.03.02.107	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2700	112.03.02.108	VACA RIOFRIO LUIS HUMBERTO	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2701	112.03.02.108.01	Construccion del Sistema de Alcantarillado del sector Perime	t	7	112.03.02.108	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2702	112.03.02.109	CARPIO PONTON MARIA BELEN	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2703	112.03.02.109.01	Construccion de Sala de Uso Multiple y oficinas EMAPAR	t	7	112.03.02.109	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2704	112.03.02.110	CRESPO CRIOLLO EDUARDO VICENTE	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2705	112.03.02.110.01	Construccion Cambio de Tuberia de Alcantarillado Combinado s	t	7	112.03.02.110	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2710	112.03.02.100.02	Completacion de Redes de Agua Potable de los Barrios Nor Occ	t	7	112.03.02.100	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2713	112.15.03	Otros Fondos para Fines Especificos	f	5	112.15	\N	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2715	911.17.02	Equipos Sistemas y Paquetes Informticos	t	5	911.17	\N	\N	0	f	91	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2716	921.17	BIENES NO DEPRECIABLES	f	4	921	\N	\N	0	t	92	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2717	921.17.01	Mobiliarios	t	5	921.17	\N	\N	0	f	92	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2718	921.17.02	Equipos Sistemas y Paquetes Informticos	t	5	921.17	\N	\N	0	f	92	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2721	213.57.02.007	Retencion en la Fuente	t	6	213.57.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2722	112.01.02.123	Samaniego Valencia Carlos Pacifico	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2723	112.01.02.124	Montenegro Carrillo Vinicio Israel	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2725	112.01.02.125	Guadalupe Aguayo Vicente	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2727	112.01.02.126	Cabay Valla Geovanny Marcelo	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2728	112.01.02.127	Allauca Chacha Diego Armando	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2729	112.01.02.128	Guaman Pacheco Segundo Alejandro	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2730	112.01.02.129	Sinche Tuquinga Juan Miguel	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2731	112.01.02.130	Diaz Andrade Mario Heriberto	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2732	112.01.02.131	Villegas Insuaste Victor Polibio	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2733	112.01.02.132	Criollo  Silva Luis Alberto	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2735	112.01.02.133	Guevara Montalvo Roberto German	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2736	151.51.01.069	Estudios de los Planes Maestros de Agua Potable y Alcantaril	t	6	151.51.01	75.01.01.000.069.001	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2737	213.75.23	Procuraduria General del Estado	t	5	213.75	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2738	213.75.24	Secretara Tecnica del Comite de Consultoria	t	5	213.75	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2741	142.03.99.001	Redes e Instalaciones de Agua Potable	t	6	142.03.99	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2742	142.03.99.002	Redes e Instalaciones de Alcantarillado	t	6	142.03.99	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2743	112.01.02.134	Zurita Zuñiga Angel Vicente	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2744	113.28.06	De entidades financieras Publicas	f	5	113.28	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2745	113.28.06.001	Banco del Estado	t	6	113.28.06	\N		0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2746	212.03.03	Credito  PROMADEC  SUBVENCION Banco del Esta	t	5	212.03	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2752	112.01.02.135	Rosero Silva Helmo Fabricio	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2753	112.03.02.111	NICOLA GARCES GABRIEL GERARDO	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2754	112.03.02.111.01	Consultora de Auditora de Gestin de la EMAPAR	t	7	112.03.02.111	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2756	141.99.02	Depreciacion acumulada edificios locales y residencias	t	5	141.99	\N	\N	0	t	124	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2757	213.81.05	Cuentas por Pagar IVA Servicios  Proveedor	t	5	213.81	\N	\N	0	t	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2758	213.81.06	Cuentas por Pagar IVA Servicios  SRI	t	5	213.81	\N	\N	0	t	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2762	112.01.01.022	Erazo Torres Erika Vanessa	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2765	112.01.01.025	Merino Barreno Otto Paul	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2768	112.01.02.136	Villa Uvidia Edison Fabian	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2771	213.61.02.026	Retenciones Judiciales	t	6	213.61.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2773	135	Inversiones en Comercializacion y Distribucion	f	3	13	\N	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2774	135.05	Existencias de Productos Terminados para la Venta	f	4	135	\N	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2775	135.05.99	Existencia de Otros Productos Terminados	f	5	135.05	\N	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2776	135.05.99.001	Agua Potable	t	6	135.05.99	\N	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2780	112.05	Anticipos a Proveedores de Bienes yo Servicios	f	4	112	\N	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2785	112.15.03.001	Matriculacion de vehiculos de la EMAPAR	t	6	112.15.03	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2786	112.03.02.112	PROAÑO CAMPO MARIO ARTURO	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2787	112.03.02.112.01	Adquicicion de tapas y rejillas de sumidero de hierro fundid	t	7	112.03.02.112	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2788	112.03.02.056.02	Construccion alcantarillado pluvial barrio Retamal de Tapi	t	7	112.03.02.056	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2790	112.03.02.113	SANCHEZ ACOSTA HECTOR PATRICIO	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2791	112.03.02.113.01	Suministro de rejillas de sumideros de varilla corrugada y p	t	7	112.03.02.113	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2795	112.01.01.070	Guevara Montalvo Cecilia Enriqueta	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2797	112.01.01.072	Yepez Villavicencio Andres Alejandro	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2798	112.01.01.073	Jimenez Zavala Norma Mariella	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2799	112.01.01.074	Carvajal Medina Erika Marlene	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2800	112.01.01.075	Bonifaz Ayala Ivan Patricio	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2802	112.01.01.077	Haro Gavidia Norberto Nicolas	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2803	112.01.01.078	Ortiz Villa Marisol Amanda	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2804	112.01.02.137	Tapia Hernandez Carlos Rodriguez	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2805	112.01.02.138	Vargas Palma Gabriela Natividad	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2806	112.03.02.114	AUTOMEKANO CIA  LTDA	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2807	112.03.02.114.01	Adquisicion de una volqueta  m Nissan Diesel ao	t	7	112.03.02.114	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2808	112.03.02.115	ESCORZA PESANTEZ GIOVANNI PATRICIO	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2809	112.03.02.115.01	Construccion alcantarillado sanitario Barrio Santa Ana de Ta	t	7	112.03.02.115	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2811	213.97.02	Cuentas por Pagar Años Anteriores Imp a la Renta 1%	t	5	213.97		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2812	213.97.03	Cuentas Por Pagar Años Anteriores Imp a la Renta 2%	t	5	213.97		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2814	213.83.81	Cuentas por Pagar Impuesto al Valor Agregado IVA Aos Anterio	t	5	213.83	\N	\N	0	t	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2815	112.01.02.139	Corporacion Nacional de Telecomunicaciones	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2816	112.01.02.140	Secretaria Nacional de Telecomunicaciones	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2820	111.15.03.004	Cuenta Rotativa de Ingresos N BG 6928994	t	6	111.15.03	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2823	112.05.04	EP Corporacion Nacional de Telecomunicaciones	t	5	112.05	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2824	112.05.05	Secretaria Nacional de Telecomunicaciones	t	5	112.05	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2827	213.51.02.024	retencion en la Fuente 10%	t	6	213.51.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2828	213.53.02.008	Retencion en la Fuente 8%	t	6	213.53.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2829	112.13.03.015	Ortiz Guerrero Jimmy	t	6	112.13.03	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2831	112.01.02.142	Alvarez Velastegui Alex	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2833	112.01.02.143	Coronel Velastegui Hector	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2834	112.01.01.080	Haro Inca Samuel	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2835	112.01.01.081	Mendez Arias Victor Manuel	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2836	112.01.01.082	Velarde Humanante Carlos	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2837	112.01.01.083	Segura Chavez Milton Paul	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2838	112.01.02.144	Casco Cacuango José Luis	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2839	112.03.02.117	ECHEVERRIA MARTINEZ FRANCISCO JAVIER	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2840	112.03.02.117.01	Adquisicion de equipos de proteccion individual para el per	t	7	112.03.02.117	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2842	112.01.02.145	Rivera Zurita Paco	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2843	112.01.02.146	Lalon Leon Luis Gonzalo	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2844	112.01.02.147	Bonilla Ñauñay Segundo Luis	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2845	112.01.02.148	Haro Medina Claudio Danny	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2846	112.01.02.149	Andrade Guanga Fabian	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2847	112.01.02.150	Cujano Silva Victor	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2848	112.01.02.151	Orna Chavez Luis Eduardo	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2849	112.01.02.152	Rivera Robalino Freddy	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2850	112.01.02.153	Medina Oñate Juan Adan	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2851	112.01.02.154	Sanailan Once Patricio	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2852	112.01.02.155	Alcocer Illapa Moises	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2853	112.01.02.156	Oñate Lazo Mario	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2854	112.01.02.157	Martinez Paredes Angel	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2855	112.01.02.158	Sinaluisa Colcha Hector	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2856	623.01.99.002	No Especificados	t	6	623.01.99	\N	13.01.99.03.001	0	f	6622	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2857	111.15.04	Cooperativa de Ahorro y Crédito Riobamba Ltda.	f	5	111.15	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2858	111.15.04.001	Cuenta de Ahorros Nº 401110659282	t	6	111.15.04	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2859	112.01.02.159	Cayambe Ushca Alex Adolfo	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2862	213.61.02.027	Subsidio IESS	t	6	213.61.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2863	213.61.02.028	Retencion en la Fuente 10%	t	6	213.61.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2864	112.01.02.160	Pintag Quitio Jose Miguel	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2865	112.01.02.161	Totoy Chiliguana John Enrique	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2866	213.63.02.013	Retención en la Fuente 10%	t	6	213.63.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2867	133.18	Indemnizaciones	f	4	133	\N	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2868	133.18.04	Compensación por Desahucio	t	5	133.18		\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2871	112.03.02.118	HERRERA RODRIGUEZ CRISITIAN	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2872	112.03.02.118.01	Alcantarillado Combinado Barrio Jose Mancero calle Angel M	t	7	112.03.02.118	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2873	112.03.02.119	CORDOVA GAIBOR MARIO	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2874	112.03.02.119.01	Mejoramiento del Sistema Existente Captaciones, Reservas y R	t	7	112.03.02.119	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2877	112.03.02.120	GUALOTO QUINCHUELA LUIS ALFONSO	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2878	112.03.02.120.01	Alcantarillado Combinado en el Barrio Santa Faz	t	7	112.03.02.120	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2881	112.01.02.162	Sanunga Paz Luis Hector	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2882	112.01.02.163	Casco Gavidia Carlos Vicente	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2883	112.01.02.164	Rivera Ponimboza Marlon David	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2884	112.01.02.165	Perez Fierro Edison Ricardo	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2885	112.01.02.166	Guanga Chacha Edwin Fabian	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2886	112.01.02.167	Guanga Tacuri Sebasian David	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2887	112.01.02.168	Miñarcaja Paucar Segundo Rodrigo	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2888	112.01.01.084	Andrade Moreno Lupe Noemi	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2889	112.01.01.085	Perez Diaz Piedad	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2890	112.03.02.121	GADVAY MUÑOZ ANGEL ALBERTO	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2891	112.03.02.121.01	Consultoria Fiscalización Obras	t	7	112.03.02.121	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2893	112.03.02.122	LEON VALENCIA PATRICIO	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2894	112.03.02.122.01	Adquisición de un Rodillo vibratorio y un Martillo Hidraulic	t	7	112.03.02.122	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2896	113.19.02	CxC Otros ingresos	t	5	113.19	\N		0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2900	112.03.02.123	COLLAGUAZO LARA LUIS ANTONIO	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2901	112.03.02.123.01	Consultoría Estudios Proteccion Catodica Linea de Conducción	t	7	112.03.02.123	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2903	112.03.02.124	COSMACOR S.A	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2904	112.03.02.124.01	Alcantarillado combinado barrio La Esperanza	t	7	112.03.02.124	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2905	112.03.02.125	BARRENO NORIEGA JUAN CARLOS	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2906	112.03.02.125.01	Conexión Redes de Tanque Piscin, Redes de Distribución	t	7	112.03.02.125	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2907	112.01.02.169	Guadalupe Aguayo Efrain	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2908	112.03.02.126	AVALOS LAYEDRA VICENTE ANTONIO	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2909	112.03.02.126.01	Construcción de Guardianías	t	7	112.03.02.126	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2910	112.03.02.127	AQUASOLVENT CIA LTDA	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2911	112.03.02.127.01	Mantenimiento Mecanico y Quimico del pozo San Gabriel	t	7	112.03.02.127	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2912	112.01.02.170	Miñarcaja Castro Diego	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2913	112.01.02.171	Salazar Uvidia Alvaro Luis	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2918	112.03.02.106.02	Perforación del Pozo Estadio Yaruquies	t	7	112.03.02.106	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2920	112.03.02.116	BECERRA TOTOY HUMBERTO	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2921	112.03.02.116.01	Construccion Tratamiento Maldonado derivacion La Saboya	t	7	112.03.02.116	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2923	112.03.02.128	RIOS SILVA MAYRA	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2924	112.03.02.128.01	Consultoria Manejo y Control de Inventario Existencias y Act	t	7	112.03.02.128	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2925	112.01.02.172	Merino Villegas Miguel Patricio	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2926	112.01.02.173	Gonzalez Yuquilema Luis Marco	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2927	112.01.02.174	Aucancela Milan Honorio	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2928	112.01.02.175	Berrones Quinancela Antonio Patricio	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2929	112.01.02.176	Gusman Ilvay Agustin	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2930	112.01.02.177	Heredia Chango Sonnia Jimena	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2931	112.01.02.178	Ortega Aldaz Santiago Jose	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2932	112.01.02.179	Pomatoca Sagba Luis Oscar	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2933	112.01.02.180	Pusay Lliquin Nancy Carmela	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2934	112.01.02.181	Quintanilla Guerrero Wilian Marcelo	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2935	112.01.02.182	Rivera Salas Abel Gustavo	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2936	112.01.02.183	Sinaluisa Colcha Carlos Roberto	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2937	112.01.02.184	Trujillo Noboa Hugo Geovanny	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2938	112.01.02.185	Yuquilema Guaman Jose Alberto	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2939	112.01.02.186	Cruz Ayala Cristian Alejandro	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2940	112.01.02.187	Ramirez Becerra Cristian	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2941	626.21.06.002	CREDITO 11268 BEDE PROMADEC II PLANES MAESTROS AGUA POT ALC	t	6	626.21.06	\N		0	f	6623	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2943	223.01.01.002	Credito 11268 BEDE Planes Maestros Agua Pot. Alc. Riobamba	t	6	223.01.01	96.02.01.000.000.001		0	f	221	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2944	111.03.04	EMAPAR BEDE CRE 11268 PLANES MAESTROS AGUA PORT ALC RIOBAMBA	t	5	111.03	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2945	911.09.04	Responsabilidad Civil	t	5	911.09	\N	\N	0	f	91	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2946	921.09.04	Responsabilidad Civil	t	5	921.09	\N	\N	0	f	92	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2953	213.97.04	Cuentas Por Pagar Años Anteriores Imp a la Renta 10%	t	5	213.97		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2956	112.01.01.086	Lara Cachote Edgar Rolando	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2957	112.01.01.087	Martinez Once Hermes Adrian	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2958	112.01.01.088	Romero Herrera Fabian	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2959	112.01.01.089	Chavez Llerena Wendy Marisol	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2960	112.01.01.090	Tacuri Chauca Norma	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2961	112.01.01.091	Guerrero Siguenza Veronica Azucena	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2962	112.01.02.188	Pilco Chunata Javier Fernando	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2963	112.03.02.129	GUBER SOCIEDAD CIVIL Y COMERCIAL	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2964	112.03.02.129.01	Adquisición de Uniformes para los Empleados de la EP EMAPAR	t	7	112.03.02.129	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2965	112.03.02.130	CARGUA LEMA ANGEL EDUARDO	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2966	112.03.02.130.01	Construcción de Camaras de Válvulas Sector Piloto Red 1	t	7	112.03.02.130	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2967	112.03.02.131	LOPEZ MARTINEZ CARLOS MARCELO	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3052	112.01.02.194	Orozco silva Luis Alfonso	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2968	112.03.02.131.01	Construcción del Comedor en las Instalaciones de la EP EMAPA	t	7	112.03.02.131	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2969	112.03.02.132	AVALOS RODRIGUEZ ROBERTO CARLOS	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2970	112.03.02.132.01	Construcción Tercera Planta del Edificio de la Unidad Tecnic	t	7	112.03.02.132	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2972	112.03.02.133	PALOMEQUE NUÑEZ JENNY GERMANIA	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2973	112.03.02.133.01	Construcción Cerramiento Perimetral Mamp de Ladrillo Molobog	t	7	112.03.02.133	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2977	112.03.02.134	MORENO YANEZ MAURO PATRICIO	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2978	112.03.02.134.01	Ejecución del Colector Modesto Arrieta	t	7	112.03.02.134	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2980	112.03.02.135	SILVA TOTOY VICENTE RAFAEL	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2981	112.03.02.135.01	Protección y estabilización de Taludes en la nueva Conducció	t	7	112.03.02.135	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2982	213.98	Cuentas por Pagar de Años Anteriores	f	4	213	\N	\N	0	t	211	16	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2983	213.98.01	Proveedor	t	5	213.98			0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2984	213.98.02	Retención Impuesto a la Renta 1%	t	5	213.98			0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2985	213.98.03	Retención Impuesto a la Renta 2%	t	5	213.98			0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2986	213.98.04	Retención Impuesto a la Renta 10%	t	5	213.98			0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2988	112.03.02.122.02	Adquisición de una Cámara de video Sumergible	t	7	112.03.02.122	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2989	112.03.02.136	ALULEMA RODRIGUEZ SILVIO GERMAN	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2990	112.03.02.136.01	Cerramiento Tratamiento Aireadores EP EAMAPAR	t	7	112.03.02.136		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2994	112.03.02.137	TAGUA PALTA HERNAN PATRICIO	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2995	112.03.02.137.01	Adquisición de Rejillas para Alcantarilado	t	7	112.03.02.137		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2996	112.03.02.138	PAEZ PINO WALTER RICARDO	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2997	112.03.02.138.01	Construccion Colector San Antonio del Aeropuerto	t	7	112.03.02.138		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2998	112.03.02.139	RODRIGUEZ VALLEJO WASHINGTON EDUARDO	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+2999	112.03.02.139.01	Adecuación e implementación del Area Comercial en el Edifici	t	7	112.03.02.139		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3000	112.03.02.130.02	Cambio de Tuberias de Alcantarillado Sector La Primavera	t	7	112.03.02.130		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3001	112.03.02.130.03	Const.  de los Sist de Alcant de la Coop de Vivienda Solidar	t	7	112.03.02.130		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3003	112.03.02.140	LARA OLIVO JULIO CESAR	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3004	112.03.02.140.01	Construcción de Alcantarillado Sector Jerusalen Medio Mundo	t	7	112.03.02.140		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3005	112.03.02.141	JARAMILLO GONZALEZ ALBERTO NICOLAS	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3006	112.03.02.141.01	Cambio de Tuberias de Agua Potable varios sectores de la ciu	t	7	112.03.02.141		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3007	112.01.01.093	Castelo Gavilanez Rosa Ximena	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3009	213.75.14	Descuentos por Multas	t	5	213.75		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3013	112.01.02.189	Escobar Guevara Luis Alberto	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3014	112.01.01.094	Ponton Butron Alma Belen	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3015	112.01.02.190	Pilco Orozco Juan Dagoberto	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3018	112.03.02.142	YEPEZ MERINO JAIME GERMAN	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3019	112.03.02.142.01	Construcción cerramiento reservas San José de Tapi	t	7	112.03.02.142		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3021	112.01.01.095	Merizalde Salas Verónica Elizabeth	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3022	112.15.03.005	Legalización de Predios de la EP-EMAPAR	t	6	112.15.03		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3024	112.03.02.143	GUIDO FREIRE HARO ALBUJA	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3025	112.03.02.143.01	Red de distribucion de agua potable San José de Tapi	t	7	112.03.02.143		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3026	112.03.02.144	CONSTRUCTORA DE LOS ANDES COANDES CIA LTDA	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3027	112.03.02.144.01	Construcción de la Red de Distribución de Agua Potable Maldo	t	7	112.03.02.144		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3028	911.09.05	Seguro Accidentes Personales	t	5	911.09		\N	0	f	91	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3029	921.09.05	Seguro Accidentes Personales	t	5	921.09		\N	0	f	92	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3030	112.03.02.144.02	Construccion de la Red de Distribución Saboya	t	7	112.03.02.144		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3031	112.03.02.145	CONSTRUCTORA ESPINOZA MOLINA	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3032	112.03.02.145.01	Construccion del Colector Brigada	t	7	112.03.02.145		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3034	112.03.02.117.02	Adquisición de ropa de Trabajo para Trabajadores y Tecnicos	t	7	112.03.02.117		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3035	112.01.02.191	Caceres Vargas Cristian Andres	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3036	112.01.02.192	Rodriguez Zabala Juan Evangelista	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3039	112.03.02.146	ALULEMA RODRIGUEZ FLAVIO MIGUEL	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3040	112.03.02.146.01	Construcción de un tanque de reserva 2000m3 en el Carmen	t	7	112.03.02.146		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3041	112.01.02.193	Vimos Valdiviezo Carlos Oswaldo	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3044	112.01.01.097	Salas Barba Marcelo Fernando	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3046	112.03.02.147	CASTILLO AGUIRRE ALVARO RAMIRO	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3047	112.03.02.147.01	Fiscalizacion Construccion Red Saboya	t	7	112.03.02.147		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3048	112.01.01.098	Arguello Altamirano Noemí	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3050	112.03.02.148	ARELLANO BARRIGA ANA CRISTINA	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3051	112.03.02.148.01	Const del cerramiento Perimetral Muro de Gavion Casa de Guar	t	7	112.03.02.148		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3053	112.01.02.195	Yuquilema Borja Hermenegildo	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3054	112.01.02.196	Velastegui Rodriguez Juan Carlos	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3055	112.01.02.197	Changotasig Ayala Danny	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3056	112.01.02.198	Pilco Cifuentes Luis Antonio	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3057	112.01.02.199	Tagua Atupana José Antonio	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3062	112.01.01.099	Zuñiga Silva Paulina Veronica	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3065	112.03.02.149	LLUMIQUINGA PALACIOS LUIS CARLOS	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3066	112.03.02.149.01	Construcción de una Tanque de 1000 m3 en el Tratamiento	t	7	112.03.02.149		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3068	112.01.02.200	Pacheco Guzman Pedro	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3069	112.01.02.201	Mora Murillo Julio Humberto	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3071	112.03.02.150	CONSTRUCTORA TORRES SALAZAR CONSTOSA CIA	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3072	112.03.02.150.01	Construccion de un Tanque de 1000 m3 en Yaruquies	t	7	112.03.02.150		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3073	112.03.02.151	OBREGON GUADALUPE ANGEL EDISON	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3074	112.03.02.151.01	Fiscalización de la obra Const de los Tanq Trat Carm y Yaru	t	7	112.03.02.151		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3076	112.03.02.152	OVIEDO VILLAGOMEZ VICENTE EDUARDO	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3077	112.03.02.152.01	Adquisición de 700MB m3 de mezcla asfaltica	t	7	112.03.02.152		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3078	112.03.02.040.02	Fiscalizacion de la Obra Red de Distribución San Jose de Tap	t	7	112.03.02.040		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3080	112.03.02.153	CORPCONSUL CIA LTDA	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3081	112.03.02.153.01	Fiscalización de la Construcción Colector Brigada	t	7	112.03.02.153		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3082	112.03.02.153.02	Fiscalizacion de la Construccion de la Red de Dist Maldonado	t	7	112.03.02.153		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3083	112.03.02.154	SEGOVIA UNDA SARA CECILIA	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3084	112.03.02.154.01	Adquisición de Equipos Informáticos	t	7	112.03.02.154		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3085	112.01.02.202	Solis Gutierrez gonzalo Mauricio	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3088	112.01.02.203	Santos LLerena Jaime Vinicio	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3089	112.01.01.100	Armijos Urgiles Carmen Silvana	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3090	112.03.02.116.02	Construccion de la Red de Distribucion Yaruquies	t	7	112.03.02.116		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3091	112.01.02.204	Valdivieso Carrillo Juan Carlos	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3092	112.01.02.205	Ochoa Barreto Jonathan Orlando	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3093	112.01.01.101	Pulgar Trujillo Rosa Ana	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3094	112.01.01.102	Santillan Cepeda Carlos Alberto	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3095	112.01.01.103	Escobar Arrieta Sandra Noemi	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3096	112.01.01.104	Parreno Mayorga Belen de las Mercedes	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3100	213.75.25	Retención 10% Recepcion	t	5	213.75		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3101	112.01.02.206	Guanga Chacha Luis Nasario	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3102	112.01.02.207	Pomasqui Collaguazo Luis Ernersto	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3103	112.01.01.105	Barreno Torres Diego Enrique	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3104	112.01.01.106	Bayas Manzano Monica	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3106	112.01.01.108	Leon Encalada Yadira Marianela	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3107	112.01.01.109	Machado Adriana	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3108	112.01.01.110	Moreno Aviles David	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3109	112.01.01.111	Ortega Romero Sandra Paulina	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3110	112.01.01.112	Pumagualli Lema Raul Xavier	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3111	112.01.01.113	Quinzo Cayambe Milton Avelino	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3112	112.01.01.114	Reyes Pilatuña Fausto David	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3113	112.01.01.115	Salazar Perez Ana Elizabeth	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3114	112.01.01.116	Samaniego Cevallos Valeria	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3115	112.01.01.117	Velastegui Cepeda Wilson Vladimir	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3116	112.01.01.107	Gomez Guadalupe Jose luis	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3120	112.03.02.155	BAQUERO TAPIA RODRIGO MANUEL	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3121	112.03.02.155.01	Adquisicion de Materiales y Hierro Fundido EP-EMAPAR	t	7	112.03.02.155		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3122	112.03.02.156	ANDINO CELLERI FABRICIO FERNANDO	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3123	112.03.02.156.01	Cons Red Piscin P:M Constr varias obras muro de protecion	t	7	112.03.02.156		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3124	112.01.01.118	Robalino Gladis	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3129	112.01.01.119	Echeverria Erazo Paola Maricruz	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3130	151.51.01.112	Fiscalizacion de la Red de Distri.  San Jose de Tapi	t	6	151.51.01		\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3133	112.03.02.141.02	Construcción de la Línea de Impulsión Las Abras	t	7	112.03.02.141		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3134	112.03.02.097.02	Const.  de la Linea de Impulsion Pozo de la Lolita 24 de May	t	7	112.03.02.097		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3135	112.01.02.208	Tzaqui Llangarí Marcos	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3136	112.01.02.209	Bucay Silva Nelson Vicente	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3137	112.01.02.210	Villalva Quishpi Jose Javier	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3138	112.01.02.211	Montero Guarco Nelly Patricia	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3139	112.01.02.212	García Ortega Luis Alfredo	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3140	112.01.01.021	Mora Argudo Rosa Beatriz	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3141	112.01.01.064	Viñan Valencia Gustavo Dario	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3142	213.98.05	Recepcion 5%	t	5	213.98		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3144	213.98.06	Recepcion 10%	t	5	213.98		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3145	112.03.02.157	 CORPORACION PARA LA CAPAC TECNICA Y LA ERGONOMIA ERGOLATINA	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3146	112.03.02.157.01	Contra servicio de Consultoria Reglamento Interno Seguridad	t	7	112.03.02.157		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3147	112.01.01.037	Espinoza Arias Jorge	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3148	112.01.01.060	Chavez Castro Marco Enrique	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3149	112.01.01.071	Salazar Almeida Joselito Ramiro	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3150	112.01.01.096	Urgiles Torres Jaime Bolivar	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3151	112.01.02.214	CETEMAPAR	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3152	112.03.02.070.02	Construcción Linea de Impulsion Yaruquies	t	7	112.03.02.070		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3153	213.71.01	Servicios Personales por Contrato	f	5	213.71		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3154	213.71.01.001	Servicio Personales por Contrato	t	6	213.71.01		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3155	213.71.02	Fondos de Terceros	f	5	213.71		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3156	213.71.02.001	Aporte Personal	t	6	213.71.02		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3157	213.71.02.002	Aporte Patronal	t	6	213.71.02		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3158	213.71.02.003	Fondo de Reserva	t	6	213.71.02		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3159	213.71.02.004	Impuesto a la Renta Relacion de Dependencia	t	6	213.71.02		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3160	112.01.01.120	Montalvo Ramos Maria Fernanda	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3161	112.01.01.121	Cabay Alarcon Monica Cristina	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3162	112.01.01.122	Serrano Iglesias Mirian Veronica	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3163	112.01.01.123	Curicama Gadvay Jose luis	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3164	112.01.01.124	Machado Garcia Alejandro	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3165	112.01.01.125	Guevara Marquez Mery Eugenia	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3166	112.03.02.158	DE PRADA GALVEZ MARIA MERCEDES	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3167	112.03.02.158.01	Adquisición de Ropa de Tarabajo Para los Trabajadores	t	7	112.03.02.158		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3168	112.03.02.159	TELLO BURBANO CONSTRUCTORA CIA LTDA	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3169	112.03.02.159.01	Construcción Duchas y Vestidores EP-EMAPAR	t	7	112.03.02.159		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3170	112.01.01.126	Carvajal Pepinos Jaime Ramiro	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3171	213.71.02.005	Otros Descuentos	t	6	213.71.02		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3175	213.71.02.006	Retenciones Judiciales	t	6	213.71.02		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3177	213.71.02.007	Cetemapar	t	6	213.71.02		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3178	112.03.02.160	MIÑO ANDINO RENATO ALONSO	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3179	112.03.02.160.01	Construcción Cerramiento Frontal EP-EMAPAR	t	7	112.03.02.160		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3180	112.01.02.215	Ushca Duchi Luis Ramiro	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3182	213.75.26	Retención 5% Recepción	t	5	213.75		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3184	112.03.02.143.02	Construccion de la Red de Distribución El Recreo	t	7	112.03.02.143		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3185	112.01.02.216	Urquizo Flores Mario Fernando	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3186	112.03.02.161	UREÑA MORENO JUAN ENRIQUE	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3187	112.03.02.161.01	Cambio de tuberia de alcantarillado sector La Primavera	t	7	112.03.02.161		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3188	112.01.02.217	Ugeño Rivera Fernando Alejandro	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3189	213.71.02.008	Atrasos	t	6	213.71.02		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3190	213.71.01.002	Horas Extras	t	6	213.71.01		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3191	112.01.02.218	Tumailli Amaguaya Julio Abel	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3193	112.03.02.162	CONSORCIO ALBER CONSTRUCCIONES	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3194	112.03.02.162.01	Construcción de la Red de Distribución San Martín de Veranil	t	7	112.03.02.162		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3195	112.01.02.219	Brito Reyes Rubén Darío	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3196	112.01.02.220	Ureña Moreno Efren Dario	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3197	112.01.01.127	Ortiz Rivera Hernan Baltazar	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3199	112.01.01.128	Castilllo Chiriboga Yahaira Alexandra	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3202	112.01.02.221	Orozco Chulli Fabian Rolando	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3203	911.09.06	Fidelidad Publica	t	5	911.09		\N	0	f	91	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3204	921.09.06	Fidelidad Publica	t	5	921.09		\N	0	f	92	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3206	151.51.01.120	Varias Obras de Agua Potable	t	6	151.51.01	75.01.01.000.120.001	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3208	112.03.02.163	VELASQUEZ BENAVIDES VICTOR RENEE	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3209	112.03.02.163.01	Fiscalizacion de la obra Red de Distrib El Recreo	t	7	112.03.02.163		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3212	633.07.07	Compensacion por Vacaciones no Gozadas por Cesacion de Funci	t	5	633.07	51.07.07.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3214	112.01.01.129	Escorza Cuello Cesar	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3216	112.03.02.114.02	Repotenciación Retroexcavadora JCBS	t	7	112.03.02.114		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3217	112.01.02.222	Benavides Sanchez Paolo	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3227	112.03.02.164	NARVAEZ TERREROS BLANCA NOEMI	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3228	112.03.02.164.01	Adquisición de prendas y equipos de proteccion individual	t	7	112.03.02.164		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3229	112.01.02.223	Pilco Inca Félix Maria	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3231	213.84.02.005	Otros descuentos	t	6	213.84.02		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3234	112.01.02.224	Baldeon Almeida Luis Andres	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3235	911.09.07	Vehiculos	t	5	911.09		\N	0	f	91	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3236	911.09.08	Equipo y Maquinaria	t	5	911.09		\N	0	f	91	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3237	921.09.07	Vehiculos	t	5	921.09		\N	0	f	92	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3238	921.09.08	Equipo y Maquinaria	t	5	921.09		\N	0	f	92	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3239	112.03.02.165	EMPRESA PERFOCONSUL CIA LTDA	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3240	112.03.02.165.01	Peforacion de un pozo profundo para capt.  setor las hierbas	t	7	112.03.02.165		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3241	112.03.02.156.02	Contrato Complementario Construccion Red Piscin	t	7	112.03.02.156		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3242	112.01.02.225	Cardenas Cardenas Luis Miguel	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3243	133.32.18	Publicidad y Propaganda en Medios	t	5	133.32	63.02.18.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3244	223.01.02	Créditos del Sector Público No Financiero	f	5	223.01		\N	0	t	221	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3245	223.01.02.002	Crédito 11267 BEDE Planes Maestros Transferencia GAD Riobamb	t	6	223.01.02	96.02.02.000.000.001		0	f	221	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3246	223.01.02.001	Crédito GAD Riobamba saldo 2007 (Transferencia Patrimonial)	t	6	223.01.02			0	f	221	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3247	113.36.01	Cuentas por Cobrar Prestamos Sector Publico No Financiero	t	5	113.36		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3248	635.02.02	Intereses al Sector Publico No Financiero	f	5	635.02		\N	0	t	6624	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3249	112.03.02.166	CONSTRUCTORA CEVALLOS HIDALGO S.A	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3250	112.03.02.166.01	Construccion de la Red de Distrib de Agua Potable El Carmen	t	7	112.03.02.166		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3252	112.03.02.116.03	Contrat Complementario Cond Tratamiento Maldonado Aereadores	t	7	112.03.02.116		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3253	133.18.05	Restitucion de puesto	t	5	133.18		\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3254	213.71.02.009	Prestamos IESS	t	6	213.71.02		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3256	112.03.02.160.02	Construcción de Alcantarillado Cdla Fausto Molina	t	7	112.03.02.160		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3257	213.71.02.010	Subsidio IESS	t	6	213.71.02		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3258	213.84.99	Otros devengado Iva	t	5	213.84		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3259	213.63.99	Otros devengado IVA	t	5	213.63		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3261	213.53.99	Otros devengado IVA	t	5	213.53		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3262	133.13	Remuneraciones Compensatorias	f	4	133		\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3263	133.13.06	Refrigerio	t	5	133.13	61.03.06.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3264	151.51.01.128	Perforacion de un Pozo Profundo en las Hierbas	t	6	151.51.01		\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3265	112.03.02.167	INNOVASSUR CONSTRUCTORA CIA. LTDA	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3266	112.03.02.167.01	Extencion de Alcantarillado Sector MAGAP	t	7	112.03.02.167		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3267	112.03.02.168	MAGGI SANCHEZ VINICIO WILFRIDO	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3268	112.03.02.168.01	Sistema Terciario Calle Chile y Uruguay	t	7	112.03.02.168		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3269	112.03.02.169	PRIETO MONTALVO RAMIRO FABIAN	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3270	112.03.02.169.01	Const. del Muro de Estabilizacion de la Conduccion Llio Aere	t	7	112.03.02.169		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3272	213.51.02.025	Subsidios IESS	t	6	213.51.02		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3273	112.01.02.226	Chafla Sinche Washington David	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3277	112.03.02.170	ALMEIDA NAVARRO FRANCISCO RODRIGO	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3278	112.03.02.170.01	Fiscalizacion Red de Distribucion El Carmen	t	7	112.03.02.170		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3283	132.08.06	Existencias de Herramientas	t	5	132.08	63.08.06.000.000.001	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3284	112.01.02.227	Gonzalez Pazmiño Israel	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3285	112.01.02.228	Peñafiel Diaz José	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3286	112.05.24	Instituto Ecuatoriano de Seguridad Social (redondeos)	t	5	112.05		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3287	112.03.02.171	LUCERO ERAZO LUIS ANTONIO	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3288	112.03.02.171.01	Arreglo de la volqueta HMA-1018	t	7	112.03.02.171		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3290	112.03.02.167.02	Alcantarillado calle Medardo Angel Silva	t	7	112.03.02.167		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3291	112.03.02.172	CONSTRUCTORA ELECRICA QUIMBIAMBA & QUIMBIAMBA CELEC CIA LTDA	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3292	112.03.02.172.01	Mantenimiento de 7 pozos profundos de la EP-EMAPAR	t	7	112.03.02.172		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3293	213.98.99	Devengado IVA	t	5	213.98		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3295	213.71.01.003	Remuneraciones Complementarias	t	6	213.71.01		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3297	112.01.02.229	Uvidia Hidalgo Washington Edmundo	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3298	112.01.01.130	Baquero Almachi Galo Patricio	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3299	112.01.01.131	Gavilanez Obregon Jorge Lenin	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3300	213.71.02.011	Retención 10%	t	6	213.71.02		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3301	213.71.02.012	Devengado IVA	t	6	213.71.02		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3302	213.71.02.013	Retención 8%	t	6	213.71.02		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3303	626.21.02.002	CREDITO 11267 BEDE PROMADEC II PLANES MAESTROS TRANSFER IMR	t	6	626.21.02			0	f	6623	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3310	112.01.01.132	Abarca Robalino Anderly Xavier	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3311	112.01.02.230	Pilco Orozco Washington German	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3312	112.01.02.231	Nenger Pozo Jose luis	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3313	634.02.18	Publicidad y Propaganda en medios de comunicacion masiva	t	5	634.02	53.02.18.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3314	112.01.01.133	Escobar Jimenez Ofelia Geovanna	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3315	112.01.02.232	Andocilla Aldaz Victor Manuel	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3316	213.57.02.008	Otros Devengado IVA	t	6	213.57.02		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3318	111.15.05	Cooperativa de Ahorro y Credito Accion Rural	f	5	111.15		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3319	111.15.05.005	Cuenta de Ahorros No.374281619	t	6	111.15.05		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3320	112.03.02.173	ROMO ORBE CRISTHIAN FRANCISCO	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3321	112.03.02.173.01	Adquisición de dos medidores de caudal portatiles	t	7	112.03.02.173		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3322	112.01.02.233	Majin Ilbay Fabian Octavio	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3323	112.01.01.134	Carvajal Lomas German Fabrizzio	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3324	112.01.01.135	Viteri Moran Guillermo Andres	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3327	213.63.02.014	Retención para Recepcion 10%	t	6	213.63.02		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3331	634.01.06	Servicios de Correo	t	5	634.01	53.01.06.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3332	112.03.02.174	ASQUI & ASOCIADOS CONSULTORIA Y CONSTRUCCIONES S.A	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3333	112.03.02.174.01	Readecuación de Oficinas	t	7	112.03.02.174		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3334	112.01.01.136	Bastidas Logroño Diego Javier	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3335	112.01.02.235	Remache Flor Edgar	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3336	112.01.01.137	Empleados EP-EMAPAR	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3338	112.01.01.138	Ponce Cardenas Lorena Gysela	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3339	112.01.01.139	Salazar Villa José Patricio	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3341	213.61.02.029	Otros devengado Iva	t	6	213.61.02		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3342	112.01.02.236	Orna Rodriguez Julio	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3345	112.01.02.237	Paguay Ushca Segundo Melchor	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3347	112.03.02.175	VELASTEGUI PUENTE HERNAN PATRICIO	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3348	112.03.02.175.01	Construccion del Sistema de Bombeo del Pozo del Estadio de Y	t	7	112.03.02.175		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3350	213.98.07	Otros descuentos	t	5	213.98		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3351	112.01.01.140	Maldonado Merino Monica Paulina	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3352	112.01.01.141	Pastor Ramirez Maria Isabel	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3355	213.51.99	Otros devengado Iva	t	5	213.51		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3357	112.01.02.238	Quishpe Flores Gonzalo	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3358	112.01.02.239	Trabajadores EP-EMAPAR	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3359	112.03.02.176	LOPEZ LOPEZ EDGAR NAPOLEON	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3360	112.03.02.176.01	Adquisicion de Suministros de Impresion	t	7	112.03.02.176		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3361	112.03.02.177	IGLESIAS VAZQUEZ VICTOR RENE	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3362	112.03.02.177.01	Consultoria de Modelacion Operativa y Monitoreo de las	t	7	112.03.02.177		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3364	213.71.02.014	Asoemapar	t	6	213.71.02		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3365	213.71.02.015	Otros Descuentos	t	6	213.71.02		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3366	112.03.02.178	CONDOR GUARANGO DIEGO ALEX	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3367	112.03.02.178.01	Construcción de Duchas y Vestidores La Saboya	t	7	112.03.02.178		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3368	112.03.02.124.02	Construcción de Extención de Matriz de Alcacantarillado JM	t	7	112.03.02.124		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3370	112.03.02.179	QUIMBIAMBA QUILUMBAQUIN PLACIDO VINICIO	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3371	112.03.02.179.01	Construccion de la Red de Generacion Electrica Emergente EBI	t	7	112.03.02.179		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3372	112.01.02.213	Chunata Rodriguez Nelson Fabian	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3373	112.01.02.240	Agualsaca Pagalo Edison	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3374	112.03.02.180	CAPROTECSA CENTRO DE AUDIOLOGIA PROTECCION Y SALUD AMBIENTAL	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3375	112.03.02.180.01	Adquisicion de un sonometro, medidor de estres y luxometro	t	7	112.03.02.180		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3376	112.01.02.241	Tapia Alvear Holger	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3378	112.03.02.181	Milton Vinicio Cazar Ruiz	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3379	112.03.02.181.01	Contratacion de productos cominicacionales	t	7	112.03.02.181		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3380	112.01.01.142	Ruiz Naranjo Daniela	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3381	213.71.02.016	Asociacion de Empleados	t	6	213.71.02		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3382	112.01.01.143	Romero Quiroga Klever	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3384	112.01.01.144	Guijarro Barahona Monica Isabel	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3385	112.03.02.175.02	Mantenimiento Preventivo y Correctivo de las Estaciones de B	t	7	112.03.02.175		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3386	112.01.01.145	Vallejo Brito Veronica Susana	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3387	112.01.01.146	Arellano Revelo Diego Fernando	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3388	112.01.01.147	Cevallos Vique Geovanna Paola	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3389	112.01.01.148	Zarate Procel Danny Roberto	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3390	112.01.01.149	Cuenca Choca Maria Veronica	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3391	112.01.01.150	Flores Robalino Juan Carlos	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3392	112.01.01.151	Puente Tituaña Daniela Alexandra	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3393	112.01.01.152	Mejia Garces Rodney Eduardo	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3395	112.01.02.242	Guaman Noboa Luis Gerardo	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3396	112.15.03.010	Permiso de funcionamiento	t	6	112.15.03		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3398	112.01.01.153	Avila Rivera Eduardo	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3399	112.01.02.243	Colcha Chavez Alfredo Rolando	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3400	112.01.01.154	Moreno Aguirre Samuel	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3401	112.01.01.155	Alarcon Abarca Fabian Virgilio	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3402	112.05.28	Servicio de Rentas Internas	t	5	112.05		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3403	151.51.01.134	Consultoria para el desarrollo de la Modelacion Oper Nuev Re	t	6	151.51.01		\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3406	213.73.02.006	Devengado Iva	t	6	213.73.02		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3407	112.01.01.156	Villa Yanez Henry	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3408	112.01.02.244	Puma Inguillay Gabriela	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3409	112.03.02.173.02	Adquisicion de un correlador y un geofono	t	7	112.03.02.173		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3410	112.01.01.157	Moina Garces Maria	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3411	112.01.01.158	Vasquez Costales Pamela	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3412	112.01.02.245	Brito Coronel Eduardo Ruben	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3413	112.01.02.246	Buenaño Armendariz Maria Janeth	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3414	112.01.02.247	Castro Guaman Holger Efrain	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3415	112.01.02.248	Coronel Urquizo Alex Fabian	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3416	112.01.02.249	Gavilanez Escobar Jorge Eduardo	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3417	112.01.02.250	Lopez Arroba Tatiana Monse	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3418	112.01.02.251	Macias Castro Lelys Soraida	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3419	112.01.02.252	Morales Samaniego Cristian Elias	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3420	112.01.02.253	Morocho Auquilla Segundo Galo	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3421	112.01.02.254	Oñate Haro Ruben Eduardo	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3422	112.01.02.255	Parra Broncano Estalin Rodrigo	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3424	112.01.02.257	Piñas Valdivieso Bertha Jimena	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3425	112.01.02.258	Sarango Alvarez Edison Patricio	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3426	112.01.02.259	Vela Yepez Juan Carlos	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3427	112.03.02.182	QUIMPAC ECUADOR S.A QUIMPACSA	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3428	112.03.02.182.01	Adquisicion de 18.140 KG de cloro gas	t	7	112.03.02.182		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3429	112.01.01.159	Moreira Lara Carlos	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3430	112.01.01.160	Mucarsel Mancheno Aldo	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3431	112.01.01.161	Abarca Melendres Juan	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3432	112.01.02.260	Tenesaca Guzman Pedro	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3433	112.01.01.162	Pumagualli Lema Diana Carolina	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3434	112.01.01.163	Donoso Lliquin Jenny	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3435	112.01.01.164	Tapia Perez Maria Soledad	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3436	112.01.01.165	Borja Sevilla Lorena	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3437	112.01.01.166	Fernandez Cando Hugo	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3438	112.01.01.167	Ortiz Rosero Carlos	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3439	112.01.01.168	Yerovi Acosta Miryan Adriana	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3441	112.03.02.135.02	Restauracion y Readecuacion de Gerencia y Oficinas de la EP-	t	7	112.03.02.135		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3442	112.01.02.261	Castro Guaman Alex	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3443	112.01.02.262	Padilla Chavez Segundo	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3444	112.01.02.263	Quintana Jara Cesar Rodrigo	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3445	112.01.02.264	Cabezas Quito Juan Carlos	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3446	112.01.02.265	Abdo Garcia Josue Roberto	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3447	112.01.02.266	Gallegos Paredes Julio	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3448	112.01.02.267	Chavez Miño Luis	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3449	112.01.02.268	Proaño Lozano Paco	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3450	112.01.02.269	Rodriguez Medina Robinson	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3451	112.01.01.169	Parra Rodriguez Edison	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3452	112.01.02.270	Caiza Lopez Carlos	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3453	112.01.01.171	Muñoz Shuguli Gianela	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3454	112.01.02.271	Soria Silva Maria	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3455	112.01.01.172	Freire Morales Myrian Vanesa	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3456	112.01.02.272	Rodriguez Hidalgo Flor	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3457	112.01.01.173	Bonifaz Brito Adriana	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3458	112.01.02.273	Cruz Ximena	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3459	112.01.01.174	Herrera Moscoso Noris	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3460	112.01.02.274	Cardenas Bravo Darwin	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3461	112.01.01.175	Donoso Parra Sandra Paulina	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3462	112.01.01.176	Sagñay Ruiz Norma	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3463	112.01.01.177	Salazar Poma Rulis	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3464	112.01.02.275	Pilco Guachi Juan Misael	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3466	112.01.02.276	Cujano Orozco Marco Alejandro	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3467	112.01.01.178	Carrasco Perez Juan	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3469	213.61.02.030	IESS Extension Conyugal	t	6	213.61.02		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3470	631	INVERSIONES PUBLICAS	f	3	63		\N	0	f	6622	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3471	631.53	Inversiones en Bienes Nacionales de Uso Publico	t	4	631		\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3472	124.83	Cuentas por Cobrar Años Anteriores	f	4	124		\N	0	f	122	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3473	124.83.83	Cuentas por Cobrar Años Anteriores	t	5	124.83		\N	0	t	122	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3475	112.13.03.036	Chavez Miño Luis Fernando	t	6	112.13.03		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3476	633.05.12	Subrogacion	t	5	633.05	51.05.12.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3477	133.15.12	Subrogacion	t	5	133.15	61.05.12.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3478	112.03.02.183	CONSORCIO ROMERO GUAMAN	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3479	112.03.02.183.01	Equipamiento del pozo de las Hierbas	t	7	112.03.02.183		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3480	112.03.02.184	CONSORCIO M&D CONSTRUCCIONES	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3481	112.03.02.184.01	Alcantarillado Pluvial calle Rio Bulu Bulu	t	7	112.03.02.184		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3482	112.01.01.179	Quito Abad Lily	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3483	112.01.01.180	Rivadeneira Ocaña Angelica	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3484	213.98.08	Aporte Personal	t	5	213.98		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3485	213.98.09	Aporte Patronal	t	5	213.98		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3486	112.01.01.181	Galarza Bermeo Elodia	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3487	112.01.01.182	Garcia Cabay Maria Eugenia	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3488	112.01.01.183	Villacres Hidalgo Veronica	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3490	112.01.01.185	Escobar Valverde Gabriela	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3491	112.01.01.186	Orna Novillo Johanna	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3492	112.01.02.277	Buñay Gehan	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3493	112.01.01.187	Boada Pino Monica	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3494	112.01.01.188	Sanchez Arteaga Jose Roberto	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3495	112.01.01.189	Huacho Guaman Roberto	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3496	112.01.01.190	Martinez Pacheco Alexis	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3497	112.01.01.191	Samaniego Samaniego Erika	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3498	112.01.02.278	Luna Gutierrez Ricardo Daniel	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3499	151.51.01.135	Construccion de la Red de Generacion electrica emergente EB1	t	6	151.51.01		\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3501	113.83	Cuentas por Cobrar de Años Anteriores	f	4	113		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3502	113.83.83	Cuentas por Cobrar Años Anteriores	t	5	113.83		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3503	124.98.01.001	Cuentas por Cobrar Servicios	t	6	124.98.01			0	f	122	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3504	124.98.01.002	Cuentas por Cobrar Anticipos de Obras	t	6	124.98.01			0	f	122	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3505	124.98.01.003	Cuentas por Cobrar IVA	t	6	124.98.01			0	f	122	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3506	224.98.01.001	Cuentas por Pagar Años Anteriores 2016	t	6	224.98.01	97.01.01.000.000.001	\N	0	f	222	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3509	151.51.01.136	Equipamiento del Pozo de las Hierbas	t	6	151.51.01		\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3510	911.23	TITULOS DE CREDITO EMITIDOS	f	4	911		\N	0	t	91	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3511	911.23.01	Titulos de creditos servicios	t	5	911.23		\N	0	f	91	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3512	921.23	EMISION DE TITULOS DE CREDITO	f	4	921		\N	0	t	92	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3513	921.23.01	Emision de titulos de creditos servicios	t	5	921.23		\N	0	f	92	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3514	224.83	Cuentas por Pagar Años Anteriores	f	4	224		\N	0	f	222	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3515	224.83.57	Cuentas por Pagar de Años Anteriores Otros Gastos	t	5	224.83		\N	0	t	222	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3521	151.51.03.082	Alcantarillado Pluvial Rio Bulu Bulu	t	6	151.51.03	75.01.03.000.081.001	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3522	112.01.02.279	Duran Pilamunga Jose Luis	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3523	112.01.02.280	Valentin Caiza Maria Cristina	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3524	112.01.02.281	Erazo Samaniego Jordan Isac	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3526	112.01.02.282	Arevalo Buenaño José	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3527	112.01.02.283	Atiencia Garcia Wilson	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3528	112.01.01.192	Chacha Benavides Diana	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3529	112.01.02.284	Chacha Chacha Juan Gabriel	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3530	112.01.02.285	Garces Rocha Maria	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3531	112.01.01.193	Rodriguez Falconí Andrea	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3532	112.01.01.194	Del Salto Ocaña Tatiana Elizabeth	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3533	112.01.01.195	Cabezas Quito Lorena	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3535	112.03.02.119.02	Aislamiento definitivo de Acometidas	t	7	112.03.02.119		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3537	213.57.02.009	Retencion en la fuente 8%	t	6	213.57.02		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3538	111.15.06	REPORNE S.A Red Facilito	f	5	111.15		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3539	111.15.06.001	Coop. 29 de Octubre 4502271038	t	6	111.15.06		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3540	112.13.03.039	Villacres Hidalgo Maria Veronica	t	6	112.13.03		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3541	911.17.03	Herramientas	t	5	911.17		\N	0	f	91	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3542	911.17.04	Maquinaria y Equipo	t	5	911.17		\N	0	f	91	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3543	911.17.05	Suministros de Aseo y Limpieza	t	5	911.17		\N	0	f	91	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3544	911.17.06	Suministros de Oficina	t	5	911.17		\N	0	f	91	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3545	911.17.07	Suministros de Protección y Seguridad	t	5	911.17		\N	0	f	91	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3546	911.17.08	Materiales de Construcción	t	5	911.17		\N	0	f	91	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3547	911.17.09	Otros Bienes de Control	t	5	911.17		\N	0	f	91	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3548	921.17.03	Herramientas	t	5	921.17		\N	0	f	92	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3549	921.17.04	Maquinaria y Equipo	t	5	921.17		\N	0	f	92	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3550	921.17.05	Suministros de Aseo y Limpieza	t	5	921.17		\N	0	f	92	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3551	921.17.06	Suministros de Oficina	t	5	921.17		\N	0	f	92	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3552	921.17.07	Suministros de Protección y Seguridad	t	5	921.17		\N	0	f	92	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3553	921.17.08	Materiales de Construccion	t	5	921.17		\N	0	f	92	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3554	921.17.09	Otros Bienes de Control	t	5	921.17		\N	0	f	92	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3555	911.17.10	Libros y Colecciones	t	5	911.17		\N	0	f	91	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3556	921.17.10	Libros y Colecciones	t	5	921.17		\N	0	f	92	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3557	911.17.11	Materiales Electricos	t	5	911.17		\N	0	f	91	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3558	921.17.11	Materiales Electricos	t	5	921.17		\N	0	f	92	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3559	911.17.12	Instrumental Medico Odontologico y de Laboratorio	t	5	911.17		\N	0	f	91	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3560	921.17.12	Instrumental Medico y de Laboratorio	t	5	921.17		\N	0	f	92	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3561	911.17.13	Repuestos y Accesorios	t	5	911.17		\N	0	f	91	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3562	921.17.13	Repuestos y Accesorios	t	5	921.17		\N	0	f	92	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3563	911.17.14	Vestuario y Lenceria	t	5	911.17		\N	0	f	91	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3564	921.17.14	Vestuario y Lenceria	t	5	921.17		\N	0	f	92	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3565	112.03.02.185	IÑIGUEZ SANCHEZ FELIPE	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3566	112.03.02.185.01	Consultoria del Estudio Tarifario para los serv de agua Pota	t	7	112.03.02.185		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3567	112.03.02.186	CONSORCIO NISSI RBBA	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3568	112.03.02.186.01	Construccion e instalacion de 3000 rejillas	t	7	112.03.02.186		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3569	213.51.02.027	IEES Extension Conyugal	t	6	213.51.02		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3570	112.03.02.187	GUEVARA ALDAZ FRANKLIN RUBEN	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3571	112.03.02.187.01	Adquisicion de Equipo de Bombeo para sustituir los anteriore	t	7	112.03.02.187		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3572	133.18.06	Beneficio por Jubilacion	t	5	133.18		\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3573	151.51.01.137	Aislamiento Definitivo de Acometidas	t	6	151.51.01	75.01.01.000.128.001	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3574	112.03.02.188	FUNDIEC S.A.	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3575	112.03.02.188.01	Suministro de 500 tapas de HD (Hierro Ductil)	t	7	112.03.02.188		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3577	131.01.01	Inventario de Alimentos y Bebidas	t	5	131.01		\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3579	112.13.03.040	Borja Fernandez Cristina Paola	t	6	112.13.03		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3580	633.03	Remuneraciones Compensatorias	f	4	633		\N	0	f	6622	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3581	624.03.01.006	Agua Potable Suministros (cargo variable)	t	6	624.03.01		14.03.01.01.002	0	f	6621	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3582	624.03.03.003	Alcantarillado y Servicios (cargo fijo)	t	6	624.03.03		14.03.03.01.002	0	f	6621	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3583	626.05	Subsidios	f	4	626		\N	0	f	6623	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3584	626.05.03	De tarifas del Sector Publico	f	5	626.05		\N	0	t	6623	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3585	626.05.03.001	Subsidio de Pliegos Tarifarios Agua Potable	t	6	626.05.03			0	f	6623	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3586	113.18.02	Cuentas por Cobrar Subsidios de Pliegos Tarifarios	t	5	113.18		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3587	633.03.06	Alimentacion	t	5	633.03	51.03.06.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3588	633.02.35	Remuneración Variable por Eficiencia	t	5	633.02		\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3589	633.07.02	Supresión de Puesto	t	5	633.07		\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3590	633.07.03	Despido Intempestivo	t	5	633.07	51.07.03.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3591	633.07.04	Compensación por Desahucio	t	5	633.07	51.07.04.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3592	634.05	Arrendamientos de Bienes	f	4	634		\N	0	f	6622	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3593	634.05.02	Arrendamiento de Edificios, Locales, Residencias, Parqueader	t	5	634.05	53.05.02.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3594	634.07.02	Arrendamiento y Licencias de Uso de Paquetes Informáticos	t	5	634.07	53.07.02.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3595	636.05	Subsidios	f	4	636		\N	0	f	6623	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3596	636.05.03	De Tarifas a Entes Públicos	t	5	636.05		\N	0	t	6623	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3597	636.05.04	De Tarifas a Entes Privados	t	5	636.05		\N	0	t	6623	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3598	223.01.02.003	Convenio de Cooperacion Obras Complem Plan Maestro  65081	t	6	223.01.02			0	f	221	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3599	634.06.02	Servicios de Auditoria	t	5	634.06	53.06.02.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3600	133.15.07	Honorarios	t	5	133.15		\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3601	133.37.02	Arrendamiento y Licencias de Uso de Paquetes Informáticos	t	5	133.37	63.07.02.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3602	133.38.29	Insumos Bienes Materiales y Suministros para Investigación	t	5	133.38	63.08.11.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3603	151.51.01.138	Contraparte Emapar Trasvase-Programa de Reduccion de Perdida	t	6	151.51.01		\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3604	151.51.01.139	Varias Obras de Agua Potable	t	6	151.51.01		\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3605	151.51.01.140	Aislamiento de Redes Antiguas	t	6	151.51.01	75.01.01.000.126.001	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3606	151.51.01.141	Optimizacion de Redes de Agua Potable	t	6	151.51.01	75.01.01.000.127.001	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3607	133.38.99.006	Materiales Accesorios Equipo Menor Alcantarillado	t	6	133.38.99		\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3608	132.05	Existencias de Productos Terminados	f	4	132		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3609	132.05.99	Existencias de Otros Productos Terminados	t	5	132.05	63.12.99.000.000.001	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3610	151.51.03.083	Varias Obras de Alcantarillado	t	6	151.51.03	75.01.03.000.000.001	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3611	151.51.03.084	Construccion e Instalacion de 3000 Rejillas	t	6	151.51.03		\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3612	151.51.03.085	Sumistros de 500 Tapas de HD	t	6	151.51.03	75.01.03.000.080.001	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3614	635.02.02.003	Intereses Sector Publico No Financiero (65081)	t	6	635.02.02		\N	0	f	6624	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3615	112.01.01.196	Noboa Luna Daniel	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3616	112.03.02.189	PATE C.A	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3617	112.03.02.189.01	Proceso de Contratacion para el Aislamiento Redes Antiguas	t	7	112.03.02.189		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3618	112.05.30	Ministerio del Ambiente	t	5	112.05		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3619	112.05.31	National Tire Experts	t	5	112.05		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3620	623.01.99.001	Por Mantenimiento e Incorp Predios Nuevo Catastro	t	6	623.01.99		13.01.99.01.001	0	f	6622	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3621	626.05.03.002	Subsidios de Pliegos Tarifarios Alcantarillado	t	6	626.05.03			0	f	6623	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3622	113.13.04	CONTRIBUCIONES	f	5	113.13		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3623	113.13.04.011	CONSTRUCCION Y AMPLIACION DE OBRAS Y SISTEMAS DE AGUA POTABL	f	6	113.13.04		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3624	113.13.04.011.01	Construccion y Ampliacion de Obras y Sistemas de Agua Potabl	t	7	113.13.04.011		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3625	623.04.11	Construccion y Ampliacion de Obras y Sistemas de Agua Potabl	t	5	623.04			0	t	6622	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3626	113.14.03.001.05	Adicional a las Facturas de Agua Potable pago a EERSA	t	7	113.14.03.001		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3627	624.03.01.005	Adicional a las Facturas de la EERSA	t	6	624.03.01			0	f	6621	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3628	112.05.25	Banco Central	t	5	112.05		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3629	112.01.01.197	Moncayo Acevedo Clara Elena	t	6	112.01.01		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3630	113.14.03.001.06	Agua Potable y Suministros (Cargo Variable)	t	7	113.14.03.001		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3631	113.14.03.003.03	Alcantarillado Servicios (Cargo Fijo)	t	7	113.14.03.003		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3632	112.01.02.286	Pilco Orozco Fausto Nelson	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3633	112.01.02.287	Cajo Llongo Julio Amado	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3634	112.01.02.288	Moyota Veloz Pablo Fernando	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3635	131.01.13	Inventarios de Repuestos y Accesorios	t	5	131.01	53.08.13.000.000.001	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3636	112.05.32	Acosta Jativa Larry (Reencauche)	t	5	112.05		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3637	112.05.33	EP-EMAPAR	t	5	112.05		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3638	112.01.02.289	Jama Castillo Cesar	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3639	112.01.01.198	Hidrobo Nina Gabriela del Pilar	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3640	112.03.02.182.02	Adquisicion de 20 cilindros de cloro gas de 907KG	t	7	112.03.02.182	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3641	112.01.01.199	Muñoz Andrade Luis Rodrigo	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3643	112.03.02.190	OVIEDO MOREANO SANTIAGO EDUARDO	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3644	112.03.02.190.01	Adquisicion de 633 toneladas de mezcla asfaltica	t	7	112.03.02.190	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3645	125	Inversiones Diferidas	f	3	12	\N	\N	0	f	123	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3646	125.03	Prepagos por Arrendamientos de Bienes	f	4	125	\N	\N	0	f	123	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3647	125.03.02	Edificios Locales Residencias Parqueaderos Casi Judi y Banca	t	5	125.03		\N	0	t	123	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3648	112.01.01.200	Tamayo Sanaguano Luis Wilfrido	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3649	112.01.01.201	Alcivar Guaman Carmen Graviela	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3650	112.01.01.202	Espinoza Yepez Gustavo	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3651	112.01.01.203	Guaman Alulema Daniel Alfonso	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3652	213.53.02.009	Otros Descuentos	t	6	213.53.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3653	112.01.01.204	Espindola Lara Maria Belen	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3654	112.01.01.205	Tello Moreano Cristian Daniel	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3655	112.01.01.206	Ibujes Burbano Andrea Paola	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3656	112.01.01.207	Diaz Borja Cristian Eduardo	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3657	112.01.01.208	Pazmiño Baño Byron Homero	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3658	112.03.02.191	ALL MAINT MANTENIMIENTO TOTAL S.A	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3659	112.03.02.191.01	Mantenimiento de 7 pozos de propiedad de la EP-EMAPAR	t	7	112.03.02.191	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3660	112.01.01.209	Vinueza Suarez Andrea Belen	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3661	112.01.01.210	Larreina Heredia Roberto Alejandro	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3662	112.05.34	Agencia de Regulacion y Control (ARCSA)	t	5	112.05	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3663	112.01.01.211	Albuja Sanchez Mario Andres	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3664	112.05.35	Municipio de Riobamba	t	5	112.05	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3665	112.01.02.290	Lema Remache Edison Dario	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3666	112.01.02.291	Alvarez Satan Jose Israel	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3667	112.01.01.212	Chugñay Berrones David Geovanny	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3668	213.15	Cuentas por pagar Notas de Credito	t	4	213	\N	\N	0	t	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3669	213.81.09	|Cuentas Por Pagar IVA Bienes 10%  Cont Espec	t	5	213.81	\N	\N	0	t	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3670	213.81.10	Cuentas Por Pagar IVA Bienes 90% Proveedor Cont Espec	t	5	213.81	\N	\N	0	t	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3671	213.81.11	Cuentas Por Pagar IVA Servicios 20% SRI Cont Espec	t	5	213.81	\N	\N	0	t	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3672	213.81.12	Cuentas Por Pagar IVA Servicios 80% Proveedor Cont Espec	t	5	213.81	\N	\N	0	t	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3673	112.01.01.213	Oñate Tenelema Segundo Enrique	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3674	112.03.02.192	ASTAP	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3675	112.03.02.192.01	Adquisicion de Repuestos y mantenimientos vehiculos Eductore	t	7	112.03.02.192	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3676	125.07	Cargos Diferidos por Gastos en Informática	f	4	125	\N	\N	0	f	123	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3677	125.07.01	Desarrollo, Actualización, Asistencia Técnica y Soporte de S	t	5	125.07	\N	\N	0	t	123	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3678	125.08	Prepagos por Bienes de Uso y Consumo Corriente	f	4	125	\N	\N	0	f	123	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3679	125.08.07	Prepagos Materiales Impresión, Fotografía, Reproducción y Pu	t	5	125.08	\N	\N	0	t	123	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3680	112.03.02.193	VELASQUEZ SANCHEZ JULIO ROBINSON	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3681	112.03.02.193.01	Recubrimiento Interno de Tanqueros de Propiedad de la EP-Ema	t	7	112.03.02.193	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3682	112.01.01.214	Soria Ayerve Victoria	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3683	112.03.02.191.02	Recuperacion del Pozo Pedregal Yaruquies	t	7	112.03.02.191	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3684	112.03.02.194	CONSORCIO PLATINO	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3685	112.03.02.194.01	Construccion de Infraestructura para la Bodega de la Saboya	t	7	112.03.02.194	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3686	112.01.01.215	Fajardo Guerrero Carlos Alfonso	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3687	112.05.36	Banco del Pacifico	t	5	112.05	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3688	112.01.01.216	Morocho Valdivieso Pablo Israel	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3689	112.01.01.217	Gomez Palacios Ricardo Rigoberto	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3690	112.01.02.292	Zambrano Basantes Lenin Esterlin	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3691	112.01.02.293	Cobos Shiquin Napoleon 	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3692	635.02.02.002	Intereses Sector Publico No Financiero (11267)	t	6	635.02.02	56.02.02.000.000.001	\N	0	f	6624	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3693	131.01.37	Existencias Combustibles, lubricantes y aditivos y en genera	t	5	131.01	53.08.37.000.000.001	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3694	112.01.01.218	Valdiviezo Cruz Cristian Paul	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3695	634.02.08	Servicio de Seguridad y Vigilancia	t	5	634.02	53.02.08.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3696	213.61.99	Otros devengado Iva	t	5	213.61	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3697	112.05.37	Colcha Lizardo Enrique	t	5	112.05	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3698	112.05.38	Mera Balseca Maria Cristina	t	5	112.05	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3699	151.51.07.001	Infraestructura Bodega la Saboya	t	6	151.51.07		\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3700	112.01.01.219	Sanchez Lopez Rodrigo Patricio	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3701	112.01.01.220	Lopez Lopez Jose Luis	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3702	112.01.01.221	Valencia Oleas Catalina Maria	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3703	112.01.02.294	Guailla Atupaña Jose Genaro	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3704	112.01.02.295	Guailla Caiza Franklin	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3705	112.05.39	Empresa Electrica Riobamba	t	5	112.05	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3706	112.01.01.222	Miranda Pilataxi Marco	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3707	112.01.01.223	Sampedro Guevara Karen	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3708	112.05.40	Legislacion Indexada	t	5	112.05	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3709	112.03.02.195	BONILLA YUCAILLA ANA CATALINA	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3710	112.03.02.195.01	Adquisicion de toners convenio GADM Riobamba EP-EMAPAR	t	7	112.03.02.195	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3711	143	BIENES DE INFRAESTRUCTURA	f	3	14	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3712	143.01	Obras de Infraestructura	f	4	143	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3713	143.01.01	Infraestructura de Agua Potable	f	5	143.01	\N	\N	0	t	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3714	143.01.01.001	Redes de Agua Potable	t	6	143.01.01	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3715	143.01.03	Infraestructura de Alcantarillado	f	5	143.01	\N	\N	0	t	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3716	143.01.03.001	Redes de Alcantarillado	t	6	143.01.03	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3717	143.01.03.002	Colectores	t	6	143.01.03	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3718	143.01.01.002	Tanques y Reservas	t	6	143.01.01	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3719	143.01.01.003	Lineas de Impulsion	t	6	143.01.01	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3720	143.01.01.004	Pozos	t	6	143.01.01	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3721	143.01.01.005	Plantas de Tratamiento	t	6	143.01.01	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3722	143.01.03.003	Plantas de Tratamiento	t	6	143.01.03	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3723	143.99	Depreciación Acumulada de Bienes de Infraestructura	f	4	143	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3724	143.99.01	Depreciación Acumulada de Infraestructura de Agua Potable	f	5	143.99	\N	\N	0	t	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3725	143.99.03	Depreciación Acumulada de Infraestructura de Alcantarillado	f	5	143.99	\N	\N	0	t	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3726	143.99.01.001	Depreciacion Acumulada Redes de Agua Potable	t	6	143.99.01	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3727	143.99.01.002	Depreciacion Acumulada Tanques y Reservas	t	6	143.99.01	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3728	143.99.01.003	Depreciacion Acumulada Lineas de Impulsion	t	6	143.99.01	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3729	143.99.01.004	Depreciacion Acumulada Pozos	t	6	143.99.01	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3730	143.99.01.005	Depreciacion Acumulada Plantas de Tratamiento	t	6	143.99.01	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3731	143.99.03.001	Depreciacion Acumulada Redes de Alcantarillado	t	6	143.99.03	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3732	143.99.03.002	Depreciacion Acumulada Colectores	t	6	143.99.03	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3733	143.99.03.003	Depreciacion Acumulada Plantas de Tratamiento	t	6	143.99.03	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3734	112.01.01.224	Darquea Aldaz Vanessa	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3735	133.35.04	Arrendamiento de Maquinaria y Equipo	t	5	133.35	63.05.04.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3736	112.13.03.041	Ibujes Burbano Andrea Paola	t	6	112.13.03	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3737	634.08.37	Combustibles, Lubricantes y Aditivos en General para Vehícul	t	5	634.08		\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3738	112.01.02.296	Ortiz Erazo Angel	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3739	112.01.02.297	Nogales Guerrero Jesus	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3740	143.01.07	Construcciones y Edificaciones	f	5	143.01	\N	\N	0	t	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3741	143.01.07.001	Construccion Predio San Pablo El Chaupi Cenegal	t	6	143.01.07	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3742	143.01.07.002	Construccion Predio Captacion Llio	t	6	143.01.07	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3743	143.01.07.003	Construccion Predio Aireadores	t	6	143.01.07	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3744	143.01.07.004	Construccion Predio El Pedregal	t	6	143.01.07	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3745	125.11	Prepagos por Arrendamientos de Bienes para Producción	f	4	125	\N	\N	0	f	123	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3746	125.11.04	Prepagos por Arrendamiento de Maquinarias y Equipos	t	5	125.11	\N	\N	0	t	123	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3747	131.01.26	Dispositivos medicos de uso general	t	5	131.01	53.08.26.000.000.001	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3748	131.01.09	Inventario de  Medicamentos	t	5	131.01	53.08.09.000.000.001	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3750	112.13.03.042	Gomez Maya Luis Geovanny	t	6	112.13.03	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3752	112.03.02.191.03	Mantenimiento Preventivo y Correctivo 2017 de los pozos 	t	7	112.03.02.191	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3753	112.01.01.225	Cevallos Gaibor Cinthia Fernanda	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3754	112.01.01.226	Palta Pilco Byron Gabriel	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3755	112.01.01.227	Valladares Mantilla Marco Antonio	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3756	125.15	Cargos Diferidos por Gastos en Informática para Producción	f	4	125	\N	\N	0	f	123	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3757	125.15.01	Desarrollo, Actualización, Asistencia Técnica y Soporte de S	t	5	125.15	\N	\N	0	t	123	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3758	112.01.02.298	Cabrera Borja Jose	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3759	125.02	Prepagos por Servicios Generales	f	4	125	\N	\N	0	f	123	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3760	125.02.04	Prepagos por Edición, Impresión, Reproducción y Publicacione	t	5	125.02	\N	\N	0	t	123	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3761	125.02.05	Prepago de Telecomunicaciones	t	5	125.02	\N	\N	0	t	123	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3762	143.01.01.006	Conducciones de Agua Potable	t	6	143.01.01	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3763	112.13.03.043	Rodriguez Falconi Maria Andrea	t	6	112.13.03	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3764	112.03.02.196	MALDONADO TIPAN JOSE IVAN	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3765	112.03.02.196.01	Construccion del Sist de Alcantarill de las calles Sao Paulo	t	7	112.03.02.196	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3766	141.01.13	Equipo Medico	t	5	141.01		\N	0	t	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3767	141.01.15	Equipo Odontologico	t	5	141.01	84.01.15.000.000.001	\N	0	t	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3768	132.08.07	Inventario de Materiales de Impresion fotografia repro publi	t	5	132.08		\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3769	213.57.02.010	Otros Descuentos	t	6	213.57.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3770	112.01.02.299	Yausen Allauca Edwin	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3771	112.01.02.300	Gonzalez Ramos Stalin	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3772	112.01.02.301	Lema Saiteros Miguel	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3773	112.01.02.302	Real Lopez Santiago	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3774	112.01.02.303	Quiñonez Herreria Jose	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3775	634.02.03	Almacenamiento, embalaje, envase y recarga de extintores	t	5	634.02	53.02.03.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3776	112.01.01.228	Andino Cisneros Juan Carlos	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3777	112.01.01.229	Cadena Garcia Carlos Paul	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3778	112.01.02.304	Shagñay Cacoando David	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3779	112.01.01.230	Machado Merino Juan Pablo	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3780	112.01.01.231	Salazar Bravo Edgar Gustavo	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3781	112.01.01.232	Carrasco Villacres Veronica	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3782	112.01.02.305	Pilco Orozco Wilmer	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3783	112.01.02.306	Guilcapi Acan Walter Alcides	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3784	112.01.01.233	Salazar Saltos Juan Jose	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3785	124.97	Anticipos de Fondos de Años Anteriores	f	4	124	\N	\N	0	f	122	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3786	124.97.07	Anticipos por Devengar de Ejercicios Anteriores EP ByS	t	5	124.97	\N	38.01.07.00.001	0	t	122	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3787	124.97.08	Anticipos por Devengar de Ejercicios Anteriores EP Obras	t	5	124.97	\N	38.01.08.00.001	0	t	122	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3788	141.99.16	Depreciación Acumulada de Equipo Médico y Odontológico	f	5	141.99	\N	\N	0	t	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3789	141.99.16.001	Depreciación Acumulada de Equipo Médico	t	6	141.99.16	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3790	141.99.16.002	Depreciación Acumulada de Equipo Odontológico	t	6	141.99.16	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3791	142.99.03	Depreciación Acumulada de Mobiliarios	t	5	142.99	\N	\N	0	t	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3792	224.98.01.003	Cuentas por Pagar Años Anteriores 2017	t	6	224.98.01	97.01.01.000.000.001	\N	0	f	222	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3793	112.13.03.044	Quintana Jara Cesar Rodrigo	t	6	112.13.03	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3794	112.13.03.045	Ramirez Escorza Veronica Marlene	t	6	112.13.03	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3795	112.01.01.234	Puente Rodriguez Carmita Elena	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3796	112.01.01.235	Abril Verdezoto Fabian Eduardo	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3797	112.01.01.236	Fernandez Cepeda Miguel Humberto	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3798	112.01.01.237	Fray Aguirre Angel Alberto	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3799	112.03.02.197	DIARIO LOS ANDES	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3800	112.03.02.197.01	Contratacion de un medio escrito de cobertura Regional	t	7	112.03.02.197	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3801	113.98.01.001	De Cuentas por Cobrar Años Anteriores Servicios	f	6	113.98.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3802	113.98.01.002	De Cuentas por Cobrar Años Anteriores Anticipos	t	6	113.98.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3803	113.97	Cuentas por Cobrar Anticipos de Fondos de Años Anteriores	f	4	113	\N	\N	0	t	111	15	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3804	113.97.01	Cuentas por Cobrar Anticipos Años Anteriores Bienes y Servic	t	5	113.97	\N	38.01.07.00.001	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3805	113.97.02	Cuentas por Cobrar Anticipos Años Anteriores Obras	t	5	113.97	\N	38.01.08.00.001	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3806	131.01.41	Existencias y Accesorios para Vehiculos Terrestres	t	5	131.01	53.08.41.000.000.001	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3807	141.01.14	Instrumental Médico	t	5	141.01	84.01.14.000.000.001	\N	0	t	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3808	112.05.41	Quimpac S.A	t	5	112.05	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3809	112.03.02.198	FREIRE HEREDIA MANUEL MARCONI	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3810	112.03.02.198.01	Contratacion de un medio para socializar la Const del Trasba	t	7	112.03.02.198	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3811	132.08.10	Inventario de dispositivos medicos para laboratorio clinico 	t	5	132.08		\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3812	112.01.01.238	Crespo Ocha Fernando Xavier	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3813	126	Cuentas de Dudosa Recuperación	f	3	12	\N	\N	0	f	123	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3814	126.99	(-) Provisión para Incobrables	f	4	126	\N	\N	0	f	123	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3815	126.99.07	(-) Provisión para Incobrables - Deudores Financieros	t	5	126.99	\N	\N	0	t	123	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3816	638.54	Amortización de Incobrables	t	4	638	\N	\N	0	t	6625	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3817	634.08.09	Inventarios de Medicamentos	t	5	634.08	\N	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3818	131.01.03	Inventario Combustibles y Lubricantes	t	5	131.01	53.08.03.000.000.001	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3819	112.03.02.199	LINEAS Y REDES ELECTRICAS DEL CENTRO	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3820	112.03.02.199.01	Instalacion del banco de Capacitores para mejorar el factor 	t	7	112.03.02.199	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3821	131.01.08	Inventario de Instrumental Medico Menor	t	5	131.01		\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3822	911.17.15	Instrumental Medico	t	5	911.17	\N	\N	0	f	91	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3823	921.17.15	Instrumental Medico	t	5	921.17	\N	\N	0	f	92	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3824	112.01.01.239	Costales Montenegro Roberto Isaac	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3825	112.01.01.240	Acan Caiza Klever Euclides	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3826	112.01.01.241	Chavez Cuadrado Nayme Klever	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3827	112.01.01.242	Pesantez Villacis Remigio Teodoro	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3828	112.01.01.243	Aguirre Lozano David Ramiro	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3829	634.02.26	Servicios Medicos Hospitalarios y complementarios	t	5	634.02	53.02.26.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3830	635.02.02.004	Intereses Sector Publico No Financiero (65192)	t	6	635.02.02	56.02.02.000.004.001	\N	0	f	6624	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3831	112.05.42	Jarpiseg	t	5	112.05	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3832	112.03.02.200	Donoso Lliquin Esthela Patricia	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3833	112.03.02.200.01	Cambio de Matriz en las calles Paris y Quito	t	7	112.03.02.200	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3834	112.13.03.046	Salazar Rodolfo	t	6	112.13.03	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3835	112.01.01.244	Borja Fernandez Cristina Paola	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3836	112.01.01.255	Sagñay Zambrano Roberto	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3837	112.03.02.201	CONSTRUCTORA RAMIAND S.A	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3838	112.03.02.201.01	Linea de Impulsion Pozo Santa Ana Reserva el Tratamiento	t	7	112.03.02.201	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3839	112.03.02.191.04	Mantenimiento Preventivo de los pozos de la EP-EMAPAR-2018	t	7	112.03.02.191	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3840	112.03.02.202	ORDOÑEZ MOLINA FRANKLIN MIGUEL	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3841	112.03.02.202.01	Consultoria de actualizacion de los diseños de las plantas d	t	7	112.03.02.202	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3842	634.08.41	Repuestos y Accesorios para Vehículos Terrestres	t	5	634.08	\N	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3847	133.91.03	Depreciacion bienes de produccion mobiliarios	t	5	133.91	\N	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3853	131.01.06	Inventario de Herramientas	t	5	131.01		\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3854	224.98.01.004	Cuentas por Pagar Años Anteriores 2018	t	6	224.98.01	97.01.01.000.000.001	\N	0	f	222	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3855	112.01.01.256	Chiriboga Velasco Maria Soldead	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3856	112.15.03.011	Impuestos Prediales	t	6	112.15.03	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3857	213.97.99	Devengado IVA	t	5	213.97	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3858	213.97.05	Otros Descuentos 	t	5	213.97	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3859	112.01.01.257	Rivadeneira Ocaña Carlos	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3860	112.01.02.307	Salazar Fonseca Rodolfo	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3861	112.01.01.258	Cevallos Basantes Fernando Marcelo	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3862	112.01.01.259	Rodriguez Orozco Andrea Nathaly	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3863	112.05.43	Vasconez Mucarsel Jose Antonio	t	5	112.05	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3864	112.01.02.308	Montalvo Mc-Gregor Jose Miguel	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3865	112.01.02.309	Guaman Tenelanda Elena Piedad	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3866	112.01.02.310	De La Cruz Fernandez Pedro Ruben	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3867	112.15.03.012	Analisis fisicos quimicos del agua en laboratorios certifica	t	6	112.15.03	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3868	143.01.07.005	Construccion Planta Central Sabu Izamba	t	6	143.01.07	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3869	112.01.01.260	Ramos Carrillo Alexis Fernando	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3870	112.01.02.311	Valdivieso Artega Luis Ernesto	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3871	112.01.02.312	Iglesias Guevara Erick Sebastian	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3872	112.13.03.047	Carrasco Villacres Veronica Monserrath	t	6	112.13.03	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3873	634.06.12	Capacitación a Servidores Públicos	t	5	634.06	53.06.12.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3874	634.02.07	Difusión, Información y Publicidad	t	5	634.02	53.02.07.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3875	112.01.01.261	Freire Rodriguez Jose Luis	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3876	112.01.01.262	Calvopiña Sigchay Marcelo Enrique	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3877	112.01.01.263	Erazo Andrade Ivonne Patricia	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3878	133.31.05	Telecomunicaciones	t	5	133.31	63.01.05.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3879	151.58	Transferencias para Inversión al Sector Público	f	4	151	\N	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3880	151.58.02	A Entidades Descentralizadas y Autónomas	f	5	151.58	\N	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3881	151.58.02.001	Convenio de Crédito 65081 Obras Complementarias PM	f	6	151.58.02	\N	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3882	151.58.02.002	Convenio de Crédito 65192 Trasvase	f	6	151.58.02	\N	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3883	151.58.02.001.01	Capital 65081	t	7	151.58.02.001	78.01.02.000.001.001	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3884	151.58.02.001.02	Interes 65081	t	7	151.58.02.001	78.01.02.000.002.001	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3885	151.58.02.001.03	Comision Bancaria 65081	t	7	151.58.02.001	78.01.02.000.003.001	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3886	151.58.02.002.01	Capital 65192	t	7	151.58.02.002	78.01.02.000.200.001	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3887	151.58.02.002.02	Interes 65192	t	7	151.58.02.002	78.01.02.000.201.001	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3888	151.58.02.002.03	Comision Bancaria 65192	t	7	151.58.02.002	78.01.02.000.202.001	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3889	133.13.04	Compensacion por transporte	t	5	133.13	61.03.04.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3890	133.39	Impuestos, Tasas y Contribuciones	f	4	133	\N	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3891	133.39.02	Tasas Generales, Impuestos, Contribuciones, Permisos, Licenc	t	5	133.39	67.01.02.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3892	112.05.44	Perugachi Arroyo Marlon Paul	t	5	112.05	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3895	133.13.13	Compensacion por Cesacion de Funciones 	t	5	133.13	61.03.13.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3896	112.01.02.313	Moreno Alvarez Mauro Alejandro	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3897	112.01.02.314	Zabala Moreno Paula Lorena	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3898	112.01.02.315	Palta Pilco German Patricio	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3899	112.01.01.264	Silva Vimos Maria Elena	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3900	112.15.03.013	Inscripcion para capacitaciones	t	6	112.15.03	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3901	635.04.16	Obligaciones con el IESS por Responsabilidad Patronal	t	5	635.04	57.02.16.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3902	635.01.02	Tasas Generales, Impuestos, Contribuciones, Permisos, Licenc	t	5	635.01	57.01.02.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3903	112.03.02.203	LOKALCONSULT CIA. LTDA.	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3904	112.03.02.203.01	Consultoria para mejorar los servicios de agua potable y alc	t	7	112.03.02.203	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3905	635.04.18	Intereses por Mora Patronal al IESS	t	5	635.04	57.02.18.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3906	112.01.01.265	Andino Vasquez Maritza Gabriela	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3907	634.08.32	Inventarios de Dispositivos Médicos para Odontología	t	5	634.08	53.08.32.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3908	131.01.32	Inventarios de Dispositivos Médicos para Odontología	t	5	131.01	53.08.32.000.000.001	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3909	637	Obligaciones no Reconocidas de Ejercicios Anteriores	f	3	63	\N	\N	0	f	6623	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3910	637.99	Obligaciones no Reconocidas ni Pagadas en Ejercicios Anterio	f	4	637	\N	\N	0	f	6623	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3911	637.99.01	Obligaciones de Ejercicios Anteriores por Gastos en Personal	t	5	637.99	99.01.01.000.000.001	\N	0	t	6623	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3912	213.99	Cuentas por Pagar por Obligaciones no Reconocidas ni Pagadas	f	4	213	\N	\N	0	t	211	16	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3913	213.99.01	Proveedor	t	5	213.99	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3914	133.38.19	Accesorios y Productos Químicos	t	5	133.38	63.08.19.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3915	112.01.02.316	Buenaño Buenaño Edison	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3916	112.01.02.317	Soto Cevallos Adriano David	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3917	112.03.02.204	ASQUI ARMAS CARMEN LOURDES	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3918	112.03.02.204.01	Adquisicion de materiales, equipos y herramientas menores 	t	7	112.03.02.204	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3919	112.01.02.318	Alvear Remache Carlos Fernando	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3920	112.15.03.014	Tramites Notariales	t	6	112.15.03	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3921	112.05.45	Zurich Seguros Ecuador S.A	t	5	112.05	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3922	112.01.02.319	Vasconez Segovia Pedro Alejandro	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3923	112.01.02.320	Giron Bonilla Maria Fernanda	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3924	112.03.02.205	HUICALPI CANDO MONICA PULINA	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3925	112.03.02.205.01	Contratacion para control de inundaciones 	t	7	112.03.02.205	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3926	213.51.01.009	Anticipos de Sueldos	t	6	213.51.01	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3927	213.61.01.007	Anticipos de Sueldos	t	6	213.61.01	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3928	224.98.01.005	Cuentas por Pagar Años Anteriores 2019	t	6	224.98.01	97.01.01.000.000.001	\N	0	f	222	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3929	112.03.02.206	FLOR CEVALLOS GERMAN ALBERTO	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3930	112.03.02.206.01	Contrato Obra de Alcantarillado Ramal 1 y 2 Colector Panamer	t	7	112.03.02.206	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3931	112.03.02.191.05	Mantenimiento de pozos 2020	t	7	112.03.02.191	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3932	112.01.02.321	Guaño Colcha Samuel David	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3933	112.01.02.322	Sghirla Herreria Eddie Geovani	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3934	112.01.02.323	Poroso Reyes Santo Seferino 	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3935	112.01.01.266	Pacheco Logroño Diego Alfonso	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3936	133.40	Seguros y Otros Gastos Financieros	f	4	133	\N	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3937	133.40.01	Seguros	t	5	133.40	67.02.01.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3938	213.67.01	Cuentas por pagar Proveedores	f	5	213.67	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3939	213.67.01.001	Proveedor	t	6	213.67.01	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3940	213.67.01.002	Retencion en la Fuente 1%	t	6	213.67.01	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3941	213.67.01.003	Retencion en la fuente 2%	t	6	213.67.01	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3942	213.67.01.004	Retencion en la Fuente 8%	t	6	213.67.01	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3943	213.67.01.012	Otros descuentos	t	6	213.67.01	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3944	213.67.99	Otro devengado Iva	t	5	213.67	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3945	629.99	Donaciones Recibidas en Bienes Muebles e Inmuebles	t	4	629	\N	\N	0	t	6625	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3946	213.98.10	Retención Impuesto a la Renta 8%	t	5	213.98	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3947	112.05.46	Arias Guajan Ivan	t	5	112.05	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3948	111.06	Banco Central del Ecuador Empresas Públicas	f	4	111	\N	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3949	111.06.01	01BC Ingresos Propios 79220129 	t	5	111.06			0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3950	213.53.02.010	Retención en la Fuente 1.75%	t	6	213.53.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3951	213.53.02.011	REtencion en la Fuente 2.75%	t	6	213.53.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3952	213.63.02.015	Retencion en la Fuente 1.75%	t	6	213.63.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3953	213.63.02.016	Retencion en la Fuente 2.75%	t	6	213.63.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3954	213.57.02.011	REtención en la Fuente 1.75% del 10%	t	6	213.57.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3955	213.57.02.012	REtención en lea Fuente 2.75%	t	6	213.57.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3956	213.67.01.013	Retención en la Fuente 1.75%	t	6	213.67.01	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3957	213.67.01.014	Retencion en la Fuente 2.75%	t	6	213.67.01	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3958	213.73.02.007	Retenciones en la Fuente 1.75%	t	6	213.73.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3959	213.73.02.008	Retenciones en la Fuente 2.75%	t	6	213.73.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3960	213.75.02.003	Retencion en la Fuente 1.75%	t	6	213.75.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3961	213.75.02.004	Retencion en la Fuente 2.75%	t	6	213.75.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3962	213.84.02.006	Retencion en la Fuente 1.75%	t	6	213.84.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3963	213.84.02.007	Retencion en la Fuente 2.75%	t	6	213.84.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3964	213.98.11	Rtencion en la Fuente 1.75%	t	5	213.98	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3965	213.98.12	Rtencion en la Fuente 2.75%	t	5	213.98	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3966	112.03.02.207	MARSED SERVICIOS ASISTENCIA Y DISTRIBUCIONES SA	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3967	112.03.02.207.01	Servicio Tecnificacion, lecturas digitacion, prefacturas DGC	t	7	112.03.02.207	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3968	112.03.02.208	CONSORCIO REINTIPA	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3969	112.03.02.208.01	Adquisicion de 3000 medidores de media pulgada	t	7	112.03.02.208	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3970	151.51.07.002	Linea de Impulsion Pozo Santa Ana RT	t	6	151.51.07	75.01.07.000.000.001	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3971	112.03.02.209	HERNANDEZ LEON FRANCISCO RODRIGO	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3972	112.03.02.209.01	Varias obras de Alcantarillado	t	7	112.03.02.209	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3973	151.51.03.086	Alcantarillado control de Inundaciones	t	6	151.51.03	75.01.03.000.068.001	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3974	151.51.03.087	Alcantarillado area de aporte le Ramal	t	6	151.51.03	75.01.03.000.069.001	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3975	133.34.04.001	Gastos en Maquinaria y Equipo	t	6	133.34.04	63.04.04.000.003.001	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3976	133.34.04.002	Mantenimiento de Pozos	t	6	133.34.04	63.04.04.000.002.001	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3977	133.36.07	Servicios Tecnicos Especializados	t	5	133.36	63.06.07.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3978	112.01.02.324	Barreno Robalino Jose Vicente	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3979	112.01.02.325	Lema Morales Juan Luis	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3980	112.01.02.326	Morocho Betancourt Edgar	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3981	112.01.02.327	Chacaguasay Barbecho Miriam	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3982	112.01.02.328	Almeida Mazon Luis Arnaldo	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3983	213.78.01	Credito 65081 Obras Complementarias PM	f	5	213.78	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3984	213.78.01.001	Capital Credito 65081	t	6	213.78.01		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3985	213.78.01.002	Interes Crédito 65081	t	6	213.78.01		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3986	213.78.01.003	Comision Bancaria Credito 65081	t	6	213.78.01		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3987	213.78.02	Credito 65192 Trasvase	f	5	213.78	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3988	213.78.02.001	Capital Credito 65192	t	6	213.78.02		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3989	213.78.02.002	Interés Credito 65192	t	6	213.78.02		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3990	213.78.02.003	Comision Bancaria 65192	t	6	213.78.02		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3991	634.07.03	Arrendamiento de Equipos Informaticos	t	5	634.07	53.07.03.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3992	112.03.02.210	CONSORCIO WICERCON DOS	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3993	112.03.02.210.01	Construccion Alcantarillado Sector Bellavista y la Dolorosa 	t	7	112.03.02.210	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3994	112.01.01.267	Conde Vera Gabriel Alejandro	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3995	112.01.02.329	Iaconangeli Martina	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3996	112.01.01.268	Valdivieso Samaniego Christian Mauricio	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3997	629.97	Donaciones Recibidas en Inventarios	t	4	629	\N	\N	0	t	6625	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3998	112.03.02.205.02	Contrato Complementario para control de Inundaciones	t	7	112.03.02.205	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+3999	133.32.03	Almacenamiento, embalaje envase y recarga de Extintores	t	5	133.32	63.02.03.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4000	112.11	GARANTIAS ENTREGADAS	f	4	112	\N	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4001	112.11.01	Arrendamiento local Agencia Norte	t	5	112.11	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4002	112.01.01.269	Abarca Santillan Viviana Karina	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4003	112.01.01.270	Jara Macias Lissette Maritza	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4004	112.01.01.271	Zavala Loza Ivan Danilo	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4005	112.01.01.272	Crizon Concha Hector Raul	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4006	124.98.01.004	Cuentas por Cobrar Años Anteriores 	f	6	124.98.01	\N	\N	0	f	122	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4007	124.98.01.004.01	Cartera Vencida Años Anteriores	t	7	124.98.01.004	\N	38.01.01.01.001	0	f	122	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4011	224.98.01.006	Cuentas por Pagar Años Anteriores 2020	t	6	224.98.01	97.01.01.000.000.001	\N	0	f	222	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4012	112.01.01.273	Coello Sanchez Jaime Rodrigo	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4013	112.03.02.211	CAJO SOLANO SONIA ALEXANDRA	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4014	112.03.02.211.01	Consultoria para los servicios especializados PTAR Chibunga	t	7	112.03.02.211	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4015	112.05.47	Contraloria General del Estado	t	5	112.05	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4016	633.07.06	Beneficio por Jubilación	t	5	633.07	51.07.06.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4017	133.36.09	Investigación Profesional y Análisis de Laboratorio	t	5	133.36	63.06.09.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4018	112.01.01.274	Romero Ibañez Sergio Dario	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4019	112.01.02.330	Inca Carrillo Stalin Javier	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4020	112.01.02.331	Sani Paguay Miguel Angel	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4021	112.01.02.332	Pilco Sañay Raul Fernando	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4022	112.01.01.275	Castillo Moya Juan Carlos	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4023	112.01.01.276	Saltos Augusto Alfredo	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4024	112.03.02.212	SCANPLANET S.A	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4025	112.03.02.212.01	Consultoria para los servicios  Espe para Ges. docu y archiv	t	7	112.03.02.212	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4026	113.98.01.001.01	Cartera Vencida Acumulada Años Anteriores	t	7	113.98.01.001	\N	38.01.01.00.001	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4027	113.98.01.001.02	Cartera Vencida convenios Años Anteriores	t	7	113.98.01.001	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4028	113.98.01.001.03	Cartera No vencida emisión Diciembre	t	7	113.98.01.001	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4029	113.98.01.001.04	Cartera No Vencida convenios 	t	7	113.98.01.001	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4030	133.35.02	Arrendamiento de Edificios, locales, residencias	t	5	133.35	63.05.02.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4031	151.51.03.070	Alcantarillado Sector Dolorosa Bellavista	t	6	151.51.03	75.01.03.000.070.001	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4032	112.01.02.333	Remache Yumi Jose Julio	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4033	112.01.01.277	Harnisth Cevallos Danilo Stalin	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4034	112.01.01.278	Garzon Rodriguez Diana	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4035	112.01.01.279	Salinas Paredes Victor Gustavo	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4036	112.01.01.280	Calderon Limaico Andres Leonardo	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4037	112.01.02.334	Mejia Ruiz Joe Fernando	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4038	125.05	Cargos Diferidos por Estudios e Investigaciones	f	4	125	\N	\N	0	f	123	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4039	125.05.01	Cargos Diferidos por Asesoría e Investigación Especializada	t	5	125.05	\N	\N	0	t	123	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4040	112.01.01.281	Montenegro Ramos Maria Avelina	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4041	112.01.02.335	Santander Santander Jaime	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4042	112.01.02.336	Zambrano Velastegui Bony	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4043	213.67.01.011	Retención en la Fuente 1.75% del 10%	t	6	213.67.01	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4044	112.03.02.213	MENDOZA BASANTES JULIO CESAR	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4045	112.03.02.213.01	Proyecto interceptor Las Abras	t	7	112.03.02.213	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4046	213.81.08	Cuentas Por Pagar IVA SRI Sociedades SRI 100%	t	5	213.81	\N	\N	0	t	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4047	112.03.02.214	LOGROÑO SALVATIERRA CARLOS EDUARDO	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4048	112.03.02.214.01	Adquisición de materiales de publicidad y articulos analogos	t	7	112.03.02.214	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4049	112.01.01.282	Pastor Hernandez Jonathan Roberto	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4050	112.03.02.191.06	Mantenimiento de Pozos EP-EMAPAR	t	7	112.03.02.191	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4051	112.05.48	Portugal MH Seguridad Privada	t	5	112.05	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4052	634.06.07	Servicios Técnicos Especializados	t	5	634.06	53.06.07.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4053	112.03.02.215	CONSORCIO RGM	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4054	112.03.02.215.01	Construccion del proyecto Alcantarillado sector LLacta Pura 	t	7	112.03.02.215	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4055	112.01.01.283	Arevalo Fernandez Salvador Alicia 	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4056	112.01.01.284	Silva Miranda Adriana Nicole	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4057	112.01.02.337	Gaona Benitez Celso	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4058	151.51.01.142	Interceptor las Abras	t	6	151.51.01	75.01.01.000.131.001	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4059	112.01.01.285	Viñan Carrera Javier Alonso	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4060	112.01.01.286	Pailiacho Yucta Victor Augusto 	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4061	112.03.02.216	GREATSOLAR SA	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4062	112.03.02.216.01	Adquisicion de Iluminarias Solares	t	7	112.03.02.216	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4063	131.01.10	Dispositivos Médicos para Laboratorio Clinico y Patologia	t	5	131.01		\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4064	634.08.10	Materiales para Laboratorio y Uso Medico	t	5	634.08	\N	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4065	634.08.26	Dispositivos medicos de uso general	t	5	634.08	\N	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4066	151.51.03.088	Alcantarillado Llacta Pura	t	6	151.51.03	75.01.03.000.073.001	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4067	112.01.01.287	Layedra Luna Germanico Bolivar	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4068	112.03.02.217	AUSTRAL CIA LTDA	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4069	112.03.02.217.01	Adquisición del Equipo Caminero para la EP-EMAPAR	t	7	112.03.02.217	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4070	112.01.02.338	Tenganan Broncano Willian Alfonso 	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4071	112.01.02.339	Sisa Paca Diego Moises	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4072	112.01.02.340	Soldado Nono Henry Cristian	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4073	112.03.02.213.02	Contrato complementario Interceptor las Abras	t	7	112.03.02.213	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4074	112.05.49	Agencia de Regulacion y Control Telecomunicaciones	t	5	112.05	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4075	112.01.01.288	Barreto Bonilla Victor Oswaldo	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4076	112.01.01.289	Armas Espinoza Ricardo Sebastian	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4077	112.01.01.290	Orozco Salao Rosa Maria	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4078	212.03.04	IVA 100% Retenido EP-EMAPAR	t	5	212.03	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4079	224.98.01.007	Cuentas por Pagar Años Anteriores 2021	t	6	224.98.01	97.01.01.000.000.001	\N	0	f	222	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4080	911.17.99	Bienes para regulacion y ajustes	t	5	911.17	\N	\N	0	f	91	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4081	921.17.99	Bienes para regulacion y ajustes	t	5	921.17	\N	\N	0	f	92	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4082	112.03.02.218	TAPIA CURILLO LESLIE SOFIA	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4083	112.03.02.218.01	Mantenimiento y/o reposición de las geomembranas de los tanq	t	7	112.03.02.218	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4084	112.03.02.219	LARA CRUZ GUIDO FABIAN	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4085	112.03.02.219.01	Plataforma de gestión documental y procesos de aplicación pr	t	7	112.03.02.219	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4086	213.81.14	Cuentas por pagar Impuesto al valor agregado SRI 100% Ley Re	t	5	213.81	\N	\N	0	t	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4087	112.03.02.192.02	Adquisición de caja de transferencia para  vehiculo HMA 190	t	7	112.03.02.192	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4088	112.01.02.341	Quisnancela Salazar Erika Lisbeth	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4089	112.01.02.342	Herrera Perez Jose Ricardo	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4090	112.01.02.343	Espinoza Betancourt Christian Andres	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4091	112.01.02.344	Salao Redin Raul Marcelo	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4092	112.03.02.220	CONSORCIO CICLON DE LOS ANDES	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4093	112.03.02.220.01	Alcantarillado para los barrios Noroccidentales de Riobamba	t	7	112.03.02.220	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4094	633.03.04	Compensacion por transporte	t	5	633.03	51.03.04.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4095	112.03.02.221	TAPIA CURILLO LESLIE SOFIA	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4096	112.03.02.221.01	Servicio del Mantenimiento y Reposición de las Geomenbranas 	t	7	112.03.02.221	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4097	112.03.02.192.03	Provisión e instalación de sistemas de cloracion Airea y Yar	t	7	112.03.02.192	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4098	634.45	Bienes Muebles No Depreciables	f	4	634	\N	\N	0	f	6622	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4099	634.45.03	Mobiliarios ( Bienes Muebles No Depreciables)	t	5	634.45	53.14.03.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4100	634.45.04	Maquinarias y Equipos (Bienes Muebles no Depreciables)	t	5	634.45	53.14.04.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4101	634.45.06	Herramientas (Bienes Muebles no Depreciables)	t	5	634.45	53.14.06.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4102	634.45.07	Equipos, Sistemas y Paquetes Informáticos	t	5	634.45	53.14.07.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4103	112.05.50	Balseca Oñate ines Marcelina	t	5	112.05	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4104	112.01.02.345	Arellano Enriquez Joselito Gerardo	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4105	112.01.02.346	Pailiacho Yucta Victor Augusto	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4106	112.01.02.347	Pilco Andino Francisco Xavier	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4107	112.01.02.348	Poveda Bravo Lupe Isabel	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4108	112.01.02.349	Cuji Quishpe Narciso	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4109	112.01.02.350	Zabala Moreno Gabriela Alejandra	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4110	112.15.03.015	Duplicados de Placas	t	6	112.15.03	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4111	143.01.07.006	Infraestructura Piscin	t	6	143.01.07	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4112	143.99.01.006	Depreciacion Acumulada Conducciones de Agua Potable	t	6	143.99.01	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4113	143.99.07	Depreciacion Acumulada de Construcciones y Edificaciones	f	5	143.99	\N	\N	0	t	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4114	143.99.07.006	Depreciacion Acumulada Infraestructura Piscin	t	6	143.99.07	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4116	112.03.02.222	GRUPCAMITEC CONSTRUCTORES Y CONSULTORES CAMINO&MORENO S.A	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4117	112.03.02.222.01	Ejecucion Proyecto Varias Obras de Alcantarillado	t	7	112.03.02.222	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4118	112.01.02.351	Garcia Cano Juan Andres 	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4119	112.01.02.352	Villa Poma Victor Alfonso	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4120	112.01.02.353	Guevara Sinaluisa Luis Enrique	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4121	112.01.02.354	Lema Morales Victor Jacinto	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4122	112.01.02.355	Brito Pazmiño Cesar 	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4123	639.56	ACTUALIZACION Y AJUSTES AL PATRIMONIO	f	4	639	\N	\N	0	f	6625	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4124	639.56.02	Baja de Propiedad Planta y Equipo	t	5	639.56	\N	\N	0	t	6625	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4125	112.03.02.223	WHITEORION S.A 	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4126	112.03.02.223.01	Contrato analisis de Riesgo Cibernetico y Ethical Hacking	t	7	112.03.02.223	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4127	112.01.01.291	LLangari Soldado Mirian Edilma	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4128	133.34.04.003	Mantenimiento de Geomembranas	t	6	133.34.04	63.04.04.000.005.001	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4129	639.94	Gasto por Perdida de Activos Fijos	t	4	639	\N	\N	0	t	6625	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4130	112.03.02.192.04	Adquisicion de motobombas de 2 y 4 pulgadas	t	7	112.03.02.192	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4131	112.03.02.224	ROMERO HERRERA FABIAN AUGUSTO	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4132	112.03.02.224.01	Mejoramiento de la Seguridad Industrial Reservas EP EMAPAR	t	7	112.03.02.224	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4133	133.34.04.004	Gastos en Maquinarias y Equipos (Instalación, Mantenimiento 	t	6	133.34.04	63.04.04.000.006.001	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4134	112.01.01.292	Parra Carrasco Marcela Liliana	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4135	151.51.03.089	Alcantarillado Barrios Noroccidentales	t	6	151.51.03	75.01.03.000.072.001	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4136	112.03.02.225	ARISOLTY S.A	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4137	112.03.02.225.01	Gestión integral de facturación toma de lectura inspecciones	t	7	112.03.02.225	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4138	112.01.01.293	Chong Qui Rosero Cristobal Eduardo	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4139	112.01.01.294	Escalante Guevara Cristhian Andres	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4140	112.01.01.295	Hidalgo Rodriguez Evelyn Giselle	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4141	133.18.07	Compensacion por Vacaciones No gozadas	t	5	133.18	61.07.07.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4142	112.01.01.296	Aguiar Calderón Cristian Gustavo	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4143	113.13.01.099.04	Gastos Judiciales	t	7	113.13.01.099	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4144	623.01.99.003	Gastos Judiciales	t	6	623.01.99	\N	13.01.99.04.001	0	f	6622	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4145	112.01.01.297	Silva Andrade Marcela Elizabeth	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4146	112.01.02.356	Gonzalez Ponce Ivan Alberto	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4147	112.01.02.357	Moreno Barsallo Daniela Estefania	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4148	112.01.02.358	Noboa de la Torre Carlos Andres	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4149	112.01.02.359	Espin carrillo Diego	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4150	639.56.01	Baja de Inventario	t	5	639.56	\N	\N	0	t	6625	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4151	639.55	ACTUALIZACION Y AJUSTES DEL PASIVO	f	4	639	\N	\N	0	f	6625	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4152	639.55.01	Actualizacion de Pasivos	t	5	639.55	\N	\N	0	t	6625	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4153	629.56	ACTUALIZACION Y AJUSTE DE PASIVOS	f	4	629	\N	\N	0	f	6625	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4154	629.56.03	Actualización Depósitos y Fondos de Terceros de Años Anterio	t	5	629.56	\N	\N	0	t	6625	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4155	639.57	ACTUALIZACION DE INVERSIONES FINANCIERAS	f	4	639	\N	\N	0	f	6625	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4156	639.57.02	Actualizacion Deudores Financieros	t	5	639.57	\N	\N	0	t	6625	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4157	112.03.02.226	CHACAN ESCOBAR LUIS GONZALO	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4158	112.03.02.226.01	Reparacion Emisario nuevo colector Brigada Inmaculada 2022	t	7	112.03.02.226	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4159	143.99.07.001	Depreciacion Acumulada San Pablo El Chaupi Cenegal	t	6	143.99.07	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4160	143.99.07.002	Depreciacion Acumulada Captacion Llio	t	6	143.99.07	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4161	143.99.07.003	Depreciacion Acumulada Aireadores	t	6	143.99.07	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4162	143.99.07.004	Dpreciacion Acumulada El Pedregal	t	6	143.99.07	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4163	143.99.07.005	Depreciacion Acumulada Planta Central Sabu Izamba	t	6	143.99.07	\N	\N	0	f	124	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4164	224.98.01.008	Cuentas por Pagar Años Anteriores 2022	t	6	224.98.01	97.01.01.000.000.001	\N	0	f	222	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4165	212.07.01	Obligaciones pendientes empresa Ferrocarriles	t	5	212.07	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4166	113.13.01.099.05	No Especificados Sueldos y Multas	t	7	113.13.01.099	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4167	112.01.02.360	Calle Santander Manuel Ufredo	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4168	112.01.02.361	Centeno Moyon Jose Luis	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4169	112.01.02.362	Herrera Yanza Elvis	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4170	112.01.02.363	Ortiz Moreno Juan	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4172	112.01.01.298	Robalino Altamirano Ivan Ismael	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4173	112.03.02.220.02	Alcantarillado Barrios Noroccidentales Contrato Complementar	t	7	112.03.02.220	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4174	112.01.01.299	Colcha Estrada Jessica Silvana	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4175	112.01.01.300	Romero Herrera Juan Fernando	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4176	112.01.02.364	Uvidia Castillo Ramon Remigio	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4177	112.01.01.301	Viñan Gomez Karen Lisbeth	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4178	112.01.02.365	Cevallos Aguilar Washington Ramon	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4179	124.95	Cuentas por Cobrar Servidores Públicos por Nomina - SPRYN	f	4	124	\N	\N	0	f	122	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4180	124.95.01	Cuentas por Cobrar Servidores Públicos	t	5	124.95	\N	\N	0	t	122	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4181	124.04	Recuperación por Pérdida de Recursos Públicos	f	4	124	\N	\N	0	f	122	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4182	124.04.01	Recuperación por Pérdida de Recursos Públicos a Servidores	t	5	124.04	\N	\N	0	t	122	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4183	112.03.02.227	CACERES AYALA GABRIEL JOSE	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4184	112.03.02.227.01	Mantenimiento de Pozos 2022	t	7	112.03.02.227	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4185	112.01.02.366	Flores Castro Victor Felix	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4186	112.01.02.367	Paredes Palacios Alex Santiago	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4187	112.01.02.368	Cano Espin Andrea Moraima	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4188	112.01.01.302	Cueva Villamarin Andrea Elizabeth	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4189	112.01.01.303	Ojeda Silva Victoria Renata	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4190	112.01.02.369	Cajas Sigcho Luis Alberto	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4191	112.01.02.370	Jacome Merino Romel Stalin	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4192	112.01.02.371	Lopez Tamayo Daniel Alejandro	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4193	629.55	ACTUALIZACION Y AJUSTES DE ACTIVOS	f	4	629	\N	\N	0	f	6625	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4194	629.55.05	Actualizacion de Propidad, Planta y Equipo	t	5	629.55	\N	\N	0	t	6625	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4195	629.55.01	Actualizacion de las Cuentas por Cobrar	t	5	629.55	\N	\N	0	t	6625	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4196	112.01.02.372	Lobato Sinaluisa Luis Javier	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4197	911.43	Bienes no Depreciables para Regulacion y Ajustes	f	4	911	\N	\N	0	t	91	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4198	911.43.01	Bienes no Depreciables para Regulacion y Ajustes	t	5	911.43	\N	\N	0	f	91	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4199	921.43	Responsabilidad por bienes no depreciables para R. y A.	f	4	921	\N	\N	0	t	92	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4200	921.43.01	Bienes no Depreciables para Regulacion y Ajustes	t	5	921.43	\N	\N	0	f	92	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4201	112.01.01.304	Cajamarca Alatamirano Gladys Eugenia	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4202	633.04.08	Subsidio por antiguedad	t	5	633.04	51.04.08.000.000.001	\N	0	t	6622	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4203	133.14	Subsidios	f	4	133	\N	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4204	133.14.08	Subsidio por Antiguedad	t	5	133.14	61.04.08.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4205	213.61.02.031	Subsidio por Antiguedad	t	6	213.61.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4206	213.51.02.028	Subsidio por Antiguedad	t	6	213.51.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4207	112.03.02.228	CONSORCIO MNG 	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4208	112.03.02.228.01	Mejoramiento del S. de alcantarillado pluvial en varios sect	t	7	112.03.02.228	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4209	112.01.02.373	Zabala Machado Gladys Eulalia	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4210	112.01.02.374	Andrade Bravo Jorge Augusto	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4211	112.01.02.375	Muñoz Rubio Nelson Patricio	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4212	112.01.01.305	Granizo Flores Nelson Roberto	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4213	112.01.01.306	Sisa Paca Freddy Milton	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4214	112.01.02.376	Sanchez Gonzalez Karla Micaela	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4215	112.01.02.377	Salgado Gavilanez Saul Vinicio	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4216	213.57.99	Otros devengado IVA	t	5	213.57	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4217	629.55.04	Actualizacion de Inventarios	t	5	629.55	\N	\N	0	t	6625	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4218	112.01.01.307	Vasquez Paredes Luis Armando	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4219	112.05.51	Bancos tarjetas de Credito/Debito	t	5	112.05	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4220	112.05.52	Federación Deportiva de Chimborazo	t	5	112.05	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4221	112.01.02.378	Tenorio Suarez Marlon Leonardo	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4222	112.01.01.308	Jaramillo Gonzalez Jorge Antonio	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4223	133.34.04.017	Gastos en Infraestructura	t	6	133.34.04	63.04.17.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4224	213.57.02.013	Retencion en la fuente 10%	t	6	213.57.02	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4225	112.01.01.309	Dagua Santamaria Norma Elza	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4226	112.01.02.380	Alvarez Granda Anderson Patricio	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4227	112.01.01.310	Vaca Cazorla Patricia Hortencia	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4228	112.01.01.311	Gomez Vaca Paul Emilio	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4229	112.01.01.312	Ramos Leon Rosa Marlene	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4230	112.01.02.381	Majin Miñarcaja Ivan	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4231	112.01.01.313	Reinoso Ponton Hernan Rodrigo	t	6	112.01.01	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4232	112.03.02.229	DITECA S.A	f	6	112.03.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4233	112.03.02.229.01	Adquisicion de una Retroexcavadora 4x4	t	7	112.03.02.229	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4234	112.03.02.192.05	Mantenimiento hidrosuccionador 2110 Fase 3	t	7	112.03.02.192	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4235	639.01	Depreciacion Bienes de Adminsitracion	f	4	639	\N	\N	0	t	\N	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4236	639.01.03	Depreciacion  Mobiliario Administracion	t	5	639.01	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4237	639.01.04	Depreciacion Maquinaria y Equipo Administracion 	t	5	639.01	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4238	639.01.05	Depreciacion vehiculos Administracion	t	5	639.01	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4239	639.01.06	Depreciacion  Herramientas Administracion	t	5	639.01	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4240	639.01.07	Depreciacion  Equipos y Sistemas Informaticos Adminis	t	5	639.01	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4241	639.01.11	Depreciacion Partes y Repuestos	t	5	639.01	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4242	639.02	Depreciacion Bienes de Produccion	f	4	639	\N	\N	0	t	\N	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4243	639.02.04	Depreciacion Maquinaria Produccion	t	5	639.02	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4244	639.02.05	Depreciacion Vehiculos Produccion	t	5	639.02	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4245	639.02.06	Depreciacion Herramientas Produccion	t	5	639.02	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4246	639.02.11	Depreciacion Partes y Repuestos	t	5	639.02	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4247	639.03	Depreciacion Bienes de Infraestructura 	f	4	639	\N	\N	0	t	\N	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4248	639.03.01	Depreciacion redes de agua potable	f	5	639.03	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4249	639.03.01.001	Depreciacion redes de Agua Potable	t	6	639.03.01	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4250	639.03.01.002	Depreciacion tanques y Reservas	t	6	639.03.01	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4251	639.03.01.003	Depreciacion lineas de impulsion	t	6	639.03.01	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4252	639.03.01.004	Depreciacion pozos	t	6	639.03.01	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4253	639.03.01.006	Depreciacion Conducciones de Agua Potable	t	6	639.03.01	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4254	639.03.02	Depreciacion Redes de Alcantarillado 	f	5	639.03	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4255	639.03.02.001	Depreciacion redes de Alcantarillado	t	6	639.03.02	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4256	639.03.02.002	Depreciacion Colectores	t	6	639.03.02	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4257	639.03.07	Depreciacion Construcciones y edificaciones	f	5	639.03	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4258	639.03.07.001	Depreciacion Construcciones y edificaciones	t	6	639.03.07	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4259	224.98.01.009	Cuentas por Pagar Años Anteriores 2023	t	6	224.98.01	97.01.01.000.000.001	\N	0	f	222	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4260	112.01.02.379	Perez Logroño Edison Efrain	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4261	124.98.01.005	Cuentas por Cobrar Años Anteriores	f	6	124.98.01	\N	\N	0	f	122	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4262	124.98.01.005.01	Cuentas por Cobrar IVA	t	7	124.98.01.005	\N	38.01.01.01.001	0	f	122	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4263	223.01.02.004	Convenio de Cooperación 003-2016 Trasvase Maguazo Alao 65192	t	6	223.01.02	\N	\N	0	f	221	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4264	112.01.02.382	Cabezas Chiriboga Jose Luis	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4265	634.02.55	Combustibles	t	5	634.02	53.02.55.000.000.001	\N	0	t	\N	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4266	112.05.53	Asociación de Empleados ASOEMAPAR	t	5	112.05	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4267	625.04.99.001	Atrasos	t	6	625.04.99	\N	17.04.99.01.001	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4268	112.03.02.227.02	Mantenimiento de Pozos de Agua Subterranea 2023 COTO-EP-EMAP	t	7	112.03.02.227	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4269	133.32.55	Combustibles	t	5	133.32	63.02.55.000.000.001	\N	0	t	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4270	625.04.99.002	Multas por Incumplimiento de Reglamento de Prestación de Ser	t	6	625.04.99	\N	17.04.99.01.001	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4271	212.03.05	Notas de Crédito IESS	t	5	212.03	\N	\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4272	113.17.04.099.02	Multas por Incumplimiento de Reglamento de Prestación de Ser	t	7	113.17.04.099	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4273	113.81.03	Cuentas por Cobrar Impuesto al Valor Agregado – Compras Rete	t	5	113.81	\N	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4274	625.04.04	Incumplimientos de Contratos	f	5	625.04	\N	\N	0	t	\N	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4275	625.04.04.001	Incumplimientos de Contratos	t	6	625.04.04	\N	17.04.04.00.001	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4276	113.17.04.004	Incumplimiento del contrato	f	6	113.17.04	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4277	113.17.04.004.01	Ingresos provenientes de la aplicación de multas por incumpl	t	7	113.17.04.004	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4278	112.01.02.383	Larrea Mantilla Francisco Javier	t	6	112.01.02	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4279	151.51.03.090	Mejoramiento del sistema de Alcantarillado Pluvial en varios	t	6	151.51.03	75.01.03.000.079.001	\N	0	f	125	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4280	112.05.54	Caceres Ayala Gabriel Jose	f	5	112.05	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4281	112.05.54.001	Mantenimiento de pozos de agua subterranea 2023 COTO EPEMAPA	t	6	112.05.54	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4282	911.09.09	Multiriesgo Industrial	t	5	911.09	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4283	921.09.09	Multiriesgo Industrial	t	5	921.09	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4284	112.05.23	Instituto Ecuatoriano de Seguridad Social	t	5	112.05	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+4285	112.15.03.016	Regularizaciones ARCA	t	6	112.15.03	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:12	\N	\N
+\.
+
+
+--
+-- TOC entry 4937 (class 0 OID 5986435)
+-- Dependencies: 219
 -- Data for Name: estructura; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -2966,8 +5063,8 @@ COPY public.estructura (idestructura, nivel, nombre, longitud) FROM stdin;
 
 
 --
--- TOC entry 4931 (class 0 OID 5732675)
--- Dependencies: 226
+-- TOC entry 4939 (class 0 OID 5986439)
+-- Dependencies: 221
 -- Data for Name: gruposbene; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -2984,8 +5081,8 @@ COPY public.gruposbene (idgrupo, codgru, nomgru, modulo1, modulo2, modulo3, modu
 
 
 --
--- TOC entry 4923 (class 0 OID 5732629)
--- Dependencies: 218
+-- TOC entry 4941 (class 0 OID 5986449)
+-- Dependencies: 223
 -- Data for Name: ifinan; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -3068,8 +5165,8 @@ COPY public.ifinan (idifinan, codifinan, nomifinan, foto) FROM stdin;
 
 
 --
--- TOC entry 4921 (class 0 OID 5732622)
--- Dependencies: 216
+-- TOC entry 4943 (class 0 OID 5986453)
+-- Dependencies: 225
 -- Data for Name: niveles; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -3085,8 +5182,8 @@ COPY public.niveles (idnivel, nomniv, longniv) FROM stdin;
 
 
 --
--- TOC entry 4935 (class 0 OID 5732698)
--- Dependencies: 230
+-- TOC entry 4945 (class 0 OID 5986457)
+-- Dependencies: 227
 -- Data for Name: presupuesto; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -3581,8 +5678,8 @@ COPY public.presupuesto (idpresupuesto, tippar, codpar, codigo, nompar, inicia, 
 
 
 --
--- TOC entry 4933 (class 0 OID 5732686)
--- Dependencies: 228
+-- TOC entry 4947 (class 0 OID 5986468)
+-- Dependencies: 229
 -- Data for Name: proyectos; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -3632,8 +5729,32 @@ COPY public.proyectos (idproyecto, codigo, nombre, movimiento, idestructura, usu
 
 
 --
--- TOC entry 4949 (class 0 OID 0)
--- Dependencies: 223
+-- TOC entry 4951 (class 0 OID 5986520)
+-- Dependencies: 233
+-- Data for Name: tiptran; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.tiptran (numero, nombre) FROM stdin;
+0	General
+1	Desde Trámite
+2	Anticipo
+3	Cuenta por Cobrar
+4	Cuenta por Cobrar Año Anterior
+5	Depósitos y Fondos de Terceros
+6	Cuenta por Pagar
+7	Cuenta por Pagar Año Anterior
+8	Liquidacion de Anticipo
+9	Cobro
+10	Cobro del Año Anterior
+11	Liquidacion Dep.Fon.Terceros
+12	Pago
+13	Pago del Año Anterior (Presup)
+\.
+
+
+--
+-- TOC entry 4966 (class 0 OID 0)
+-- Dependencies: 216
 -- Name: beneficiarios_idbene_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -3641,8 +5762,8 @@ SELECT pg_catalog.setval('public.beneficiarios_idbene_seq', 1027, true);
 
 
 --
--- TOC entry 4950 (class 0 OID 0)
--- Dependencies: 221
+-- TOC entry 4967 (class 0 OID 0)
+-- Dependencies: 218
 -- Name: clasificador_idclasificador_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -3650,8 +5771,17 @@ SELECT pg_catalog.setval('public.clasificador_idclasificador_seq', 1, false);
 
 
 --
--- TOC entry 4951 (class 0 OID 0)
--- Dependencies: 219
+-- TOC entry 4968 (class 0 OID 0)
+-- Dependencies: 231
+-- Name: cuentas_idcuenta_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.cuentas_idcuenta_seq', 1, false);
+
+
+--
+-- TOC entry 4969 (class 0 OID 0)
+-- Dependencies: 220
 -- Name: estructura_idestructura_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -3659,8 +5789,8 @@ SELECT pg_catalog.setval('public.estructura_idestructura_seq', 1, false);
 
 
 --
--- TOC entry 4952 (class 0 OID 0)
--- Dependencies: 225
+-- TOC entry 4970 (class 0 OID 0)
+-- Dependencies: 222
 -- Name: gruposbene_idgrupo_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -3668,8 +5798,8 @@ SELECT pg_catalog.setval('public.gruposbene_idgrupo_seq', 8, true);
 
 
 --
--- TOC entry 4953 (class 0 OID 0)
--- Dependencies: 217
+-- TOC entry 4971 (class 0 OID 0)
+-- Dependencies: 224
 -- Name: ifinan_idifinan_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -3677,8 +5807,8 @@ SELECT pg_catalog.setval('public.ifinan_idifinan_seq', 74, true);
 
 
 --
--- TOC entry 4954 (class 0 OID 0)
--- Dependencies: 215
+-- TOC entry 4972 (class 0 OID 0)
+-- Dependencies: 226
 -- Name: niveles_idnivel_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -3686,8 +5816,8 @@ SELECT pg_catalog.setval('public.niveles_idnivel_seq', 1, false);
 
 
 --
--- TOC entry 4955 (class 0 OID 0)
--- Dependencies: 229
+-- TOC entry 4973 (class 0 OID 0)
+-- Dependencies: 228
 -- Name: presupuesto_idpresupuesto_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -3695,8 +5825,8 @@ SELECT pg_catalog.setval('public.presupuesto_idpresupuesto_seq', 1, false);
 
 
 --
--- TOC entry 4956 (class 0 OID 0)
--- Dependencies: 227
+-- TOC entry 4974 (class 0 OID 0)
+-- Dependencies: 230
 -- Name: proyectos_idproyecto_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -3704,7 +5834,7 @@ SELECT pg_catalog.setval('public.proyectos_idproyecto_seq', 1, false);
 
 
 --
--- TOC entry 4767 (class 2606 OID 5732653)
+-- TOC entry 4774 (class 2606 OID 5986481)
 -- Name: clasificador clasificador_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3713,7 +5843,16 @@ ALTER TABLE ONLY public.clasificador
 
 
 --
--- TOC entry 4771 (class 2606 OID 5732691)
+-- TOC entry 4786 (class 2606 OID 5986519)
+-- Name: cuentas cuentas_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cuentas
+    ADD CONSTRAINT cuentas_pk PRIMARY KEY (idcuenta);
+
+
+--
+-- TOC entry 4784 (class 2606 OID 5986483)
 -- Name: proyectos estrfunc_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3722,7 +5861,7 @@ ALTER TABLE ONLY public.proyectos
 
 
 --
--- TOC entry 4765 (class 2606 OID 5732639)
+-- TOC entry 4778 (class 2606 OID 5986485)
 -- Name: estructura estructura_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3731,7 +5870,7 @@ ALTER TABLE ONLY public.estructura
 
 
 --
--- TOC entry 4763 (class 2606 OID 5732627)
+-- TOC entry 4780 (class 2606 OID 5986487)
 -- Name: niveles niveles_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3740,7 +5879,7 @@ ALTER TABLE ONLY public.niveles
 
 
 --
--- TOC entry 4773 (class 2606 OID 5732710)
+-- TOC entry 4782 (class 2606 OID 5986489)
 -- Name: presupuesto presupue_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3749,7 +5888,7 @@ ALTER TABLE ONLY public.presupuesto
 
 
 --
--- TOC entry 4769 (class 2606 OID 5732655)
+-- TOC entry 4776 (class 2606 OID 5986491)
 -- Name: clasificador uc_codpar; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3758,7 +5897,7 @@ ALTER TABLE ONLY public.clasificador
 
 
 --
--- TOC entry 4774 (class 2606 OID 5732692)
+-- TOC entry 4789 (class 2606 OID 5986492)
 -- Name: proyectos estrfunc_estructura_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3767,7 +5906,7 @@ ALTER TABLE ONLY public.proyectos
 
 
 --
--- TOC entry 4775 (class 2606 OID 5732711)
+-- TOC entry 4787 (class 2606 OID 5986497)
 -- Name: presupuesto presupuesto_clasificador_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3776,7 +5915,7 @@ ALTER TABLE ONLY public.presupuesto
 
 
 --
--- TOC entry 4776 (class 2606 OID 5732716)
+-- TOC entry 4788 (class 2606 OID 5986502)
 -- Name: presupuesto presupuesto_proyectos_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3784,7 +5923,7 @@ ALTER TABLE ONLY public.presupuesto
     ADD CONSTRAINT presupuesto_proyectos_fk FOREIGN KEY (idproyecto) REFERENCES public.proyectos(idproyecto);
 
 
--- Completed on 2025-08-14 21:02:35
+-- Completed on 2025-08-20 17:57:46
 
 --
 -- PostgreSQL database dump complete

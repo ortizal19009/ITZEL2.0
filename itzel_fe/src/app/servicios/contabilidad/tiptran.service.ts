@@ -4,9 +4,11 @@ import { HttpClient } from '@angular/common/http';
 const apiUrl = environment.API_URL;
 const baseUrl = `${apiUrl}/tiptran`;
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TiptranService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
+  getAllTiptran() {
+    return this.http.get(`${baseUrl}`);
+  }
 }
