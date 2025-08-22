@@ -1,0 +1,4 @@
+.selected-row {
+  background-color: #d1e7dd !important; /* verde clarito */
+  cursor: pointer;
+}
