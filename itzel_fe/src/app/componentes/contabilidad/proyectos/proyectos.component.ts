@@ -6,6 +6,7 @@ import { ProyectosService } from '../../../servicios/contabilidad/proyectos.serv
 import { ServerConfigService } from '../../../servicios/config/server-config.service';
 import { FilterPipe } from '../../../pipes/filter.pipe';
 import Swal from 'sweetalert2';
+import { Proyectos } from '../../../modelos/contabilidad/proyectos';
 
 @Component({
   selector: 'app-proyectos',
@@ -20,6 +21,7 @@ export class ProyectosComponent implements OnInit {
   options: any = {};
   messageRecived: string = '';
   swAddProject: Boolean = true;
+  _proyecto: Proyectos = new Proyectos();
   constructor(
     private proyectosService: ProyectosService,
     private serverConfigService: ServerConfigService
@@ -37,19 +39,14 @@ export class ProyectosComponent implements OnInit {
       },
     });
   }
-  receiveMessageAddProyect(message: string) {
-    if (message === 'success') {
-      this.swal('success', 'Datos guardados conexito');
-      this.getAllProyectos();
-    } else {
-      alert('Datos no guardados');
-      this.swal('error', 'No guardado');
-    }
+  setDataToDelete(proyecto: any) {
+    this._proyecto = proyecto;
   }
-  delete(idproyecto: any) {
-    this.proyectosService.proyectoDelete(idproyecto).subscribe({
+  delete() {
+    this.proyectosService.proyectoDelete(this._proyecto.idproyecto!).subscribe({
       next: (datos: any) => {
         this.swal(datos.status, datos.message);
+        this.getAllProyectos();
       },
       error: (e: any) => console.error(e),
     });

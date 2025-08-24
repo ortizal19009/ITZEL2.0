@@ -49,9 +49,9 @@
                         <div class="col-sm">
                             <div class="input-group input-group-sm mb-3">
                                 <span class="input-group-text">Estructura</span>
-                                <select class="form-control" [ngClass]="{'is-invalid': f['idestructura'].invalid && f['idestructura'].touched,
-                           'is-valid': f['idestructura'].valid, '': f['idestructura'].untouched}"
-                                    formControlName="idestructura" [compareWith]="compararEstructura">
+                                <select class="form-control" [ngClass]="{'is-invalid': f['estructura'].invalid && f['estructura'].touched,
+                           'is-valid': f['estructura'].valid, '': f['estructura'].untouched}"
+                                    formControlName="estructura" [compareWith]="compararEstructura">
                                     <option *ngFor="let estructura of _estructuras" [ngValue]="estructura">
                                         {{estructura.nombre}} - Nivel({{estructura.nivel}})
                                     </option>

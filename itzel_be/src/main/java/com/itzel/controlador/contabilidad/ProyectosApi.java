@@ -8,6 +8,7 @@ import com.itzel.modelo.contabilidad.Proyectos;
 import com.itzel.servicio.contabilidad.ProyectosService;
 import net.sf.jasperreports.engine.JRException;
 import org.apache.coyote.Response;
+import org.springframework.beans.BeanUtils;
 import org.springframework.core.io.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,16 +56,15 @@ public class ProyectosApi {
         return ResponseEntity.ok(proyectosService.save(e));
     }
     @PutMapping
-    public ResponseEntity<Object> update(@RequestParam Long idproyecto, @RequestBody Proyectos e){
-        Proyectos _e = proyectosService.findById(idproyecto).orElse(null);
-        assert _e != null;
-        _e.setCodigo(e.getCodigo());
-        _e.setNombre(e.getNombre());
-        _e.setMovimiento(e.getMovimiento());
-        _e.setIdestructura(e.getIdestructura());
-        _e.setUsumodi(e.getUsumodi());
-        _e.setFecmodi(e.getFecmodi());
-        return ResponseEntity.ok(proyectosService.update(_e));
+    public ResponseEntity<Proyectos> update(@RequestParam Long idproyecto, @RequestBody Proyectos e) {
+        Proyectos _e = proyectosService.findById(idproyecto)
+                .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
+
+        // Copiar todas las propiedades excepto las que no deben actualizarse
+        BeanUtils.copyProperties(e, _e, "idproyecto", "usucrea", "feccrea");
+
+        Proyectos actualizado = proyectosService.saveOne(_e);
+        return ResponseEntity.ok(actualizado);
     }
     @GetMapping("/validar/codigo")
     public ResponseEntity<Boolean> getByCodigo(@RequestParam String codigo){

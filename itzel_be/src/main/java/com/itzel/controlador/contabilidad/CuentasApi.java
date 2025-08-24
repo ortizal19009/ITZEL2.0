@@ -2,6 +2,7 @@ package com.itzel.controlador.contabilidad;
 
 import com.itzel.modelo.contabilidad.Cuentas;
 import com.itzel.servicio.contabilidad.CuentasService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -46,4 +47,21 @@ public class CuentasApi {
     public ResponseEntity<Optional<Cuentas>> getById(@RequestParam Long idcuenta){
         return ResponseEntity.ok(cuentasService.findById(idcuenta));
     }
+    //buscar una sola cuenta por el codigo cuenta (codcue)
+    @GetMapping("/byCodcue")
+    public ResponseEntity<Cuentas> getByCodcue(@RequestParam String codcue) {
+        return cuentasService.findByCodcue(codcue)
+                .map(ResponseEntity::ok)        // Si existe → 200 con la cuenta
+                .orElse(ResponseEntity.noContent().build()); // Si no existe → 404
+    }
+    @PutMapping
+    public ResponseEntity<Cuentas> updateCuentas(@RequestBody Cuentas c) {
+        Cuentas cuenta = cuentasService.findById(c.getIdcuenta())
+                .orElseThrow(() -> new RuntimeException("Cuenta no encontrada"));
+        // Copia todos los atributos excepto "idcuenta"
+        BeanUtils.copyProperties(c, cuenta, "idcuenta");
+
+        return ResponseEntity.ok(cuentasService.saveOne(cuenta));
+    }
+
 }

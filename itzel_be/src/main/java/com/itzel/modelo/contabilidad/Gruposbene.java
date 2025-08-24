@@ -1,14 +1,11 @@
 package com.itzel.modelo.contabilidad;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 @Table(name = "gruposbene")
 public class Gruposbene {
     @Id
@@ -22,18 +19,6 @@ public class Gruposbene {
     private Long modulo4;
     private Long modulo5;
     private Long modulo6;
-
-    public Gruposbene(Long idgrupo, String codgru, String nomgru, Long modulo1, Long modulo2, Long modulo3, Long modulo4, Long modulo5, Long modulo6) {
-        this.idgrupo = idgrupo;
-        this.codgru = codgru;
-        this.nomgru = nomgru;
-        this.modulo1 = modulo1;
-        this.modulo2 = modulo2;
-        this.modulo3 = modulo3;
-        this.modulo4 = modulo4;
-        this.modulo5 = modulo5;
-        this.modulo6 = modulo6;
-    }
 
     public Long getIdgrupo() {
         return idgrupo;
@@ -105,5 +90,20 @@ public class Gruposbene {
 
     public void setModulo6(Long modulo6) {
         this.modulo6 = modulo6;
+    }
+
+    public Gruposbene(Long idgrupo, String codgru, String nomgru, Long modulo1, Long modulo2, Long modulo3, Long modulo4, Long modulo5, Long modulo6) {
+        this.idgrupo = idgrupo;
+        this.codgru = codgru;
+        this.nomgru = nomgru;
+        this.modulo1 = modulo1;
+        this.modulo2 = modulo2;
+        this.modulo3 = modulo3;
+        this.modulo4 = modulo4;
+        this.modulo5 = modulo5;
+        this.modulo6 = modulo6;
+    }
+
+    public Gruposbene() {
     }
 }

@@ -6,6 +6,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Optional;
+
 public interface CuentasR extends JpaRepository<Cuentas, Long> {
     //Consulta personalizada con paginación
     @Query(value = "SELECT * FROM cuentas ORDER BY codcue asc", nativeQuery = true)
@@ -15,4 +17,6 @@ public interface CuentasR extends JpaRepository<Cuentas, Long> {
     public Page<Cuentas> findByCod(String codcue, Pageable pageable);
     @Query(value = "SELECT * FROM cuentas WHERE LOWER(nomcue) like %?1% ORDER BY codcue asc", nativeQuery = true)
     public Page<Cuentas> findByDenom(String nomcue, Pageable pageable);
+    //buscar una sola cuenta por el codigo cuenta (codcue)
+    Optional<Cuentas> findByCodcue(String codcue);
 }

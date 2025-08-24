@@ -6,21 +6,12 @@ import lombok.*;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 @Table(name = "tiptran")
 public class Tiptran {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long numero;
     private String nombre;
-
-    public Tiptran() {
-    }
-
-    public Tiptran(Long numero, String nombre) {
-        this.numero = numero;
-        this.nombre = nombre;
-    }
 
     public Long getNumero() {
         return numero;
@@ -36,5 +27,13 @@ public class Tiptran {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public Tiptran(Long numero, String nombre) {
+        this.numero = numero;
+        this.nombre = nombre;
+    }
+
+    public Tiptran() {
     }
 }

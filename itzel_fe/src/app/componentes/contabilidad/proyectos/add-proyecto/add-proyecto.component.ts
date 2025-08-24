@@ -37,7 +37,7 @@ export class AddProyectoComponent implements OnInit {
       codigo: ['', [Validators.minLength(2), Validators.required]], // ojo: minLength, no min (min es para números)
       nombre: ['', [Validators.required]],
       movimiento: [false, [Validators.required]],
-      idestructura: [''],
+      estructura: [''],
       usucrea: [1],
       feccrea: [this.date],
     });
@@ -63,7 +63,7 @@ export class AddProyectoComponent implements OnInit {
       next: (estructuras: any) => {
         this._estructuras = estructuras;
         this.f_proyecto.patchValue({
-          idestructura: estructuras[0],
+          estructura: estructuras[0],
         });
       },
       error: (e: any) => console.error(e),
@@ -77,7 +77,7 @@ export class AddProyectoComponent implements OnInit {
     this.proyectoService.validarCodigo(code).subscribe({
       next: (validador: any) => {
         const longitudEsperada =
-          estructura.idestructura.longitud * estructura.idestructura.nivel;
+          estructura.estructura.longitud * estructura.estructura.nivel;
         const longitudInvalida = code.length !== longitudEsperada;
         const codigoDuplicado = validador;
         const codigoNoValido = codigoDuplicado || longitudInvalida;
@@ -114,6 +114,7 @@ export class AddProyectoComponent implements OnInit {
   }
 
   save() {
+    console.log(this.f_proyecto.value);
     this.proyectoService.proyectoSave(this.f_proyecto.value).subscribe({
       next: (request: any) => {
         this._request = request.message;

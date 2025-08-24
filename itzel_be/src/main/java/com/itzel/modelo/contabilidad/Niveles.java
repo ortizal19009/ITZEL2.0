@@ -1,11 +1,11 @@
 package com.itzel.modelo.contabilidad;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "niveles")
 public class Niveles {
     @Id
@@ -36,5 +36,14 @@ public class Niveles {
 
     public void setLongniv(Long longniv) {
         this.longniv = longniv;
+    }
+
+    public Niveles(Long idnivel, String nomniv, Long longniv) {
+        this.idnivel = idnivel;
+        this.nomniv = nomniv;
+        this.longniv = longniv;
+    }
+
+    public Niveles() {
     }
 }

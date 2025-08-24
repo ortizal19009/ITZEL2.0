@@ -6,8 +6,6 @@ import lombok.*;
 @Entity
 @Setter
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "estructura")
 public class Estructura {
     @Id
@@ -16,6 +14,16 @@ public class Estructura {
     private Long nivel;
     private String nombre;
     private Long longitud;
+
+    public Estructura() {
+    }
+
+    public Estructura(Long idestructura, Long nivel, String nombre, Long longitud) {
+        this.idestructura = idestructura;
+        this.nivel = nivel;
+        this.nombre = nombre;
+        this.longitud = longitud;
+    }
 
     public Long getIdestructura() {
         return idestructura;

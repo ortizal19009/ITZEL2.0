@@ -2,6 +2,7 @@ package com.itzel.controlador.contabilidad;
 
 import com.itzel.modelo.contabilidad.Beneficiarios;
 import com.itzel.servicio.contabilidad.BeneficiariosService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
@@ -96,23 +97,10 @@ public class BeneficiariosApi {
     @PutMapping("/{idbene}")
     public ResponseEntity<Beneficiarios> updateBeneficiario(@PathVariable Long idbene, @RequestBody Beneficiarios x) {
         Beneficiarios y = beneServicio.findById(idbene)
-                .orElse(null);
-        y.setNomben(x.getNomben());
-        y.setTpidben(x.getTpidben());
-        y.setCodben(x.getCodben());
-        y.setRucben(x.getRucben());
-        y.setCiben(x.getCiben());
-        y.setTlfben(x.getTlfben());
-        y.setDirben(x.getDirben());
-        y.setMailben(x.getMailben());
-        y.setTpcueben(x.getTpcueben());
-        y.setCuebanben(x.getCuebanben());
-        y.setIdgrupo(x.getIdgrupo());
-        y.setIdifinan(x.getIdifinan());
-        // y.setUsucrea(x.getUsucrea());
-        // y.setFeccrea(x.getFeccrea());
-        y.setUsumodi(x.getUsumodi());
-        y.setFecmodi(x.getFecmodi());
+                .orElseThrow(() -> new RuntimeException("Beneficiario no encontrado"));
+
+        // Copiar propiedades excepto campos que NO quieres sobreescribir
+        BeanUtils.copyProperties(x, y, "idbene", "usucrea", "feccrea");
         Beneficiarios z = beneServicio.save(y);
         return ResponseEntity.ok(z);
     }

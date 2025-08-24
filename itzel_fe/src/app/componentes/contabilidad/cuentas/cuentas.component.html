@@ -81,7 +81,7 @@
                         <td class="text-center">
                             <i class="fa fa-check-circle-o check-circle" aria-hidden="true" [hidden]=!cuenta.movcue></i>
                         </td>
-                        <td class="text-center">{{cuenta.idnivel.nomniv}}</td>
+                        <td class="text-center">{{cuenta.nivel.nomniv}}</td>
                         <td class="text-center">
                             <i class="fa fa-check-circle-o check-circle" aria-hidden="true" [hidden]=!cuenta.sigef></i>
                         </td>
@@ -97,11 +97,9 @@
                                         [routerLink]="['/add-cuenta',cuenta.idcuenta]"
                                         routerLinkActive="router-link-active">
                                         <i class="bi bi-pencil"></i>&nbsp; Nuevo</button>
-                                    <button class="dropdown-item" type="button" data-toggle="collapse"
-                                        data-target="#div1">
+                                    <button class="dropdown-item" type="button" [routerLink]="['/modi-cuenta', cuenta.idcuenta]">
                                         <i class="bi bi-pencil"></i>&nbsp; Modificar</button>
-                                         <button class="dropdown-item" type="button" data-toggle="collapse"
-                                        data-target="#div1">
+                                         <button class="dropdown-item" type="button" [routerLink]="['/info-cuenta', cuenta.idcuenta]">
                                         <i class="bi bi-pencil"></i>&nbsp; Info.</button>
                                     <button class="dropdown-item" type="button" data-toggle="modal"
                                         data-target="#modalEliminar">

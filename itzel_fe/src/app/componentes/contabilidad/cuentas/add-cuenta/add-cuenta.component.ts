@@ -7,7 +7,11 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute, Route, Router, RouterLink } from '@angular/router';
+import {
+  ActivatedRoute,
+  Router,
+  RouterLink,
+} from '@angular/router';
 import { CuentasService } from '../../../../servicios/contabilidad/cuentas.service';
 import { Cuentas } from '../../../../modelos/contabilidad/cuentas';
 import { TiptranService } from '../../../../servicios/contabilidad/tiptran.service';
@@ -38,36 +42,47 @@ export class AddCuentaComponent implements OnInit {
   _presupuestos?: any;
   selectedPresupuesto!: any;
   modalTitle!: string;
-
+  date: Date = new Date();
+  sizeCodcue!: number;
   constructor(
     private _params: ActivatedRoute,
     private s_cuentas: CuentasService,
     private fb: FormBuilder,
     private s_tiptran: TiptranService,
     private s_nivel: NivelesService,
-    private s_presupuestos: PresupuestoService
+    private s_presupuestos: PresupuestoService,
+    private router: Router
   ) {}
   ngOnInit(): void {
     this.idcuenta = +this._params.snapshot.paramMap.get('idcuenta')!;
 
     this.f_cuenta = this.fb.group({
-      codcue: ['', Validators.required],
+      codcue: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(/.*[^.]$/),
+          Validators.minLength(this.sizeCodcue),
+        ],
+      ],
       nomcue: ['', Validators.required],
-      movcue: [false, Validators.required],
+      movcue: [false],
       nivel: ['', Validators.required],
       grucue: ['', Validators.required],
       nomgrup: ['', Validators.required],
       asodebe: ['', Validators.required],
       asohaber: ['', Validators.required],
-      tiptran: [0, Validators.required],
-      sigef: ['', Validators.required],
+      tiptran: [0],
+      sigef: [''],
       grubalances: ['', Validators.required],
       grufluefec: ['', Validators.required],
       balancostos: ['', Validators.required],
+      usucrea: 1,
+      feccrea: this.date,
     });
     this.getCuentaById(this.idcuenta);
-    this.getAllTipTran();
     this.getAllNiveles();
+    this.getAllTipTran();
     this.modalTitle =
       this._tippar === 2
         ? 'Partidas asociadas al debe'
@@ -86,7 +101,6 @@ export class AddCuentaComponent implements OnInit {
         p.codigo.toString().includes(this.stringFilter)
     );
   }
-
   get f() {
     return this.f_cuenta.controls;
   }
@@ -109,7 +123,7 @@ export class AddCuentaComponent implements OnInit {
         console.log(_niveles);
         this._niveles = _niveles;
         this.f_cuenta.patchValue({
-          nivel: _niveles[0],
+          nivel: _niveles[this._cuenta.nivel.idnivel],
         });
       },
     });
@@ -119,17 +133,26 @@ export class AddCuentaComponent implements OnInit {
       next: (datos: any) => {
         console.log(datos);
         this._cuenta = datos;
+        this.sizeCodcue = datos.codcue.length + 1;
         this.f_cuenta.patchValue({
           grucue: datos.grucue,
           nomgrup: datos.nomcue,
-          codcue: datos.grucue
+          codcue: `${datos.codcue}.`,
         });
       },
       error: (e: any) => console.error(e),
     });
   }
-  getValidarNombre(e: any) {}
-  getValidacionCodigo(e: any) {}
+  async getValidacionCodigo(e: any) {
+    let codigo = e.target.value;
+    let cuenta: Cuentas = await this.s_cuentas.asyncgetCuentaByCodcue(codigo);
+    console.log(cuenta);
+    if (cuenta) {
+      // Para marcarlo inválido debes usar:
+      this.f_cuenta.controls['codcue'].setErrors({ codigoExistente: true });
+    }
+    console.log(codigo);
+  }
   getAsoDebeHaber() {
     console.log(this._codPartida);
 
@@ -166,12 +189,24 @@ export class AddCuentaComponent implements OnInit {
   save() {
     let cuenta!: Cuentas;
     let f = this.f_cuenta.value;
-    cuenta.codcue = f.cuenta;
+    /*     cuenta.codcue = f.cuenta;
     cuenta.nomcue = f.nomcue;
     cuenta.movcue = f.movcue;
-    cuenta.nivel = f.nivel;
+    cuenta.nivel = f.nivel; */
+    console.log(f);
+    this.s_cuentas.saveCuenta(f).subscribe({
+      next: (cuenta: any) => {
+        console.log(cuenta);
+        this.swal('success', 'Datos guardados con exito');
+        this.router.navigate(['/cuentas']);
+      },
+      error: (e: any) => {
+        console.error(e);
+        this.swal('error', 'No se pudo guardar la cuenta');
+      },
+    });
 
-    console.log(cuenta);
+    /*     console.log(cuenta); */
   }
   swal(icon: any, mensaje: any) {
     Swal.fire({

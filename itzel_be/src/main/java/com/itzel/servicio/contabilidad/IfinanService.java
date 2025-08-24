@@ -63,14 +63,6 @@ public class IfinanService {
         return dao.findById(id);
     }
 
-    // public Boolean deleteById(Long id) {
-    //    if (dao.existsById(id)) {
-    //       dao.deleteById(id);
-    //       return !dao.existsById(id);
-    //    }
-    //    return false;
-    // }
-
     public void delete(Ifinan entity) {
         dao.delete(entity);
     }

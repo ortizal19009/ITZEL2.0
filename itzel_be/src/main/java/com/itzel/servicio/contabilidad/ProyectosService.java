@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,64 +35,83 @@ public class ProyectosService {
     public Proyectos findByNombre(String nombre){
         return dao.findByNombre(nombre);
     }
+    public Proyectos saveOne(Proyectos p){
+        return dao.save(p);
+    }
     public Map<String, Object> save(Proyectos e) {
         Map<String, Object> response = new HashMap<>();
-        if (e == null || e.getCodigo() == null || e.getIdestructura() == null) {
-            response.put("status", "error");
-            response.put("message", "Dato de ingreso invalido.");
-            return response;
-        }
-        Long codigoLength = (long) e.getCodigo().length();
-        Long expectedLength = e.getIdestructura().getLongitud() * e.getIdestructura().getNivel();
-        if (codigoLength % 2 != 0) {
-            response.put("status", "error");
-            response.put("message", "Longitud del código ingresado incorrecto.");
-            return response;
-        }
-        if (codigoLength>2){
-            int d = 0;
-            int h = 2;
-            while (codigoLength > h){
-                Proyectos existingEstrfunc = dao.findByCodigo(e.getCodigo().substring(d,h));
-                if (existingEstrfunc == null) {
-                    response.put("status", "error");
-                    response.put("message", "Error: Código "+e.getCodigo().substring(d,h)+" no existe.");
-                    return response;
-                }
-                h += 2;
-            }
-        }
-        Proyectos existingEstrfunc = dao.findByCodigo(e.getCodigo());
-        if (existingEstrfunc != null) {
-            response.put("status", "error");
-            response.put("message", "Error: Código ya existe.");
-            return response;
-        }
-        if (codigoLength.equals(expectedLength)) {
-            try{
-                dao.save(e);
-            } catch (Exception ex) {
-                response.put("status","error");
-                response.put("message",ex.getMessage());
+        try {
+            System.out.println(e.getCodigo());
+            System.out.println(e.getEstructura());
+            System.out.println(e.getFeccrea());
+            if (e == null || e.getCodigo() == null || e.getEstructura() == null) {
+                response.put("status", "error");
+                response.put("message", "Dato de ingreso inválido.");
                 return response;
             }
-            response.put("status", "success");
-            response.put("message", "Datos guardados con éxito.");
-        } else {
+
+            Long codigoLength = (long) e.getCodigo().length();
+            Long expectedLength = e.getEstructura().getLongitud() * e.getEstructura().getNivel();
+
+            if (codigoLength % 2 != 0) {
+                response.put("status", "error");
+                response.put("message", "Longitud del código ingresado incorrecta.");
+                return response;
+            }
+
+            if (codigoLength > 2) {
+                int d = 0;
+                int h = 2;
+                while (codigoLength > h) {
+                    Proyectos existingEstrfunc = dao.findByCodigo(e.getCodigo().substring(d, h));
+                    if (existingEstrfunc == null) {
+                        response.put("status", "error");
+                        response.put("message", "Error: Código " + e.getCodigo().substring(d, h) + " no existe.");
+                        return response;
+                    }
+                    h += 2;
+                }
+            }
+
+            Proyectos existingEstrfunc = dao.findByCodigo(e.getCodigo());
+            if (existingEstrfunc != null) {
+                response.put("status", "error");
+                response.put("message", "Error: Código ya existe.");
+                return response;
+            }
+
+            if (codigoLength.equals(expectedLength)) {
+                dao.save(e);
+                response.put("status", "success");
+                response.put("message", "Datos guardados con éxito.");
+            } else {
+                response.put("status", "error");
+                response.put("message", "Validación fallida: Longitud del código ingresado incorrecta.");
+            }
+
+        } catch (Exception ex) {
             response.put("status", "error");
-            response.put("message", "Validación fallida: Longitud del código ingresado incorrecto.");
+            response.put("message", ex.getMessage());
+            response.put("errorType", ex.getClass().getName()); // Tipo de excepción
+            response.put("cause", ex.getCause() != null ? ex.getCause().toString() : "N/A");
+
+            // Opcional: stacktrace como string
+            StringWriter sw = new StringWriter();
+            ex.printStackTrace(new PrintWriter(sw));
+            response.put("stacktrace", sw.toString());
         }
+
         return response;
     }
     public Map<String, Object> update(Proyectos e) {
         Map<String, Object> response = new HashMap<>();
-        if (e == null || e.getCodigo() == null || e.getIdestructura() == null) {
+        if (e == null || e.getCodigo() == null || e.getEstructura() == null) {
             response.put("status", "error");
             response.put("message", "Dato de ingreso invalido.");
             return response;
         }
         Long codigoLength = (long) e.getCodigo().length();
-        Long expectedLength = e.getIdestructura().getLongitud() * e.getIdestructura().getNivel();
+        Long expectedLength = e.getEstructura().getLongitud() * e.getEstructura().getNivel();
         if (codigoLength % 2 != 0) {
             response.put("status", "error");
             response.put("message", "Longitud del código ingresado incorrecto.");

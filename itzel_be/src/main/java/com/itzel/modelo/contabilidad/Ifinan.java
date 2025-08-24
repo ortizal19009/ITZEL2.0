@@ -1,8 +1,11 @@
 package com.itzel.modelo.contabilidad;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "ifinan")
 public class Ifinan {
     @Id
@@ -11,10 +14,6 @@ public class Ifinan {
     private String codifinan;
     private String nomifinan;
     private String foto;
-
-    public Ifinan() {
-        super();
-    }
 
     public Long getIdifinan() {
         return idifinan;
@@ -46,5 +45,15 @@ public class Ifinan {
 
     public void setFoto(String foto) {
         this.foto = foto;
+    }
+
+    public Ifinan(Long idifinan, String codifinan, String nomifinan, String foto) {
+        this.idifinan = idifinan;
+        this.codifinan = codifinan;
+        this.nomifinan = nomifinan;
+        this.foto = foto;
+    }
+
+    public Ifinan() {
     }
 }

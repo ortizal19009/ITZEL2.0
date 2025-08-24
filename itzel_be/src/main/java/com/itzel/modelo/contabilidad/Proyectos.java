@@ -1,8 +1,7 @@
 package com.itzel.modelo.contabilidad;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -19,7 +18,7 @@ public class Proyectos {
     private Boolean movimiento;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idestructura")
-    private Estructura idestructura;
+    private Estructura estructura;
     private Long usucrea;
     private LocalDate feccrea;
     private Long usumodi;
@@ -57,12 +56,12 @@ public class Proyectos {
         this.movimiento = movimiento;
     }
 
-    public Estructura getIdestructura() {
-        return idestructura;
+    public Estructura getEstructura() {
+        return estructura;
     }
 
-    public void setIdestructura(Estructura idestructura) {
-        this.idestructura = idestructura;
+    public void setEstructura(Estructura estructura) {
+        this.estructura = estructura;
     }
 
     public Long getUsucrea() {
@@ -95,5 +94,20 @@ public class Proyectos {
 
     public void setFecmodi(LocalDate fecmodi) {
         this.fecmodi = fecmodi;
+    }
+
+    public Proyectos(Long idproyecto, String codigo, String nombre, Boolean movimiento, Estructura estructura, Long usucrea, LocalDate feccrea, Long usumodi, LocalDate fecmodi) {
+        this.idproyecto = idproyecto;
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.movimiento = movimiento;
+        this.estructura = estructura;
+        this.usucrea = usucrea;
+        this.feccrea = feccrea;
+        this.usumodi = usumodi;
+        this.fecmodi = fecmodi;
+    }
+
+    public Proyectos() {
     }
 }

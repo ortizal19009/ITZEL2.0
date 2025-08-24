@@ -40,7 +40,7 @@ export class ModiProyectoComponent implements OnInit {
       codigo: ['', Validators.min(2)],
       nombre: ['', Validators.required],
       movimiento: [false, Validators.required],
-      idestructura: '',
+      estructura: '',
     });
     this.getAllEstructuras();
     this.getByIdProyecto(this.idproyecto);
@@ -51,7 +51,7 @@ export class ModiProyectoComponent implements OnInit {
         console.table(estructuras);
         this._estructuras = estructuras;
         this.f_proyecto.patchValue({
-          idestructura: estructuras[0],
+          estructura: estructuras[0],
         });
       },
       error: (e: any) => console.error(e),
@@ -68,7 +68,7 @@ export class ModiProyectoComponent implements OnInit {
           codigo: _proyecto.codigo,
           nombre: _proyecto.nombre,
           movimiento: _proyecto.movimiento,
-          idestructura: _proyecto.idestructura,
+          estructura: _proyecto.estructura,
         });
       },
       error: (e: any) => console.error(e),
@@ -82,7 +82,7 @@ export class ModiProyectoComponent implements OnInit {
     this.proyectoService.validarCodigo(code).subscribe({
       next: (validador: any) => {
         const longitudEsperada =
-          estructura.idestructura.longitud * estructura.idestructura.nivel;
+          estructura.estructura.longitud * estructura.estructura.nivel;
         const longitudInvalida = code.length !== longitudEsperada;
         const codigoDuplicado = validador;
         const codigoNoValido = codigoDuplicado || longitudInvalida;

@@ -1,15 +1,12 @@
 package com.itzel.modelo.contabilidad;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 @Table(name="cuentas")
 public class Cuentas {
     @Id
@@ -20,7 +17,7 @@ public class Cuentas {
     private Boolean movcue;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idnivel")
-    private Niveles idnivel;
+    private Niveles nivel;
     private String grucue;
     private String asodebe;
     private String asohaber;
@@ -34,6 +31,9 @@ public class Cuentas {
     private LocalDate feccrea;
     private Long usumodi;
     private LocalDate fecmodi;
+
+    public Cuentas() {
+    }
 
     public Long getIdcuenta() {
         return idcuenta;
@@ -67,12 +67,12 @@ public class Cuentas {
         this.movcue = movcue;
     }
 
-    public Niveles getIdnivel() {
-        return idnivel;
+    public Niveles getNivel() {
+        return nivel;
     }
 
-    public void setIdnivel(Niveles idnivel) {
-        this.idnivel = idnivel;
+    public void setNivel(Niveles nivel) {
+        this.nivel = nivel;
     }
 
     public String getGrucue() {
@@ -135,8 +135,8 @@ public class Cuentas {
         return resulcostos;
     }
 
-    public void setResulcostos(Long resultcostos) {
-        this.resulcostos = resultcostos;
+    public void setResulcostos(Long resulcostos) {
+        this.resulcostos = resulcostos;
     }
 
     public Long getBalancostos() {
@@ -176,6 +176,27 @@ public class Cuentas {
     }
 
     public void setFecmodi(LocalDate fecmodi) {
+        this.fecmodi = fecmodi;
+    }
+
+    public Cuentas(Long idcuenta, String codcue, String nomcue, Boolean movcue, Niveles nivel, String grucue, String asodebe, String asohaber, Long tiptran, Boolean sigef, Long grubalances, Long grufluefec, Long resulcostos, Long balancostos, Long usucrea, LocalDate feccrea, Long usumodi, LocalDate fecmodi) {
+        this.idcuenta = idcuenta;
+        this.codcue = codcue;
+        this.nomcue = nomcue;
+        this.movcue = movcue;
+        this.nivel = nivel;
+        this.grucue = grucue;
+        this.asodebe = asodebe;
+        this.asohaber = asohaber;
+        this.tiptran = tiptran;
+        this.sigef = sigef;
+        this.grubalances = grubalances;
+        this.grufluefec = grufluefec;
+        this.resulcostos = resulcostos;
+        this.balancostos = balancostos;
+        this.usucrea = usucrea;
+        this.feccrea = feccrea;
+        this.usumodi = usumodi;
         this.fecmodi = fecmodi;
     }
 }

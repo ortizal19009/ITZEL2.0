@@ -1,15 +1,12 @@
 package com.itzel.modelo.contabilidad;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 @Table(name = "beneficiarios")
 public class Beneficiarios {
     @Id
@@ -28,10 +25,10 @@ public class Beneficiarios {
     private String foto;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idgrupo")
-    private Gruposbene idgrupo;
+    private Gruposbene grupo;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idifinan")
-    private Ifinan idifinan;
+    private Ifinan ifinan;
     private Long swconsufin;
     private Integer modulo;
     private Long usucrea;
@@ -39,7 +36,10 @@ public class Beneficiarios {
     private Long usumodi;
     private LocalDate fecmodi;
 
-    public Beneficiarios(Long idbene, String codben, String nomben, String tpidben, String rucben, String ciben, String tlfben, String dirben, String mailben, Long tpcueben, String cuebanben, String foto, Gruposbene idgrupo, Ifinan idifinan, Long swconsufin, Integer modulo, Long usucrea, LocalDate feccrea, Long usumodi, LocalDate fecmodi) {
+    public Beneficiarios() {
+    }
+
+    public Beneficiarios(Long idbene, String codben, String nomben, String tpidben, String rucben, String ciben, String tlfben, String dirben, String mailben, Long tpcueben, String cuebanben, String foto, Gruposbene grupo, Ifinan ifinan, Long swconsufin, Integer modulo, Long usucrea, LocalDate feccrea, Long usumodi, LocalDate fecmodi) {
         this.idbene = idbene;
         this.codben = codben;
         this.nomben = nomben;
@@ -52,8 +52,8 @@ public class Beneficiarios {
         this.tpcueben = tpcueben;
         this.cuebanben = cuebanben;
         this.foto = foto;
-        this.idgrupo = idgrupo;
-        this.idifinan = idifinan;
+        this.grupo = grupo;
+        this.ifinan = ifinan;
         this.swconsufin = swconsufin;
         this.modulo = modulo;
         this.usucrea = usucrea;
@@ -158,20 +158,20 @@ public class Beneficiarios {
         this.foto = foto;
     }
 
-    public Gruposbene getIdgrupo() {
-        return idgrupo;
+    public Gruposbene getGrupo() {
+        return grupo;
     }
 
-    public void setIdgrupo(Gruposbene idgrupo) {
-        this.idgrupo = idgrupo;
+    public void setGrupo(Gruposbene grupo) {
+        this.grupo = grupo;
     }
 
-    public Ifinan getIdifinan() {
-        return idifinan;
+    public Ifinan getIfinan() {
+        return ifinan;
     }
 
-    public void setIdifinan(Ifinan idifinan) {
-        this.idifinan = idifinan;
+    public void setIfinan(Ifinan ifinan) {
+        this.ifinan = ifinan;
     }
 
     public Long getSwconsufin() {

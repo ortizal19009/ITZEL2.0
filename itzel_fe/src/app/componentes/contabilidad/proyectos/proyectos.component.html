@@ -64,9 +64,9 @@
                             <i class="fa fa-check-circle-o check-circle" aria-hidden="true"
                                 [hidden]=!proyecto.movimiento></i>
                         </td>
-                        <td class="text-center">{{proyecto.idestructura.nivel}}</td>
+                        <td class="text-center">{{proyecto.estructura.nivel}}</td>
                         <td>
-                            {{proyecto.idestructura.nombre}}
+                            {{proyecto.estructura.nombre}}
                         </td>
                         <td class="text-center">
                             <div class="btn-group py-0">
@@ -74,21 +74,50 @@
                                     data-toggle="dropdown" aria-expanded="false">
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right popLista">
-                                    <button [disabled]="proyecto.codigo == '00'" class="dropdown-item" [routerLink]="['/modi-proyecto', proyecto.idproyecto]"
-                                        type="button">
+                                    <button [disabled]="proyecto.codigo == '00'" class="dropdown-item"
+                                        [routerLink]="['/modi-proyecto', proyecto.idproyecto]" type="button">
                                         <i class="bi bi-pencil"></i>&nbsp; Modificar</button>
-                                    <button [disabled]="proyecto.codigo == '00'" class="dropdown-item" [routerLink]="['/info-proyecto', proyecto.codigo]"
-                                        type="button">
+                                    <button [disabled]="proyecto.codigo == '00'" class="dropdown-item"
+                                        [routerLink]="['/info-proyecto', proyecto.codigo]" type="button">
                                         <i class="bi bi-pencil"></i>&nbsp; Info.</button>
-                                    <button [disabled]="proyecto.codigo == '00'" class="dropdown-item" type="button" (click)="delete(proyecto.idproyecto)"
-                                        data-toggle="modal" data-target="#modalEliminar">
+                                    <button [disabled]="proyecto.codigo == '00'" class="dropdown-item" type="button"
+                                        data-bs-toggle="modal" (click)="setDataToDelete(proyecto)"
+                                        data-bs-target="#confirmDeleteModal">
                                         <i class="bi bi-file-minus"></i>&nbsp; Eliminar</button>
                                 </div>
                             </div>
                         </td>
+
                     </tr>
                 </tbody>
+
             </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de confirmación -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteLabel">Confirmar eliminación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+
+            <div class="modal-body">
+                ⚠️ ¿Estás seguro de que deseas eliminar este registro? Esta acción no se puede
+                deshacer.
+                <hr>
+                <strong class="text-center">{{_proyecto.nombre}}</strong>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" (click)="delete()" id="btnConfirmDelete">Eliminar</button>
+            </div>
+
         </div>
     </div>
 </div>

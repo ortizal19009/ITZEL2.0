@@ -1,1 +1,224 @@
-<p>modi-cuenta works!</p>
+<div class="container-fluid mt-5">
+    <div class="card card-success card-outline mb-4">
+        <div class="card-header">
+            <div class="card-title">{{title}}</div>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="f_cuenta">
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text" id="basic-addon1">Grupo</span>
+                            <input type="text" readonly [ngClass]="{'is-invalid': f['grucue'].invalid && f['grucue'].touched,
+                           'is-valid': f['grucue'].valid, '': f['grucue'].untouched}"
+                                class="form-control form-control-sm col-sm-4" formControlName="grucue"
+                                aria-describedby="basic-addon1" />
+                            <input type="text" readonly [ngClass]="{'is-invalid': f['nomgrup'].invalid && f['nomgrup'].touched,
+                           'is-valid': f['nomgrup'].valid, '': f['nomgrup'].untouched}"
+                                class="form-control form-control-sm col-sm" formControlName="nomgrup"
+                                aria-describedby="basic-addon1" />
+                            <div *ngIf="sw_codigo" class="error">
+                                <i class="bi bi-x-circle p-2 mt-auto"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text" id="basic-addon1">Nivel</span>
+                            <select type="text" class="form-select form-select-sm"
+                            [ngClass]="{'is-invalid': f['nivel'].invalid && f['nivel'].touched,
+                           'is-valid': f['nivel'].valid, '': f['nivel'].untouched}" formControlName="nivel"
+                                aria-describedby="basic-addon1">
+                                <option [ngValue]="nivel" *ngFor="let nivel of _niveles">{{nivel.nomniv}}</option>
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text" id="basic-addon1">Código</span>
+                            <input type="text" class="form-control form-control-sm"
+                                (input)="getValidacionCodigo($event)" [ngClass]="{'is-invalid': f['codcue'].invalid && f['codcue'].touched,
+                           'is-valid': f['codcue'].valid, '': f['codcue'].untouched}" formControlName="codcue"
+                                aria-describedby="basic-addon1" />
+                            <div *ngIf="sw_codigo" class="error">
+                                <i class="bi bi-x-circle p-2 mt-auto"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="mb-3">
+                            <div class="input-group input-group-sm mb3">
+                                <span class="input-group-text " id="basic-addon3">Nombre</span>
+                                <input type="text" class="form-control" [ngClass]="{'is-invalid': f['nomcue'].invalid && f['nomcue'].touched,
+                           'is-valid': f['nomcue'].valid, '': f['nomcue'].untouched}" formControlName="nomcue"
+                                    aria-describedby="basic-addon3 basic-addon4" />
+                                <div *ngIf="sw_nombre" class="error">
+                                    <i class="bi bi-x-circle p-2 mt-auto"></i>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="mb-3">
+                            <div class="input-group input-group-sm mb3">
+                                <button class="btn btn-sm btn-primary" (click)="resetBusquedaModal(2)"
+                                    data-bs-toggle="modal" data-bs-target="#debhab">Partida asociada al debe</button>
+                                <input type="text" class="form-control" [ngClass]="{'is-invalid': f['asodebe'].invalid && f['asodebe'].touched,
+                           'is-valid': f['asodebe'].valid, '': f['asodebe'].untouched}" placeholder="Buscar..."
+                                    formControlName="asodebe" aria-describedby="basic-addon3 basic-addon4" />
+                                <div *ngIf="sw_nombre" class="error">
+                                    <i class="bi bi-x-circle p-2 mt-auto"></i>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="mb-3">
+                            <div class="input-group input-group-sm mb3">
+                                <button class="btn btn-sm btn-primary " (click)="resetBusquedaModal(1)"
+                                    data-bs-toggle="modal" data-bs-target="#debhab" id="basic-addon3">Partida asosciada
+                                    al haber</button>
+                                <input type="text" class="form-control" [ngClass]="{'is-invalid': f['asohaber'].invalid && f['asohaber'].touched,
+                           'is-valid': f['asohaber'].valid, '': f['asohaber'].untouched}" placeholder="Buscar..."
+                                    formControlName="asohaber" aria-describedby="basic-addon3 basic-addon4" />
+                                <div *ngIf="sw_nombre" class="error">
+                                    <i class="bi bi-x-circle p-2 mt-auto"></i>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="addon-wrapping">Movimiento</span>
+                            </div>
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <input type="checkbox" formControlName="movcue">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="addon-wrapping">Sigef</span>
+                            </div>
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <input type="checkbox" formControlName="sigef">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text">Tipo de transacción</span>
+                            <select class="form-select form-select-sm" [ngClass]="{'is-invalid': f['tiptran'].invalid && f['tiptran'].touched,
+                           'is-valid': f['tiptran'].valid, '': f['tiptran'].untouched}" formControlName="tiptran">
+                                <option *ngFor="let tiptran of tiptrans" [ngValue]="tiptran.numero">
+                                    {{tiptran.nombre}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+        <div class="card-footer text-right">
+            <button type="submit" [routerLink]="['/cuentas']" class="btn btn-sm btn-success me-2">Cancelar</button>
+            <button type="submit" class="btn btn-sm btn-outline-success" [disabled]="f_cuenta.invalid"
+                (click)="save()">Aceptar</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal BUSCAR DEBE / HABER -->
+<div class="modal fade" id="debhab" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="debhabLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+
+            <!-- HEADER -->
+            <div class="modal-header d-flex flex-column">
+                <div class="row w-100">
+                    <div class="col-sm-12">
+                        <h3 class="modal-title fs-5">{{modalTitle}}</h3>
+                    </div>
+                </div>
+
+                <div class="row w-100 mt-2">
+                    <div class="col-sm-12">
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text">Código partida</span>
+                            <input type="text" class="form-control form-control-sm" [(ngModel)]="_codPartida"
+                                placeholder="Código de la partida">
+                            <button class="btn btn-sm btn-primary" (click)="getAsoDebeHaber()"><i
+                                    class="fa-solid fa-magnifying-glass"></i> Buscar</button>
+                            <input type="text" class="form-control form-control-sm" placeholder="Filtrar..."
+                                (input)="setFiltro($event)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BODY -->
+            <div class="modal-body">
+                <div class="col-sm-12 table-responsive" *ngIf="presupuestosFiltrados?.length > 0">
+                    <table
+                        class="table-hover table-xs p-0 m-0 table-bordered border-primary table-striped align-middle">
+                        <thead class="text-center">
+                            <tr>
+                                <th>Código</th>
+                                <th>Nombre</th>
+                                <th>Tipo</th>
+                                <th>Inicia</th>
+                                <th>Certificado</th>
+                                <th>Comprometido</th>
+                                <th>Devengado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let presupuesto of presupuestosFiltrados"
+                                (click)="selectPresupuesto(presupuesto)"
+                                [class.selected-row]="selectedPresupuesto === presupuesto">
+                                <td>{{presupuesto.codigo}}</td>
+                                <td class="truncate-text" [attr.title]="presupuesto.nompar">{{presupuesto.nompar}}</td>
+                                <td>{{presupuesto.tippar}}</td>
+                                <td class="text-right">{{presupuesto.inicia}} $</td>
+                                <td class="text-right">{{presupuesto.totcerti}} $</td>
+                                <td class="text-right">{{presupuesto.totmisos}} $</td>
+                                <td class="text-right">{{presupuesto.totdeven}} $</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- MENSAJE SI NO HAY RESULTADOS -->
+                <div *ngIf="!presupuestosFiltrados?.length">
+                    <p class="text-center text-muted">No se encontraron resultados</p>
+                </div>
+            </div>
+
+            <!-- FOOTER -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal"
+                    (click)="setPresupuesto()">Aceptar</button>
+            </div>
+
+        </div>
+    </div>
+</div>

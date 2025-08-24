@@ -18,6 +18,9 @@ public class CuentasService {
     public List<Cuentas> findAll(){
         return dao.findAll();
     }
+    public Cuentas saveOne(Cuentas c){
+        return dao.save(c);
+    }
     public Map<String, Object> save(Cuentas c) {
         Map<String, Object> response = new HashMap<>();
         Cuentas _cuetna = dao.findById(c.getIdcuenta()).orElse(null);
@@ -47,5 +50,9 @@ public class CuentasService {
     }
     public Optional<Cuentas> findById(Long idcuenta){
         return dao.findById(idcuenta);
+    }
+    //buscar una sola cuenta por el codigo cuenta (codcue)
+    public Optional<Cuentas> findByCodcue(String codcue){
+        return dao.findByCodcue(codcue);
     }
 }

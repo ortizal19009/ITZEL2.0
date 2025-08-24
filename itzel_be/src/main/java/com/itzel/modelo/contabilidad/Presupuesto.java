@@ -1,12 +1,13 @@
 package com.itzel.modelo.contabilidad;
 
 import jakarta.persistence.*;
-import lombok.NoArgsConstructor;
-
+import lombok.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+
 @Entity
-@NoArgsConstructor
+@Getter
+@Setter
 @Table(name = "presupuesto")
 public class Presupuesto {
     @Id
@@ -25,10 +26,10 @@ public class Presupuesto {
     private BigDecimal arrastreaa;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idproyecto")
-    private Proyectos idproyecto;
+    private Proyectos proyecto;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idclasificador")
-    private Clasificador idclasificador;
+    private Clasificador clasificador;
     private Long usucrea;
     private LocalDate feccrea;
     private Long usumodi;
@@ -130,20 +131,20 @@ public class Presupuesto {
         this.arrastreaa = arrastreaa;
     }
 
-    public Proyectos getIdproyecto() {
-        return idproyecto;
+    public Proyectos getProyecto() {
+        return proyecto;
     }
 
-    public void setIdproyecto(Proyectos idproyecto) {
-        this.idproyecto = idproyecto;
+    public void setProyecto(Proyectos proyecto) {
+        this.proyecto = proyecto;
     }
 
-    public Clasificador getIdclasificador() {
-        return idclasificador;
+    public Clasificador getClasificador() {
+        return clasificador;
     }
 
-    public void setIdclasificador(Clasificador idclasificador) {
-        this.idclasificador = idclasificador;
+    public void setClasificador(Clasificador clasificador) {
+        this.clasificador = clasificador;
     }
 
     public Long getUsucrea() {
@@ -176,5 +177,29 @@ public class Presupuesto {
 
     public void setFecmodi(LocalDate fecmodi) {
         this.fecmodi = fecmodi;
+    }
+
+    public Presupuesto(Long idpresupuesto, Long tippar, String codpar, String codigo, String nompar, BigDecimal inicia, BigDecimal totmod, BigDecimal totcerti, BigDecimal totmisos, BigDecimal totdeven, BigDecimal arrastre, BigDecimal arrastreaa, Proyectos proyecto, Clasificador clasificador, Long usucrea, LocalDate feccrea, Long usumodi, LocalDate fecmodi) {
+        this.idpresupuesto = idpresupuesto;
+        this.tippar = tippar;
+        this.codpar = codpar;
+        this.codigo = codigo;
+        this.nompar = nompar;
+        this.inicia = inicia;
+        this.totmod = totmod;
+        this.totcerti = totcerti;
+        this.totmisos = totmisos;
+        this.totdeven = totdeven;
+        this.arrastre = arrastre;
+        this.arrastreaa = arrastreaa;
+        this.proyecto = proyecto;
+        this.clasificador = clasificador;
+        this.usucrea = usucrea;
+        this.feccrea = feccrea;
+        this.usumodi = usumodi;
+        this.fecmodi = fecmodi;
+    }
+
+    public Presupuesto() {
     }
 }
