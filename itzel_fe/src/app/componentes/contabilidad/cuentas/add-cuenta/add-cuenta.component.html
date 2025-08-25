@@ -27,8 +27,7 @@
                     <div class="col-sm">
                         <div class="input-group input-group-sm mb-3">
                             <span class="input-group-text" id="basic-addon1">Nivel</span>
-                            <select type="text" class="form-select form-select-sm"
-                            [ngClass]="{'is-invalid': f['nivel'].invalid && f['nivel'].touched,
+                            <select type="text" class="form-select form-select-sm" [ngClass]="{'is-invalid': f['nivel'].invalid && f['nivel'].touched,
                            'is-valid': f['nivel'].valid, '': f['nivel'].untouched}" formControlName="nivel"
                                 aria-describedby="basic-addon1">
                                 <option [ngValue]="nivel" *ngFor="let nivel of _niveles">{{nivel.nomniv}}</option>
@@ -131,6 +130,23 @@
                                 <option *ngFor="let tiptran of tiptrans" [ngValue]="tiptran.numero">
                                     {{tiptran.nombre}}</option>
                             </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text" id="basic-addon1">Estado de situación / resultados</span>
+                            <input type="text" class="form-control form-control-sm" formControlName="resulcostos"
+                                aria-describedby="basic-addon1" />
+
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text" id="basic-addon1">Flujo del efectivo</span>
+                            <input type="text" class="form-control form-control-sm" formControlName="grufluefec"
+                                aria-describedby="basic-addon1" />
                         </div>
                     </div>
                 </div>
