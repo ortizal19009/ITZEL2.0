@@ -1,0 +1,104 @@
+<nav class="main-header navbar navbar-expand navbar-dark">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a routerLink="inicio" class="nav-link roboto">Inicio</a>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle roboto" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false"> Módulos
+            </a>
+            <div class="dropdown-menu navbar-dark " aria-labelledby="navbarDropdown">
+                <a class="dropdown-item text-white" href="#"> <i class="bi-file-earmark-binary nav-icon"></i>&nbsp;&nbsp;Contabilidad gubernamental</a>
+            </div>
+        </li>
+    </ul>
+
+    <div class="btn-group ml-auto">
+        <button type="button" class="bg-transparent border-0 dropdown-toggle text-white" data-toggle="dropdown"
+            aria-expanded="false"> <i class="bi-gear"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right border roboto ancho sombra bg-dark pt-0">
+            <form class="mx-3">
+                <div class="input-group input-group-sm col-md-10 mt-4 mb-2">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text font-weight-bold" id="inputGroup-sizing-sm">Desde</span>
+                    </div>
+                    <input type="date" class="form-control" aria-label="Sizing example input"
+                        aria-describedby="inputGroup-sizing-sm" formControlName="fdesde">
+                </div>
+
+                <div class="input-group input-group-sm col-md-10 mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text font-weight-bold small" id="inputGroup-sizing-sm">Hasta</span>
+                    </div>
+                    <input type="date" class="form-control" aria-label="Sizing example input"
+                        aria-describedby="inputGroup-sizing-sm" formControlName="fhasta">
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <div class="input-group input-group-sm ml-2 mb-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text font-weight-bold small">PDF en otra pestaña </span>
+                                <div class="input-group-text">
+                                    <input type="checkbox" formControlName="otrapestania">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-outline-success btn-sm mx-1 mb-2">
+                    <i class="fa fa-check-circle"></i>&nbsp; Aceptar</button>
+                <button type="submit" class="btn btn-outline-success btn-sm mx-1 mb-2"><i
+                        class="fa fa-times-circle"></i>&nbsp;
+                    Cancelar</button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ">
+        <!-- Colores -->
+        <li class="nav-item dropdown">
+            <a class="nav-link"> <i class="bi-palette"></i> </a>
+        </li>
+
+        <!-- Messages Dropdown Menu -->
+        <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#">
+                <i class="bi-chat-square"></i>
+                <span class="badge badge-danger navbar-badge"></span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-md badge-dark dropdown-menu-right">
+                <span class="dropdown-header text-white">
+                    <span class="badge badge-danger navbar-badge"></span> </span>
+            </div>
+        </li>
+
+        <!-- Notifications Dropdown Menu -->
+        <!-- <li class="nav-item dropdown">
+         <a class="nav-link" data-toggle="dropdown" href="#">
+            <i class="far fa-bell fondo1-texto"></i>
+            <span class="badge badge-warning navbar-badge">0</span>
+         </a>
+         <div class="dropdown-menu dropdown-menu-md badge-dark dropdown-menu-right"
+            [ngClass]="{'fondo1-background': fondo1 == 1}">
+            <span class="dropdown-header text-white">0 Notificaciones</span>
+         </div>
+      </li> -->
+
+        <li class="nav-item">
+            <a class="nav-link" role="button" data-toggle="tooltip" title="Obscuro">
+                <i class="fondo1-texto"></i>
+            </a>
+        </li>
+    </ul>
+</nav>
