@@ -1,0 +1,17 @@
+/* Cuando un enlace está activo */
+.nav-sidebar .nav-link.active {
+  background-color: #007bff !important; /* Azul */
+  color: #fff !important; /* Texto blanco */
+  border-radius: 8px;
+}
+
+/* Los íconos dentro del activo */
+.nav-sidebar .nav-link.active i {
+  color: #fff !important;
+}
+
+/* Mantener submenú abierto cuando está activo */
+.nav-sidebar .menu-open > .nav-link {
+  background-color: #0069d9 !important; 
+  color: #fff !important;
+}
