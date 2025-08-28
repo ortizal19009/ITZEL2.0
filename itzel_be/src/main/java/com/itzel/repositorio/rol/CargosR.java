@@ -1,6 +1,6 @@
-package com.itzel.repositorio.contabilidad;
+package com.itzel.repositorio.rol;
 
-import com.itzel.modelo.contabilidad.Cargos;
+import com.itzel.modelo.rol.Cargos;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

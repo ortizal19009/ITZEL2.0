@@ -1,7 +1,7 @@
-package com.itzel.servicio.contabilidad;
+package com.itzel.servicio.rol;
 
-import com.itzel.modelo.contabilidad.Cargos;
-import com.itzel.repositorio.contabilidad.CargosR;
+import com.itzel.modelo.rol.Cargos;
+import com.itzel.repositorio.rol.CargosR;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -23,7 +23,7 @@ import { InfoGasto } from './componentes/contabilidad/presupuestos/gastos/info-g
 export const routes: Routes = [
   { path: 'inicio', component: AppWrapper },
   /* ==========PROYECTOS========== */
-  { path: 'proyectos', component: Proyectos },
+  { path: 'proyectos', component: Proyectos, runGuardsAndResolvers: 'always' },
   { path: 'add-proyecto', component: AddProyecto },
   { path: 'modi-proyecto/:idproyecto', component: ModiProyecto },
   { path: 'imp-proyecto', component: ImpProyecto },

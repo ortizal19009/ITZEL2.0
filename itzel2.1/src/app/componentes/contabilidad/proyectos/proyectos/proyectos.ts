@@ -68,7 +68,7 @@ export class Proyectos implements OnInit {
       //showDenyButton: true,
       showCancelButton: true,
       confirmButtonText: 'Aceptar',
-/*       denyButtonText: `Don't save`, */
+/*    denyButtonText: `Don't save`, */
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
