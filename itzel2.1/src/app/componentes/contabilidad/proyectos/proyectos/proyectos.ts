@@ -1,16 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { ServerConfigService } from '../../../servicios/config/server-config.service';
 import { Proyecto } from '../../../modelos/contabilidad/proyecto.model';
 import { ProyectoService } from '../../../servicios/contabilidad/proyecto.service';
+import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { FilterPipe } from '../../../pipes/filter.pipe';
 
 @Component({
   selector: 'app-proyectos',
-  imports: [],
+  imports: [RouterLink, CommonModule, FilterPipe],
   templateUrl: './proyectos.html',
-  styleUrl: './proyectos.css'
+  styleUrl: './proyectos.css',
 })
-export class Proyectos {
+export class Proyectos implements OnInit {
   title?: string = 'Proyectos';
   _proyectos?: any;
   stringFilter!: string;
@@ -37,6 +40,7 @@ export class Proyectos {
   }
   setDataToDelete(proyecto: any) {
     this._proyecto = proyecto;
+    this.swalConfirm();
   }
   delete() {
     this.proyectosService.proyectoDelete(this._proyecto.idproyecto!).subscribe({
@@ -58,5 +62,20 @@ export class Proyectos {
       timer: 3000,
     });
   }
-
+  swalConfirm() {
+    Swal.fire({
+      title: 'Deseas eliminar el registro?',
+      //showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: 'Aceptar',
+/*       denyButtonText: `Don't save`, */
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        this.delete();
+      } else if (result.isDenied) {
+        this.swal('Info!', 'Datos no han sidio guardados');
+      }
+    });
+  }
 }
