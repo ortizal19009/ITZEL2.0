@@ -1,0 +1,41 @@
+import { Injectable } from '@angular/core';
+import { VentanasService } from './ventanas.service';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ColoresService {
+
+   constructor(private venService: VentanasService) { }
+
+   public async setcolor(idusuario: number, ventana: string): Promise<string[]> {
+      // console.log('idusuario: ', idusuario, 'ventana: ', ventana)
+      let ventanas = await this.venService.getByIdusuarioyNombre(idusuario, ventana);
+      // console.log('colores.service ventanas: ', ventanas)
+      if (ventanas) return Promise.resolve([ventanas.color1!, ventanas.color2!]);
+      else {
+         let newVentana = {} as Ventana; //Interface para los datos de la nueva Ventana
+         newVentana.nombre = ventana;
+         newVentana.color1 = 'rgb(128,143,82)'; 
+         newVentana.color2 = 'rgb(227,242,183)';
+         newVentana.idusuario = idusuario;
+         try {
+            const respuesta = await this.venService.saveVentana(newVentana);
+            // console.log('respuesta: ', respuesta)
+            return Promise.resolve([newVentana.color1, newVentana.color2]);
+         } catch (error) {
+            console.error(error);
+         }
+      }
+      return Promise.resolve(['0']);
+   }
+
+}
+
+interface Ventana {
+   idventana: number;
+   nombre: string;
+   color1: string;
+   color2: string;
+   idusuario: number;
+}
