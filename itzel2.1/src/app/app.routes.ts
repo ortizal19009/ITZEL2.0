@@ -4,9 +4,9 @@ import { AddProyectoComponent } from './componentes/contabilidad/proyectos/add-p
 import { ModiProyectoComponent } from './componentes/contabilidad/proyectos/modi-proyecto/modi-proyecto.component';
 import { ImpProyectoComponent } from './componentes/contabilidad/proyectos/imp-proyecto/imp-proyecto.component';
 import { InfoProyectoComponent } from './componentes/contabilidad/proyectos/info-proyecto/info-proyecto.component';
-import { Ifinan } from './componentes/contabilidad/ifinan/ifinan/ifinan';
-import { AddIfinan } from './componentes/contabilidad/ifinan/add-ifinan/add-ifinan';
-import { ModiIfinan } from './componentes/contabilidad/ifinan/modi-ifinan/modi-ifinan';
+import { IfinanComponent } from './componentes/contabilidad/ifinan/ifinan/ifinan.component';
+import { AddIfinanComponent } from './componentes/contabilidad/ifinan/add-ifinan/add-ifinan.component';
+import { ModiIfinanComponent } from './componentes/contabilidad/ifinan/modi-ifinan/modi-ifinan.component';
 import { Cuentas } from './componentes/contabilidad/cuentas/cuentas/cuentas';
 import { AddCuenta } from './componentes/contabilidad/cuentas/add-cuenta/add-cuenta';
 import { ModiCuenta } from './componentes/contabilidad/cuentas/modi-cuenta/modi-cuenta';
@@ -30,15 +30,15 @@ export const routes: Routes = [
   */
 
   /* ==========PROYECTOS========== */
-  { path: 'proyectos', component: ProyectosComponent, runGuardsAndResolvers: 'always' },
+  { path: 'proyectos', component: ProyectosComponent },
   { path: 'add-proyecto', component: AddProyectoComponent },
   { path: 'modi-proyecto/:idproyecto', component: ModiProyectoComponent },
   { path: 'imp-proyecto', component: ImpProyectoComponent },
   { path: 'info-proyecto/:codigo', component: InfoProyectoComponent },
   /* ==========IFINAN========== */
-  { path: 'ifinan', component: Ifinan },
-  { path: 'add-ifinan', component: AddIfinan },
-  { path: 'modi-ifinan/:idifinan', component: ModiIfinan },
+  { path: 'ifinan', component: IfinanComponent },
+  { path: 'add-ifinan', component: AddIfinanComponent },
+  { path: 'modi-ifinan/:idifinan', component: ModiIfinanComponent },
   /* ==========CUENTAS========== */
   { path: 'cuentas', component: Cuentas },
   { path: 'add-cuenta/:idcuenta', component: AddCuenta },

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ModiIfinan } from './modi-ifinan';
+import { ModiIfinan } from './modi-ifinan.component';
 
 describe('ModiIfinan', () => {
   let component: ModiIfinan;

@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ImpProyectoComponent } from './imp-proyecto.component';
 
-describe('ImpProyecto', () => {
+describe('ImpProyectoComponent', () => {
   let component: ImpProyectoComponent;
   let fixture: ComponentFixture<ImpProyectoComponent>;
 

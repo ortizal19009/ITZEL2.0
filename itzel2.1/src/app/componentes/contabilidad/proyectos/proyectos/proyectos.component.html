@@ -24,7 +24,7 @@
 
 <div class="container-fluid mt-3">
    <div class="row mb-0">
-      <div class="col-sm-8 table-responsive  center-form card-size">
+      <div class="col-sm-8 table-responsive center-form card-size">
          <table class="table table-sm table-hover text-nowrap table-striped table-head-fixed table-bordered sombra">
             <thead class="">
                <tr class="text-center">
@@ -35,7 +35,7 @@
                   <th></th>
                </tr>
             </thead>
-            <tbody class="detalle">
+            <tbody class="">
                <tr class="roboto small pad0" *ngFor="let proyecto of _proyectos | filter:stringFilter; let i = index">
                   <td class="text-left">{{proyecto.codigo}}</td>
                   <td>{{proyecto.nombre}}</td>

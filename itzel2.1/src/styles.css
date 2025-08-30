@@ -27,7 +27,7 @@
   width: 300px; /* Ajusta el ancho según sea necesario */
 }
 .check-circle {
-  color: rgb(238, 255, 0);
+  color: rgb(0, 255, 34);
 }
 .uncheck-circle {
   color: rgb(255, 10, 10);
@@ -44,7 +44,7 @@
   height: 700px;
 }
 .card-size {
-  height: 600px;
+  height: 650px;
   width: 100%;
 }
 .hoverable-row:hover {

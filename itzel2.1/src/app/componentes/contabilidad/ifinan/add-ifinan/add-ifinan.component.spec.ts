@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddIfinan } from './add-ifinan';
+import { AddIfinanComponent } from './add-ifinan.component';
 
-describe('AddIfinan', () => {
-  let component: AddIfinan;
-  let fixture: ComponentFixture<AddIfinan>;
+describe('AddIfinanComponent', () => {
+  let component: AddIfinanComponent;
+  let fixture: ComponentFixture<AddIfinanComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AddIfinan]
+      imports: [AddIfinanComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AddIfinan);
+    fixture = TestBed.createComponent(AddIfinanComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
