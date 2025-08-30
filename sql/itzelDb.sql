@@ -5,7 +5,7 @@
 -- Dumped from database version 16.3
 -- Dumped by pg_dump version 16.3
 
--- Started on 2025-08-20 17:57:46
+-- Started on 2025-08-30 08:21:17
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -73,12 +73,56 @@ CREATE SEQUENCE public.beneficiarios_idbene_seq
 ALTER SEQUENCE public.beneficiarios_idbene_seq OWNER TO postgres;
 
 --
--- TOC entry 4957 (class 0 OID 0)
+-- TOC entry 5009 (class 0 OID 0)
 -- Dependencies: 216
 -- Name: beneficiarios_idbene_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public.beneficiarios_idbene_seq OWNED BY public.beneficiarios.idbene;
+
+
+--
+-- TOC entry 236 (class 1259 OID 5994725)
+-- Name: cargos; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.cargos (
+    idcargo smallint NOT NULL,
+    nomcargo character varying(50) NOT NULL,
+    valor double precision NOT NULL,
+    descargo character varying(100),
+    usucrea smallint NOT NULL,
+    feccrea timestamp without time zone NOT NULL,
+    usumodi smallint,
+    fecmodi timestamp without time zone
+);
+
+
+ALTER TABLE public.cargos OWNER TO postgres;
+
+--
+-- TOC entry 235 (class 1259 OID 5994724)
+-- Name: cargos_idcargo_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.cargos_idcargo_seq
+    AS smallint
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.cargos_idcargo_seq OWNER TO postgres;
+
+--
+-- TOC entry 5010 (class 0 OID 0)
+-- Dependencies: 235
+-- Name: cargos_idcargo_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.cargos_idcargo_seq OWNED BY public.cargos.idcargo;
 
 
 --
@@ -127,7 +171,7 @@ CREATE SEQUENCE public.clasificador_idclasificador_seq
 ALTER SEQUENCE public.clasificador_idclasificador_seq OWNER TO postgres;
 
 --
--- TOC entry 4958 (class 0 OID 0)
+-- TOC entry 5011 (class 0 OID 0)
 -- Dependencies: 218
 -- Name: clasificador_idclasificador_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -180,12 +224,96 @@ CREATE SEQUENCE public.cuentas_idcuenta_seq
 ALTER SEQUENCE public.cuentas_idcuenta_seq OWNER TO postgres;
 
 --
--- TOC entry 4959 (class 0 OID 0)
+-- TOC entry 5012 (class 0 OID 0)
 -- Dependencies: 231
 -- Name: cuentas_idcuenta_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public.cuentas_idcuenta_seq OWNED BY public.cuentas.idcuenta;
+
+
+--
+-- TOC entry 241 (class 1259 OID 6595443)
+-- Name: definir; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.definir (
+    iddefinir integer NOT NULL,
+    razonsocial character varying(100) NOT NULL,
+    nombrecomercial character varying(100) NOT NULL,
+    ruc character varying(13) NOT NULL,
+    direccion character varying(100) NOT NULL,
+    tipoambiente character(1) NOT NULL,
+    iva double precision NOT NULL,
+    empresa character varying,
+    ubirepo character varying,
+    posiacti character varying,
+    longacti character varying,
+    naturaleza character varying,
+    fechap date,
+    nombre character varying,
+    ubicomprobantes character varying,
+    asunto character varying,
+    textomail character varying,
+    dirmatriz character varying,
+    fechacierre date,
+    f_i character varying,
+    f_g character varying,
+    porciva real,
+    ciudad character varying,
+    idtabla17 integer,
+    ubidigi character varying,
+    ubimagenes character varying,
+    swpreingsin character varying,
+    firma bytea,
+    clave_firma text,
+    email character varying,
+    clave_email character varying
+);
+
+
+ALTER TABLE public.definir OWNER TO postgres;
+
+--
+-- TOC entry 238 (class 1259 OID 5994732)
+-- Name: eliminados; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.eliminados (
+    ideliminado bigint NOT NULL,
+    idusuario smallint NOT NULL,
+    modulo smallint NOT NULL,
+    fecha timestamp without time zone NOT NULL,
+    routerlink character varying(20) NOT NULL,
+    tabla character varying(20) NOT NULL,
+    datos character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.eliminados OWNER TO postgres;
+
+--
+-- TOC entry 237 (class 1259 OID 5994731)
+-- Name: eliminados_ideliminado_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.eliminados_ideliminado_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.eliminados_ideliminado_seq OWNER TO postgres;
+
+--
+-- TOC entry 5013 (class 0 OID 0)
+-- Dependencies: 237
+-- Name: eliminados_ideliminado_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.eliminados_ideliminado_seq OWNED BY public.eliminados.ideliminado;
 
 
 --
@@ -220,7 +348,7 @@ CREATE SEQUENCE public.estructura_idestructura_seq
 ALTER SEQUENCE public.estructura_idestructura_seq OWNER TO postgres;
 
 --
--- TOC entry 4960 (class 0 OID 0)
+-- TOC entry 5014 (class 0 OID 0)
 -- Dependencies: 220
 -- Name: estructura_idestructura_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -265,7 +393,7 @@ CREATE SEQUENCE public.gruposbene_idgrupo_seq
 ALTER SEQUENCE public.gruposbene_idgrupo_seq OWNER TO postgres;
 
 --
--- TOC entry 4961 (class 0 OID 0)
+-- TOC entry 5015 (class 0 OID 0)
 -- Dependencies: 222
 -- Name: gruposbene_idgrupo_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -305,7 +433,7 @@ CREATE SEQUENCE public.ifinan_idifinan_seq
 ALTER SEQUENCE public.ifinan_idifinan_seq OWNER TO postgres;
 
 --
--- TOC entry 4962 (class 0 OID 0)
+-- TOC entry 5016 (class 0 OID 0)
 -- Dependencies: 224
 -- Name: ifinan_idifinan_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -344,7 +472,7 @@ CREATE SEQUENCE public.niveles_idnivel_seq
 ALTER SEQUENCE public.niveles_idnivel_seq OWNER TO postgres;
 
 --
--- TOC entry 4963 (class 0 OID 0)
+-- TOC entry 5017 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: niveles_idnivel_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -398,7 +526,7 @@ CREATE SEQUENCE public.presupuesto_idpresupuesto_seq
 ALTER SEQUENCE public.presupuesto_idpresupuesto_seq OWNER TO postgres;
 
 --
--- TOC entry 4964 (class 0 OID 0)
+-- TOC entry 5018 (class 0 OID 0)
 -- Dependencies: 228
 -- Name: presupuesto_idpresupuesto_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -433,7 +561,7 @@ ALTER TABLE public.proyectos OWNER TO postgres;
 
 CREATE SEQUENCE public.proyectos_idproyecto_seq
     AS integer
-    START WITH 1
+    START WITH 42
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
@@ -443,7 +571,7 @@ CREATE SEQUENCE public.proyectos_idproyecto_seq
 ALTER SEQUENCE public.proyectos_idproyecto_seq OWNER TO postgres;
 
 --
--- TOC entry 4965 (class 0 OID 0)
+-- TOC entry 5019 (class 0 OID 0)
 -- Dependencies: 230
 -- Name: proyectos_idproyecto_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -457,7 +585,7 @@ ALTER SEQUENCE public.proyectos_idproyecto_seq OWNED BY public.proyectos.idproye
 --
 
 CREATE TABLE public.tiptran (
-    numero smallint,
+    numero integer NOT NULL,
     nombre character varying(30) NOT NULL
 );
 
@@ -465,7 +593,119 @@ CREATE TABLE public.tiptran (
 ALTER TABLE public.tiptran OWNER TO postgres;
 
 --
--- TOC entry 4732 (class 2604 OID 5986472)
+-- TOC entry 234 (class 1259 OID 5986531)
+-- Name: tiptran_numero_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public.tiptran ALTER COLUMN numero ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.tiptran_numero_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- TOC entry 240 (class 1259 OID 6595432)
+-- Name: usuarios; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.usuarios (
+    idusuario smallint NOT NULL,
+    identificausu character varying(20) NOT NULL,
+    codusu character varying(150) NOT NULL,
+    nomusu character varying(100) NOT NULL,
+    email character varying(80),
+    pregunta character varying(254),
+    respuesta character varying(254),
+    feccrea timestamp without time zone NOT NULL,
+    usumodi bigint,
+    fecmodi timestamp without time zone,
+    estado boolean DEFAULT true NOT NULL,
+    fdesde date,
+    fhasta date,
+    otrapestania boolean DEFAULT false NOT NULL,
+    alias character varying(20),
+    codusu1 character varying(150),
+    priusu character varying(300),
+    perfil character varying(10),
+    toolbarframe integer,
+    toolbarsheet integer
+);
+
+
+ALTER TABLE public.usuarios OWNER TO postgres;
+
+--
+-- TOC entry 239 (class 1259 OID 6595431)
+-- Name: usuarios_idusuario_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.usuarios_idusuario_seq
+    AS smallint
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.usuarios_idusuario_seq OWNER TO postgres;
+
+--
+-- TOC entry 5020 (class 0 OID 0)
+-- Dependencies: 239
+-- Name: usuarios_idusuario_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.usuarios_idusuario_seq OWNED BY public.usuarios.idusuario;
+
+
+--
+-- TOC entry 243 (class 1259 OID 6595452)
+-- Name: ventanas; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.ventanas (
+    idventana integer NOT NULL,
+    nombre character varying(50) NOT NULL,
+    color1 character varying(20) NOT NULL,
+    color2 character varying(20) NOT NULL,
+    idusuario integer NOT NULL
+);
+
+
+ALTER TABLE public.ventanas OWNER TO postgres;
+
+--
+-- TOC entry 242 (class 1259 OID 6595451)
+-- Name: ventanas_idventana_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.ventanas_idventana_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.ventanas_idventana_seq OWNER TO postgres;
+
+--
+-- TOC entry 5021 (class 0 OID 0)
+-- Dependencies: 242
+-- Name: ventanas_idventana_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.ventanas_idventana_seq OWNED BY public.ventanas.idventana;
+
+
+--
+-- TOC entry 4757 (class 2604 OID 5986472)
 -- Name: beneficiarios idbene; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -473,7 +713,15 @@ ALTER TABLE ONLY public.beneficiarios ALTER COLUMN idbene SET DEFAULT nextval('p
 
 
 --
--- TOC entry 4746 (class 2604 OID 5986473)
+-- TOC entry 4798 (class 2604 OID 5994728)
+-- Name: cargos idcargo; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cargos ALTER COLUMN idcargo SET DEFAULT nextval('public.cargos_idcargo_seq'::regclass);
+
+
+--
+-- TOC entry 4771 (class 2604 OID 5986473)
 -- Name: clasificador idclasificador; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -481,7 +729,7 @@ ALTER TABLE ONLY public.clasificador ALTER COLUMN idclasificador SET DEFAULT nex
 
 
 --
--- TOC entry 4771 (class 2604 OID 5986516)
+-- TOC entry 4796 (class 2604 OID 5986516)
 -- Name: cuentas idcuenta; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -489,7 +737,15 @@ ALTER TABLE ONLY public.cuentas ALTER COLUMN idcuenta SET DEFAULT nextval('publi
 
 
 --
--- TOC entry 4752 (class 2604 OID 5986474)
+-- TOC entry 4799 (class 2604 OID 5994735)
+-- Name: eliminados ideliminado; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.eliminados ALTER COLUMN ideliminado SET DEFAULT nextval('public.eliminados_ideliminado_seq'::regclass);
+
+
+--
+-- TOC entry 4777 (class 2604 OID 5986474)
 -- Name: estructura idestructura; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -497,7 +753,7 @@ ALTER TABLE ONLY public.estructura ALTER COLUMN idestructura SET DEFAULT nextval
 
 
 --
--- TOC entry 4753 (class 2604 OID 5986475)
+-- TOC entry 4778 (class 2604 OID 5986475)
 -- Name: gruposbene idgrupo; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -505,7 +761,7 @@ ALTER TABLE ONLY public.gruposbene ALTER COLUMN idgrupo SET DEFAULT nextval('pub
 
 
 --
--- TOC entry 4760 (class 2604 OID 5986476)
+-- TOC entry 4785 (class 2604 OID 5986476)
 -- Name: ifinan idifinan; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -513,7 +769,7 @@ ALTER TABLE ONLY public.ifinan ALTER COLUMN idifinan SET DEFAULT nextval('public
 
 
 --
--- TOC entry 4761 (class 2604 OID 5986477)
+-- TOC entry 4786 (class 2604 OID 5986477)
 -- Name: niveles idnivel; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -521,7 +777,7 @@ ALTER TABLE ONLY public.niveles ALTER COLUMN idnivel SET DEFAULT nextval('public
 
 
 --
--- TOC entry 4762 (class 2604 OID 5986478)
+-- TOC entry 4787 (class 2604 OID 5986478)
 -- Name: presupuesto idpresupuesto; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -529,7 +785,7 @@ ALTER TABLE ONLY public.presupuesto ALTER COLUMN idpresupuesto SET DEFAULT nextv
 
 
 --
--- TOC entry 4770 (class 2604 OID 5986479)
+-- TOC entry 4795 (class 2604 OID 5986479)
 -- Name: proyectos idproyecto; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -537,7 +793,23 @@ ALTER TABLE ONLY public.proyectos ALTER COLUMN idproyecto SET DEFAULT nextval('p
 
 
 --
--- TOC entry 4933 (class 0 OID 5986407)
+-- TOC entry 4800 (class 2604 OID 6595435)
+-- Name: usuarios idusuario; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.usuarios ALTER COLUMN idusuario SET DEFAULT nextval('public.usuarios_idusuario_seq'::regclass);
+
+
+--
+-- TOC entry 4803 (class 2604 OID 6595455)
+-- Name: ventanas idventana; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.ventanas ALTER COLUMN idventana SET DEFAULT nextval('public.ventanas_idventana_seq'::regclass);
+
+
+--
+-- TOC entry 4975 (class 0 OID 5986407)
 -- Dependencies: 215
 -- Data for Name: beneficiarios; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1574,7 +1846,21 @@ COPY public.beneficiarios (idbene, codben, nomben, tpidben, rucben, ciben, tlfbe
 
 
 --
--- TOC entry 4935 (class 0 OID 5986424)
+-- TOC entry 4996 (class 0 OID 5994725)
+-- Dependencies: 236
+-- Data for Name: cargos; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.cargos (idcargo, nomcargo, valor, descargo, usucrea, feccrea, usumodi, fecmodi) FROM stdin;
+3	JEFE DE SISTEMAS	2450	\N	1	2025-07-31 12:03:58.825	\N	\N
+4	PROFESIONAL 1	820.75	\N	1	2025-07-31 15:25:38.498	1	2025-07-31 15:26:48.568
+5	CONCEJAL	4500	\N	1	2025-07-31 15:27:50.571	\N	\N
+1	ADMINISTRADOR DE CONTRATOS	1100		1	2025-07-28 11:04:26.577384	1	2025-07-31 15:28:11.555
+\.
+
+
+--
+-- TOC entry 4977 (class 0 OID 5986424)
 -- Dependencies: 217
 -- Data for Name: clasificador; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3027,7 +3313,7 @@ COPY public.clasificador (idclasificador, codpar, nivpar, grupar, nompar, despar
 
 
 --
--- TOC entry 4950 (class 0 OID 5986513)
+-- TOC entry 4992 (class 0 OID 5986513)
 -- Dependencies: 232
 -- Data for Name: cuentas; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3035,7 +3321,6 @@ COPY public.clasificador (idclasificador, codpar, nivpar, grupar, nompar, despar
 COPY public.cuentas (idcuenta, codcue, nomcue, movcue, idnivel, grucue, asodebe, asohaber, tiptran, sigef, grubalances, grufluefec, resulcostos, balancostos, usucrea, feccrea, usumodi, fecmodi) FROM stdin;
 1	1	ACTIVOS	f	1	0	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
 2	11	OPERACIONALES	f	2	1	\N	\N	0	f	\N	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
-3	111	DISPONIBILIDADES	f	3	11	\N	\N	0	f	111	18	\N	\N	1	2025-01-20 17:14:10	\N	\N
 4	111.01	Cajas Recaudadoras	t	4	111	\N	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
 5	111.03	Banco Central del Ecuador Moneda Nacional	f	4	111	\N	\N	0	t	111	\N	\N	\N	1	2025-01-20 17:14:10	\N	\N
 19	112	ANTICIPOS DE FONDOS	f	3	11	\N	\N	0	f	111	18	\N	\N	1	2025-01-20 17:14:10	\N	\N
@@ -4073,6 +4358,7 @@ COPY public.cuentas (idcuenta, codcue, nomcue, movcue, idnivel, grucue, asodebe,
 3216	112.03.02.114.02	Repotenciación Retroexcavadora JCBS	t	7	112.03.02.114		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
 3217	112.01.02.222	Benavides Sanchez Paolo	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
 3227	112.03.02.164	NARVAEZ TERREROS BLANCA NOEMI	f	6	112.03.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
+3	111	DISPONIBILIDADES	f	3	11	\N	\N	0	f	111	\N	\N	\N	1	2025-01-20 00:00:00	\N	\N
 3228	112.03.02.164.01	Adquisición de prendas y equipos de proteccion individual	t	7	112.03.02.164		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
 3229	112.01.02.223	Pilco Inca Félix Maria	t	6	112.01.02		\N	0	f	111	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
 3231	213.84.02.005	Otros descuentos	t	6	213.84.02		\N	0	f	211	\N	\N	\N	1	2025-01-20 17:14:11	\N	\N
@@ -5050,7 +5336,50 @@ COPY public.cuentas (idcuenta, codcue, nomcue, movcue, idnivel, grucue, asodebe,
 
 
 --
--- TOC entry 4937 (class 0 OID 5986435)
+-- TOC entry 5001 (class 0 OID 6595443)
+-- Dependencies: 241
+-- Data for Name: definir; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.definir (iddefinir, razonsocial, nombrecomercial, ruc, direccion, tipoambiente, iva, empresa, ubirepo, posiacti, longacti, naturaleza, fechap, nombre, ubicomprobantes, asunto, textomail, dirmatriz, fechacierre, f_i, f_g, porciva, ciudad, idtabla17, ubidigi, ubimagenes, swpreingsin, firma, clave_firma, email, clave_email) FROM stdin;
+1	EMPRESA PUBLICA MUNICIPAL DE AGUA POTABLE Y ALCANTARILLADO DE TULCAN	EPMAPA-T	0460028810001	JUAN RAMON ARELLANO Y BOLIVAR	2	0.15000000596046448	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	JUAN RAMON ARELLANO Y BOLIVAR	\N	\N	\N	\N	\N	\N	\N	\N	\N	\\x308220f6020103308220b206092a864886f70d010701a08220a30482209f3082209b3082060c06092a864886f70d010701a08205fd048205f9308205f5308205f1060b2a864886f70d010c0a0102a08204fe308204fa301c060a2a864886f70d010c0103300e04085e246bccacb104f0020207d0048204d8c102e3077659b50ce5d2f16bf90385ca0ae867337ae07916389b261f5d76094ee5fb3f1499e14619310fe32ad8d1df109f76f913c080028968ba1b76a274280799a5ca7678e07f28e61ba25a4fd07dcc2292c0b663dedf9e1935cdebf99c4e9d5e5ca219ea6bd198d5fd351d6c1b79a0b528df51551e53b84a1dd8cba69c61d51aeb0dc5a69ab0d46e2d4511ae1d83ec4450e6a07d7e9df2ab4c43381a4fc45e7590d5d2977c1c41a3806513ee61e9eb3d2f6fb2ec425f24805337fc4d2ccd75372997dbaeb29a7e0fdc8df571b85cd7c6a47242465130450110b9208e99329d092059214ff787f1ba9bb6a6423c140a04e339d8e0a33cde1721a1038787e4eb337fac75de17c97ae18ec52efc671c5686874f9b50d07ad702c7ccfd85096a13ee8407103deda158bf15bca5f854c21a7facaaadf2d6f3479bfe78c8ba834b2a77810b17fb07e6dc73861c09a3d4d0d3cf6eed94e38c8ab6ad88776433ae7a06c0f48fcc1187b8271f98b6335e28b13d9ec1ab8bec866209c5be8b3f941171918c2a91b9c78ab578affb2d3f8af7cea2a62721e9029262bf6286782ee0591acf3a48c69a2d08c227aa71808580c68ef28181f52d62b3ed0343c248415904a8d98f9fb89198a918a5913c5966bc5d688360faed2867a93a71dc47fbfb8bdeba89406808637b29af9fdccad187817af0ae9625374e540c9165c11d6b2e917bf70f118e6a1721138383b6d8745f732e6ad9e38d344ed1dce96cd3447f2ffb8e8f40e2aa4da7ded94f8a6f9b78018385de4edc70d3dacf697e9c8a70540200ef642c918fe33557297056cb76d1ec2809df3af7259d16de432d0f729b042cef21b1bd71ca1825dde18fd02dad92036987ae3c5b93ac46eb3d09a0f223e41dbd6308e46442ad39a235651e3faf269a0338bbeb3ef1d47594685ffbe6a1c84c67f755adb44cb38d1aebaddced95a1564c5955c6d741307db349723ee7a68ca797ce6b77254b8bab2afb86fd40782ee4a64ced55a06a70595bba3e3153d5c20efaa3875364c8d7b39c010a53d93310b506379e80896954e889c47fb2d8635bec86e284a64e8bc109b7f797c7d73127973a9dd38feb55751b62a7bb7f1d088c218aa11ebe90bc082a0b29f6aabfcdf16ce1346f2e3418575e36f216311bca47ba16b345e4bed627c712acd017cf197547692a0ef320653e4ea9cbf12e5c7b3f49fabaa21e9a0d859434320ff251540a5c31b08a25a028cb362424fe66d06c2c1e22e3993a9e3951ddc9c45d81b2a0f5b6994d27975a9fc3474c7f5412416b8bceaad06d7cd99ee07179ae3825c60fc340119408255efd3cac4b3418063a2659fd72be31da901ebc28ea323107b3b8222c09714ffa9905ebafc56886467246a513f23cbc3990fe1d3344bd62d97b490b1d7ffd847c489698f5a922f93cb715aa244bcedf498a1f1224ebf0e7d55fbcef42d375c0bd0b01d4cf31c72a42905ab050665285e23dd53c4498e203cc158ef4aec834e7941f7d6319feafdb246328824d8686bbd4b6d4abadb9b435667c9041acf693a48d8ca602bc92b1ea6db6826a87d1da3d97f9a760d5d48f7f6327f9e202873a34c0e356c2d0ed4f9a31c8172943bea72352729a0ee8ca885f92ad3746df9b216cb9606f51451953a3540774e1d454f150fa4f2cfe36f51e8fc900030b9a7226dea3c5f032519d8190768c9234e89c58ea8511f5ce8c97a040fad8c05be348ced89a33e340e1fc9028d93181df301306092a864886f70d0109153106040401000000305b06092a864886f70d010914314e1e4c007b00320039004200390039003900330046002d0043004100360035002d0034003500390031002d0041003400320034002d003200320036003000460043004600390038003400390034007d306b06092b0601040182371101315e1e5c004d006900630072006f0073006f0066007400200045006e00680061006e006300650064002000430072007900700074006f0067007200610070006800690063002000500072006f00760069006400650072002000760031002e003030821a8706092a864886f70d010706a0821a7830821a7402010030821a6d06092a864886f70d010701301c060a2a864886f70d010c0103300e0408a7a2cb12ecf3cff9020207d080821a40c7b3c518aec2fcfe26f8f2ee7d1b5b5887122dda22f903d750a99a6ba26bb6e4b9b203c94fefc6bf6e81bb45d68a9db14eaa71cf8dcfe7f2db0cbbcba129baff421e3ac94a1c5b319c75a4b3189ed87b2bd5013cbe41ad88ac4d156e062c04120d97abdce6acf4de49df43e090c115d7181fb0062a8ce7ad82cf6430d2898f64e20f3152a7eb1c63478a991cda6f7e6b70b7d5a3287b77a134f3eed749fd2d790c2398fe378d5f13a31ef1e11339a2900cc2d90e3ab49a3413328f2c5f297715e65eb4eda5164a6ae1ac60c8d2a67bd155ccab3b160d8fda34b7d4428ce1b0bd61b0c179401a54a7976894d097cd1b01664d18101e2fc40035ea4dce8a0df5932d4ad8143e248bdd26079ae9a0b65c737a758d339be032dc7ee954572681ba9f7b2251a77c255a8c0abf1e8142267a52102457b49ecb30605b2c61841b6da04084dc3fb065c4b5e3f80fdd745963521d1050e0cde2ad47c99e073f17e540f872e1befd7b19b9f3c9762aa5d356ba648e0afacfd784e550877abf49182d2426924f598a01b40c65b752b52794363a4097368f68dee5095cf1b0e31e714d948cb549517ce354b6dc4892cdc6008448db26dac4d2b99e0d41faf3e06831bb0cd87d6bb2a8e9c40e565213ec4dc40384106d2a70b33a21498badf210c1239929961c57f7390051f5f60d952f462b20d1f3fd0304b5722d17a6e9772af3a14edd67cd3cd2f4c2339ff9eac375ac816d278029ba43d893dd86bf7091be30b7c77499120416154b04414eed1b4e816bbbba384379bcced0b2b4a20ac2c657bc2fb3c232dcf1dc5598dcb140ee22f1cff86825a3883b5e604f61e025be06527c1078367e2f66dccb888275f402de3118021e64167370afbeeab1e19b8d9f64da065c781980526a3e285a4424f805d19bbde3b88cf8dadd82f6751f84084215f8d30ffbd4b575b270d755430382556d7f47ee0a70bc4cc8bce1fa0838b75cfb88d718ee958307cbed0816adaa04779ac11782f32123f2216ffee5f8a107e28b7e4effad89570ca7535832262d99a9cb740f49bfe37c2feb56bfa0b684a404731cfcc7dca49ceb6e79f80346b39ce87dbabcf2383b994f41059c790f66b6aec6c3c6bb160ff522997c34020b8eb49ca696c40c69310f7f62c5685ca6ceebee166e6e1ec9665fa2283158ce8e63ff871d34e3be010d6e001cf9002214d6c3c52d9465ce647107ef936d538547d30dcfb9d1c1bb1dc0488a4616de85182536374c3c38b9dfcf5d21ecd6bfecbe51b1479a1b5176af96cfb28a9a36eb86a1d980408291e2452a0d8867a75a425f9ef9e8c1541864d29bc1f468f59e8dedc88e0665c452c60a06a1dfb22f905b54c842a3e04f5c01d4ef8e7f6a3ff5a096ea13b2b181a386c5e959339d3c99350f6ddd4e04ec044b67484778b1295cb09d0253e133e0c226f2318c44aedf6b299911b9f449877ff2c234ef74cf250187576a3f6b25dd0818458494734bd4fcc5805894517210dc90490a1cd2254afdb48e504608468e23022810558de1f397b51ca2dd050df27ec8ef3e1e277e79dee950c8108edb448240c48beb3857e30d1856218d55e68041e462de670a3cc3488e765dcb76dc3a1e4334fe15c3432eabdf2b032c51cd023c5ceabeed07b1ab9844e4ce4d1da0b14ca79d6827257f6d1d10c611df85af389474e81124951fcb0e609fd55c3447b1873663213aeb8b8e1c7687397114713bf0253a238298fa036cc82a3a61a3048be00976b8c36f0c033f3d7204eca7ad2ec78872eccc8e3b95c0099946b0ce6202b819a1c0e6ff2810b777d7cde930482716d2d9ec93f6813f045db21abb9fb71abdc27b7d86eaed14ea311963f7c8ac8c3e31f661116e14e7c010cb4d46eb441cdfcc934a27ad513dc935e1966ac453544099239f6f5d417aa28cc48f92ba4d7e6bcfe9369a5bf92d6b1f6be2a1b8a751f201b9c86a60efeca395effdacc03756059c1a37ddcb7017ab51e895d43040212cabfe2018d903614cdc622f26d593eac030079deded808e3a040c0fcf7d82a7baa4fd198713fa2705c83f03b9a93202a9949eabb6b613b0ab42d5ebd26e60724ddca2b937af894f7b9170998c945fef8ebb2666cce685098f390987d86f81c81a270167b78f587c0567c288197b22898960885594137f8248e0cf72e6997892718e8d792d2fc77c70dec4f2874055fa98c93a5e976ef459ff094acdcff7d31ee750d26cbde6b5f14bf03aa2351ba43e2e8677aeff2c2dc4a348f68da99ad2acb03c55b42435cc1cd7b91d4f52df315a2d363b54884d1fe9b88d02c565a7f5bd17d17f75c0a479347a47ed039deb4505fdcf676937b920e24c4c1f26f307cef2c126962590dce7d80186367c50aa88d99c2f91431bbca61ef177b946328429af850006c7352117f22e9bdc6aad15843b1ff5fcb5fecbe98d2684130493e9a062bba012e9bb72d4e35f1337c3df58249514a624ca5d7336ecc58ec682432e75097706a8741d811033a5dee3113da4169533c488791de37d6297c9f61945ef5407dd564e19d2b2ed326a2016ebdbe056d8c9d56df191f5e370f38c76557bd753f6b3c6d0d3acf4642a29fdd8282f041044a2d76af1055e6df32e045f40c05abfc5ca26c9375a9b7e03ac783f25dd83ccd36a6c6f5a733307d9faeb68f0f21722251448cb70379027e614307de6d1ca69e03196c4364e49b6da75cc29be8ebd94c11688a4aa8ec68b15048fdacf45dba8256f323044be53937533a4774947e601b0793626636079e5f23895c9a6790e9fca515a6a9df5151a1212e8fb2c4c4318c45d3175b1a38faa671c38214788fcab6d92c81498560f8245f4030f552044c90daa93c750242d4ad10a9e1dff9d3be8079e5ea537abbd321c924cb067434649a617a8db7bca35a9aaa06ab0963cf4c006a939e3d615043dce4776f067f92c9d322c77bf05734fe913c702de833fe2b3affb41b6b2146db14d2d71052159110aea0087666f3e0ff318a5c8dcde3f910281ba27a980ad636cd47af05c656e2c0c52aabd6100c976c6da1ff0e96dd10d9dc77502068b9799f0a1e4ff975def56e33f245e37d137c278a1dea4d75d2a2dc582a57526ab1b00d08ddcb41d4665505b3d2a3558559258b61897a4ad2aaf109fe99d82c27c020cb111fcefca776585585801a0a9eca383de65226a3a4c68f8e4fbcd6b91c68957f363cf9748a50a6a8deff395aa28d35c85984c1a0d6d37c87ab5c8901d2d8ce6a212b4cf7c44b3c7a2a24c2e0b1260112dbf7df13c59b28016fe39682f64b361dd0dab89ec5c130bb42e316658bd0cc35ff9100f21cda536764f58edba840612694bf2305717c077a10abadd4b323eb282e869a032c27f4b3c60d75d611d238c956a3bb2837c6b4f29d451053e927f8e43d3651d7f73600039fc98014b43a605e2966a7de3f3891b06e20d7413f0adeae9cf51571ab90f6e862d9bf8e50f891f2f77dc6fa96ec1cdb88f3622b4ff220a012bb5f78bca8e8b583948525f9667a4d841ed2d15b554363e59cf6b719ab3d4bbb336ae35504e9378c111608f97b4cd4d7618619caef155c4f4f73e405e5e0f3c8b107d886e9904ef4dfcaca3cc391062d04ae545555042dee498cbea3e096ebea1eea1d13e2f0f1a6ca2d90002a811e4ca4df0f7f38e8d38ed922fefc4d68cc7ca9411d6ec7e6bccf1b5162f5a8dc004db40a7d97619278bbcd8146184bcfcee6cfc9514653cad4acd3b9fe0256178698957a78315ca4dc82faba98f20564ac3abf8a4466f8c3bc09c912b7fb598ea38d5c10e336d8b2f7d4f45b3abedea6a8f7e6fc45df40ad2568ed96ec1e7e9a973d79d0ce4a057847a6297ac1137a1dde4510d3025a1a4b29a22ce3ef7818bd0e49ac45e44a96c4361dc485ff04bcdaa6f231a3ee303e8d9f548e0da1cd42bde084c27d88e3c969c73b281b2594f38ce8ae32c86306f67e9beaf1cd1b2c038b2a279b3542f2c539d260b595ca3c9e1db810e9675ac9d240e6bff6dae6c7c38942f965df07c3211d98ed55906c7eb052cea59b15b229b3862982e42b928aec5bbbc1d82fb5107b6c621d439ef40bc809e893ef4bc3a5b6de8c6d7ecabac644fcff5bf9fdb4c03fd52fd514ed9e74df763d62fcb6dacd6cc9bac336a95b8505df1e4df11859586f118d22c7175d73867e645b312c59745bd79ddcea1c8bc9caa45ed3e9dc6b72c6eeee8f5ae0156e27a8cc7ce77ec9077a8cc6a25b15030874c40c6e624e4f1318edd72ba289bee7781fd73b3ca96583c09e0de743871311190e41eb92585324d509f4d1331217c9a40a47255aa6787b1b47a9e733a4fb3926e9e0f8f43bae9d770447e0ad9013f911dce21661bd42e7aa18740687d9da4f5fd37b8fa2eb43d5a13c57ad53037ee2021bcf9c6a61dd24ce3afbfc8454d2925e443998d1cfb851d76b5c182dd2122dd0471cffa05b4489c34cabcfcac47b22acecf987a61ed794f9aef809e877ef43f9478f84eec6f2eb9171b83fc57a3674c15cf85a1aab764feab268c950ae992988990018bded36c3bc5fb201175b38ddd5ccb717923d105062bfc4698e4c443f4ccb684f45cc7dbe84ceee2bf86f753e75b3ac2a1df006daaf7a8bccaef0a525b2cae7097e9ce6b5f7a8f67bd54745119ade2770e6905cfa705545228f553966fe8f162fdf75c05329a9a465135eee579bec8cf4b6a45d7858da667510eb6ec2473b070aa63ee51f6481684246ea130d2bac8e192b1d8541f5ac91984a93a04dd041580cfbd61ca5f9d42d0ba45b05e748a51e05db573e3a2315264792060aae8a13ff6246d5fa9d69496413463240c61ffc5d69c57a6be5086c61140ba1f63b606c15c562375326ed0d6836ecbb8cc35ed1602c88c36281dd321feec82c14839f9b6bb7c641cde149f76ce63c488427c84d40e29728c0c1c43dfdabbde0d40ef01a000a70da81be3236d04bfc37e64c824b0d0e03fca2a795394503f1667b75dd1bfa0159f74706d9d61e30fbdeb23d5467b052c1a64b0085d3d91f34fe31aa54d80caecc106a2de9dc1794260061c4c44fa404e36bb47ad47eb79ad33446a925ae224d36e303e68ff436ddc4871df9c8d78521a1b0ec381e8e6611b14df2447bc3c56d61360df01daa4e82a2b638935df914ebed06ec4819ff574c2f9730ef84319d7ffbb20ba614b14ef8e507907ed9259683fa88d8e141a1bae51b45e6f86f3ddeec8bb4db5ed936e086e50514f9f355258eb1e8497a6a54f49d6cb04c871721ba881eff87a1d23fa854be6132e10b57dad9446e828732fcfc2de71e6d55e7ec54147dc9ebcb4f0f9144923f615660c93698957747ac2c2c9ea2dbc1ed8eb141759aa44708b68fdb7b9f9b18679c7c4a60d78355c132d74cc69d8a826c2c5f2708f9b3813f58184ebb6f32408c79fa72e38670313ac51baf5501ac780e4e1a4522eb65ac63748bb19d21c13b4d0c7473ce5c5746ae4f88ddb108c1b88bf918966fc37103127d8ddf1262b39c8de371cf9907cc531415da905a0a0aa1c43bf56de02d002d0b0e8f29d9ac95ddf7e2423ed27620647614ed9906c84e2c293dbcd1033817caa155422b888ce348adcef008d1a157450328e2a8513362c40ee690e4fe02d0a98832b3d978aebb312d441ea67ac9c61dfc1d295fbb695e7ae9f0671b957069984ac43e3ee9e8fd154aa2d76d577e93f5162779b83881597f78a85d3bf89e3bcca5fcad7b884f44fba6db33220db814d3c4b7c21976911909ff047f6eb30ea242fbbfb6522e0a22c9fa9ae81c0be7989eca93063f10a62095b3122209cc96428677ce8094da102364ef58725e0969f34fb3c2d9c80b690000c6f19965239d4e528afac44d239f5acfb94096f9bbe6b57a6ce5119d3a87de51b4035f7bf800a26df4ceb60ad0481e67c055b05f5f9c16aed3c4ad5766c5b125b8cdf135abe708c0a29d2e0a077fbc9cb82777e0741ed9566bffa541377d1e1e9d9078243cffbb57561785163fee95036b79181feae51b2f74e220649c7a565962fd662ccabf58b91c2638860ab47aa51ede459c3fea4a16ca990816dbc84e333f5c3ecfd4887446722f8eca3f573b269d29135bae983241a31a6956becf9d14457c5ae206c756c3406525d7a748acfaeaf8c09913e725813d5df8390f870a408fcedb92ec9b45538d4837cf63686e920d7851b436a3a0cfbd4c82ba1fd8de8f0ad7a2edd949568ebb8a382da0d8c500d059b04c46be21f6f7c7bb2f6f5366cf1d54542e8f6e2e3d1370f97e0eb054066645e1e63736e75114880e9a85c1fc8b2d0f34a296bf5f69c5e4a3d6265eb639d45e70fbcdf978458efa6b4c6101795597802f0a36f95a25a7b976c8fdc84da9298bd083f68b4c2f1c63a9f21829857d73842585827e9870c6f8b5ee9d82882dc6798a821f09b2883d58e1b81e729d0a6c16367c0d5062716da16a8aef7aa8be48966306c94fc150cf9cc3fe816f414c8df62da01838a3b0453597215905b6e86c0a9e79f8213b8321ec376b82e5102d003b306b6da3559cdd999f99741357fe9d22e92a04ef8052723745cc20cd4913a87968d4fd6cb09f3e28b839bc48747f1b011ebf416f2ac45d45813ea648570d2d9124e1c420ca6da5c7afc0d9e5f457feaa7e4e7c18d1b80bd5c78d4929d77831bd33c7198cea8986da45eb54c60ebcae14286c324d431fcf756405317b19b3d79da90a5bc700ee998c1c142c9f8418de551357fa5eafd5e4ab86c9b2abc5cee913f58856cf486510d1ecaabe0df631fee87e209be7f997eaf22c774e45b339ec4f1bc00a997bc2572301b373bf5b05de04d6b49fcba6daa336a5ebfd3230ff3ab7ad1c032715fdab008b513aba503818c4d235faa91776b4289022f9c0db3c8d809fefb97af8eb903697af24d854dc68752c4ccea49a396adb08f02bb6e3ed3aebc7b2427cddbead60e0155829472698e22e2817c31e1b2c2294428aec1b3b856cddad1f3baf2dba0529ae00922b0acede429d28c1a69df726639a99041317f7313d650717d8e960c38f86e010c4c406561588708852ca346e89b278fe701b4c40eed151c81e9336f38d1da864b5c1290215cfa6cbf8f277b0b26be56f62fdba3b94d07ed4e5d1606d3625302a9593c64910b2267369e0ed25cbe997bb4769be450fe59dfaa6092047a8f685669ffab48a97c90beb7bcdb875db7b6088895a03c1434818bfd7ce5047752810c2957c59ff3dccd8fd60df9110b6bdbf9ce700f21c38b78972da0328336e370f683e3f7b89198a39638c5aa41bf0e55a291e71d4be77288c508b5c8d5870b5520a24a50ac9076d5ba0ff356b845d33bdb41d37935008fa4497602d71dc37e91b7dc7c23e43a5c2409ab286bda0c2766ffa2303efea5e9d416cf4b5f5f6ea86dbbedfc7abe8ce24123946153bc533df6ae933381cfa8d245a883c49b5e607b0f56186ab3f1cbcf9f4e6eac41f4800865a41c2500b00fe7c1492a48d89d64dbf9c87503a9fc915354e17864d9f79ac7305eff86b87cbd091969f667209889238cbff1848bbba12af53afdf3e38475f445b516cfe25ee3dfc0537a3ebfff11c22e814024cbd51d5df0aeb8947889f4edfe707f21894704732969703921e0efee52a57342d6785f3c2a5902d218248abb36c8b8da1788d4307ab6ec38848458176e3ab9e511b13f87f8412bb70954f6552a7451728dbb5cf2f8accf60ccf056e4da1c4d6aaa2d7c4ea622aecb0060769f3d712b4abcdb74a93bf82e7b6f0eb1c8c521ccb3189cbbf0f38b91e32b942729b48167866e5f78195e2fe66868a1de3929fd1daae704c9ed53143e11ce835e6faccefe893871aa953cb5d7c88a4a2abef8b3e41268a299094522add7d5330a0a81528988f9d19b2c38ad687c60c777c90977e023e1c0736dc927fa0f4914f3390d836d395b767cb8f1784304de18660e70be2cb2a2b7d4d125fdb73832e9ef45cd87b9e7519e47b37a6c6886badd2e3a6788aa029b18d39e531e6f2768d02a23a840fe7724f5cfaf9b2d1856f1bb5244ae70fbe63c2115f552e5968ed208950ccaddcab2a7d4367df7d8aabf3a9fb01223414e0d3bf08944cb52110a1aeb2dc80cd0a98625545e7e6f43c9ef6ce839c883907fbb2f5a40d9dadb4667a4c031b6bc0cd0e238d3735c438a2eade24dd8edce1230e98b15a28a894c87da9b0246efbdd5c479cd4b3d6fb5f51339c96216cab3242b94e67c24d9f9c42bb894e072798625236aac5081c953f30da0cc3d044c60f7f14672f672af2462876c753a05d810914ac19f184fd836a0c4b9c26c02c1cc3a9d213684fe45c9a10094db01383308678132ccf753a0dc3e9559c442ff0c97f77b9d6712ad996a65a5038ebe7a1b59c640c8ea218d7d8b60bacff56f0c2a4704c1a16481a7c95cde7f7fa39bc650bec84acd4047d1ad67ab554537d2b048d75576cd7e5cf10d85dd0831178a7b7104bd5aa2508b6fbe64c22134444b85f918383e306283f56704daeec29845fd030356f2e0eda9da11e4fa6a0d010dabe8295d165ed0d315be5923098fb9659d90bf7ac231f32ad9e59e1f3560e9dc132a040a53e5c1c1b96da4af266a7fb184b56c7ab512422e8ccf8a7e7f488b93aeab4c4ca3637a629370de3ddeaab84f0668a3434e9fcec4eac8f82c66db6184a351ac353ee7fe8f754c5df6a98c4efe12728da53ac690376eb19ff80474b68490fbf623f743c5e063fb186a08d2e09e3967adda24e9d8cf4526b44cc70d9c3c4960815483ca37d4d335ad447ba172cb07f9fbbbe2e3e7884eba7f4ced344ec56d7b270d4df2568375fbaee6ba9a67921fcd14069da4ffe9e93be59bee0d73dfb65f276fe4bc3a0fe735d2a1d2b39f0345b7d542333afcdfd5bc581f99d77b0dfc132152d9be0f7ffb91ae74ef1b94115dfa93b845d4db321897ba9cc4f71b10d9d35404f5c6a441f91f73253e564ba1b3d5d4eb4a30f9ed00f02176df67578150ad49d8a0f1308a90f8c1067cbe992e7449e14b40adbf27602634358fa4b635b4d5e06e202b55fafc1c4528912d5f60c72b6ce42d23dc7e3bb697b674b6341fd6c6f63fa12cb88c3ffbf30f7b8f68f05836a5e346655d0308942cc0ba63d6ce5634f30e3aefd6ab99252a5daff95b28da7c3c736efa63b95ae9cad2067f027cf46ecefa07b37f26108a5bfd3f9ff94a924a36e1bc01da33a7e7a305d0f4a8164f1d6c7c719ca0e5b8fa60c1f75a46cf20cd12e4adec5110adb9200a95e4b4e1c0687f2c5928448ad38afd5fba6dc77158fb0164faafb4f9adf607e1be376c919518fd208c92fdb549ac1b89c7942fd7d8e754d4023fa7b9007c247669e57e507ff27b93fdbb642a72f533d2ac89d934e258651efcbf7e3c793b03c0867be46b7849993d594e9e98e057791e1117ba9d79b7bbe7670db8f79c6ffaca9725b75d67a4a2be54f3d22a7f76c8224803c3969771d73cd209bb52262b418789c7865fa6b9ee0c2e3e161815303b301f300706052b0e03021a041448cf42b8fd70ed70f7a6d03488dcfac1624fba2e0414a16846b184e38a9861f387a3092ca540d90c51ef020207d0	OM/KrvAoJVXfu1f+/bPctg==	facturacion@epmapatulcan.gob.ec	MqXPxUDo/LY6REc4XRE/JQY4woK45WCHMGltsw/QxN0K1QNdSiTSK6CgN36S1troVEJDuQWp9/GPTA1wYJuicAUBh6DN5amHLLqwkatz5VM=
+\.
+
+
+--
+-- TOC entry 4998 (class 0 OID 5994732)
+-- Dependencies: 238
+-- Data for Name: eliminados; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.eliminados (ideliminado, idusuario, modulo, fecha, routerlink, tabla, datos) FROM stdin;
+1	1	1	2025-07-29 16:57:44.162	estrfunc	estrfunc	ESTRFUNC: undefined Para probar eliminacion
+2	1	1	2025-07-29 17:00:17.753	estrfunc	ESTRFUNC	103 ADMINISTRACIÓN GENERAL
+3	1	1	2025-07-29 17:05:27.606	estrfunc	ESTRFUNC	110 Para probar eliminacion
+4	1	4	2025-07-29 17:27:24.189	estrfunc	ESTRFUNC	201 CONTROL DE OBRAS Y FISCALIZACIÓN
+5	1	4	2025-07-31 15:45:36.968	departamentos	DEPARTAMENTOS	Otra Actividad Mi Actividad
+6	1	4	2025-07-31 15:51:34.627	departamentos	DEPARTAMENTOS	AGUA POTABLE ACTIVIDAD: PLANEACION ESTRATEGICA Falta contarEmpleadosPorIddepartamento()
+7	1	4	2025-07-31 15:55:20.131	cargos	CARGOS	Otro cargo mas undefined Falta contarEmpleadosPorIdcargo()
+8	1	4	2025-07-31 15:57:20.438	cargos	CARGOS	JEFE DESAEC 1900 Falta contarEmpleadosPorIdcargo()
+9	1	4	2025-07-31 17:38:43.729	profesiones	PROFESIONES	Conserje 1 Falta contarEmpleadosPorIdprofesion()
+10	1	6	2025-07-31 18:20:47.93	gruposrol	GRUPOSROL	Jubilados Falta contarEmpleadosPorIdgruporol()
+11	1	2	2025-08-02 11:36:43.244	documentos	DOCUMENTOS	CONTRATO ACTIVIDAD: (Ninguno)
+12	1	2	2025-08-02 11:38:28.186	documentos	DOCUMENTOS	LIBRETA ACTIVIDAD: (Ninguno)
+13	1	2	2025-08-02 11:41:15.472	documentos	DOCUMENTOS	INICIAL Comprob.SRI: (Ninguno)
+14	1	2	2025-08-02 11:41:39.608	documentos	DOCUMENTOS	Uno mas Comprob.SRI: (Ninguno)
+15	1	6	2025-08-05 21:36:23.621	tabla4	TABLA4	10 Nuevecito Modi
+16	1	6	2025-08-07 12:11:26.422	tabla4	TABLA4	50 A Inst. Estado y Empr. Públicas que percibe ingreso exento de Imp. Renta
+17	1	6	2025-08-08 13:16:23.994	tabla4	TABLA4	26 Comprob SRI 26
+18	1	6	2025-08-08 13:20:39.823	documentos	DOCUMENTOS	AA Modificado Comprob.SRI: (Ninguno)
+19	1	6	2025-08-08 18:22:13.151	documentos	DOCUMENTOS	Docu 25 Modi Comprob.SRI: Tabla4 25 Modi
+20	1	6	2025-08-08 18:22:22.997	tabla4	TABLA4	25 Tabla4 25 Modi
+21	1	6	2025-08-12 11:24:11.911	usuarios	USUARIOS	LManoban Manoban Lalisa
+22	1	6	2025-08-12 12:09:57.595	usuarios	USUARIOS	UPython1 Usuario python Modi
+\.
+
+
+--
+-- TOC entry 4979 (class 0 OID 5986435)
 -- Dependencies: 219
 -- Data for Name: estructura; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -5063,7 +5392,7 @@ COPY public.estructura (idestructura, nivel, nombre, longitud) FROM stdin;
 
 
 --
--- TOC entry 4939 (class 0 OID 5986439)
+-- TOC entry 4981 (class 0 OID 5986439)
 -- Dependencies: 221
 -- Data for Name: gruposbene; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -5081,7 +5410,7 @@ COPY public.gruposbene (idgrupo, codgru, nomgru, modulo1, modulo2, modulo3, modu
 
 
 --
--- TOC entry 4941 (class 0 OID 5986449)
+-- TOC entry 4983 (class 0 OID 5986449)
 -- Dependencies: 223
 -- Data for Name: ifinan; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -5165,7 +5494,7 @@ COPY public.ifinan (idifinan, codifinan, nomifinan, foto) FROM stdin;
 
 
 --
--- TOC entry 4943 (class 0 OID 5986453)
+-- TOC entry 4985 (class 0 OID 5986453)
 -- Dependencies: 225
 -- Data for Name: niveles; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -5182,7 +5511,7 @@ COPY public.niveles (idnivel, nomniv, longniv) FROM stdin;
 
 
 --
--- TOC entry 4945 (class 0 OID 5986457)
+-- TOC entry 4987 (class 0 OID 5986457)
 -- Dependencies: 227
 -- Data for Name: presupuesto; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -5678,7 +6007,7 @@ COPY public.presupuesto (idpresupuesto, tippar, codpar, codigo, nompar, inicia, 
 
 
 --
--- TOC entry 4947 (class 0 OID 5986468)
+-- TOC entry 4989 (class 0 OID 5986468)
 -- Dependencies: 229
 -- Data for Name: proyectos; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -5729,7 +6058,7 @@ COPY public.proyectos (idproyecto, codigo, nombre, movimiento, idestructura, usu
 
 
 --
--- TOC entry 4951 (class 0 OID 5986520)
+-- TOC entry 4993 (class 0 OID 5986520)
 -- Dependencies: 233
 -- Data for Name: tiptran; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -5753,7 +6082,304 @@ COPY public.tiptran (numero, nombre) FROM stdin;
 
 
 --
--- TOC entry 4966 (class 0 OID 0)
+-- TOC entry 5000 (class 0 OID 6595432)
+-- Dependencies: 240
+-- Data for Name: usuarios; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.usuarios (idusuario, identificausu, codusu, nomusu, email, pregunta, respuesta, feccrea, usumodi, fecmodi, estado, fdesde, fhasta, otrapestania, alias, codusu1, priusu, perfil, toolbarframe, toolbarsheet) FROM stdin;
+1	SAUL RUALES	868738867681139655226553	RUALES SAUL		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-03-03 12:20:35.351	t	2023-06-16	2024-08-01	f	SAUL RUALES	1e586084aed2ba60	220973234260412313428412101200911320030402122121215613033223732004431294230411315620121143901420323073044003215597230202732000312264113004127044342312570123224382302601202132477214104127214232210741223090357595586568231487869133301220104114144231211334133203440140041124003031223143203101031142314424	\N	\N	\N
+2	SOFIA PILLAJO	8777638777677139456630253093	PILLAJO SOFIA		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-03-18 07:47:00.2	t	2023-06-16	2024-08-01	f	SOFIA PILLAJO	f8d45a53fc219a761119c00a20c05d59	130874040394400123207034241300713144141144123021419612014030600331232332300422012204424012823313144070022131049573040331301332024300240221044032243423871343322272002544201312477320310349102142034522112393196577787788004421442323040242411303111243100142104030324240421034220023204342334032023030440403	\N	\N	\N
+3	NANCYRODRIGUEZ	767688768778691409513289297858	RODRIGUEZ NANCY		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-03-05 14:31:37.887	t	2023-06-16	2024-08-01	f	NANCYRODRIGUEZ	7fcd1911ff965c34	101561143354401402205240341110533004222114131421449504003043743433314484340024212610334111902301214264144034426551020002242334130040203310108332412024671232314204120502201422197222444346100142033901124173365996765766341463700331011044220000444423223314331313222104122413323404310123211301200000414213	\N	\N	\N
+4	JCARDENAS	7668667689358982574	CARDENAS JEFFERSON		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-04-24 07:34:46.357	t	2023-06-16	2024-08-01	f	JCARDENAS	8139a72ac3e802598272538d7eb6aee2	131432424142103213033234310400200112310400312001315131203320614003124340414213134111130000222033043400214121210170411120332314030042202201435241323200023103230414341144231334322300044014140124344330404462414434443221440261801032243042302412301233401243023234344240024411402440410434422212032424002241	\N	\N	\N
+5	DIEGO DELGADO	6767736677667139851698291938	DELGADO DIEGO		7fcd1911ff965c34	7fcd1911ff965c34	2023-08-31 00:00:00	1	2024-03-11 16:40:45.878	t	\N	2024-08-01	f	DIEGO DELGADO	cebf4db6f61acddd	222891034371020004246023421303740021413430310222018644130114512031044250233040411321301034103041124184040031447692123131922001303144024411249040044000561204041460040522114223376344112145422443213602434393489656966979333421624233012314041443423431331332010401022413444211402321344431412124324310123000	\N	\N	\N
+6	GENNY CALDERON	767783667668771489298657298891	CALDERON GENNY		7fcd1911ff965c34	7fcd1911ff965c34	2024-01-10 08:52:58.501	1	2024-07-05 10:50:04.297	f	\N	2024-08-01	f	GENNY CALDERON	\N	\N	\N	\N	\N
+7	GABY PAGUAY	766838678681195515029651	GABY PAGUAY	\N	\N	\N	2024-10-21 07:37:00	1	2025-02-10 16:33:00.278	f	2024-10-21	2025-10-21	f	GABY PAGUAY	\N	\N	\N	\N	\N
+8	PPUETATE	88868686894549500	PUETATE PEDRO		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-03-04 12:11:23.968	t	2023-06-16	2024-08-01	f	Pedro	62de61560769c667f09db89b82cc5e20	240752244251423421309204243113704342034311041311106513402442741103432091124431329740200333921401134383323214249959440301004331244094224212005212232310651442031073212534042143086402213237314042243844222250475956557687244134900342243214134141003434024132324004044110002011304320120142203043413134322230	\N	\N	\N
+9	Joana Jojoa	711719371101171171101173917117	Joana Jojoa	\N	7fcd1911ff965c34	7fcd1911ff965c34	2024-06-16 00:00:00	1	2025-07-21 10:43:23.528	t	\N	2024-08-01	f	Joana Jojoa	7fcd1911ff965c34	201332002113301424114213313212123314220300420042436810402034940102211200141142133340020232232024444242440011325910240111403420132031124331220141233340104343404232401311210423023324242412132314042044002404111033403242110131013022101002232222223341433023422244220012010302202424411322334122431430140121	\N	\N	\N
+10	EVELYN CHENAS	6867873676768133589272896969	EVELYN CHENAS	\N	7fcd1911ff965c34	7fcd1911ff965c34	2025-01-13 07:37:00	1	2025-01-13 09:00:45.844	t	2025-01-13	2026-01-13	f	EVELYN CHENAS	\N	304422300124113144033011341043320302330103221002237804421303640302131031432223223310442232240400434034132344204181124404444214144123310102045444013333342240223020414204124430134031421024311411012100443362300111131102113376701430204211310341422130401033413322023434022444424340213014423100104231414202	\N	\N	\N
+11	RIGOBERTONARVAEZ	877766887376886691709562582942969132	RIGOBERTO NARVAEZ	ng@mail.com	7fcd1911ff965c34	7fcd1911ff965c34	2025-01-22 21:17:19.574	1	2025-01-23 11:54:43.03	t	2025-01-13	2026-01-13	f	RIGOBERTO NARVAEZ	\N	300004241134431133412021240304434030303443242340345623303421724324123342244300310233144010430233422242113001218083340343132143312283113313024041214412554024412232013923343102140014233343210210112100142301212340434111221392610213404000212421144112423141122042000023100322030114123030421340120124022424	\N	\N	\N
+12	GISELLA CANACUAN	77867636676686715855758572569331	GISELLA CANACUAN	\N	7fcd1911ff965c34	7fcd1911ff965c34	2024-08-01 00:00:00	1	2024-08-01 09:31:38.028	t	2024-08-01	2025-08-01	f	GISELA CANACUAN	\N	101994113261322113102424224234740104041203201023037624023044810341442323142332002132243434343121134032431024028690301203431422022400112000448031012314764044014233223804124004188410132345330434443612214151324202043300143375823210302341003242031101043042234004331020402230440040043120110311111133231024	\N	\N	\N
+13	VERONICA TATES	868777663868681439454257389296	VERONICA TATES	\N	7fcd1911ff965c34	7fcd1911ff965c34	2024-10-21 07:37:00	1	2024-10-21 07:38:59.68	t	2024-10-21	2025-10-21	f	VERONICA TATES	\N	032123221133042332111230310434403003112213221432138012124121821130103443312443330100234334013430122324310444324473042123220201132423223203037042133344301412322214004244113221432133302120120040440044423160344233344431010360623332141013034001042243431214201133034440222430234013403041312420404011401413	\N	\N	\N
+14	Alejandro Bolivar	4544455554108042589828	Alejandro Bolívar	\N	7fcd1911ff965c34	7fcd1911ff965c34	2024-06-16 00:00:00	1	2024-11-05 09:31:35.293	f	2024-06-16	2024-08-01	f	Alejandro Bolivar	7fcd1911ff965c34	\N	\N	\N	\N
+15	ORTEGA ANDREA	7886764676866135928856519429	ORTEGA ANDREA	ng@gmail.com	\N	\N	2025-07-02 09:04:00	1	2025-07-02 09:03:43.157	t	\N	\N	f	ORTEGA ANDREA	\N	423851203171313032326223023101632143242411214024307503134102942144430181111131134023133343212102113060432114225661420120431212214420122210015404244021860134310123423804434231388401233137020303312943221450379977959568400062122310042324331132041340210440310310210134001300044420232034104221111142312114	\N	\N	\N
+16	JPERUGACHI	7868876677103275152904	PERUGACHI JOFFRE		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2025-01-22 21:17:02.195	f	2023-06-16	2024-08-01	f	JPERUGACHI	e38cb202874b3a2ba8f5968154811a63	\N	\N	\N	\N
+17	JOHANA PORTILLA	77767638788777615566342902585294	JOHANA PORTILLA		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2025-02-13 15:48:17.873	t	2023-06-16	2024-08-01	f	JOHANA PORTILLA	7fcd1911ff965c34	124134120211302131404202000402440001032203330100107604321103843401231054344203029611420041330440441210041140010854211020634034000080142343246222032210712310410412213531114030197000424329101142421904330322284335411022222190711340134324442113102342031234403331033044411434133124001203411032402042022224	\N	\N	\N
+18	ORTEGAESTACIO	4544555559105658828	ORTEGA ESTACIO AMPARO		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2025-07-28 12:03:58.097	t	2023-06-16	2024-08-01	f	ORTEGAESTACIO	7fcd1911ff965c34	212441214310034401133013240043032011124444303420045504341113503143013001210432442010302214202442434403341323111780431012412333132341421433139103110422242032230140114431431320443034044303232331331230340151131121302142142177834322312440210012013240432023021030043104301221011220004100403033030043112214	\N	\N	\N
+55	RODRIGUEZN	7fcd1911ff965c34	RODRIGUEZ NANCY		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	RODRIGUEZN	7fcd1911ff965c34	\N	1000000000	\N	\N
+56		7fcd1911ff965c34	INSTITUCIONES INSTITUCIONES		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f		7fcd1911ff965c34	\N	1000000000	\N	\N
+19	NORTHON BURBANO	77887773688667715985625628924298	BURBANO ORTIZ NORTHON RAMIRO		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-06-04 08:59:55.633	t	2023-06-16	2024-08-01	f	NORTHON BURBANO	7fcd1911ff965c34	240753002284104132135103021232721140421411314003037522412421901042333282024402232203434010011104100173423044135896011141804320144492313231428143141034982032314452234701020133014442024331102431222210143171399886985878304076768301414022212330341334402012121100310140413223233430012110034140244214431423	\N	\N	\N
+20	ALEXIS ORTIZ	67687837887912034292338965	ORTIZ ALEXIS		7fcd1911ff965c34	7fcd1911ff965c34	2024-02-09 16:15:41.872	1	2025-02-11 21:54:45.189	t	\N	2024-08-01	f	ALEXIS ORTIZ	\N	\N	\N	\N	\N
+21	RcR	19018970601990511	CADENA RENE		7fcd1911ff965c34	7fcd1911ff965c34	2023-08-31 00:00:00	1	2024-02-24 13:59:13.295	t	\N	2024-08-01	f	René Cadena R.	cebf4db6f61acddd	144672311160314004315411214211704441030421342233025724203213513234114054143020127712204221524212032350224424339669243043641434111072111032445403040241553401002193440843340004485022030447001203332632113070197559987765100158699221433443120122422122001311322102102403024130243114231203204404041222233423	\N	\N	\N
+22	JORGE ALMEIDA	7787636776766135839765291294	JORGE ALMEIDA	jorge.almeida@epmapatulcan.gob.ec	\N	\N	2025-08-04 15:15:33.109	1	\N	t	\N	\N	t	JORGE ALMEIDA	\N	402864124083234402237231214314544121003023101314329724210121540212124494432130036900424110040321124153413130417668220011532313442292030134227003421012682142421450014542104444165413342345211003414932232292434320341242421398814020103013020331412401340243331123041233423243040224132313201040422301214400	\N	\N	\N
+23	NB	7fcd1911ff965c34	B N		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	NB	7fcd1911ff965c34	\N	1000000000	\N	\N
+24	CARTOON	7fcd1911ff965c34	VIZCAINO CARLOS ANDRES	cartoonvizc@gmail.com	7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	CARTOON	7fcd1911ff965c34	\N	1000000000	\N	\N
+25	ORTEGAM	7fcd1911ff965c34	ORTEGA AMPARO		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	ORTEGAM	7fcd1911ff965c34	\N	1000000000	\N	\N
+26	CARLOS SANCHEZ	7fcd1911ff965c34	SANCHEZ CARLOS	latro09@hotmail.com	7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	CARLOS SANCHEZ	7fcd1911ff965c34	\N	1000000000	\N	\N
+27	CVIZCAINO	7fcd1911ff965c34	VIZCAINO CARLOS		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	CVIZCAINO	7fcd1911ff965c34	\N	1000000000	\N	\N
+28	RHUERA	7fcd1911ff965c34	HUERA RAUL		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	RHUERA	7fcd1911ff965c34	\N	1000000000	\N	\N
+29	SILVIA ARELLANO	7fcd1911ff965c34	ARELLANO SILVIA		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	SILVIA ARELLANO	7fcd1911ff965c34	\N	1000000000	\N	\N
+30	XIMENA BOLAÑOS	7fcd1911ff965c34	BOLAÑOS XIMENA 		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	XIMENA BOLAÑOS	7fcd1911ff965c34	\N	1000000000	\N	\N
+31	RCADENA	19018970601990511	CADENA RENE		7fcd1911ff965c34	7fcd1911ff965c34	2023-08-31 00:00:00	1	2024-11-11 08:54:57.328	f	\N	2024-08-01	f	Ing.Rene Cadena	24154f49e2abafa2	\N	\N	\N	\N
+32	MNARVAEZ	77688669809562587	NARVAEZ MARTHA	mnarvaez@epmapat.ec	7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-04-05 11:36:19.467	t	2023-06-16	2024-08-01	f	MNARVAEZ	0c18b23a5d4efd1fa5ee566fa595568f	301774013432133302222313323013030400341332422022417530313102704201320151311011132044233300024244234014402423430182020104610134241061214342036422203113952242210491333732011134333120310043401332330143100234431144301321122156668432402010423423440240241130031304233244344434414014322140031023343111202023	\N	\N	\N
+33	XIME BOLAÑOS	7fcd1911ff965c34	BOLAÑOS XIME 		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	XIME BOLAÑOS	7fcd1911ff965c34	\N	1000000000	\N	\N
+34	BOLAÑOS XIMENA	7fcd1911ff965c34	BOLAÑOS XIMENA		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	BOLAÑOS XIMENA	7fcd1911ff965c34	\N	1000000000	\N	\N
+35	XBOLAÑOS	7fcd1911ff965c34	bolaños xime		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	XBOLAÑOS	7fcd1911ff965c34	\N	1000000000	\N	\N
+36	CAJA1	7fcd1911ff965c34	CAJA1 CAJA1		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	CAJA1	7fcd1911ff965c34	\N	1000000000	\N	\N
+37	XIMENA BOLANIOS	7fcd1911ff965c34	BOLAÑOS XIMENA		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	XIMENA BOLANIOS	7fcd1911ff965c34	\N	1000000000	\N	\N
+38	MARCELO DAVILA	7fcd1911ff965c34	DAVILA MARCELO	aud_lexasesores@hotmail.es	5f7a8f5ede02df836d4adf8889548fa1	5f7a8f5ede02df836d4adf8889548fa1	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	MARCELO DAVILA	7fcd1911ff965c34	\N	1000000000	\N	\N
+39	MDAVILA	7fcd1911ff965c34	DAVILA MARCELO	aud_lexasesores@hotmail.es	5f7a8f5ede02df836d4adf8889548fa1	5f7a8f5ede02df836d4adf8889548fa1	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	MDAVILA	7fcd1911ff965c34	\N	1000000000	\N	\N
+40	MARDAVILA	7fcd1911ff965c34	DAVILA MARCELO		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	MARDAVILA	7fcd1911ff965c34	\N	1000000000	\N	\N
+41	MADIVILA	7fcd1911ff965c34	DAVILA MARCELO	aud_lexasesores@hotmail.es	5f7a8f5ede02df836d4adf8889548fa1	5f7a8f5ede02df836d4adf8889548fa1	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	MADIVILA	7fcd1911ff965c34	\N	1000000000	\N	\N
+42	ATUZ	7fcd1911ff965c34	TUZ ANDRES 		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	ATUZ	7fcd1911ff965c34	\N	1000000000	\N	\N
+43	JCAGUIRRE	7fcd1911ff965c34	AGUIRRE JUAN CARLOS		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	JCAGUIRRE	7fcd1911ff965c34	\N	1000000000	\N	\N
+44	RAMIRO CHINGAL	7fcd1911ff965c34	CHINGAL RAMIRO		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	RAMIRO CHINGAL	7fcd1911ff965c34	\N	1000000000	\N	\N
+45	MELISSA TAPIA	7fcd1911ff965c34	TAPIA MELISSA		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	MELISSA TAPIA	7fcd1911ff965c34	\N	1000000000	\N	\N
+46	MARIANA CHUNES	7fcd1911ff965c34	chunes mariana		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	MARIANA CHUNES	7fcd1911ff965c34	\N	1000000000	\N	\N
+47	JOHNNY CHAMORRO	7fcd1911ff965c34	chamorro johnny		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	JOHNNY CHAMORRO	7fcd1911ff965c34	\N	1000000000	\N	\N
+48	MARITZA MENESES	7fcd1911ff965c34	MENESES MARITZA		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	MARITZA MENESES	7fcd1911ff965c34	\N	1000000000	\N	\N
+49	JOSE LUIS LOPEZ	7fcd1911ff965c34	LOPEZ JOSE LUIS		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	JOSE LUIS LOPEZ	7fcd1911ff965c34	\N	1000000000	\N	\N
+50	AOBANDO	7fcd1911ff965c34	OBANDO ALEJANDRO		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	AOBANDO	7fcd1911ff965c34	\N	1000000000	\N	\N
+51	ORTEGAMP	7fcd1911ff965c34	ORTEGA AMPARO		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	ORTEGAMP	7fcd1911ff965c34	\N	1000000000	\N	\N
+52	ORTAMP	7fcd1911ff965c34	ORTE AMPAR		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	ORTAMP	7fcd1911ff965c34	\N	1000000000	\N	\N
+53	NRODRIGUEZ 	7fcd1911ff965c34	RODRIGUEZ NANCY		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	NRODRIGUEZ 	7fcd1911ff965c34	\N	1000000000	\N	\N
+54	RODRIGUEZ NANCY	7fcd1911ff965c34	rodriguez nancy		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	RODRIGUEZ NANCY	7fcd1911ff965c34	\N	1000000000	\N	\N
+57	MCASTRO	7fcd1911ff965c34	CASTRO MIROS		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	MCASTRO	7fcd1911ff965c34	\N	1000000000	\N	\N
+58	PARGOTI	7fcd1911ff965c34	ARGOTI PAOLA		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	PARGOTI	7fcd1911ff965c34	\N	1000000000	\N	\N
+59	AUTORIZACIONES	7fcd1911ff965c34	AUTORIZACIONES AUTORIZACIONES		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	AUTORIZACIONES	7fcd1911ff965c34	\N	1000000000	\N	\N
+60	FTOBAR	7fcd1911ff965c34	TOBAR ING FERNANDO		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	FTOBAR	7fcd1911ff965c34	\N	1000000000	\N	\N
+61	XPRADO	7fcd1911ff965c34	PRADO XAVIER		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	XPRADO	7fcd1911ff965c34	\N	1000000000	\N	\N
+62	ESTEBAN	7fcd1911ff965c34	CUZCO ESTEBAN	prueba@hotmail.com	602cd4dd032df2c9	1ea1336ffd93273c	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	ESTEBAN	7fcd1911ff965c34	\N	1000000000	\N	\N
+63	WISE	7fcd1911ff965c34	SOLIS WILLIAM		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	WISE	7fcd1911ff965c34	\N	1000000000	\N	\N
+64	CARLOS VIZCAINO	7fcd1911ff965c34	VIZCAINO ARMAS CARLOS ANDRES		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	CARLOS VIZCAINO	7fcd1911ff965c34	\N	1000000000	\N	\N
+65	PMURILLO	7fcd1911ff965c34	MURILLO PABLO		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	PMURILLO	7fcd1911ff965c34	\N	1000000000	\N	\N
+66	FVIZUETE	7fcd1911ff965c34	VIZUETE FERNANDA		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	FVIZUETE	7fcd1911ff965c34	\N	1000000000	\N	\N
+67	AVELASCO	7fcd1911ff965c34	VELASCO ANDRES		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	AVELASCO	7fcd1911ff965c34	\N	1000000000	\N	\N
+68	JROBLES	7fcd1911ff965c34	ROBLES JAIRO		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	JROBLES	7fcd1911ff965c34	\N	1000000000	\N	\N
+69	GNOBOA	7fcd1911ff965c34	NOBOA GALO		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	GNOBOA	7fcd1911ff965c34	\N	1000000000	\N	\N
+70	ABOLAÑOS	7fcd1911ff965c34	BOLAÑOS ANITA		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	Anita B.	7fcd1911ff965c34	\N	1000000000	\N	\N
+71	AMERA	7fcd1911ff965c34	MERA ALBERTO	mera@epmapat.ec	7fcd1911ff965c34	7fcd1911ff965c34	2022-10-13 00:00:00	1	2024-11-05 09:31:48.678	f	2023-06-16	2024-08-01	t	Alberto	7fcd1911ff965c34	\N	\N	\N	\N
+72	TROSERO	7fcd1911ff965c34	ROSERO TATIANA		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	TROSERO	7fcd1911ff965c34	\N	1000000000	\N	\N
+73	RNARVAEZ	7fcd1911ff965c34	NARVAEZ RUBEN		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	RNARVAEZ	7fcd1911ff965c34	\N	1000000000	\N	\N
+74	BOT	phasma	Automaticacion BOT	bot@planerp.ec	phasma	phasma	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	BOT	phasma	\N	1000000000	\N	\N
+75	BOLANIOS MAGALY	62395765ef58d84d75f23674f5e14a81	bolanios magaly		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-11-05 09:32:08.181	f	2023-06-16	2024-08-01	f	BOLANIOS MAGALY	62395765ef58d84d75f23674f5e14a81	\N	\N	\N	\N
+76	DQUEZADA	68869666858509518	QUEZADA DARIO		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2025-02-12 07:44:48.156	t	2023-06-16	2024-08-01	f	Dario	a3a152f15ec7d1c9	303652213070440100026033233432533214230023420110209813131324634122400180313140005743443422914333144293104200328989343013520431101411302301225414302101950104220432003803203430186002042037033102022830300473498663001134433365985333133043403433344203003421421123400341423030321232104124343332442420213120	\N	\N	\N
+77	WHIGUERA	7fcd1911ff965c34	HIGUERA WLADIMIR		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	WHIGUERA	7fcd1911ff965c34	\N	1000000000	\N	\N
+78	LTRUJILLO	7fcd1911ff965c34	TRUJILLO LEONOR		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	LTRUJILLO	7fcd1911ff965c34	\N	1000000000	\N	\N
+79	DBURBANO	7fcd1911ff965c34	BURBANO DAVID		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	DBURBANO	7fcd1911ff965c34	\N	1000000000	\N	\N
+80	FREDDY	7fcd1911ff965c34	NAUTA FREDDY	freddy777@aucas.com	d55551452d312d19edc8e1a552155b1d	d97221e884df9300376dbaf5fbe8e01c	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	FREDDY	7fcd1911ff965c34	\N	1000000000	\N	\N
+81	CONSULTAS	99e95eacc6da06e58af2286947b9c6d1	CONTRALORIA CONTRALORIA		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-11-11 08:49:12.001	f	2023-06-16	2024-08-01	f	CONSULTAS	99e95eacc6da06e58af2286947b9c6d1	\N	\N	\N	\N
+82	PRUEBA1	cebf4db6f61acddd	prueba prueba		7fcd1911ff965c34	7fcd1911ff965c34	2023-08-31 00:00:00	1	2024-11-11 08:54:35.575	f	\N	2024-08-01	f	PRUEBA1	cebf4db6f61acddd	\N	\N	\N	\N
+83	CINTHYA ORBE	6d4e81cf435bc06e84b1c9e5f5130d68	ORBE CINTHYA 		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-11-11 08:48:41.73	f	2023-06-16	2024-08-01	f	CINTHYA ORBE	6d4e81cf435bc06e84b1c9e5f5130d68	\N	\N	\N	\N
+84	HCASTRO	766888779243572	CASTRO HUMBERTO		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-05-01 14:17:40.803	t	2023-06-16	2024-08-01	f	HCASTRO	0bfd691b6221fc18e46a336b4f7c54a8	130331033341301320240122442003142322300224411204404124110313134422012241422124413344410213141032042201420004020284320224131300324034203231016200010111330343224402423443044040101012241100211242142241221120112043140323443283641212023042143311334022110113022233323211331441111200110414002411303424340140	\N	\N	\N
+85	FACILITO	7db36c2c420086303b404a59da378f5a	FACILITO FACILITO		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	t	2023-06-16	2024-08-01	f	FACILITO	7db36c2c420086303b404a59da378f5a	\N	1000000000	\N	\N
+86	LODY RODRIGUEZ	bcdefafa2aa576368fa874cb0ff171df	RODRIGUEZ LODY		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	t	2023-06-16	2024-08-01	f	LODY RODRIGUEZ	bcdefafa2aa576368fa874cb0ff171df	\N	1000000000	\N	\N
+87	EDUARDO TUBON	7fcd1911ff965c34	TUBON EDUARDO		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-11-11 08:49:32.76	f	2023-06-16	2024-08-01	f	EDUARDO TUBON	7fcd1911ff965c34	\N	\N	\N	\N
+88	ANDRES MONTENEGRO	676868377786767871792198948972392885	MONTENEGRO ANDRES		7fcd1911ff965c34	7fcd1911ff965c34	2024-01-15 10:53:18.065	1	2025-01-22 21:17:16.676	f	\N	2024-08-01	f	Montenegro A.	\N	\N	\N	\N	\N
+89	JOHANA NARVAEZ	7fcd1911ff965c34	narvaez johana		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	JOHANA NARVAEZ	7fcd1911ff965c34	\N	1000000000	\N	\N
+90	BERNARDO	7fcd1911ff965c34	Leon Bernardo	bbernardoleon@gmail.com	5fe0b4808c4e0dfb7b9a5c29fbb2aab8	452f501e6bf29dba	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	BERNARDO	7fcd1911ff965c34	\N	1000000000	\N	\N
+91	AORTEGA	7fcd1911ff965c34	FTOBAR AORTEGA		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	AORTEGA	7fcd1911ff965c34	\N	1000000000	\N	\N
+92	GGUERRON	7fcd1911ff965c34	GUERRÓN AB. GABRIELA		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	GGUERRON	7fcd1911ff965c34	\N	1000000000	\N	\N
+93	CONTRALORIA2021	7fcd1911ff965c34	contraloria contraloria		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	CONTRALORIA2021	7fcd1911ff965c34	\N	1000000000	\N	\N
+94	JORGE CUMBAL	80d047016a196f89f77227611d8ae1fc	CUMBAL JORGE		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	JORGE CUMBAL	80d047016a196f89f77227611d8ae1fc	\N	1000000000	\N	\N
+95	BOLANIOS XIMENAM	7fcd1911ff965c34	bolanios ximena		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	BOLANIOS XIMENAM	7fcd1911ff965c34	\N	1000000000	\N	\N
+96	RIGOBERTO NARVAEZ	877766887376886691709562582942969132	NARVAEZ RIGOBERTO		7fcd1911ff965c34	7fcd1911ff965c34	2023-12-27 11:37:34.378	1	2024-11-11 08:55:23.111	f	\N	2024-08-01	f	RIGOBERTO NARVAEZ	\N	\N	\N	\N	\N
+97	MANUEL VIVANCO	cebf4db6f61acddd	VIVANCO MANUEL 		7fcd1911ff965c34	7fcd1911ff965c34	2024-01-15 10:54:12.856	1	2024-11-11 08:52:46.96	f	\N	2024-08-01	f	MANUEL VIVANCO	\N	\N	\N	\N	\N
+98	ANTHONY QUIRANZA	7fcd1911ff965c34	QUIRANZA ANTHONY		7fcd1911ff965c34	7fcd1911ff965c34	2023-08-31 00:00:00	\N	\N	f	\N	2024-08-01	f	ANTHONY QUIRANZA	7fcd1911ff965c34	\N	1000000000	\N	\N
+99	ANDRES SERRANO	cd2c69b22e9bdbd3b2e30bbe7d0921f5	SERRANO ANDRES		7fcd1911ff965c34	7fcd1911ff965c34	2023-12-20 11:40:59.624	\N	\N	t	\N	2024-08-01	f	\N	\N	\N	1000000000	\N	\N
+100	MONICA MORA	7a017ac8817b17941b74f6794a02ea1c	MORA LARREA MONICA FERNANDA		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-11-11 08:53:16.759	f	2023-06-16	2024-08-01	f	MONICA MORA	7a017ac8817b17941b74f6794a02ea1c	\N	\N	\N	\N
+101	YOHANNA CADENA	ebe4f0f8edee583a	CADENA YOHANNA		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-11-11 08:55:42.791	f	2023-06-16	2024-08-01	f	YOHANNA CADENA	ebe4f0f8edee583a	\N	\N	\N	\N
+102	AMPARO ORTEGA	7fcd1911ff965c34	Ortega Amparo		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-02-22 17:18:40.062	f	2023-06-16	2024-08-01	f	Ortega A.	7fcd1911ff965c34	\N	1000000000	\N	\N
+103	JUAN CHAVEZ	eb671caa5f0015382e050e37cc3232eb	CHAVEZ JUAN		7fcd1911ff965c34	7fcd1911ff965c34	2023-08-31 00:00:00	1	2024-11-11 08:52:02.247	f	\N	2024-08-01	f	JUAN CHAVEZ	eb671caa5f0015382e050e37cc3232eb	\N	\N	\N	\N
+104	ABOLANIOS	7fcd1911ff965c34	bolanios anita		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	Anita B.	7fcd1911ff965c34	444134204430004320011331431343440030124204000220024173313133043230101101042314432021102343022222102110021224230204232213012332224123342030024420211142421321431214234100103240122222001013031312201012001043234342322103024044100321300341033023344420302440042441331240321021400323014342204201231000224404	1000000000	\N	\N
+105	RVILLARREAL	887776886671165922566362	VILLARREAL RENE		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-03-03 12:21:10.325	t	2023-06-16	2024-08-01	f	RVILLARREAL	79fe708380f79fe5b436bc8ef22e6450	113332133104042332142034120231033132030044420310109332203400614412012304022101011022224144434034113222434032220150401243230141111233244422035413124203340040324233223240112221230120132341333221200240112461123221023402022344831241004333041001011012401021143123001413124142110243010103021144311113112200	\N	\N	\N
+106	WAGUILAR	86787768825635157	AGUILAR WILMER		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-03-03 12:14:08.91	t	2023-06-16	2024-08-01	f	WAGUILAR	54edd04b89ef26c8	011012131313423110243401034314421130004040024033227232414201744031012020201330131323422031142212301340430344024494301301004111243314100200349400401321212312113032144423023042123412404034132432204231210482103311011003122082924000044202031431404434314320332443144320211122220304434043222223404234330424	\N	\N	\N
+107	BOLANIOS XIMENA	67767778387767615589738239385696	bolanios ximena		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-03-18 11:31:58.392	t	2023-06-16	2024-08-01	f	BOLANIOS XIMENA	7fcd1911ff965c34	102030003132022043440003204212430044402124310340307700000224833222014032413233010442143221200243240212430102203391133014200140224221114221008000044113044201201231410130443221230241042042034331444110311482024432402204000252914031041320031033112330141214240334430034340401040202133424001004201444240312	\N	\N	\N
+108	NORTEGA	778867675194298	ORTEGA NUBY		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-03-03 12:15:04.753	t	2023-06-16	2024-08-01	f	NORTEGA	dcf9e2554141f33a	401213000102322130013431204110431414444204310343335224134313933041443112401241311111332121444330430423210443040350420012540402112342314320009302420404420212024103044403212204444142434421413401210142040071430413123031444011033300410323211424320321213001224340301301200113441131443143240102202340334304	\N	\N	\N
+109	PAOLA PUETATE	8677638868686139454950256950	PUETATE PAOLA		7fcd1911ff965c34	7fcd1911ff965c34	2023-08-31 00:00:00	1	2024-04-29 12:09:24.431	t	\N	2024-08-01	f	PAOLA PUETATE	cebf4db6f61acddd	341301404210434443212404333443024443232331441203118904440323544324241340144120320010443113410401203400443403021182220340010130222340134044136223401233114122014214220240340421234244422444200420200024200483241143221010310471941421321431102310213321221314001312214310134314222202112132121404210043102231	\N	\N	\N
+110	SMORILLO	87787777896632973	MORILLO SAIDA		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-03-08 11:48:18.717	t	2023-06-16	2024-08-01	f	SMORILLO	7fcd1911ff965c34	000421140144044444243401214401102103433244022033415011400223612324402012431221423341303242213331321243324304434352122301124234111030243343419123303401302224442124011220214242022244001300214123030134120073044331000432021251910120324221244412042020040232413023012410103322221400344100441314241212001203	\N	\N	\N
+111	Administrador	612091271654551220804619179119	Administrador		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-13 00:00:00	\N	\N	f	\N	\N	f	Administrador	7fcd1911ff965c34	\N	1000000000	\N	\N
+112	JJACOME	b747b762ba8b0d4b3df7427af8e3551f	JACOME JEFFERSON	jefferson.jacome@epmapatulcan.gob.ec	7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-11-11 08:50:50.471	f	2023-06-16	2024-08-01	f	Jácome J.	b747b762ba8b0d4b3df7427af8e3551f	\N	\N	\N	\N
+113	JOBANDO	776676779885694	OBANDO JACKSON		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-07-10 12:49:26.096	t	2023-06-16	2024-08-01	f	JOBANDO	8465fd74fb8143890018dfc01b27e760	020881222273200134323213444033612021313101133031107631120321742203101304204302119911110130814241404251034410339596010100001412132262221112426434023322661112311251143822003414095234131046021444444730011150441202321313023083701432313123123340422021410400330141112024020014023031303021142042341134141130	\N	\N	\N
+114	JHOANA SOTO	777676387871194932585924	SOTO JHOANA		7fcd1911ff965c34	7fcd1911ff965c34	2024-01-31 14:41:32.492	1	2024-03-03 12:11:34.356	t	\N	2024-08-01	f	JHOANA SOTO	\N	230951024351014410406224401121713014242401023102009612032332834212032311121220431443140300442002211202100104048652401032011133022014404300236242234020690314001141112402302323031323222141120210242201111390214113000403422250921013402211120022442021101120300131002120120344302000243021030111020311334301	\N	\N	\N
+115	RICHARD GUDINIO	87676863786777715938385128252732	GUDINIO RICHARD		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2025-01-23 15:04:31.939	f	2023-06-16	2024-08-01	f	RICHARD GUDINIO	6ed753678beecf83	121120300330340132322004022031213212122123414341040042314212044243014034230141012421442303320403114241003124221044231333203424214021242212140203144432010300141423021003023241314342101103120413013214144144211243402002002342423303443401204121143431004431414100223204044122031011033133131214042242212304	\N	\N	\N
+\.
+
+
+--
+-- TOC entry 5003 (class 0 OID 6595452)
+-- Dependencies: 243
+-- Data for Name: ventanas; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.ventanas (idventana, nombre, color1, color2, idusuario) FROM stdin;
+1	transaci	rgb(57, 95, 95)	rgb(210, 221, 210)	1
+2	abonados	rgb(57, 95, 95)	rgb(210, 221, 210)	1
+3	tramites	rgb(57, 95, 95)	rgb(210, 221, 210)	1
+4	rutas	rgb(57, 95, 95)	rgb(210, 221, 210)	1
+5	transferencias	rgb(100,100,100)	rgb(210,221,235)	1
+6	usuarios	rgb(57, 95, 95)	rgb(210, 221, 210)	10058
+7	usuarios	rgb(64,30,73)	rgb(229,198,237)	1
+8	generadorxml	rgb(57, 95, 95)	rgb(210, 221, 210)	10059
+9	clientes	rgb(125,136,62)	rgb(215,242,212)	1
+10	generadorxml	rgb(57, 95, 95)	rgb(210, 221, 210)	1
+11	cajas	rgb(57, 95, 95)	rgb(210, 221, 210)	8
+12	sinafip	rgb(57, 95, 95)	rgb(210, 221, 210)	1
+13	cajas	rgb(57, 95, 95)	rgb(210, 221, 210)	21
+14	cajas	rgb(57, 95, 95)	rgb(210, 221, 210)	10031
+15	cajas	rgb(57, 95, 95)	rgb(210, 221, 210)	31
+16	cajas	rgb(57,95,95)	rgb(210,221,210)	1
+17	cajas	rgb(57, 95, 95)	rgb(210, 221, 210)	10067
+18	certificaciones	rgb(57, 95, 95)	rgb(210, 221, 210)	1
+19	transferencias	rgb(57, 95, 95)	rgb(210, 221, 210)	11
+20	suspensiones	rgb(57, 95, 95)	rgb(210, 221, 210)	1
+21	cajas	rgb(57, 95, 95)	rgb(210, 221, 210)	10053
+22	facturas	rgb(80, 4, 80)	rgb(250, 200, 250)	1
+23	convenios	rgb(80, 4, 80)	rgb(250, 200, 250)	1
+24	transferencias	rgb(80, 4, 80)	rgb(250, 200, 250)	10070
+25	convenios	rgb(80, 4, 80)	rgb(250, 200, 250)	10069
+26	facturas	rgb(80, 4, 80)	rgb(250, 200, 250)	11
+27	generadorxml	rgb(80, 4, 80)	rgb(250, 200, 250)	11
+28	facturas	rgb(80, 4, 80)	rgb(250, 200, 250)	10067
+29	transferencias	rgb(80, 4, 80)	rgb(250, 200, 250)	3
+30	transferencias	rgb(80, 4, 80)	rgb(250, 200, 250)	10067
+31	facturas	rgb(80, 4, 80)	rgb(250, 200, 250)	3
+32	convenios	rgb(80, 4, 80)	rgb(250, 200, 250)	10067
+33	habilitaciones	rgb(80, 4, 80)	rgb(250, 200, 250)	1
+34	emisiones	rgb(80, 4, 80)	rgb(250, 200, 250)	11
+35	lecturas	rgb(80, 4, 80)	rgb(250, 200, 250)	11
+36	emisiones	rgb(80, 4, 80)	rgb(250, 200, 250)	1
+37	lecturas	rgb(80, 4, 80)	rgb(250, 200, 250)	1
+38	convenios	rgb(80, 4, 80)	rgb(250, 200, 250)	25
+39	generadorxml	rgb(80, 4, 80)	rgb(250, 200, 250)	10070
+40	emisiones	rgb(80, 4, 80)	rgb(250, 200, 250)	3
+41	lecturas	rgb(80, 4, 80)	rgb(250, 200, 250)	3
+42	cajas	rgb(80, 4, 80)	rgb(250, 200, 250)	10059
+43	cajas	rgb(80, 4, 80)	rgb(250, 200, 250)	10064
+44	cajas	rgb(57,95,95)	rgb(210,221,210)	4
+45	cajas	rgb(80, 4, 80)	rgb(250, 200, 250)	17
+46	generadorxml	rgb(80, 4, 80)	rgb(250, 200, 250)	10047
+47	facturas	rgb(80, 4, 80)	rgb(250, 200, 250)	10045
+48	cajas	rgb(80, 4, 80)	rgb(250, 200, 250)	22
+49	generadorxml	rgb(80, 4, 80)	rgb(250, 200, 250)	3
+50	cajas	rgb(80, 4, 80)	rgb(250, 200, 250)	16
+51	generadorxml	rgb(80, 4, 80)	rgb(250, 200, 250)	17
+52	emisiones	rgb(80, 4, 80)	rgb(250, 200, 250)	17
+53	lecturas	rgb(80, 4, 80)	rgb(250, 200, 250)	17
+54	cajas	rgb(80, 4, 80)	rgb(250, 200, 250)	3
+55	cajas	rgb(80, 4, 80)	rgb(250, 200, 250)	10045
+56	cajas	rgb(80, 4, 80)	rgb(250, 200, 250)	11
+57	facturas	rgb(80, 4, 80)	rgb(250, 200, 250)	10074
+58	facturas	rgb(80, 4, 80)	rgb(250, 200, 250)	6
+59	fecfactura	rgb(80, 4, 80)	rgb(250, 200, 250)	6
+60	cajas	rgb(80, 4, 80)	rgb(250, 200, 250)	6
+61	generadorxml	rgb(80, 4, 80)	rgb(250, 200, 250)	6
+62	transferencias	rgb(80, 4, 80)	rgb(250, 200, 250)	6
+63	usuarios	rgb(80, 4, 80)	rgb(250, 200, 250)	6
+64	usuarios	rgb(80, 4, 80)	rgb(250, 200, 250)	25
+65	transferencias	rgb(80, 4, 80)	rgb(250, 200, 250)	10045
+66	ccertificaciones	rgb(80, 4, 80)	rgb(250, 200, 250)	1
+67	facturas	rgb(80, 4, 80)	rgb(250, 200, 250)	10076
+68	fecfactura	rgb(80, 4, 80)	rgb(250, 200, 250)	10074
+69	generadorxml	rgb(80, 4, 80)	rgb(250, 200, 250)	10074
+70	fecfactura	rgb(80, 4, 80)	rgb(250, 200, 250)	10076
+71	fecfactura	rgb(80, 4, 80)	rgb(250, 200, 250)	10075
+72	generadorxml	rgb(80, 4, 80)	rgb(250, 200, 250)	10075
+73	facturas	rgb(80, 4, 80)	rgb(250, 200, 250)	10075
+74	facturas	rgb(80, 4, 80)	rgb(250, 200, 250)	10073
+75	emisiones	rgb(80, 4, 80)	rgb(250, 200, 250)	10073
+76	emisiones	rgb(80, 4, 80)	rgb(250, 200, 250)	6
+77	cajas	rgb(5,5,5)	rgb(150,150,150)	10032
+78	facturas	rgb(80, 4, 80)	rgb(250, 200, 250)	10070
+79	cajas	rgb(80, 4, 80)	rgb(250, 200, 250)	10073
+80	emisiones	rgb(80, 4, 80)	rgb(250, 200, 250)	10067
+81	emisiones	rgb(80, 4, 80)	rgb(250, 200, 250)	10031
+82	fecfactura	rgb(80, 4, 80)	rgb(250, 200, 250)	10031
+83	facturas	rgb(80, 4, 80)	rgb(250, 200, 250)	10047
+84	emisiones	rgb(80, 4, 80)	rgb(250, 200, 250)	10047
+85	transferencias	rgb(80, 4, 80)	rgb(250, 200, 250)	10031
+86	facturas	rgb(80, 4, 80)	rgb(250, 200, 250)	10031
+87	lecturas	rgb(80, 4, 80)	rgb(250, 200, 250)	10047
+88	convenios	rgb(80, 4, 80)	rgb(250, 200, 250)	3
+89	convenios	rgb(80, 4, 80)	rgb(250, 200, 250)	10073
+90	generadorxml	rgb(80, 4, 80)	rgb(250, 200, 250)	10031
+91	fecfactura	rgb(80, 4, 80)	rgb(250, 200, 250)	10045
+92	emisiones	rgb(80, 4, 80)	rgb(250, 200, 250)	10045
+93	usuarios	rgb(80, 4, 80)	rgb(250, 200, 250)	10031
+94	usuarios	rgb(80, 4, 80)	rgb(250, 200, 250)	22
+95	convenios	rgb(80, 4, 80)	rgb(250, 200, 250)	10031
+96	facturas	rgb(80, 4, 80)	rgb(250, 200, 250)	8
+97	fecfactura	rgb(80, 4, 80)	rgb(250, 200, 250)	11
+98	facturas	rgb(80, 4, 80)	rgb(250, 200, 250)	10077
+99	fecfactura	rgb(80, 4, 80)	rgb(250, 200, 250)	10077
+100	generadorxml	rgb(80, 4, 80)	rgb(250, 200, 250)	10077
+101	convenios	rgb(80, 4, 80)	rgb(250, 200, 250)	10045
+102	cajas	rgb(80, 4, 80)	rgb(250, 200, 250)	10077
+103	cajas	rgb(80, 4, 80)	rgb(250, 200, 250)	10078
+104	cajas	rgb(80, 4, 80)	rgb(250, 200, 250)	10079
+105	convenios	rgb(80, 4, 80)	rgb(250, 200, 250)	10071
+106	cv-facturas	rgb(80, 4, 80)	rgb(250, 200, 250)	1
+107	convenios	rgb(80, 4, 80)	rgb(250, 200, 250)	6
+108	convenios	rgb(80, 4, 80)	rgb(250, 200, 250)	11
+109	cv-rubros	rgb(80, 4, 80)	rgb(250, 200, 250)	1
+110	cajas	rgb(80, 4, 80)	rgb(250, 200, 250)	10080
+111	comprobacion	rgb(80, 4, 80)	rgb(250, 200, 250)	1
+112	bancos	rgb(80, 4, 80)	rgb(250, 200, 250)	1
+113	beneficiarios	rgb(80, 4, 80)	rgb(250, 200, 250)	1
+114	egresos	rgb(80, 4, 80)	rgb(250, 200, 250)	1
+115	regrecauda	rgb(80, 4, 80)	rgb(250, 200, 250)	1
+116	retenciones	rgb(80, 4, 80)	rgb(250, 200, 250)	1
+117	preingresos	rgb(80, 4, 80)	rgb(250, 200, 250)	1
+118	pregastos	rgb(80, 4, 80)	rgb(250, 200, 250)	1
+119	certipresu	rgb(80, 4, 80)	rgb(250, 200, 250)	1
+120	tramipresu	rgb(80, 4, 80)	rgb(250, 200, 250)	1
+121	reformas	rgb(80, 4, 80)	rgb(250, 200, 250)	1
+122	clasificador	rgb(80, 4, 80)	rgb(250, 200, 250)	1
+123	niifcuentas	rgb(80, 4, 80)	rgb(250, 200, 250)	1
+124	estsituacion	rgb(80, 4, 80)	rgb(250, 200, 250)	1
+125	estresultados	rgb(80, 4, 80)	rgb(250, 200, 250)	1
+126	flujoefectivo	rgb(80, 4, 80)	rgb(250, 200, 250)	1
+127	ejecupresup	rgb(80, 4, 80)	rgb(250, 200, 250)	1
+128	unicostos	rgb(80, 4, 80)	rgb(250, 200, 250)	1
+129	estrfunc	rgb(80, 4, 80)	rgb(250, 200, 250)	1
+130	ifinan	rgb(80, 4, 80)	rgb(250, 200, 250)	1
+131	convenios	rgb(80, 4, 80)	rgb(250, 200, 250)	10081
+132	cuentas	rgb(80, 4, 80)	rgb(250, 200, 250)	1
+133	facturas	rgb(80, 4, 80)	rgb(250, 200, 250)	43
+134	asientos	rgb(80, 4, 80)	rgb(250, 200, 250)	10074
+135	facturas	rgb(80, 4, 80)	rgb(250, 200, 250)	10026
+136	cajas	rgb(80, 4, 80)	rgb(250, 200, 250)	10026
+137	emisiones	rgb(80, 4, 80)	rgb(250, 200, 250)	10026
+138	asientos	rgb(80, 4, 80)	rgb(250, 200, 250)	1
+139	facturas	rgb(80, 4, 80)	rgb(250, 200, 250)	10081
+140	ntacredito	rgb(80, 4, 80)	rgb(250, 200, 250)	1
+141	add-ntacredito	rgb(80, 4, 80)	rgb(250, 200, 250)	1
+142	convenios	rgb(80, 4, 80)	rgb(250, 200, 250)	10026
+143	fecfactura	rgb(80,32,100)	rgb(250,200,250)	1
+144	definir	rgb(80, 4, 80)	rgb(250, 200, 250)	1
+145	emisiones	rgb(80, 4, 80)	rgb(250, 200, 250)	43
+146	lecturas	rgb(80, 4, 80)	rgb(250, 200, 250)	10031
+147	add-remision	rgb(80, 4, 80)	rgb(250, 200, 250)	1
+148	facturas	rgb(80, 4, 80)	rgb(250, 200, 250)	10082
+149	estados-convenios	rgb(80, 4, 80)	rgb(250, 200, 250)	1
+150	estados-convenios	rgb(80, 4, 80)	rgb(250, 200, 250)	6
+151	estados-convenios	rgb(80, 4, 80)	rgb(250, 200, 250)	10026
+152	cv-clientes	rgb(80, 4, 80)	rgb(250, 200, 250)	1
+153	cajas	rgb(80, 4, 80)	rgb(250, 200, 250)	10040
+154	estados-convenios	rgb(80, 4, 80)	rgb(250, 200, 250)	3
+155	facturas	rgb(80, 4, 80)	rgb(250, 200, 250)	10083
+156	fecfactura	rgb(80, 4, 80)	rgb(250, 200, 250)	10083
+157	convenios	rgb(80, 4, 80)	rgb(250, 200, 250)	10083
+158	generadorxml	rgb(80, 4, 80)	rgb(250, 200, 250)	10083
+159	convenios	rgb(80, 4, 80)	rgb(250, 200, 250)	43
+160	facturas	rgb(80, 4, 80)	rgb(250, 200, 250)	17
+161	convenios	rgb(80, 4, 80)	rgb(250, 200, 250)	17
+162	estados-convenios	rgb(80, 4, 80)	rgb(250, 200, 250)	17
+\.
+
+
+--
+-- TOC entry 5022 (class 0 OID 0)
 -- Dependencies: 216
 -- Name: beneficiarios_idbene_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5762,7 +6388,16 @@ SELECT pg_catalog.setval('public.beneficiarios_idbene_seq', 1027, true);
 
 
 --
--- TOC entry 4967 (class 0 OID 0)
+-- TOC entry 5023 (class 0 OID 0)
+-- Dependencies: 235
+-- Name: cargos_idcargo_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.cargos_idcargo_seq', 1, false);
+
+
+--
+-- TOC entry 5024 (class 0 OID 0)
 -- Dependencies: 218
 -- Name: clasificador_idclasificador_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5771,7 +6406,7 @@ SELECT pg_catalog.setval('public.clasificador_idclasificador_seq', 1, false);
 
 
 --
--- TOC entry 4968 (class 0 OID 0)
+-- TOC entry 5025 (class 0 OID 0)
 -- Dependencies: 231
 -- Name: cuentas_idcuenta_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5780,7 +6415,16 @@ SELECT pg_catalog.setval('public.cuentas_idcuenta_seq', 1, false);
 
 
 --
--- TOC entry 4969 (class 0 OID 0)
+-- TOC entry 5026 (class 0 OID 0)
+-- Dependencies: 237
+-- Name: eliminados_ideliminado_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.eliminados_ideliminado_seq', 1, false);
+
+
+--
+-- TOC entry 5027 (class 0 OID 0)
 -- Dependencies: 220
 -- Name: estructura_idestructura_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5789,7 +6433,7 @@ SELECT pg_catalog.setval('public.estructura_idestructura_seq', 1, false);
 
 
 --
--- TOC entry 4970 (class 0 OID 0)
+-- TOC entry 5028 (class 0 OID 0)
 -- Dependencies: 222
 -- Name: gruposbene_idgrupo_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5798,7 +6442,7 @@ SELECT pg_catalog.setval('public.gruposbene_idgrupo_seq', 8, true);
 
 
 --
--- TOC entry 4971 (class 0 OID 0)
+-- TOC entry 5029 (class 0 OID 0)
 -- Dependencies: 224
 -- Name: ifinan_idifinan_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5807,7 +6451,7 @@ SELECT pg_catalog.setval('public.ifinan_idifinan_seq', 74, true);
 
 
 --
--- TOC entry 4972 (class 0 OID 0)
+-- TOC entry 5030 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: niveles_idnivel_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5816,7 +6460,7 @@ SELECT pg_catalog.setval('public.niveles_idnivel_seq', 1, false);
 
 
 --
--- TOC entry 4973 (class 0 OID 0)
+-- TOC entry 5031 (class 0 OID 0)
 -- Dependencies: 228
 -- Name: presupuesto_idpresupuesto_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -5825,16 +6469,52 @@ SELECT pg_catalog.setval('public.presupuesto_idpresupuesto_seq', 1, false);
 
 
 --
--- TOC entry 4974 (class 0 OID 0)
+-- TOC entry 5032 (class 0 OID 0)
 -- Dependencies: 230
 -- Name: proyectos_idproyecto_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.proyectos_idproyecto_seq', 1, false);
+SELECT pg_catalog.setval('public.proyectos_idproyecto_seq', 42, true);
 
 
 --
--- TOC entry 4774 (class 2606 OID 5986481)
+-- TOC entry 5033 (class 0 OID 0)
+-- Dependencies: 234
+-- Name: tiptran_numero_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.tiptran_numero_seq', 1, false);
+
+
+--
+-- TOC entry 5034 (class 0 OID 0)
+-- Dependencies: 239
+-- Name: usuarios_idusuario_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.usuarios_idusuario_seq', 115, true);
+
+
+--
+-- TOC entry 5035 (class 0 OID 0)
+-- Dependencies: 242
+-- Name: ventanas_idventana_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.ventanas_idventana_seq', 162, true);
+
+
+--
+-- TOC entry 4820 (class 2606 OID 5994730)
+-- Name: cargos cargos_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cargos
+    ADD CONSTRAINT cargos_pk PRIMARY KEY (idcargo);
+
+
+--
+-- TOC entry 4805 (class 2606 OID 5986481)
 -- Name: clasificador clasificador_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -5843,7 +6523,7 @@ ALTER TABLE ONLY public.clasificador
 
 
 --
--- TOC entry 4786 (class 2606 OID 5986519)
+-- TOC entry 4817 (class 2606 OID 5986519)
 -- Name: cuentas cuentas_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -5852,7 +6532,25 @@ ALTER TABLE ONLY public.cuentas
 
 
 --
--- TOC entry 4784 (class 2606 OID 5986483)
+-- TOC entry 4826 (class 2606 OID 6595449)
+-- Name: definir definir_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.definir
+    ADD CONSTRAINT definir_pk PRIMARY KEY (iddefinir);
+
+
+--
+-- TOC entry 4822 (class 2606 OID 5994737)
+-- Name: eliminados eliminados_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.eliminados
+    ADD CONSTRAINT eliminados_pk PRIMARY KEY (ideliminado);
+
+
+--
+-- TOC entry 4815 (class 2606 OID 5986483)
 -- Name: proyectos estrfunc_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -5861,7 +6559,7 @@ ALTER TABLE ONLY public.proyectos
 
 
 --
--- TOC entry 4778 (class 2606 OID 5986485)
+-- TOC entry 4809 (class 2606 OID 5986485)
 -- Name: estructura estructura_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -5870,7 +6568,7 @@ ALTER TABLE ONLY public.estructura
 
 
 --
--- TOC entry 4780 (class 2606 OID 5986487)
+-- TOC entry 4811 (class 2606 OID 5986487)
 -- Name: niveles niveles_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -5879,7 +6577,7 @@ ALTER TABLE ONLY public.niveles
 
 
 --
--- TOC entry 4782 (class 2606 OID 5986489)
+-- TOC entry 4813 (class 2606 OID 5986489)
 -- Name: presupuesto presupue_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -5888,7 +6586,7 @@ ALTER TABLE ONLY public.presupuesto
 
 
 --
--- TOC entry 4776 (class 2606 OID 5986491)
+-- TOC entry 4807 (class 2606 OID 5986491)
 -- Name: clasificador uc_codpar; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -5897,7 +6595,33 @@ ALTER TABLE ONLY public.clasificador
 
 
 --
--- TOC entry 4789 (class 2606 OID 5986492)
+-- TOC entry 4824 (class 2606 OID 6595441)
+-- Name: usuarios usuarios_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.usuarios
+    ADD CONSTRAINT usuarios_pk PRIMARY KEY (idusuario);
+
+
+--
+-- TOC entry 4828 (class 2606 OID 6595457)
+-- Name: ventanas ventanas_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.ventanas
+    ADD CONSTRAINT ventanas_pk PRIMARY KEY (idventana);
+
+
+--
+-- TOC entry 4818 (class 1259 OID 5986526)
+-- Name: tiptran_numero_idx; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX tiptran_numero_idx ON public.tiptran USING btree (numero);
+
+
+--
+-- TOC entry 4831 (class 2606 OID 5986492)
 -- Name: proyectos estrfunc_estructura_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -5906,7 +6630,7 @@ ALTER TABLE ONLY public.proyectos
 
 
 --
--- TOC entry 4787 (class 2606 OID 5986497)
+-- TOC entry 4829 (class 2606 OID 5986497)
 -- Name: presupuesto presupuesto_clasificador_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -5915,7 +6639,7 @@ ALTER TABLE ONLY public.presupuesto
 
 
 --
--- TOC entry 4788 (class 2606 OID 5986502)
+-- TOC entry 4830 (class 2606 OID 5986502)
 -- Name: presupuesto presupuesto_proyectos_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -5923,7 +6647,7 @@ ALTER TABLE ONLY public.presupuesto
     ADD CONSTRAINT presupuesto_proyectos_fk FOREIGN KEY (idproyecto) REFERENCES public.proyectos(idproyecto);
 
 
--- Completed on 2025-08-20 17:57:46
+-- Completed on 2025-08-30 08:21:18
 
 --
 -- PostgreSQL database dump complete

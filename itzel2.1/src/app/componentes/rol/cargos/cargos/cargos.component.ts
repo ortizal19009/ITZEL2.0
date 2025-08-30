@@ -50,11 +50,16 @@ export class CargosComponent implements OnInit {
     if (!this.authService.sessionlog) {
       this.router.navigate(['/inicio']);
     }
-    sessionStorage.setItem('ventana', '/cargos');
-    let coloresJSON = sessionStorage.getItem('/cargos');
-    // console.log('coloresJSON: ', coloresJSON);
-    if (coloresJSON) this.colocaColor(JSON.parse(coloresJSON));
-    else this.buscaColor();
+
+    if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {
+      sessionStorage.setItem('ventana', '/cargos');
+      let coloresJSON = sessionStorage.getItem('/cargos');
+      if (coloresJSON) this.colocaColor(JSON.parse(coloresJSON));
+      else this.buscaColor();
+    } else {
+      console.warn('sessionStorage no disponible (SSR o entorno server)');
+      // Opcional: inicializa valores por defecto si quieres
+    }
 
     this.buscar();
   }

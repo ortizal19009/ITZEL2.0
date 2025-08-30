@@ -19,9 +19,16 @@ import { Gastos } from './componentes/contabilidad/presupuestos/gastos/gastos/ga
 import { AddGasto } from './componentes/contabilidad/presupuestos/gastos/add-gasto/add-gasto';
 import { ModiGasto } from './componentes/contabilidad/presupuestos/gastos/modi-gasto/modi-gasto';
 import { InfoGasto } from './componentes/contabilidad/presupuestos/gastos/info-gasto/info-gasto';
+import { CargosComponent } from './componentes/rol/cargos/cargos/cargos.component';
 
 export const routes: Routes = [
   { path: 'inicio', component: AppWrapper },
+  /* 
+  ======================================================================
+  MODULO DE CONTABILIDAD GUBERNAMENTAL
+  ======================================================================
+  */
+
   /* ==========PROYECTOS========== */
   { path: 'proyectos', component: Proyectos, runGuardsAndResolvers: 'always' },
   { path: 'add-proyecto', component: AddProyecto },
@@ -46,6 +53,13 @@ export const routes: Routes = [
   { path: 'add-gastos', component: AddGasto },
   { path: 'modi-gasto/:idpresupuesto', component: ModiGasto },
   { path: 'info-gasto/:idpresupuesto', component: InfoGasto },
+  /* 
+  ======================================================================
+  MODULO ROLES
+  ======================================================================
+  */
+  /* ==========CARGOS========== */
+  { path: 'cargos', component: CargosComponent },
 
   //{ path: '', redirectTo: 'inicio', pathMatch: 'full' },
   { path: '', redirectTo: '/proyectos', pathMatch: 'full' },
