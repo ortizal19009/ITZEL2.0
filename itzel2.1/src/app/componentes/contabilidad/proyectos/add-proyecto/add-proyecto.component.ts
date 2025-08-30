@@ -15,10 +15,10 @@ import { ProyectoService } from '../../../servicios/contabilidad/proyecto.servic
 @Component({
   selector: 'app-add-proyecto',
   imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterLink],
-  templateUrl: './add-proyecto.html',
-  styleUrl: './add-proyecto.css',
+  templateUrl: './add-proyecto.component.html',
+  styleUrl: './add-proyecto.component.css',
 })
-export class AddProyecto implements OnInit {
+export class AddProyectoComponent implements OnInit {
   title: string = 'Crear nuevo proyecto';
   _estructuras: any;
   f_proyecto!: FormGroup;

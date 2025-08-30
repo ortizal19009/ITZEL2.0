@@ -10,10 +10,10 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-modi-proyecto',
   imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterLink],
-  templateUrl: './modi-proyecto.html',
-  styleUrl: './modi-proyecto.css'
+  templateUrl: './modi-proyecto.component.html',
+  styleUrl: './modi-proyecto.component.css'
 })
-export class ModiProyecto implements OnInit{
+export class ModiProyectoComponent implements OnInit{
   title: string = 'Modificar proyecto';
   _estructuras: any;
   f_proyecto!: FormGroup;

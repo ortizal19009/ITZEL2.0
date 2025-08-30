@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
-import { Proyectos } from './componentes/contabilidad/proyectos/proyectos/proyectos';
-import { AddProyecto } from './componentes/contabilidad/proyectos/add-proyecto/add-proyecto';
-import { ModiProyecto } from './componentes/contabilidad/proyectos/modi-proyecto/modi-proyecto';
-import { ImpProyecto } from './componentes/contabilidad/proyectos/imp-proyecto/imp-proyecto';
-import { InfoProyecto } from './componentes/contabilidad/proyectos/info-proyecto/info-proyecto';
+import { ProyectosComponent } from './componentes/contabilidad/proyectos/proyectos/proyectos.component';
+import { AddProyectoComponent } from './componentes/contabilidad/proyectos/add-proyecto/add-proyecto.component';
+import { ModiProyectoComponent } from './componentes/contabilidad/proyectos/modi-proyecto/modi-proyecto.component';
+import { ImpProyectoComponent } from './componentes/contabilidad/proyectos/imp-proyecto/imp-proyecto.component';
+import { InfoProyectoComponent } from './componentes/contabilidad/proyectos/info-proyecto/info-proyecto.component';
 import { Ifinan } from './componentes/contabilidad/ifinan/ifinan/ifinan';
 import { AddIfinan } from './componentes/contabilidad/ifinan/add-ifinan/add-ifinan';
 import { ModiIfinan } from './componentes/contabilidad/ifinan/modi-ifinan/modi-ifinan';
@@ -30,11 +30,11 @@ export const routes: Routes = [
   */
 
   /* ==========PROYECTOS========== */
-  { path: 'proyectos', component: Proyectos, runGuardsAndResolvers: 'always' },
-  { path: 'add-proyecto', component: AddProyecto },
-  { path: 'modi-proyecto/:idproyecto', component: ModiProyecto },
-  { path: 'imp-proyecto', component: ImpProyecto },
-  { path: 'info-proyecto/:codigo', component: InfoProyecto },
+  { path: 'proyectos', component: ProyectosComponent, runGuardsAndResolvers: 'always' },
+  { path: 'add-proyecto', component: AddProyectoComponent },
+  { path: 'modi-proyecto/:idproyecto', component: ModiProyectoComponent },
+  { path: 'imp-proyecto', component: ImpProyectoComponent },
+  { path: 'info-proyecto/:codigo', component: InfoProyectoComponent },
   /* ==========IFINAN========== */
   { path: 'ifinan', component: Ifinan },
   { path: 'add-ifinan', component: AddIfinan },

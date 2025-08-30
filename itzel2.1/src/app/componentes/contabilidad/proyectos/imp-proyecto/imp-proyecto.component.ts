@@ -10,10 +10,10 @@ import { jsPDF } from 'jspdf';
 @Component({
   selector: 'app-imp-proyecto',
   imports: [FormsModule, CommonModule, ReactiveFormsModule, RouterLink],
-  templateUrl: './imp-proyecto.html',
-  styleUrl: './imp-proyecto.css',
+  templateUrl: './imp-proyecto.component.html',
+  styleUrl: './imp-proyecto.component.css',
 })
-export class ImpProyecto implements OnInit {
+export class ImpProyectoComponent implements OnInit {
   f_reporte!: FormGroup;
   pdfSrc: SafeResourceUrl | null = null; // Cambia a SafeResourceUrl
   pdfViwer: boolean = false;
