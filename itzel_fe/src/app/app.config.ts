@@ -7,7 +7,6 @@ import {
   withEventReplay,
 } from '@angular/platform-browser';
 import { provideHttpClient, withFetch } from '@angular/common/http';
-import { Ng2SearchPipe, Ng2SearchPipeModule } from 'ng2-search-filter';
 
 export const appConfig: ApplicationConfig = {
   providers: [

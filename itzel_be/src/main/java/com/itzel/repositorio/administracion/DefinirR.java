@@ -1,4 +1,8 @@
 package com.itzel.repositorio.administracion;
 
-public interface Definir {
+import com.itzel.modelo.administracion.Definir;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface DefinirR extends JpaRepository<Definir, Long> {
+    DefinirR findTopByOrderByIddefinirDesc();
 }
