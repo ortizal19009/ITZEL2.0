@@ -28,21 +28,27 @@
          <table class="table table-sm table-hover text-nowrap table-striped table-head-fixed table-bordered sombra">
             <thead class="">
                <tr class="text-center">
-                  <th>Código</th>
-                  <th>Nombre</th>
+                  <th (click)="ordenarPor('codigo')">Código
+                     <i *ngIf="ordenColumna === 'codigo'"
+                        [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
+                  </th>
+                  <th (click)="ordenarPor('nombre')">Nombre
+                     <i *ngIf="ordenColumna === 'nombre'"
+                        [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
+                  </th>
                   <th>Movimiento</th>
-                  <th>Nivel</th>
+                  <th>Nivel </th>
                   <th></th>
                </tr>
             </thead>
             <tbody class="">
-               <tr class="roboto small pad0" *ngFor="let proyecto of _proyectos | filter:stringFilter; let i = index">
+               <tr class="roboto small pad0" *ngFor="let proyecto of cargosFiltrados; let i = index">
                   <td class="text-left">{{proyecto.codigo}}</td>
                   <td>{{proyecto.nombre}}</td>
                   <td class="text-center">
                      <i class="fa fa-check-circle-o check-circle" aria-hidden="true" [hidden]=!proyecto.movimiento></i>
                   </td>
-                  <td class="text-center">{{proyecto.estructura.nivel}}</td>
+                  <td class="text-center">{{proyecto.estructura}}</td>
                   <td class="text-center">
                      <div class="btn-group py-0">
                         <button type="button" class="btn btn-warning btn-badged dropdown-toggle py-0"

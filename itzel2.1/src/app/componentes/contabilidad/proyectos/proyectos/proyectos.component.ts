@@ -5,15 +5,14 @@ import { Proyecto } from '../../../modelos/contabilidad/proyecto.model';
 import { ProyectoService } from '../../../servicios/contabilidad/proyecto.service';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
-import { FilterPipe } from '../../../pipes/filter.pipe';
 import { AutorizaService } from '../../../servicios/administracion/autoriza.service';
 import { ColoresService } from '../../../servicios/administracion/colores.service';
-import { CargosService } from '../../../servicios/rol/cargos.service';
 import { EliminadosService } from '../../../servicios/administracion/eliminados.service';
 
 @Component({
   selector: 'app-proyectos',
-  imports: [RouterLink, CommonModule, FilterPipe],
+  standalone: true,
+  imports: [RouterLink, CommonModule],
   templateUrl: './proyectos.component.html',
   styleUrl: './proyectos.component.css',
 })
@@ -26,24 +25,25 @@ export class ProyectosComponent implements OnInit {
   swAddProject: Boolean = true;
   _proyecto: Proyecto = new Proyecto();
   cargosFiltrados: Proyecto[] = [];
+  ordenColumna: keyof ProyectoVisual = 'codigo';
+  ordenAscendente: boolean = true;
 
   constructor(
     private proyectosService: ProyectoService,
-    private serverConfigService: ServerConfigService,
     private router: Router,
     public authService: AutorizaService,
     private coloresService: ColoresService,
-    private cargService: CargosService,
     private elimService: EliminadosService
   ) {}
   ngOnInit(): void {
+    console.log(this.authService.idusuario);
     if (!this.authService.sessionlog) {
       this.router.navigate(['/inicio']);
     }
 
     if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {
-      sessionStorage.setItem('ventana', '/cargos');
-      let coloresJSON = sessionStorage.getItem('/cargos');
+      sessionStorage.setItem('ventana', '/proyectos');
+      let coloresJSON = sessionStorage.getItem('/proyectos');
       if (coloresJSON) this.colocaColor(JSON.parse(coloresJSON));
       else this.buscaColor();
     } else {
@@ -54,9 +54,9 @@ export class ProyectosComponent implements OnInit {
   }
   async buscaColor() {
     try {
-      const datos = await this.coloresService.setcolor(this.authService.idusuario!, 'cargos');
+      const datos = await this.coloresService.setcolor(this.authService.idusuario!, 'proyectos');
       const coloresJSON = JSON.stringify(datos);
-      sessionStorage.setItem('/cargos', coloresJSON);
+      sessionStorage.setItem('/proyectos', coloresJSON);
       this.colocaColor(datos);
     } catch (error) {
       console.error('Al buscar la ventana: ', error);
@@ -75,7 +75,7 @@ export class ProyectosComponent implements OnInit {
   getAllProyectos() {
     this.proyectosService.proyectosGetAll().subscribe({
       next: (proyectos: any) => {
-        this._proyectos = proyectos;
+        this.cargosFiltrados = proyectos;
       },
       error: (err: any) => {
         console.error(err.error);
@@ -98,6 +98,34 @@ export class ProyectosComponent implements OnInit {
   }
   cerrar() {
     this.router.navigate(['/inicio']);
+  }
+  ordenarPor(campo: keyof ProyectoVisual): void {
+    console.log(campo);
+    if (this.ordenColumna === campo) {
+      this.ordenAscendente = !this.ordenAscendente;
+    } else {
+      this.ordenColumna = campo;
+      this.ordenAscendente = true;
+    }
+
+    this.cargosFiltrados.sort((a: any, b: any) => {
+      const valorA = a[campo];
+      const valorB = b[campo];
+
+      if (valorA == null && valorB == null) return 0;
+      if (valorA == null) return 1;
+      if (valorB == null) return -1;
+
+      const esNumero = typeof valorA === 'number' && typeof valorB === 'number';
+
+      if (esNumero) {
+        return this.ordenAscendente ? valorA - valorB : valorB - valorA;
+      } else {
+        return this.ordenAscendente
+          ? String(valorA).localeCompare(String(valorB))
+          : String(valorB).localeCompare(String(valorA));
+      }
+    });
   }
 
   swal(icon: any, mensaje: any) {
@@ -126,4 +154,8 @@ export class ProyectosComponent implements OnInit {
       }
     });
   }
+}
+interface ProyectoVisual {
+  codigo: string;
+  nombre: string;
 }

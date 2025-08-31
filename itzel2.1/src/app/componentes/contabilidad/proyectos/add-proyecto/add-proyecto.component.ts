@@ -49,6 +49,55 @@ export class AddProyectoComponent implements OnInit {
     return this.f_proyecto.controls;
   }
 
+  validateForm() {
+    if (this.f_proyecto.invalid) {
+      Object.keys(this.f_proyecto.controls).forEach((field) => {
+        const control = this.f_proyecto.get(field);
+        if (control && control.invalid) {
+          if (control.errors?.['required']) {
+            this.swal('error', `El campo ${field} es obligatorio`);
+          }
+          if (control.errors?.['minlength']) {
+            this.swal(
+              'error',
+              `El campo ${field} debe tener mínimo ${control.errors['minlength'].requiredLength} caracteres`
+            );
+          }
+          if (control.errors?.['maxlength']) {
+            this.swal(
+              'error',
+              `El campo ${field} debe tener máximo ${control.errors['maxlength'].requiredLength} caracteres`
+            );
+          }
+        }
+      });
+      return false;
+    }
+    return true;
+  }
+
+  showControlError(field: string) {
+    const control = this.f_proyecto.get(field);
+
+    if (control && control.invalid && (control.dirty || control.touched)) {
+      if (control.errors?.['required']) {
+        this.swal('error', `El campo ${field} es obligatorio`);
+      }
+      if (control.errors?.['minlength']) {
+        this.swal(
+          'error',
+          `El campo ${field} debe tener mínimo ${control.errors['minlength'].requiredLength} caracteres`
+        );
+      }
+      if (control.errors?.['maxlength']) {
+        this.swal(
+          'error',
+          `El campo ${field} debe tener máximo ${control.errors['maxlength'].requiredLength} caracteres`
+        );
+      }
+    }
+  }
+
   getAllProyectos() {
     this.proyectoService.proyectosGetAll().subscribe({
       next: (proyectos: any) => {},
@@ -70,10 +119,11 @@ export class AddProyectoComponent implements OnInit {
     });
   }
   getValidacionCodigo(codigo: any) {
+    console.log(codigo);
+    console.log(this.f_proyecto.value.nivel);
     const code = codigo.target.value;
     const estructura: any = this.f_proyecto.value;
     const codigoControl = this.f_proyecto.get('codigo');
-
     this.proyectoService.validarCodigo(code).subscribe({
       next: (validador: any) => {
         const longitudEsperada = estructura.estructura.longitud * estructura.estructura.nivel;
@@ -81,6 +131,12 @@ export class AddProyectoComponent implements OnInit {
         const codigoDuplicado = validador;
         const codigoNoValido = codigoDuplicado || longitudInvalida;
         this.sw_codigo = codigoNoValido;
+        if (codigoDuplicado) {
+          this.swal('error', 'El código ya existe');
+        }
+        if (longitudInvalida) {
+          this.swal('error', 'Error en la longitud del codigo ');
+        }
         if (codigoNoValido) {
           codigoControl?.setErrors({ codigoNoValido: true });
         } else {
@@ -95,13 +151,16 @@ export class AddProyectoComponent implements OnInit {
   getValidarNombre(nombre: any) {
     const name = nombre.target.value;
     const nameControl = this.f_proyecto.get('nombre');
-
     this.proyectoService.validarNombre(name).subscribe({
       next: (validador: any) => {
         this.sw_nombre = validador;
 
         if (validador) {
           // Poner error personalizado cuando el nombre es inválido
+          this.swal(
+            'error',
+            'Nombre no valido <br> Nombre ya existe o no cumple con el formato necesario'
+          );
           nameControl?.setErrors({ nombreNoValido: true });
         } else {
           // Quitar errores si es válido

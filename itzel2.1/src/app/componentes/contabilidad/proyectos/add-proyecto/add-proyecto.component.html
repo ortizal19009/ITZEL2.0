@@ -30,7 +30,7 @@
                         <div class="col-sm">
                             <div class="input-group input-group-sm mb-3">
                                 <span class="input-group-text form-control-sm">Código</span>
-                                <input type="text" class="form-control form-control-sm" formControlName="codigo"
+                                <input type="text" class="form-control form-control-sm" (blur)="showControlError('codigo')" formControlName="codigo"
                                     (change)="getValidacionCodigo($event)" [ngClass]="{
                     'is-invalid': f['codigo'].invalid && f['codigo'].touched,
                     'is-valid': f['codigo'].valid && f['codigo'].touched
@@ -42,7 +42,7 @@
                         <div class="col-sm">
                             <div class="input-group input-group-sm mb-3">
                                 <span class="input-group-text form-control-sm">Nombre</span>
-                                <input type="text" class="form-control form-control-sm" formControlName="nombre"
+                                <input type="text" class="form-control form-control-sm" (blur)="showControlError('nombre')" formControlName="nombre"
                                     (change)="getValidarNombre($event)" [ngClass]="{
                     'is-invalid': f['nombre'].invalid && f['nombre'].touched,
                     'is-valid': f['nombre'].valid && f['nombre'].touched

@@ -3,10 +3,11 @@ import { environment } from '../../../../environments/environment';
 import { Router } from '@angular/router';
 import { DefinirService } from './definir.service';
 import { UsuariosService } from './usuarios.service';
+import { ReturnStatement } from '@angular/compiler';
 const backend = environment.BACK;
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AutorizaService {
   // ======================
@@ -17,7 +18,7 @@ export class AutorizaService {
   modulo: number = 0;
   nomodulo: string = '';
   moduActual: number = 0;
-  sessionlog: boolean = true; // OJO ES FALSO 
+  sessionlog: boolean = false; // OJO ES FALSO
   idusuario?: number;
   identificacion?: string;
   alias?: string;
@@ -56,13 +57,21 @@ export class AutorizaService {
   // 🔹 Manejo de módulos
   // ======================
   public enabModulos(): void {
+    console.log(this.idusuario);
     if (this.idusuario == 1) {
       this.enabled = [true, true, true, true, true, true];
     } else {
       const modulos = sessionStorage.getItem('efg');
       this.enabled = modulos
         ? JSON.parse(modulos)
-        : [this.swmodulo1, this.swmodulo2, this.swmodulo3, this.swmodulo4, this.swmodulo5, this.swmodulo6];
+        : [
+            this.swmodulo1,
+            this.swmodulo2,
+            this.swmodulo3,
+            this.swmodulo4,
+            this.swmodulo5,
+            this.swmodulo6,
+          ];
     }
     this.colorenabled = true;
   }
@@ -108,37 +117,40 @@ export class AutorizaService {
   // ======================
   // 🔹 Manejo de sesión
   // ======================
-valsession() {
-  if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {
-    const retrievedEncodedValues = sessionStorage.getItem('abc');
-    if (retrievedEncodedValues !== null) {
-      const retrievedValues = JSON.parse(atob(retrievedEncodedValues));
-      this.sessionlog = true;
-      this.idusuario = retrievedValues.idusuario;
-      this.alias = retrievedValues.alias;
-      this.modulo = retrievedValues.object.modulo;
-      this.moduActual = retrievedValues.object.moduActual;
-      this.nomodulo = retrievedValues.object.nomodulo;
-      this.priusu = retrievedValues.priusu;
-      this.msgval = retrievedValues.msgval;
-      this.swmusica = retrievedValues.swmusica;
-      this.enabModulos();
+  valsession() {
+    if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {
+      const retrievedEncodedValues = sessionStorage.getItem('abc');
+      if (retrievedEncodedValues !== null) {
+        const retrievedValues = JSON.parse(atob(retrievedEncodedValues));
+        console.log(retrievedValues);
+        this.sessionlog = true;
+        this.idusuario = retrievedValues.idusuario;
+        this.alias = retrievedValues.alias;
+        this.modulo = retrievedValues.object.modulo;
+        this.moduActual = retrievedValues.object.moduActual;
+        this.nomodulo = retrievedValues.object.nomodulo;
+        this.priusu = retrievedValues.priusu;
+        this.msgval = retrievedValues.msgval;
+        this.swmusica = retrievedValues.swmusica;
+        this.enabModulos();
+      }
+    } else {
+      console.warn('sessionStorage no disponible (SSR o entorno server)');
+      // Aquí puedes inicializar valores por defecto si quieres
     }
-  } else {
-    console.warn('sessionStorage no disponible (SSR o entorno server)');
-    // Aquí puedes inicializar valores por defecto si quieres
   }
-}
-
 
   // Obtiene y valida el nombre de la Empresa
   private nomEmpresa() {
     this.defService.getByIddefinir(1).subscribe({
       next: (resp: any) => {
-        sessionStorage.setItem('empresa', JSON.stringify({
-          empresa: resp.empresa,
-          fechap: resp.fechap
-        }));
+        sessionStorage.setItem(
+          'empresa',
+          JSON.stringify({
+            empresa: resp.empresa,
+            fechap: resp.fechap,
+          })
+        );
       },
       error: (err: any) => console.error(err.error),
     });
@@ -179,4 +191,3 @@ valsession() {
     });
   }
 }
-

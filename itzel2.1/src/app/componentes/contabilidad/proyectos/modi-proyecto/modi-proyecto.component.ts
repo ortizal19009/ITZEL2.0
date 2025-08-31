@@ -1,6 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { EstructuraService } from '../../../servicios/contabilidad/estructura.service';
 import { ProyectoService } from '../../../servicios/contabilidad/proyecto.service';
@@ -11,9 +17,9 @@ import Swal from 'sweetalert2';
   selector: 'app-modi-proyecto',
   imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterLink],
   templateUrl: './modi-proyecto.component.html',
-  styleUrl: './modi-proyecto.component.css'
+  styleUrl: './modi-proyecto.component.css',
 })
-export class ModiProyectoComponent implements OnInit{
+export class ModiProyectoComponent implements OnInit {
   title: string = 'Modificar proyecto';
   _estructuras: any;
   f_proyecto!: FormGroup;
@@ -68,19 +74,30 @@ export class ModiProyectoComponent implements OnInit{
       error: (e: any) => console.error(e),
     });
   }
+
+  get f() {
+    return this.f_proyecto.controls;
+  }
+
   getValidacionCodigo(codigo: any) {
+    console.log(codigo);
+    console.log(this.f_proyecto.value.nivel);
     const code = codigo.target.value;
     const estructura: any = this.f_proyecto.value;
     const codigoControl = this.f_proyecto.get('codigo');
-
     this.proyectoService.validarCodigo(code).subscribe({
       next: (validador: any) => {
-        const longitudEsperada =
-          estructura.estructura.longitud * estructura.estructura.nivel;
+        const longitudEsperada = estructura.estructura.longitud * estructura.estructura.nivel;
         const longitudInvalida = code.length !== longitudEsperada;
         const codigoDuplicado = validador;
         const codigoNoValido = codigoDuplicado || longitudInvalida;
         this.sw_codigo = codigoNoValido;
+        if (codigoDuplicado) {
+          this.swal('error', 'El código ya existe');
+        }
+        if (longitudInvalida) {
+          this.swal('error', 'Error en la longitud del codigo ');
+        }
         if (codigoNoValido) {
           codigoControl?.setErrors({ codigoNoValido: true });
         } else {
@@ -91,20 +108,20 @@ export class ModiProyectoComponent implements OnInit{
       error: (e: any) => console.error(e),
     });
   }
-  get f() {
-    return this.f_proyecto.controls;
-  }
 
   getValidarNombre(nombre: any) {
     const name = nombre.target.value;
     const nameControl = this.f_proyecto.get('nombre');
-
     this.proyectoService.validarNombre(name).subscribe({
       next: (validador: any) => {
         this.sw_nombre = validador;
 
         if (validador) {
           // Poner error personalizado cuando el nombre es inválido
+          this.swal(
+            'error',
+            'Nombre no valido <br> Nombre ya existe o no cumple con el formato necesario'
+          );
           nameControl?.setErrors({ nombreNoValido: true });
         } else {
           // Quitar errores si es válido

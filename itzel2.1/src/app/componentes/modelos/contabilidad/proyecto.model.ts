@@ -2,7 +2,7 @@ import { Estructura } from "./estructura.model";
 
 export class Proyecto {
   idproyecto?: number;
-  codig?: string;
+  codigo?: string;
   nombre?: string;
   movimiento?: boolean;
   estructura?: Estructura;
