@@ -70,7 +70,6 @@ var uPlot = (function () {
 	}
 
 	function getMinMaxLog(data, _i0, _i1) {
-	//	console.log("getMinMax()");
 
 		let _min = inf;
 		let _max = -inf;

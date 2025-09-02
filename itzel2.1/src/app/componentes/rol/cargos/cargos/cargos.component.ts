@@ -155,7 +155,6 @@ export class CargosComponent implements OnInit {
   }
 
   guardar() {
-    // console.log(this.formCargo.value)
     let fecha: Date = new Date();
     let estrfunc: any; //Para no actualizar el formulario por el mensaje de validación
     estrfunc = this.formCargo.value;

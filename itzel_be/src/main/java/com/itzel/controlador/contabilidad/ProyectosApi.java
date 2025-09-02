@@ -36,16 +36,14 @@ public class ProyectosApi {
     private ProyectosService proyectosService;
     @Autowired
     private ReportService jasperReportService;
-
-   // public ProyectosApi(ReportService jasperReportService) {
-     //   this.jasperReportService = jasperReportService;
-    //}
+    
     @Autowired
     private Report_i reportI;
 
     @GetMapping
     public ResponseEntity<List<Proyectos>> getAll(){
-        List<Proyectos> proyectos  = proyectosService.findAll(Sort.by(Sort.Order.asc("codigo")));
+        //Encontrar todos los proyectos menos el de codigo 00
+        List<Proyectos> proyectos  = proyectosService.findByCodigoNotOrderByCodigoAsc("00");
         if (proyectos != null){
             return ResponseEntity.ok(proyectos);
         }

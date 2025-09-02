@@ -119,8 +119,6 @@ export class AddProyectoComponent implements OnInit {
     });
   }
   getValidacionCodigo(codigo: any) {
-    console.log(codigo);
-    console.log(this.f_proyecto.value.nivel);
     const code = codigo.target.value;
     const estructura: any = this.f_proyecto.value;
     const codigoControl = this.f_proyecto.get('codigo');
@@ -172,7 +170,6 @@ export class AddProyectoComponent implements OnInit {
   }
 
   save() {
-    console.log(this.f_proyecto.value);
     this.proyectoService.proyectoSave(this.f_proyecto.value).subscribe({
       next: (request: any) => {
         this._request = request.message;

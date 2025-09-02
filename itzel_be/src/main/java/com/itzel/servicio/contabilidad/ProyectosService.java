@@ -26,6 +26,11 @@ public class ProyectosService {
     public List<Proyectos> findAll(Sort sort){
         return dao.findAll(sort);
     }
+    //Encontrar todos los proyectos menos el de codigo 00
+    public List<Proyectos> findByCodigoNotOrderByCodigoAsc(String code){
+     return dao.findByCodigoNotOrderByCodigoAsc(code);
+    }
+
     public Optional<Proyectos> findById(Long idestrfunc){
         return dao.findById(idestrfunc);
     }
@@ -41,9 +46,6 @@ public class ProyectosService {
     public Map<String, Object> save(Proyectos e) {
         Map<String, Object> response = new HashMap<>();
         try {
-            System.out.println(e.getCodigo());
-            System.out.println(e.getEstructura());
-            System.out.println(e.getFeccrea());
             if (e == null || e.getCodigo() == null || e.getEstructura() == null) {
                 response.put("status", "error");
                 response.put("message", "Dato de ingreso inválido.");

@@ -1,6 +1,6 @@
 export class Estructura {
   idestructura?: number;
-  nivel?: number;
+  nivel!: number;
   nombre?: string;
   longitud?: number;
 }

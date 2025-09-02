@@ -63,7 +63,6 @@ export class ImpProyectoComponent implements OnInit {
   getAllProyectos(doc: any, header: any) {
     this.proyectoService.proyectosGetAll().subscribe({
       next: async (datos: any) => {
-        console.log(datos);
         datos.forEach(async (item: any) => {
           await this.datosImprimir.push([
             item.codigo,

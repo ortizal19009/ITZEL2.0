@@ -80,8 +80,6 @@ export class ModiProyectoComponent implements OnInit {
   }
 
   getValidacionCodigo(codigo: any) {
-    console.log(codigo);
-    console.log(this.f_proyecto.value.nivel);
     const code = codigo.target.value;
     const estructura: any = this.f_proyecto.value;
     const codigoControl = this.f_proyecto.get('codigo');

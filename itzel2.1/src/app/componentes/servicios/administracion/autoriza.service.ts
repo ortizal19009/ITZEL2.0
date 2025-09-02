@@ -57,7 +57,6 @@ export class AutorizaService {
   // 🔹 Manejo de módulos
   // ======================
   public enabModulos(): void {
-    console.log(this.idusuario);
     if (this.idusuario == 1) {
       this.enabled = [true, true, true, true, true, true];
     } else {
@@ -122,7 +121,6 @@ export class AutorizaService {
       const retrievedEncodedValues = sessionStorage.getItem('abc');
       if (retrievedEncodedValues !== null) {
         const retrievedValues = JSON.parse(atob(retrievedEncodedValues));
-        console.log(retrievedValues);
         this.sessionlog = true;
         this.idusuario = retrievedValues.idusuario;
         this.alias = retrievedValues.alias;

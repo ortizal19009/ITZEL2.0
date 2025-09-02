@@ -8,25 +8,28 @@ import { Router, RouterLink } from '@angular/router';
 import { AutorizaService } from '../../../servicios/administracion/autoriza.service';
 import { ColoresService } from '../../../servicios/administracion/colores.service';
 import { EliminadosService } from '../../../servicios/administracion/eliminados.service';
+import { Estructura } from '../../../modelos/contabilidad/estructura.model';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-proyectos',
   standalone: true,
-  imports: [RouterLink, CommonModule],
+  imports: [RouterLink, CommonModule, FormsModule],
   templateUrl: './proyectos.component.html',
   styleUrl: './proyectos.component.css',
 })
 export class ProyectosComponent implements OnInit {
   title?: string = 'Proyectos';
-  _proyectos?: any;
+  proyectos: any[] = [];
   stringFilter!: string;
   options: any = {};
   messageRecived: string = '';
   swAddProject: Boolean = true;
   _proyecto: Proyecto = new Proyecto();
-  cargosFiltrados: Proyecto[] = [];
+  proyectosFiltrados: Proyecto[] = [];
   ordenColumna: keyof ProyectoVisual = 'codigo';
   ordenAscendente: boolean = true;
+  estructura: Estructura[] = [];
 
   constructor(
     private proyectosService: ProyectoService,
@@ -36,7 +39,6 @@ export class ProyectosComponent implements OnInit {
     private elimService: EliminadosService
   ) {}
   ngOnInit(): void {
-    console.log(this.authService.idusuario);
     if (!this.authService.sessionlog) {
       this.router.navigate(['/inicio']);
     }
@@ -75,13 +77,31 @@ export class ProyectosComponent implements OnInit {
   getAllProyectos() {
     this.proyectosService.proyectosGetAll().subscribe({
       next: (proyectos: any) => {
-        this.cargosFiltrados = proyectos;
+        this.proyectos = proyectos; // guardo todos los proyectos
+        this.proyectosFiltrados = [...proyectos]; // inicializo lista filtrada
       },
       error: (err: any) => {
         console.error(err.error);
         this.swal('error', err.error);
       },
     });
+  }
+
+  filtrar() {
+    if (!this.stringFilter) {
+      this.proyectosFiltrados = [...this.proyectos]; // si está vacío, muestro todos
+      return;
+    }
+
+    const filter = this.stringFilter.toLowerCase();
+    this.proyectosFiltrados = this.proyectos.filter(
+      (proyecto) =>
+        proyecto.nombre?.toLowerCase().includes(filter) || // ejemplo campo nombre
+        proyecto.codigo?.toLowerCase().includes(filter) // ejemplo campo código
+    );
+  }
+  setEstructura(estructura: any) {
+    return estructura.nivel;
   }
   setDataToDelete(proyecto: any) {
     this._proyecto = proyecto;
@@ -100,7 +120,6 @@ export class ProyectosComponent implements OnInit {
     this.router.navigate(['/inicio']);
   }
   ordenarPor(campo: keyof ProyectoVisual): void {
-    console.log(campo);
     if (this.ordenColumna === campo) {
       this.ordenAscendente = !this.ordenAscendente;
     } else {
@@ -108,7 +127,7 @@ export class ProyectosComponent implements OnInit {
       this.ordenAscendente = true;
     }
 
-    this.cargosFiltrados.sort((a: any, b: any) => {
+    this.proyectosFiltrados.sort((a: any, b: any) => {
       const valorA = a[campo];
       const valorB = b[campo];
 

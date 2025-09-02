@@ -17,7 +17,6 @@ export class UsuariosService {
 
   //
   // getUsuario(a: String, b: String): Observable<boolean> {
-  //   console.log(`${baseUrl}/usuario?a=${a}&b=${b}`)
   //   return this.http.get<boolean>(`${baseUrl}/usuario?a=${a}&b=${b}`);
   // }
 
