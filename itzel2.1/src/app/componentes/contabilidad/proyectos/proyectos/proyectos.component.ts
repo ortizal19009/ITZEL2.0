@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
-import { ServerConfigService } from '../../../servicios/config/server-config.service';
 import { Proyecto } from '../../../modelos/contabilidad/proyecto.model';
 import { ProyectoService } from '../../../servicios/contabilidad/proyecto.service';
 import { CommonModule } from '@angular/common';

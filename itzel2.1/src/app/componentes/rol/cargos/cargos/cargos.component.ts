@@ -4,6 +4,7 @@ import {
   AbstractControl,
   FormBuilder,
   FormGroup,
+  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -19,7 +20,7 @@ import { ColoresService } from '../../../servicios/administracion/colores.servic
 
 @Component({
   selector: 'app-cargos',
-  imports: [CommonModule, ReactiveFormsModule, VisualFormatDirective],
+  imports: [CommonModule, ReactiveFormsModule, VisualFormatDirective, FormsModule],
   templateUrl: './cargos.component.html',
   styleUrl: './cargos.component.css',
 })

@@ -1,1 +1,77 @@
-<p>add-ifinan works!</p>
+<div class="content mt-1 pt-1 px-2">
+    <div class="container-fluid">
+        <div class="row mt-0 px-1 py-1 justify-content-start cabecera border sombra">
+            <h3 class="ml-2 mt-0 mb-0 font-weight-bold text-truncate"> <i class="fa fa-building-o"
+                    aria-hidden="true"></i>
+                &nbsp; {{title}} </h3>
+
+            <div class="btn-group ml-auto mt-0  pb-0">
+                <button type="button" class="bg-transparent border-0 dropdown-toggle text-white text-right mt-0"
+                    data-toggle="dropdown" aria-expanded="false"> <i class="bi-menu-button-wide "></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right bg-dark roboto mt-0 ">
+
+                    <button class="dropdown-item text-white" [routerLink]="['/proyectos']" type="button">
+                        <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+                        &nbsp; Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid mt-3">
+    <div class="row">
+        <div class="col-sm-8 mx-auto">
+            <div class="card card-size p-3">
+                <form [formGroup]="f_ifinan">
+                    <div class="row">
+                        <div class="col-sm">
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text form-control-sm" id="basic-addon1">Código</span>
+                                <input type="text" class="form-control form-control-sm"
+                                    (change)="getValidacionCodigo($event)" formControlName="codifinan"
+                                    aria-describedby="basic-addon1" />
+                                <div *ngIf="sw_codifinan" class="error">
+                                    <i class="bi bi-x-circle p-2 mt-auto"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div class="mb-3">
+                                <div class="input-group input-group-sm mb3">
+                                    <span class="input-group-text form-control-sm" id="basic-addon3">Nombre</span>
+                                    <input type="text" class="form-control" (change)="getValidarNombre($event)"
+                                        formControlName="nomifinan" aria-describedby="basic-addon3 basic-addon4" />
+                                    <div *ngIf="sw_nomifinan" class="error">
+                                        <i class="bi bi-x-circle p-2 mt-auto"></i>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text form-control-sm" id="inputGroupFileAddon01">Foto</span>
+                                </div>
+                                <div class="custom-file">
+                                    <input type="file" formControlName="foto" class="custom-file-input custom-file-input-sm"
+                                        id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                                    <label class="custom-file-label" for="inputGroupFile01">Buscar foto</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="card-footer mb-0 text-center">
+                    <button type="button" (click)="regresar()" class="btn btn-sm btn-success mr-2">Cancelar</button>
+                    <button type="submit" class="btn btn-sm btn-outline-success" (click)="save()"
+                        [disabled]="f_ifinan.invalid">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

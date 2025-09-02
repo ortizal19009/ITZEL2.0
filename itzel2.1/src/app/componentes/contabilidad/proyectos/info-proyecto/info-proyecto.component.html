@@ -3,10 +3,9 @@
         <div class="row mt-0 px-1 py-1 justify-content-start cabecera border sombra">
             <h3 class="ml-2  font-weight-bold text-truncate"> <i class="fa fa-building-o" aria-hidden="true"></i>
                 &nbsp; {{title}} </h3>
-            <div class="col-sm-2 text-center">
-                <input class="form-control form-control-sm text-center mb-0" type="text" placeholder="Filtrar..." />
-            </div>
             <div class="btn-group ml-auto mt-0  pb-0">
+                <input class="form-control form-control-sm text-center " type="text" placeholder="Filtrar..." />
+
                 <button type="button" class="bg-transparent border-0 dropdown-toggle text-white text-right mt-0"
                     data-toggle="dropdown" aria-expanded="false"> <i class="bi-menu-button-wide text-white"></i>
                 </button>
@@ -87,7 +86,7 @@
                                             <tr *ngFor="let pgasto of _pgastos | filter:stringFilter; let i = index ">
                                                 <td class="col-sm-1 text-center">{{i+1}}</td>
                                                 <td class="text-center">{{pgasto.codpar}}</td>
-                                                <td>{{pgasto.nompar}}</td>
+                                                <td class="truncate-text">{{pgasto.nompar}}</td>
                                                 <td class="col-sm-1 text-right">{{pgasto.inicia +
                                                     pgasto.totmod}}</td>
                                                 <td class="text-right">{{pgasto.inicia}}</td>
