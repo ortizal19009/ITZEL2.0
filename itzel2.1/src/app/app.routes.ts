@@ -18,7 +18,7 @@ import { AppWrapper } from './componentes/layout/app-wrapper/app-wrapper';
 import { Gastos } from './componentes/contabilidad/presupuestos/gastos/gastos/gastos';
 import { AddGasto } from './componentes/contabilidad/presupuestos/gastos/add-gasto/add-gasto';
 import { ModiGasto } from './componentes/contabilidad/presupuestos/gastos/modi-gasto/modi-gasto';
-import { InfoGasto } from './componentes/contabilidad/presupuestos/gastos/info-gasto/info-gasto';
+import { InfoGastoComponent } from './componentes/contabilidad/presupuestos/gastos/info-gasto/info-gasto.component';
 import { CargosComponent } from './componentes/rol/cargos/cargos/cargos.component';
 
 export const routes: Routes = [
@@ -52,7 +52,7 @@ export const routes: Routes = [
   { path: 'gastos', component: Gastos },
   { path: 'add-gastos', component: AddGasto },
   { path: 'modi-gasto/:idpresupuesto', component: ModiGasto },
-  { path: 'info-gasto/:idpresupuesto', component: InfoGasto },
+  { path: 'info-gasto/:idpresupuesto', component: InfoGastoComponent },
   /* 
   ======================================================================
   MODULO ROLES

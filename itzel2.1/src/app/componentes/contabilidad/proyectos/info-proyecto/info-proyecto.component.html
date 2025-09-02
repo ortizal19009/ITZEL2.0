@@ -37,7 +37,8 @@
                         <div class="post">
                             <div class="user-block mb-0">
                                 <div class="card-body table-responsive p-0 " style="height: 550px;">
-                                    <table class="table table-striped table-sm table-hover table-bordered">
+                                    <table
+                                        class="table table-sm table-hover table-striped table-head-fixed table-bordered sombra">
                                         <thead class="text-center">
                                             <tr>
                                                 <th>Código</th>
@@ -70,7 +71,7 @@
 
                                 <div class="card-body table-responsive p-0 " style="height: 500px;">
                                     <table
-                                        class="table table-hover table-head-fixed text-nowrap table-striped table-bordered table-sm ">
+                                        class="table table-sm table-hover table-striped table-head-fixed table-bordered sombra">
                                         <thead class="">
                                             <tr class="text-center">
                                                 <th class="col-sm-1">N°</th>
@@ -86,7 +87,7 @@
                                             <tr *ngFor="let pgasto of _pgastos | filter:stringFilter; let i = index ">
                                                 <td class="col-sm-1 text-center">{{i+1}}</td>
                                                 <td class="text-center">{{pgasto.codpar}}</td>
-                                                <td class="truncate-text">{{pgasto.nompar}}</td>
+                                                <td class="truncate-text" [attr.title]="pgasto.nompar">{{pgasto.nompar}}</td>
                                                 <td class="col-sm-1 text-right">{{pgasto.inicia +
                                                     pgasto.totmod}}</td>
                                                 <td class="text-right">{{pgasto.inicia}}</td>
@@ -99,7 +100,7 @@
                                                         </button>
                                                         <div class="dropdown-menu dropdown-menu-right popLista">
                                                             <button class="dropdown-item" type="button"
-                                                                [routerLink]="['/info-pgasto',pgasto.idpresupuesto]">
+                                                                [routerLink]="['/info-gasto',pgasto.idpresupuesto]">
                                                                 <i class="bi bi-pencil"></i>&nbsp;
                                                                 Info.</button>
                                                         </div>

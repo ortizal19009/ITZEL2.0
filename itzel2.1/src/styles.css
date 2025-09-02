@@ -56,12 +56,23 @@
 }
 
 .truncate-text {
- /*  max-width: 200px;  *//* ajusta el ancho de la celda */
-  white-space: nowrap; /* evita saltos de línea */
-  overflow: hidden; /* oculta lo que no cabe */
-  text-overflow: ellipsis; /* agrega los ... */
-  display: inline-block;
+  max-width: 200px; /* ajusta este valor según el diseño */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /*   display: inline-block; */
   vertical-align: middle;
+}
+.description {
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.description:hover {
+  overflow: visible;
+  white-space: normal;
+  z-index: 1;
 }
 /* ============================================================================ */
 .icoRegresar {
