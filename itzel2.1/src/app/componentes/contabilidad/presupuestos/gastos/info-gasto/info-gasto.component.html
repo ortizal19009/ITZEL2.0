@@ -11,8 +11,6 @@
                     data-toggle="dropdown" aria-expanded="false"> <i class="bi-menu-button-wide "></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right bg-dark roboto mt-0 ">
-                    <button class="dropdown-item text-white" [routerLink]="['/add-proyecto']" type="button">
-                        <i class="bi-calculator-fill"></i> &nbsp; Nuevo</button>
                     <button class="dropdown-item text-white" [routerLink]="['/imp-proyecto']" type="button">
                         <i class="bi bi-printer"></i> &nbsp; Imprimir / Exportar</button>
                     <button class="dropdown-item text-white" [routerLink]="['/inicio']" type="button">
@@ -40,11 +38,11 @@
                     </div>
                     <div class="col-md-6">
                         <strong>Proyecto:</strong>
-                        <span class="text-muted">{{ _pgasto.idproyecto.nombre }}</span>
+                        <span class="text-muted">{{ _pgasto.proyecto?.nombre }}</span>
                     </div>
                     <div class="col-md-6">
                         <strong>Clasificador:</strong>
-                        <span class="text-muted">{{ _pgasto.idclasificador.nompar }}</span>
+                        <span class="text-muted">{{ _pgasto.clasificador?.nompar }}</span>
                     </div>
                     <div class="col-md-6">
                         <strong>Fecha creación:</strong>
@@ -76,9 +74,9 @@
             </div>
 
             <!-- Footer -->
-            <div class="card-footer text-end">
+            <div class="card-footer text-center">
                 <button class="btn btn-sm btn-success" (click)="volver()">
-                    <i class="bi bi-arrow-left"></i> Cancelar
+                   Cancelar
                 </button>
             </div>
         </div>
