@@ -133,7 +133,7 @@ export class AutorizaService {
         this.enabModulos();
       }
     } else {
-      console.warn('sessionStorage no disponible (SSR o entorno server)');
+      console.warn('sessionStorage no disponible (SSR o entorno server), en validar sesion');
       // Aquí puedes inicializar valores por defecto si quieres
     }
   }
