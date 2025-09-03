@@ -11,7 +11,7 @@ import java.time.LocalDate;
 public class Beneficiarios {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idbene;
+    private Long idbeneficiario;
     private String codben;
     private String nomben;
     private String tpidben;
@@ -39,8 +39,8 @@ public class Beneficiarios {
     public Beneficiarios() {
     }
 
-    public Beneficiarios(Long idbene, String codben, String nomben, String tpidben, String rucben, String ciben, String tlfben, String dirben, String mailben, Long tpcueben, String cuebanben, String foto, Gruposbene grupo, Ifinan ifinan, Long swconsufin, Integer modulo, Long usucrea, LocalDate feccrea, Long usumodi, LocalDate fecmodi) {
-        this.idbene = idbene;
+    public Beneficiarios(Long idbeneficiario, String codben, String nomben, String tpidben, String rucben, String ciben, String tlfben, String dirben, String mailben, Long tpcueben, String cuebanben, String foto, Gruposbene grupo, Ifinan ifinan, Long swconsufin, Integer modulo, Long usucrea, LocalDate feccrea, Long usumodi, LocalDate fecmodi) {
+        this.idbeneficiario = idbeneficiario;
         this.codben = codben;
         this.nomben = nomben;
         this.tpidben = tpidben;
@@ -63,11 +63,11 @@ public class Beneficiarios {
     }
 
     public Long getIdbene() {
-        return idbene;
+        return idbeneficiario;
     }
 
-    public void setIdbene(Long idbene) {
-        this.idbene = idbene;
+    public void setIdbene(Long idbeneficiario) {
+        this.idbeneficiario = idbeneficiario;
     }
 
     public String getCodben() {
@@ -220,5 +220,8 @@ public class Beneficiarios {
 
     public void setFecmodi(LocalDate fecmodi) {
         this.fecmodi = fecmodi;
+    }
+
+    public static class Certificaciones {
     }
 }

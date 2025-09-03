@@ -10,14 +10,9 @@ import { FilterPipe } from '../../../pipes/filter.pipe';
 
 @Component({
   selector: 'app-info-proyecto',
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule, 
-    FilterPipe, 
-    RouterLink
-  ],  templateUrl: './info-proyecto.component.html',
-  styleUrl: './info-proyecto.component.css'
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, FilterPipe, RouterLink],
+  templateUrl: './info-proyecto.component.html',
+  styleUrl: './info-proyecto.component.css',
 })
 export class InfoProyectoComponent implements OnInit {
   title: string = 'Detalles proyecto';
@@ -68,6 +63,7 @@ export class InfoProyectoComponent implements OnInit {
   getPartidasGastos(codigo: string) {
     this.presupuestoService.getByCodigoProyectoLike(codigo).subscribe({
       next: (datos: any) => {
+      console.log(datos.body)
         if (datos.body) {
           this._pgastos = datos.body;
           this.swal(datos.status, datos.message);

@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface BeneficiariosR extends JpaRepository<Beneficiarios, Long> {
 
-    @Query(value = "SELECT * FROM beneficiarios WHERE LOWER(nomben) LIKE %?1% and codben LIKE %?2% and (rucben LIKE ?3% OR ciben LIKE ?4%) and idbene > 1 order by nomben", nativeQuery = true)
+    @Query(value = "SELECT * FROM beneficiarios WHERE LOWER(nomben) LIKE %?1% and codben LIKE %?2% and (rucben LIKE ?3% OR ciben LIKE ?4%) and idbeneficiario > 1 order by nomben", nativeQuery = true)
     public List<Beneficiarios> findBeneficiarios(String nomben, String codben, String rucben, String ciben);
 
     @Query(value = "SELECT * FROM beneficiarios WHERE LOWER(nomben) LIKE %?1% order by nomben", nativeQuery = true)

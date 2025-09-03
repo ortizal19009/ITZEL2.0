@@ -36,7 +36,7 @@ public class ProyectosApi {
     private ProyectosService proyectosService;
     @Autowired
     private ReportService jasperReportService;
-    
+
     @Autowired
     private Report_i reportI;
 
