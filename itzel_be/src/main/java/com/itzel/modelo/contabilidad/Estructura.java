@@ -57,3 +57,4 @@ public class Estructura {
         this.longitud = longitud;
     }
 }
+

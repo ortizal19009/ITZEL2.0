@@ -17,35 +17,35 @@ import java.util.Optional;
 @CrossOrigin("*")
 public class PresupuestoApi {
     @Autowired
-    private PresupuestoService presupuestoService;
+    private PresupuestoService presuService;
     @GetMapping
     public ResponseEntity<Page<Presupuesto>> getdAllByPage(@RequestParam int page, @RequestParam int size){
-        return ResponseEntity.ok(presupuestoService.findAllByPage(page, size));
+        return ResponseEntity.ok(presuService.findAllByPage(page, size));
     }
     @GetMapping("/tippar")
     public ResponseEntity<Page<Presupuesto>> getByTipparPageable(@RequestParam int tippar, @RequestParam int page, @RequestParam int size){
-        return ResponseEntity.ok(presupuestoService.findByTipparPageable(tippar, page, size));
+        return ResponseEntity.ok(presuService.findByTipparPageable(tippar, page, size));
     }
     @GetMapping("/codnom")
     public ResponseEntity<Page<Presupuesto>> getByParDenom(@RequestParam String dato, @RequestParam int tippar, @RequestParam int page, @RequestParam int size){
-        return ResponseEntity.ok(presupuestoService.findByParDenom( dato.toLowerCase(), tippar, page, size));
+        return ResponseEntity.ok(presuService.findByParDenom( dato.toLowerCase(), tippar, page, size));
     }
     @PostMapping
     public ResponseEntity<Presupuesto> savePresupuesto(@RequestBody Presupuesto presupuesto){
-        return  ResponseEntity.ok(presupuestoService.save(presupuesto));
+        return  ResponseEntity.ok(presuService.save(presupuesto));
     }
     @GetMapping("/codpar")
     public ResponseEntity<Presupuesto> getByCodPar(@RequestParam String codpar){
-        return ResponseEntity.ok(presupuestoService.findByCodPar(codpar));
+        return ResponseEntity.ok(presuService.findByCodPar(codpar));
 
     }
     @GetMapping("/byId")
-    public ResponseEntity<Optional<Presupuesto>> findById(@RequestParam Long idpresupuesto){
-        return ResponseEntity.ok(presupuestoService.findById(idpresupuesto));
+    public ResponseEntity<Optional<Presupuesto>> findById(@RequestParam Short idpresupuesto){
+        return ResponseEntity.ok(presuService.findById(idpresupuesto));
     }
     @GetMapping("/presupuestosLike")
     public ResponseEntity<Map<String, Object>> findByCodigoProyectoLike(@RequestParam String codigo){
-        List<Presupuesto> presupuestos = presupuestoService.findByCodigoProyectoLike(codigo);
+        List<Presupuesto> presupuestos = presuService.findByCodigoProyectoLike(codigo);
         Map<String, Object> response = new HashMap<>();
         if(presupuestos.isEmpty()){
             response.put("message", "Datos no encontrados");
@@ -60,7 +60,7 @@ public class PresupuestoApi {
     }
     @GetMapping("/debhab")
     public ResponseEntity<Map<String, Object>> findTipparAndCodpar(@RequestParam int tippar, @RequestParam String codpar){
-        List<Presupuesto> presupuestos = presupuestoService.findTipparAndCodpar(tippar, codpar);
+        List<Presupuesto> presupuestos = presuService.findTipparAndCodpar(tippar, codpar);
         Map<String, Object> response = new HashMap<>();
         if(presupuestos.isEmpty()){
             response.put("message", "Datos no encontrados");
@@ -73,4 +73,60 @@ public class PresupuestoApi {
         }
         return ResponseEntity.ok(response);
     }
+    // Busca por tippar, codpar Y nompar
+    @GetMapping("/busca")
+    public ResponseEntity<List<Presupuesto>> buscarPartidas(@RequestParam short tippar, @RequestParam String codpar,
+                                                            @RequestParam String nompar) {
+        List<Presupuesto> resultados = presuService.buscarPartidasPorCampos(tippar, codpar, nompar);
+        return ResponseEntity.ok(resultados);
+    }
+
+    // Valida códpar
+    @GetMapping("/valcodpar/{codpar}")
+    public ResponseEntity<Boolean> validarCodpar(@PathVariable String codpar) {
+        boolean existe = presuService.valCodpar(codpar);
+        return ResponseEntity.ok(existe);
+    }
+
+    // Valida nompar
+    @GetMapping("/valnompar/{nompar}")
+    public ResponseEntity<Boolean> valNompar(@PathVariable String nompar) {
+        boolean existe = presuService.valNompar(nompar);
+        return ResponseEntity.ok(existe);
+    }
+
+    // Cuenta las partidas del Presupuesto por idclasificador
+    @GetMapping("/countidclasificador/{idclasificador}")
+    public ResponseEntity<Short> cuentaPartidasPorClasificador(@PathVariable short idclasificador) {
+        short cantidad = presuService.cuentaPartidasPorClasificador(idclasificador);
+        return ResponseEntity.ok(cantidad);
+    }
+
+    // Guarda nuevo
+    @PostMapping
+    public Presupuesto save(@RequestBody Presupuesto partida) {
+        return presuService.save(partida);
+    }
+
+    // Busca por idpresupuesto
+    @GetMapping("/{idpresupuesto}")
+    public ResponseEntity<Presupuesto> getByIdPresupuesto(@PathVariable Short idpresupuesto) {
+        Presupuesto partida = presuService.findById(idpresupuesto)
+                .orElseThrow();
+        return ResponseEntity.ok(partida);
+    }
+
+    // Actualiza
+    @PutMapping("/{idpresupuesto}")
+    public Presupuesto actualiza(@PathVariable Short idpresupuesto, @RequestBody Presupuesto x) {
+        return presuService.actualiza(idpresupuesto, x);
+    }
+
+    // Elimina
+    @DeleteMapping("/{idpresupuesto}")
+    public ResponseEntity<Void> delete(@PathVariable("idpresupuesto") Short idpresupuesto) {
+        presuService.deleteById(idpresupuesto);
+        return ResponseEntity.noContent().build();
+    }
+
 }

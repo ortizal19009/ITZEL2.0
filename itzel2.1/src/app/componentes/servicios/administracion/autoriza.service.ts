@@ -188,4 +188,7 @@ export class AutorizaService {
       console.error('Error al reproducir:', error);
     });
   }
+  public mostrarError(d: any, l: any){
+    
+  }
 }

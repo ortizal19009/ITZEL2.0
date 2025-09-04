@@ -3,11 +3,10 @@ package com.itzel.modelo.contabilidad;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
+import java.sql.Timestamp;
 
+@Data
 @Entity
-@Getter
-@Setter
 @Table(name = "proyectos")
 public class Proyectos {
     @Id
@@ -16,13 +15,30 @@ public class Proyectos {
     private String codigo;
     private String nombre;
     private Boolean movimiento;
-    @ManyToOne(fetch = FetchType.EAGER)
+
+    @ManyToOne
     @JoinColumn(name = "idestructura")
     private Estructura estructura;
+
     private Long usucrea;
-    private LocalDate feccrea;
+    private Timestamp feccrea;
     private Long usumodi;
-    private LocalDate fecmodi;
+    private Timestamp fecmodi;
+
+    public Proyectos() {
+    }
+
+    public Proyectos(Long idproyecto, String codigo, String nombre, Boolean movimiento, Estructura estructura, Long usucrea, Timestamp feccrea, Long usumodi, Timestamp fecmodi) {
+        this.idproyecto = idproyecto;
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.movimiento = movimiento;
+        this.estructura = estructura;
+        this.usucrea = usucrea;
+        this.feccrea = feccrea;
+        this.usumodi = usumodi;
+        this.fecmodi = fecmodi;
+    }
 
     public Long getIdproyecto() {
         return idproyecto;
@@ -72,11 +88,11 @@ public class Proyectos {
         this.usucrea = usucrea;
     }
 
-    public LocalDate getFeccrea() {
+    public Timestamp getFeccrea() {
         return feccrea;
     }
 
-    public void setFeccrea(LocalDate feccrea) {
+    public void setFeccrea(Timestamp feccrea) {
         this.feccrea = feccrea;
     }
 
@@ -88,26 +104,11 @@ public class Proyectos {
         this.usumodi = usumodi;
     }
 
-    public LocalDate getFecmodi() {
+    public Timestamp getFecmodi() {
         return fecmodi;
     }
 
-    public void setFecmodi(LocalDate fecmodi) {
+    public void setFecmodi(Timestamp fecmodi) {
         this.fecmodi = fecmodi;
-    }
-
-    public Proyectos(Long idproyecto, String codigo, String nombre, Boolean movimiento, Estructura estructura, Long usucrea, LocalDate feccrea, Long usumodi, LocalDate fecmodi) {
-        this.idproyecto = idproyecto;
-        this.codigo = codigo;
-        this.nombre = nombre;
-        this.movimiento = movimiento;
-        this.estructura = estructura;
-        this.usucrea = usucrea;
-        this.feccrea = feccrea;
-        this.usumodi = usumodi;
-        this.fecmodi = fecmodi;
-    }
-
-    public Proyectos() {
     }
 }

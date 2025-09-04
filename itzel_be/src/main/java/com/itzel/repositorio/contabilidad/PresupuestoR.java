@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface PresupuestoR extends JpaRepository<Presupuesto, Long> {
+public interface PresupuestoR extends JpaRepository<Presupuesto, Short> {
     @Query(value = "SELECT * FROM presupuesto p WHERE p.tippar = ?1 ORDER BY p.codpar",nativeQuery = true)
     public Page<Presupuesto> findByTipparPageable(int tippar, Pageable pageable);
     @Query(value = "SELECT * FROM presupuesto p WHERE (p.codpar like %?1% or LOWER(p.nompar) like %?1%) and p.tippar = ?2 ORDER BY p.codpar",nativeQuery = true)
@@ -27,4 +27,16 @@ public interface PresupuestoR extends JpaRepository<Presupuesto, Long> {
 
 
     List<Presupuesto> findByTipparAndCodparContainingOrderByCodpar(int tippar, String codpar);
+
+    // Busca por tippar y codpar o nompar ordenado por codpar
+    List<Presupuesto> findByTipparAndCodparStartingWithAndNomparContainingIgnoreCaseOrderByCodparAsc(short tippar, String codpar,
+                                                                                                     String nompar);
+    // Valida codpar
+    boolean existsByCodpar(String codpar);
+
+    // Valida nompar
+    boolean existsByNomparIgnoreCase(String nompar);
+
+    // Cuenta las partidas del clasificador por idclasificador
+    short countByClasificador_Idclasificador(short idclasificador);
 }

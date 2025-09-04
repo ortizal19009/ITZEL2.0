@@ -29,6 +29,7 @@ public interface ProyectosR extends JpaRepository<Proyectos, Long> {
     List<Proyectos_rep_int> findByGrupo(String codigo);
     @Query("SELECT p FROM Proyectos p WHERE p.codigo LIKE CONCAT(:codigo, '%')")
     List<Proyectos> findByCodigoLike(@Param("codigo") String codigo);
+
     List<Proyectos> findByCodigoStartingWith(String codigo);
     //Encontrar todos los proyectos menos el de codigo 00
     List<Proyectos> findByCodigoNotOrderByCodigoAsc(String codigo);

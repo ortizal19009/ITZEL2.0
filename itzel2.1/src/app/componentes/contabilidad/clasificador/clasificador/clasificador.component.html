@@ -1,0 +1,113 @@
+<div class="content mt-1 pt-1 pl-0">
+    <div class="container-fluid">
+        <div class="row m-0 px-0 py-1 justify-content-start cabecera border sombra">
+            <div class="col-sm-4">
+                <h5 class="font-weight-bold text-truncate mt-0 my-0"> <i class="bi bi-bezier text-warning"></i>&nbsp;
+                    Clasificador presupuestario</h5>
+            </div>
+            <div class="col-sm-8">
+                <form [formGroup]="formBuscar" (ngSubmit)="buscar()">
+                    <div class="row my-0">
+
+                        <div class="input-group col-sm-6">
+                            <input type="text" class="form-control form-control-sm col-sm-3" formControlName="codpar"
+                                placeholder="Código">
+                            <input type="text" class="form-control form-control-sm text-center col-sm-9"
+                                formControlName="nompar" placeholder="Nombre">
+                        </div>
+
+                        <div class="input-group col-sm-2">
+                            <button class="btn btn-primary btn-sm">
+                                <i *ngIf="swbuscando" class="fa fa-spinner"></i>
+                                <i *ngIf="!swbuscando" class="fa fa-search"></i> {{txtbuscar}}
+                            </button>
+                        </div>
+
+                        <div *ngIf="_clasificador?.length" class="input-group col-sm-3">
+                            <input type="text" class="form-control form-control-sm text-center"
+                                formControlName="filtroControl" placeholder="Filtrar...">
+                        </div>
+
+                        <div class="btn-group ml-auto mt-0">
+                            <button type="button" class="bg-transparent border-0 dropdown-toggle text-white text-right"
+                                data-toggle="dropdown" aria-expanded="false"> <i
+                                    class="bi-menu-button-wide text-white"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right bg-dark roboto ">
+                                <button class="dropdown-item" type="button" (click)="nuevo()">
+                                    <i class="bi-file-earmark-plus text-info"></i>&nbsp; Nuevo</button>
+                                <button class="dropdown-item" type="button" (click)="imprimir()">
+                                    <i class="bi bi-printer text-info"></i>&nbsp; Imprimir / Exportar</button>
+                                <button class="dropdown-item" type="button" (click)="cerrar()">
+                                    <i class="bi-x-circle text-info"></i>&nbsp; Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row mb-0">
+        <div class="col-sm-12">
+            <table *ngIf="_clasificador?.length" class="table table-hover table-bordered table-sm sombra">
+                <thead class="cabecera">
+                    <tr class="pad0">
+                        <th class="col-md-1 text-truncate cursor" (click)="ordenarPor('codpar')">Código
+                            <i *ngIf="ordenColumna === 'codpar'"
+                                [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
+                        </th>
+                        <th class="col-md-5 cursor" (click)="ordenarPor('nompar')">Nombre
+                            <i *ngIf="ordenColumna === 'nompar'"
+                                [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
+                        </th>
+                        <th class="col-md-6 text-center cursor" (click)="ordenarPor('despar')">Descripción
+                            <i *ngIf="ordenColumna === 'despar'"
+                                [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody class="detalle roboto small">
+                    <tr *ngFor="let partida of partiFiltradas" class="fila pad0"
+                        (click)="onCellClick($event, partida )">
+                        <td [ngClass]="{'font-weight-bold': partida.nivpar < 4}">{{ partida.codpar}}</td>
+                        <td [ngClass]="{'font-weight-bold': partida.nivpar < 4}" class="text-truncate ancho200"
+                            data-toggle="tooltip" [title]="partida.nompar.length > 60 ? partida.nompar : ''">{{
+                            partida.nompar
+                            }}</td>
+                        <td [ngClass]="{'font-weight-bold': partida.nivpar < 4}"
+                            class="text-left text-truncate ancho200" data-toggle="tooltip"
+                            [title]="partida.despar!.length > 60 ? partida.despar : ''">{{ partida.despar
+                            }}</td>
+
+                        <td class="text-center">
+                            <div class="btn-group py-0">
+                                <button type="button" class="btn btn-warning btn-xs dropdown-toggle py-0"
+                                    data-toggle="dropdown" aria-expanded="false">
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right popLista">
+                                    <button class="dropdown-item" type="button"
+                                        (click)="modificar( partida.idclasificador )">
+                                        <i class="bi bi-pencil"></i>&nbsp; Modificar</button>
+                                    <button class="dropdown-item" type="button" data-toggle="modal"
+                                        data-target="#elimArticulo" (click)="eliminar( partida )">
+                                        <i class="bi bi-file-minus"></i>&nbsp; Eliminar</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot class="font-weight-bold detalle roboto small pad0">
+                    <td></td>
+                    <td>TOTAL: {{partiFiltradas.length}}</td>
+                    <td></td>
+                    <td></td>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+</div>

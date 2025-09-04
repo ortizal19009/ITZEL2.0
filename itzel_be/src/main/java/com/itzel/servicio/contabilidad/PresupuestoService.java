@@ -30,13 +30,10 @@ public class PresupuestoService {
         return dao.findByParDenom(dato, tippar, pageable);
 
     }
-    public Presupuesto save(Presupuesto presupuesto){
-        return dao.save(presupuesto);
-    }
     public Presupuesto findByCodPar(String codpar){
         return dao.findByCodpar(codpar);
     }
-    public Optional<Presupuesto> findById(Long idpresupuesto){
+    public Optional<Presupuesto> findById(Short idpresupuesto){
         return dao.findById(idpresupuesto);
     }
     public List<Presupuesto>findByCodigoProyectoLike(String codigo){
@@ -44,5 +41,70 @@ public class PresupuestoService {
     }
     public List<Presupuesto> findTipparAndCodpar(int tippar , String codpar){
         return dao.findByTipparAndCodparContainingOrderByCodpar(tippar, codpar);
+    }
+
+
+    // Busca por tippar, codpar Y nompar
+    public List<Presupuesto> buscarPartidasPorCampos(short tippar, String codpar, String nompar) {
+        return dao.findByTipparAndCodparStartingWithAndNomparContainingIgnoreCaseOrderByCodparAsc(tippar, codpar, nompar);
+    }
+
+    // Valida codpar
+    public boolean valCodpar(String codpar) {
+        return dao.existsByCodpar(codpar);
+    }
+
+    // Validar nompar
+    public boolean valNompar(String nompar) {
+        return dao.existsByNomparIgnoreCase(nompar);
+    }
+
+    // Cuenta las partidas del clasificador por idclasificador
+    public short cuentaPartidasPorClasificador(short idclasificador) {
+        return dao.countByClasificador_Idclasificador(idclasificador);
+    }
+
+    // Guarda nuevo
+    public <S extends Presupuesto> S save(S entity) {
+        return dao.save(entity);
+    }
+
+    // Busca por idpresupuesto
+    public Optional<Presupuesto> findById(short idpresupuesto) {
+        return dao.findById(idpresupuesto);
+    }
+
+    // Actualizar
+    public Presupuesto actualiza(Short idpresupuesto, Presupuesto x) {
+        Optional<Presupuesto> y = dao.findById(idpresupuesto);
+        if (y.isPresent()) {
+            Presupuesto partida = y.get();
+            partida.setTippar(x.getTippar());
+            partida.setCodpar(x.getCodpar());
+            partida.setCodigo(x.getCodigo());
+            partida.setNompar(x.getNompar());
+            partida.setInicial(x.getInicial());
+            partida.setTotmod(x.getTotmod());
+            partida.setTotcerti(x.getTotcerti());
+            partida.setTotdeven(x.getTotdeven());
+            partida.setTotmisos(x.getTotmisos());
+            partida.setArrastre(x.getArrastre());
+            partida.setArrastreaa(x.getArrastreaa());
+
+            partida.setUsumodi(x.getUsumodi());
+            partida.setFecmodi(x.getFecmodi());
+
+            partida.setProyecto(x.getProyecto());
+            partida.setClasificador(x.getClasificador());
+
+            return dao.save(partida);
+        } else {
+            throw new RuntimeException("Partida no encontrada con id " + idpresupuesto);
+        }
+    }
+
+    // Eliminar
+    public void deleteById(Short idpresupuesto) {
+        dao.deleteById(idpresupuesto);
     }
 }
