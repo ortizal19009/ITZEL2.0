@@ -57,7 +57,7 @@
                         class="roboto fila">
                         <td class="col-sm-1 text-center">{{i+1 + (page * size)}}</td>
                         <td class="text-center">{{presupuesto.codpar}}</td>
-                        <td class="truncate-text">{{presupuesto.nompar}}</td>
+                        <td class="truncate-text" [attr.title]="presupuesto.nompar">{{presupuesto.nompar}}</td>
                         <td class="col-sm-1 text-right">{{presupuesto.inicial + presupuesto.totmod}}</td>
                         <td class="text-right">{{presupuesto.inicial}}</td>
                         <td class="text-right">{{presupuesto.totmod}}</td>

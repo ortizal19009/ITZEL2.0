@@ -1,85 +1,73 @@
-<div class="content mt-1 pt-1 px-2">
+<div class="content-header">
     <div class="container-fluid">
-        <div class="row mt-0 px-1 py-1 justify-content-start cabecera border sombra">
-            <h3 class="ml-2 mt-0 mb-0 font-weight-bold text-truncate"> <i class="fa fa-building-o"
-                    aria-hidden="true"></i>
-                &nbsp; {{title}} </h3>
-
-            <div class="btn-group ml-auto mt-0  pb-0">
-                
-                <button type="button" class="bg-transparent border-0 dropdown-toggle text-white text-right mt-0"
-                    data-toggle="dropdown" aria-expanded="false"> <i class="bi-menu-button-wide "></i>
-                </button>
-                <div class="dropdown-menu dropdown-menu-right bg-dark roboto mt-0 ">
-                    <button class="dropdown-item text-white" [routerLink]="['/imp-proyecto']" type="button">
-                        <i class="bi bi-printer"></i> &nbsp; Imprimir / Exportar</button>
-                    <button class="dropdown-item text-white" [routerLink]="['/inicio']" type="button">
-                        <i class="fa fa-times-circle-o" aria-hidden="true"></i>
-                        &nbsp; Cerrar</button>
-                </div>
+        <div class="row mt-5 justify-content-center text-center">
+            <div class="col-sm-6 sombra cabecera border">
+                <h5 class="font-weight-bold mt-2">{{title}}</h5>
             </div>
+            
         </div>
     </div>
 </div>
+<div class="content">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="card col-sm-6 detalle sombra">
+                <div class="card-body">
+                    <!-- Datos generales -->
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <strong>Código: </strong>
+                            <span class="text-muted">{{ _pgasto.codigo }}</span>
+                        </div>
+                        <div class="col-md-6">
+                            <strong>Código partida: </strong>
+                            <span class="text-muted">{{ _pgasto.codpar }}</span>
+                        </div>
+                        <div class="col-md-6">
+                            <strong>Proyecto: </strong>
+                            <span class="text-muted">{{ _pgasto.proyecto?.nombre }}</span>
+                        </div>
+                        <div class="col-md-6">
+                            <strong>Clasificador: </strong>
+                            <span class="text-muted">{{ _pgasto.clasificador?.nompar }}</span>
+                        </div>
+                        <div class="col-md-6">
+                            <strong>Fecha creación: </strong>
+                            <span class="text-muted">{{ _pgasto.feccrea | date:'dd/MM/yyyy' }}</span>
+                        </div>
+                    </div>
 
-<div class="container-fluid mt-3">
-    <div class="row mb-0">
-        <div class="col-sm-8 card center-form card-size">
-            <div class="card-body">
-                <!-- Datos generales -->
-                <div class="row g-3">
-                    <div class="col-md-6">
-                        <strong>Código:</strong>
-                        <span class="text-muted">{{ _pgasto.codigo }}</span>
-                    </div>
-                    <div class="col-md-6">
-                        <strong>Código partida:</strong>
-                        <span class="text-muted">{{ _pgasto.codpar }}</span>
-                    </div>
-                    <div class="col-md-6">
-                        <strong>Proyecto:</strong>
-                        <span class="text-muted">{{ _pgasto.proyecto?.nombre }}</span>
-                    </div>
-                    <div class="col-md-6">
-                        <strong>Clasificador:</strong>
-                        <span class="text-muted">{{ _pgasto.clasificador?.nompar }}</span>
-                    </div>
-                    <div class="col-md-6">
-                        <strong>Fecha creación:</strong>
-                        <span class="text-muted">{{ _pgasto.feccrea | date:'dd/MM/yyyy' }}</span>
+                    <hr>
+
+                    <!-- Valores numéricos -->
+                    <div class="row text-center">
+                        <div class="col">
+                            <strong>Inicial</strong>
+                            <p class="mb-0 text-primary fw-bold">{{ _pgasto.inicial | number }}</p>
+                        </div>
+                        <div class="col">
+                            <strong>Certificado</strong>
+                            <p class="mb-0 text-success fw-bold">{{ _pgasto.totcerti | number }}</p>
+                        </div>
+                        <div class="col">
+                            <strong>Devengado</strong>
+                            <p class="mb-0 text-warning fw-bold">{{ _pgasto.totdeven | number }}</p>
+                        </div>
+                        <div class="col">
+                            <strong>Modificado</strong>
+                            <p class="mb-0 text-danger fw-bold">{{ _pgasto.totmod | number }}</p>
+                        </div>
                     </div>
                 </div>
-
-                <hr>
-
-                <!-- Valores numéricos -->
-                <div class="row text-center">
-                    <div class="col">
-                        <strong>Inicial</strong>
-                        <p class="mb-0 text-primary fw-bold">{{ _pgasto.inicia | number }}</p>
-                    </div>
-                    <div class="col">
-                        <strong>Certificado</strong>
-                        <p class="mb-0 text-success fw-bold">{{ _pgasto.totcerti | number }}</p>
-                    </div>
-                    <div class="col">
-                        <strong>Devengado</strong>
-                        <p class="mb-0 text-warning fw-bold">{{ _pgasto.totdeven | number }}</p>
-                    </div>
-                    <div class="col">
-                        <strong>Modificado</strong>
-                        <p class="mb-0 text-danger fw-bold">{{ _pgasto.totmod | number }}</p>
-                    </div>
+                <div class="card-footer text-center">
+                    <button class="btn btn-sm btn-success mr-3" (click)="volver()">
+                        Cancelar
+                    </button>
+                     <button class="btn btn-sm btn-warning" >
+                        Imprimir
+                    </button>
                 </div>
-            </div>
-
-            <!-- Footer -->
-            <div class="card-footer text-center">
-                <button class="btn btn-sm btn-success" (click)="volver()">
-                   Cancelar
-                </button>
             </div>
         </div>
     </div>
-
 </div>

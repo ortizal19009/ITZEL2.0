@@ -10,7 +10,7 @@ import { ColoresService } from '../../../../servicios/administracion/colores.ser
 
 @Component({
   selector: 'app-info-gasto',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './info-gasto.component.html',
   styleUrl: './info-gasto.component.css',
 })
@@ -93,7 +93,6 @@ export class InfoGastoComponent {
   getPresupuestoById(idpresupuesto: number) {
     this.presupuestoService.findById(idpresupuesto).subscribe({
       next: (presupuesto: any) => {
-        console.log(presupuesto);
         this._pgasto = presupuesto;
         this.cdr.detectChanges(); // 👈 fuerza la actualización en la vista
       },

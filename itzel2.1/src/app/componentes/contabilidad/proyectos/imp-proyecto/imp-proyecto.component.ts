@@ -175,54 +175,10 @@ export class ImpProyectoComponent implements OnInit {
         break;
     }
   }
-  _jasperReport() {
-    this.pdfViwer = false;
-    let opt: number = this.f_reporte.value.reporte;
-    let nombre: string = this.f_reporte.value.nombre;
-    const doc = new jsPDF();
-    console.log(opt);
-
-    switch (opt) {
-      case 0:
-        this.proyectoService.getAllProyectosReport().subscribe({
-          next: (datos: any) => {
-            const blob = new Blob([datos], { type: 'application/pdf' });
-            const url = window.URL.createObjectURL(blob);
-            this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-          },
-          error: (e: any) => console.error(e),
-        });
-
-        break;
-      case 1:
-        this.proyectoService
-          .getByNivelProyectosReport(+this.f_reporte.value.nivel.nivel!)
-          .subscribe({
-            next: (datos: any) => {
-              const blob = new Blob([datos], { type: 'application/pdf' });
-              const url = window.URL.createObjectURL(blob);
-              this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-            },
-            error: (e: any) => console.error(e),
-          });
-        break;
-      case 2:
-        this.proyectoService.getCogigoProyectosReport(this.f_reporte.value.grupo).subscribe({
-          next: (datos: any) => {
-            const blob = new Blob([datos], { type: 'application/pdf' });
-            const url = window.URL.createObjectURL(blob);
-            this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-          },
-          error: (e: any) => console.error(e),
-        });
-        break;
-    }
-  }
   jasperReport() {
     this.pdfViwer = false;
     let opt: number = this.f_reporte.value.reporte;
     let f: any = this.f_reporte.value;
-    console.log(opt);
     let body: any;
     switch (opt) {
       case 0:
@@ -247,7 +203,6 @@ export class ImpProyectoComponent implements OnInit {
 
         break;
       case 2:
-        console.log(f.grupo)
         body = {
           reportName: "listaProyectosByGrupo",
           parameters: {

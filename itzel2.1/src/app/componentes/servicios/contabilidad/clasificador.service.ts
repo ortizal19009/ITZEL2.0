@@ -42,7 +42,6 @@ export class ClasificadorService {
 
   //Partidas del clasificador por codpar para datalist
   findPartidasing(codpar: string) {
-    // console.log(`${baseUrl}/partidasing?codpar=${codpar}`)
     return this.http.get<Clasificador[]>(`${baseUrl}/partidasing?codpar=${codpar}`);
   }
 

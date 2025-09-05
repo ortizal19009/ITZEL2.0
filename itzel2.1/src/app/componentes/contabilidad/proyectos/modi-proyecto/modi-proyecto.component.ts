@@ -15,7 +15,7 @@ import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-modi-proyecto',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './modi-proyecto.component.html',
   styleUrl: './modi-proyecto.component.css',
 })

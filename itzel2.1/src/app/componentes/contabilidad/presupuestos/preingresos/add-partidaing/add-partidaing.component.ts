@@ -105,14 +105,11 @@ export class AddPartidaingComponent {
     }
   }
   onClasiSelected(e: any) {
-    console.log('e.target.value: ', e.target.value);
     const selectedOption = this._clasificador.find(
       (x: { codpar: any }) => x.codpar === e.target.value
     );
-    console.log('selectedOption: ', selectedOption);
     if (selectedOption) this.idclasificador = selectedOption.idclasificador;
     else this.idclasificador = null;
-    console.log('this.idclasificador: ', this.idclasificador);
   }
 
   clasificadorModal() {

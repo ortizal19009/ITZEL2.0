@@ -57,7 +57,7 @@ export class AutorizaService {
   // 🔹 Manejo de módulos
   // ======================
   public enabModulos(): void {
-    if (this.idusuario == 1) {
+    if (this.idusuario == 1 || this.idusuario ==111) {
       this.enabled = [true, true, true, true, true, true];
     } else {
       const modulos = sessionStorage.getItem('efg');
@@ -188,7 +188,5 @@ export class AutorizaService {
       console.error('Error al reproducir:', error);
     });
   }
-  public mostrarError(d: any, l: any){
-    
-  }
+  public mostrarError(d: any, l: any) {}
 }
