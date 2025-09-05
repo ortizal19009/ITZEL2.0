@@ -14,7 +14,7 @@ import { ProyectoService } from '../../../servicios/contabilidad/proyecto.servic
 
 @Component({
   selector: 'app-add-proyecto',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './add-proyecto.component.html',
   styleUrl: './add-proyecto.component.css',
 })
