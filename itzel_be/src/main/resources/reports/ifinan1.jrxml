@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.21.2.final using JasperReports Library version 6.21.2-8434a0bd7c3bbc37cbf916f2968d35e4b165821a  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ifinan" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="695b12eb-dd44-40b8-97c5-9d50ddb95dcc">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Erp_epmapat"/>
+	<queryString language="SQL">
+		<![CDATA[select * from ifinan]]>
+	</queryString>
+	<field name="idifinan" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="idifinan"/>
+		<property name="com.jaspersoft.studio.field.label" value="idifinan"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ifinan"/>
+	</field>
+	<field name="codifinan" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="codifinan"/>
+		<property name="com.jaspersoft.studio.field.label" value="codifinan"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ifinan"/>
+	</field>
+	<field name="nomifinan" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nomifinan"/>
+		<property name="com.jaspersoft.studio.field.label" value="nomifinan"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ifinan"/>
+	</field>
+	<field name="foto" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="foto"/>
+		<property name="com.jaspersoft.studio.field.label" value="foto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ifinan"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="40" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="-1" width="185" height="30" uuid="61d01122-d1e9-4923-be85-bdd9d852ee45"/>
+				<textFieldExpression><![CDATA[$F{idifinan}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="185" y="-1" width="185" height="30" uuid="3d1f4b8e-f598-4f17-91a6-e4e1c16ca4f7"/>
+				<textFieldExpression><![CDATA[$F{codifinan}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="370" y="-1" width="185" height="30" uuid="6ea748bd-02d5-48f9-8da4-80bcfdc1b540"/>
+				<textFieldExpression><![CDATA[$F{nomifinan}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

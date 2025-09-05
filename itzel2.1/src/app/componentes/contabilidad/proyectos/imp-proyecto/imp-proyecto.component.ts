@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { jsPDF } from 'jspdf';
 import { JasperreportService } from '../../../servicios/reportes/jasperreport.service';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-imp-proyecto',
   imports: [FormsModule, CommonModule, ReactiveFormsModule, RouterLink],
@@ -33,6 +34,14 @@ export class ImpProyectoComponent implements OnInit {
       value: 2,
       nombre: 'Proyectos por grupo',
     },
+    {
+      value: 3,
+      nombre: 'Ifinan',
+    },
+    {
+      value: 4,
+      nombre: 'Ifinan 2',
+    },
   ];
   listaExtenciones: any[] = [
     {
@@ -56,13 +65,13 @@ export class ImpProyectoComponent implements OnInit {
     private pdfService: PdfService,
     private sanitizer: DomSanitizer,
     private jasperService: JasperreportService
-  ) { }
+  ) {}
   ngOnInit(): void {
     this.f_reporte = this.fb.group({
       reporte: 0,
       nivel: 0,
       grupo: '',
-      extencion: '.pdf'
+      extencion: '.pdf',
     });
     this.getEstructura();
   }
@@ -183,8 +192,8 @@ export class ImpProyectoComponent implements OnInit {
     switch (opt) {
       case 0:
         body = {
-          reportName: "listaProyectos",
-          extencion: f.extencion
+          reportName: 'listaProyectos',
+          extencion: f.extencion,
         };
 
         this.buildReport(body);
@@ -192,11 +201,11 @@ export class ImpProyectoComponent implements OnInit {
         break;
       case 1:
         body = {
-          reportName: "listaProyectosByNivel",
+          reportName: 'listaProyectosByNivel',
           parameters: {
-            nivel: f.nivel.nivel
+            nivel: f.nivel.nivel,
           },
-          extencion: f.extencion
+          extencion: f.extencion,
         };
 
         this.buildReport(body);
@@ -204,11 +213,30 @@ export class ImpProyectoComponent implements OnInit {
         break;
       case 2:
         body = {
-          reportName: "listaProyectosByGrupo",
+          reportName: 'listaProyectosByGrupo',
           parameters: {
-            codigo: f.grupo
+            codigo: f.grupo,
           },
-          extencion: f.extencion
+          extencion: f.extencion,
+        };
+        this.buildReport(body);
+
+        break;
+      case 3:
+        body = {
+          reportName: 'ifinan1',
+          extencion: f.extencion,
+        };
+        this.buildReport(body);
+
+        break;
+      case 4:
+        body = {
+          reportName: 'ifinan',
+          parameters: {
+            limit: 10,
+          },
+          extencion: f.extencion,
         };
         this.buildReport(body);
 
@@ -216,25 +244,28 @@ export class ImpProyectoComponent implements OnInit {
     }
   }
   buildReport(body: any) {
-    this.jasperService.getReporteOfJasper(body)
+    this.jasperService
+      .getReporteOfJasper(body)
       .then((datos: Blob) => {
-        const fileType = body.extencion === ".csv" ? "text/csv" :
-          body.extencion === ".xlsx" ?
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" :
-            "application/pdf";
+        const fileType =
+          body.extencion === '.csv'
+            ? 'text/csv'
+            : body.extencion === '.xlsx'
+            ? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            : 'application/pdf';
 
         const fileName = body.reportName + body.extencion;
 
         const blob = new Blob([datos], { type: fileType });
 
-        if (body.extencion === ".pdf") {
+        if (body.extencion === '.pdf') {
           // mostrar PDF en iframe
           const url = URL.createObjectURL(blob);
           const pdfViewer = document.getElementById('pdfViewer') as HTMLIFrameElement;
           if (pdfViewer) pdfViewer.src = url;
         } else {
           // descargar CSV o XLSX
-          const link = document.createElement("a");
+          const link = document.createElement('a');
           link.href = URL.createObjectURL(blob);
           link.download = fileName;
           link.click();
@@ -242,5 +273,12 @@ export class ImpProyectoComponent implements OnInit {
         }
       })
       .catch((e: any) => console.error(e));
+  }
+
+  swalerta(data: any) {
+    Swal.fire({
+      title: 'vista reporte',
+      html:`` 
+    });
   }
 }
