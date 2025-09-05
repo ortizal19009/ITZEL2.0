@@ -15,8 +15,8 @@ import { Ingresos } from './componentes/contabilidad/presupuestos/ingresos/ingre
 import { AddIngreso } from './componentes/contabilidad/presupuestos/ingresos/add-ingreso/add-ingreso';
 import { ModiIngreso } from './componentes/contabilidad/presupuestos/ingresos/modi-ingreso/modi-ingreso';
 import { AppWrapper } from './componentes/layout/app-wrapper/app-wrapper';
-import { Gastos } from './componentes/contabilidad/presupuestos/gastos/gastos/gastos';
-import { AddGasto } from './componentes/contabilidad/presupuestos/gastos/add-gasto/add-gasto';
+import { GastosComponent } from './componentes/contabilidad/presupuestos/gastos/gastos/gastos.component';
+import { AddGastoComponent } from './componentes/contabilidad/presupuestos/gastos/add-gasto/add-gasto.component';
 import { ModiGasto } from './componentes/contabilidad/presupuestos/gastos/modi-gasto/modi-gasto';
 import { InfoGastoComponent } from './componentes/contabilidad/presupuestos/gastos/info-gasto/info-gasto.component';
 import { CargosComponent } from './componentes/rol/cargos/cargos/cargos.component';
@@ -53,12 +53,12 @@ export const routes: Routes = [
   { path: 'add-ingresos', component: AddIngreso },
   { path: 'modi-ingresos/:idpresupuesto', component: ModiIngreso },
   /* ==========PARTIDAS PRESUPUESTARIAS GASTOS========== */
-  { path: 'gastos', component: Gastos },
-  { path: 'add-gastos', component: AddGasto },
+  { path: 'gastos', component: GastosComponent },
+  { path: 'add-gastos', component: AddGastoComponent },
   { path: 'modi-gasto/:idpresupuesto', component: ModiGasto },
   { path: 'info-gasto/:idpresupuesto', component: InfoGastoComponent },
   { path: 'preingresos', component: PreingresosComponent },
-  { path: 'addpartidaing', component: AddPartidaingComponent },
+  { path: 'add-partidaing', component: AddPartidaingComponent },
   /* ==========CLASIFICADOR========== */
   { path: 'clasificador', component: ClasificadorComponent },
   { path: 'add-clasificador', component: AddClasificadorComponent },

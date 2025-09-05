@@ -269,6 +269,26 @@ public class BuildReportsApi {
         } else if (value instanceof java.util.Date) {
             return value; // Devuelve la fecha tal cual
         } else if (value instanceof String) {
+            // 🔥 Mantener como String, no convertir a Integer
+            return value;
+        }
+        return value;
+    }
+
+
+    private Object _normalizeParameterValue(String key, Object value) {
+        if (value instanceof Integer) {
+            return value;
+        } else if (value instanceof Long) {
+            Long longVal = (Long) value;
+            if (longVal >= Integer.MIN_VALUE && longVal <= Integer.MAX_VALUE) {
+                return longVal.intValue();
+            } else {
+                throw new IllegalArgumentException("El valor Long excede el rango de Integer");
+            }
+        } else if (value instanceof java.util.Date) {
+            return value; // Devuelve la fecha tal cual
+        } else if (value instanceof String) {
             try {
                 Integer intVal = Integer.valueOf((String) value);
                 return intVal;

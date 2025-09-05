@@ -16,6 +16,13 @@ export class ClasificadorService {
 
   constructor(private http: HttpClient) { }
 
+  getAllClasificador() {
+    return this.http.get(`${baseUrl}`);
+  }
+  getAllClasificadorByCodNom(dato: string) {
+    return this.http.get(`${baseUrl}/codnompar?dato=${dato}`);
+  }
+
   //Busca las partidas del clasificador codpar y nompar
   getByCodparyNompar(codpar: String, nompar: String) {
     return this.http.get<Clasificador[]>(`${baseUrl}/busca?codpar=${codpar}&nompar=${nompar}`);

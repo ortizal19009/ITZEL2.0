@@ -3,18 +3,14 @@
         <div class="row mt-0 px-1 py-1 justify-content-start cabecera border sombra">
             <h3 class="ml-2  font-weight-bold text-truncate"> <i class="fa fa-building-o" aria-hidden="true"></i>
                 &nbsp; {{title}} </h3>
-            <div class="col-sm-2 text-center">
-                <input class="form-control form-control-sm text-center mb-0" type="text" placeholder="Filtrar..." />
-            </div>
             <div class="btn-group ml-auto mt-0  pb-0">
-                <button type="button" class="bg-transparent border-0 dropdown-toggle text-white text-right mt-0"
+                <button type="button" class="btn btn-sm bg-transparent border-0 dropdown-toggle text-white text-right mt-0"
                     data-toggle="dropdown" aria-expanded="false"> <i class="bi-menu-button-wide text-white"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right bg-dark roboto mt-0 ">
-                    <button class="dropdown-item" type="button">
-                        <i class="bi-calculator-fill"></i> &nbsp; Conciliación</button>
-                    <button class="dropdown-item" type="button">
-                        <i class="bi bi-printer"></i> &nbsp; Imprimir / Exportar</button>
+                    <button class="dropdown-item" type="button" [routerLink]="['/inicio']">
+                        <i class="bi-calculator-fill"></i> &nbsp; Cerrar</button>
+
                 </div>
             </div>
         </div>
@@ -49,8 +45,8 @@
                                         ({{estructura.nivel}})</option>
                                 </select>
                             </div>
-                            <div class="input-group input-group-sm flex-nowrap" *ngIf="f_reporte.value.reporte==2">
-                                <span class="input-group-text" id="addon-wrapping">Grupo</span>
+                            <div class="input-group input-group-sm form-control-sm flex-nowrap" *ngIf="f_reporte.value.reporte==2">
+                                <span class="input-group-text form-control-sm" id="addon-wrapping">Grupo</span>
                                 <input type="text" class="form-control" aria-describedby="addon-wrapping"
                                     formControlName="grupo">
                             </div>
@@ -79,22 +75,17 @@
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Visor de Reportes</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Visor Reporte</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <iframe id="pdfViewer" *ngIf="pdfViwer" class="pdfViewer" frameborder="0"></iframe>
-                <iframe *ngIf="pdfSrc" [src]="pdfSrc" width="100%" height="600px"></iframe>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-success" data-dismiss="modal">Aceptar</button>
-                <!-- <button type="button" class="btn btn-sm btn-outline-success">Aceptar</button> -->
+                <iframe id="pdfViewer"  class="pdfViewer" frameborder="0" height="400px" style="border:none;"></iframe>
             </div>
         </div>
     </div>

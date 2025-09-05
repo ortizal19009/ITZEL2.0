@@ -7,6 +7,7 @@ import { PdfService } from '../../../servicios/reportes/pdf.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { jsPDF } from 'jspdf';
+import { JasperreportService } from '../../../servicios/reportes/jasperreport.service';
 @Component({
   selector: 'app-imp-proyecto',
   imports: [FormsModule, CommonModule, ReactiveFormsModule, RouterLink],
@@ -39,8 +40,9 @@ export class ImpProyectoComponent implements OnInit {
     private estructuraService: EstructuraService,
     private proyectoService: ProyectoService,
     private pdfService: PdfService,
-    private sanitizer: DomSanitizer
-  ) {}
+    private sanitizer: DomSanitizer,
+    private jasperService: JasperreportService
+  ) { }
   ngOnInit(): void {
     this.f_reporte = this.fb.group({
       reporte: 0,
@@ -158,7 +160,7 @@ export class ImpProyectoComponent implements OnInit {
         break;
     }
   }
-  jasperReport() {
+  _jasperReport() {
     this.pdfViwer = false;
     let opt: number = this.f_reporte.value.reporte;
     let nombre: string = this.f_reporte.value.nombre;
@@ -197,6 +199,95 @@ export class ImpProyectoComponent implements OnInit {
             this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(url);
           },
           error: (e: any) => console.error(e),
+        });
+        break;
+    }
+  }
+  jasperReport() {
+    this.pdfViwer = false;
+    let opt: number = this.f_reporte.value.reporte;
+    let f: any = this.f_reporte.value;
+    console.log(opt);
+    let body: any;
+    switch (opt) {
+      case 0:
+        body = {
+          reportName: "listaProyectos",
+          extencion: ".pdf"
+        };
+
+        this.jasperService.getReporteOfJasper(body).then((blob: Blob) => {
+          setTimeout(() => {
+            const file = new Blob([blob], { type: 'application/pdf' });
+            const fileURL = URL.createObjectURL(file);
+
+            // Asignar el blob al iframe
+            const pdfViewer = document.getElementById(
+              'pdfViewer'
+            ) as HTMLIFrameElement;
+
+            if (pdfViewer) {
+              pdfViewer.src = fileURL;
+            }
+          }, 500);
+        }).catch((e: any) => {
+          console.error(e);
+        });
+
+        break;
+      case 1:
+        body = {
+          reportName: "listaProyectosByNivel",
+          parameters: {
+            nivel: f.nivel.nivel
+          },
+          extencion: ".pdf"
+        };
+
+        this.jasperService.getReporteOfJasper(body).then((blob: Blob) => {
+          setTimeout(() => {
+            const file = new Blob([blob], { type: 'application/pdf' });
+            const fileURL = URL.createObjectURL(file);
+
+            // Asignar el blob al iframe
+            const pdfViewer = document.getElementById(
+              'pdfViewer'
+            ) as HTMLIFrameElement;
+
+            if (pdfViewer) {
+              pdfViewer.src = fileURL;
+            }
+          }, 500);
+        }).catch((e: any) => {
+          console.error(e);
+        });
+        break;
+      case 2:
+        console.log(f.grupo)
+        body = {
+          reportName: "listaProyectosByGrupo",
+          parameters: {
+            codigo: f.grupo
+          },
+          extencion: ".pdf"
+        };
+
+        this.jasperService.getReporteOfJasper(body).then((blob: Blob) => {
+          setTimeout(() => {
+            const file = new Blob([blob], { type: 'application/pdf' });
+            const fileURL = URL.createObjectURL(file);
+
+            // Asignar el blob al iframe
+            const pdfViewer = document.getElementById(
+              'pdfViewer'
+            ) as HTMLIFrameElement;
+
+            if (pdfViewer) {
+              pdfViewer.src = fileURL;
+            }
+          }, 500);
+        }).catch((e: any) => {
+          console.error(e);
         });
         break;
     }

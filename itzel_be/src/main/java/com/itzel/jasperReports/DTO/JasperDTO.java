@@ -1,7 +1,9 @@
 package com.itzel.jasperReports.DTO;
+import lombok.Data;
+
 import java.util.HashMap;
 import java.util.Map;
-
+@Data
 public class JasperDTO {
     private String reportName;
     private Map<String, Object> parameters = new HashMap<>();
