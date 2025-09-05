@@ -1,51 +1,74 @@
 package com.itzel.jasperReports.services;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.util.Map;
 
 import com.itzel.jasperReports.DTO.JasperDTO;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.export.JRCsvExporter;
+import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.export.*;
 import org.springframework.stereotype.Service;
-
-import net.sf.jasperreports.engine.JRParameter;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
 
 @Service
 public class BuildReports {
-    public ByteArrayOutputStream buildReport(JasperDTO jasperDTO, Connection conn) {
-        Map<String, Object> parameters = jasperDTO.getParameters();
+    // PDF
+    public ByteArrayOutputStream buildPdfReport(JasperDTO dto, Connection conn) throws JRException {
+        JasperReport jasperReport = JasperCompileManager.compileReport(
+                getClass().getResourceAsStream("/reports/" + dto.getReportName() + ".jrxml")
+        );
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, dto.getParameters(), conn);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        JasperExportManager.exportReportToPdfStream(jasperPrint, outputStream);
+        return outputStream;
+    }
 
-        try (
-            //Connection conn = dataSource.getConnection(); // Se cierra automáticamente
-                InputStream reportStream = getClass()
-                        .getResourceAsStream("/reports/" + jasperDTO.getReportName() + ".jrxml")) {
-            if (reportStream == null) {
-                throw new RuntimeException("Plantilla " + jasperDTO.getReportName() + ".jrxml no encontrada");
-            }
+    // XLSX
+    public ByteArrayOutputStream buildXlsxReport(JasperDTO dto, Connection conn) throws JRException {
+        JasperReport jasperReport = JasperCompileManager.compileReport(
+                getClass().getResourceAsStream("/reports/" + dto.getReportName() + ".jrxml")
+        );
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, dto.getParameters(), conn);
 
-            parameters.put(JRParameter.REPORT_CONNECTION, conn); // Pasamos la conexión a los subreportes
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        JRXlsxExporter exporter = new JRXlsxExporter();
 
-            JasperReport jasperReport = JasperCompileManager.compileReport(reportStream);
+        exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+        exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputStream));
 
-            // Usa JREmptyDataSource si el reporte principal no usa datos directamente
-            //JRDataSource emptyDataSource = new JREmptyDataSource();
-            // Configurar tema del gráfico
+        SimpleXlsxReportConfiguration configuration = new SimpleXlsxReportConfiguration();
+        configuration.setDetectCellType(true);   // Detecta tipo de celda
+        configuration.setCollapseRowSpan(false);
+        exporter.setConfiguration(configuration);
 
-            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, conn);
+        exporter.exportReport();
+        return outputStream;
+    }
 
-            ByteArrayOutputStream pdfStream = new ByteArrayOutputStream();
-            JasperExportManager.exportReportToPdfStream(jasperPrint, pdfStream);
-            return pdfStream;
+    // CSV
+    public ByteArrayOutputStream buildCsvReport(JasperDTO dto, Connection conn) throws JRException {
+        JasperReport jasperReport = JasperCompileManager.compileReport(
+                getClass().getResourceAsStream("/reports/" + dto.getReportName() + ".jrxml")
+        );
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, dto.getParameters(), conn);
 
-        } catch (Exception e) {
-            System.err.println("Error al generar PDF: " + e.getMessage());
-            e.printStackTrace();
-            throw new RuntimeException("Error al generar PDF", e);
-        }
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        Writer writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);
+
+        JRCsvExporter exporter = new JRCsvExporter();
+        exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+        exporter.setExporterOutput(new SimpleWriterExporterOutput(writer));
+
+        SimpleCsvExporterConfiguration configuration = new SimpleCsvExporterConfiguration();
+        exporter.setConfiguration(configuration);
+
+        exporter.exportReport();
+        return outputStream;
     }
 
 }

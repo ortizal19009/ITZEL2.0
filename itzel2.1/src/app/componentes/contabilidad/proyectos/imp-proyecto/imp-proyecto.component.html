@@ -4,7 +4,8 @@
             <h3 class="ml-2  font-weight-bold text-truncate"> <i class="fa fa-building-o" aria-hidden="true"></i>
                 &nbsp; {{title}} </h3>
             <div class="btn-group ml-auto mt-0  pb-0">
-                <button type="button" class="btn btn-sm bg-transparent border-0 dropdown-toggle text-white text-right mt-0"
+                <button type="button"
+                    class="btn btn-sm bg-transparent border-0 dropdown-toggle text-white text-right mt-0"
                     data-toggle="dropdown" aria-expanded="false"> <i class="bi-menu-button-wide text-white"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right bg-dark roboto mt-0 ">
@@ -45,10 +46,24 @@
                                         ({{estructura.nivel}})</option>
                                 </select>
                             </div>
-                            <div class="input-group input-group-sm form-control-sm flex-nowrap" *ngIf="f_reporte.value.reporte==2">
+                            <div class="input-group input-group-sm form-control-sm flex-nowrap"
+                                *ngIf="f_reporte.value.reporte==2">
                                 <span class="input-group-text form-control-sm" id="addon-wrapping">Grupo</span>
                                 <input type="text" class="form-control" aria-describedby="addon-wrapping"
                                     formControlName="grupo">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-sm-4">
+                            <div class="input-group input-group-sm flex-nowrap">
+                                <span class="input-group-text form-control-sm" id="addon-wrapping">Extenciones</span>
+                                <select type="text" class="form-control form-control-sm" aria-label="Reporte"
+                                    aria-describedby="addon-wrapping" formControlName="extencion">
+                                    <option [ngValue]="reporte.nombre" *ngFor="let reporte of listaExtenciones">
+                                        {{reporte.nombre}}
+                                    </option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -71,21 +86,19 @@
     </div>
 
 </div>
-
-
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
-    aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" *ngIf="f_reporte.value.extencion =='.pdf'" data-backdrop="static"
+    data-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg dialog-scrollable">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header cabecera">
                 <h5 class="modal-title" id="exampleModalLabel">Visor Reporte</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <iframe id="pdfViewer"  class="pdfViewer" frameborder="0" height="400px" style="border:none;"></iframe>
+            <div class="modal-body detalle">
+                <iframe id="pdfViewer" class="pdfViewer" frameborder="0" height="400px" style="border:none;"></iframe>
             </div>
         </div>
     </div>

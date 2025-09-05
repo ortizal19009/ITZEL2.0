@@ -34,6 +34,20 @@ export class ImpProyectoComponent implements OnInit {
       nombre: 'Proyectos por grupo',
     },
   ];
+  listaExtenciones: any[] = [
+    {
+      value: 0,
+      nombre: '.pdf',
+    },
+    {
+      value: 1,
+      nombre: '.xlsx',
+    },
+    {
+      value: 2,
+      nombre: '.csv',
+    },
+  ];
   datosImprimir: any = [];
   constructor(
     private fb: FormBuilder,
@@ -48,6 +62,7 @@ export class ImpProyectoComponent implements OnInit {
       reporte: 0,
       nivel: 0,
       grupo: '',
+      extencion: '.pdf'
     });
     this.getEstructura();
   }
@@ -213,26 +228,10 @@ export class ImpProyectoComponent implements OnInit {
       case 0:
         body = {
           reportName: "listaProyectos",
-          extencion: ".pdf"
+          extencion: f.extencion
         };
 
-        this.jasperService.getReporteOfJasper(body).then((blob: Blob) => {
-          setTimeout(() => {
-            const file = new Blob([blob], { type: 'application/pdf' });
-            const fileURL = URL.createObjectURL(file);
-
-            // Asignar el blob al iframe
-            const pdfViewer = document.getElementById(
-              'pdfViewer'
-            ) as HTMLIFrameElement;
-
-            if (pdfViewer) {
-              pdfViewer.src = fileURL;
-            }
-          }, 500);
-        }).catch((e: any) => {
-          console.error(e);
-        });
+        this.buildReport(body);
 
         break;
       case 1:
@@ -241,26 +240,11 @@ export class ImpProyectoComponent implements OnInit {
           parameters: {
             nivel: f.nivel.nivel
           },
-          extencion: ".pdf"
+          extencion: f.extencion
         };
 
-        this.jasperService.getReporteOfJasper(body).then((blob: Blob) => {
-          setTimeout(() => {
-            const file = new Blob([blob], { type: 'application/pdf' });
-            const fileURL = URL.createObjectURL(file);
+        this.buildReport(body);
 
-            // Asignar el blob al iframe
-            const pdfViewer = document.getElementById(
-              'pdfViewer'
-            ) as HTMLIFrameElement;
-
-            if (pdfViewer) {
-              pdfViewer.src = fileURL;
-            }
-          }, 500);
-        }).catch((e: any) => {
-          console.error(e);
-        });
         break;
       case 2:
         console.log(f.grupo)
@@ -269,27 +253,39 @@ export class ImpProyectoComponent implements OnInit {
           parameters: {
             codigo: f.grupo
           },
-          extencion: ".pdf"
+          extencion: f.extencion
         };
+        this.buildReport(body);
 
-        this.jasperService.getReporteOfJasper(body).then((blob: Blob) => {
-          setTimeout(() => {
-            const file = new Blob([blob], { type: 'application/pdf' });
-            const fileURL = URL.createObjectURL(file);
-
-            // Asignar el blob al iframe
-            const pdfViewer = document.getElementById(
-              'pdfViewer'
-            ) as HTMLIFrameElement;
-
-            if (pdfViewer) {
-              pdfViewer.src = fileURL;
-            }
-          }, 500);
-        }).catch((e: any) => {
-          console.error(e);
-        });
         break;
     }
+  }
+  buildReport(body: any) {
+    this.jasperService.getReporteOfJasper(body)
+      .then((datos: Blob) => {
+        const fileType = body.extencion === ".csv" ? "text/csv" :
+          body.extencion === ".xlsx" ?
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" :
+            "application/pdf";
+
+        const fileName = body.reportName + body.extencion;
+
+        const blob = new Blob([datos], { type: fileType });
+
+        if (body.extencion === ".pdf") {
+          // mostrar PDF en iframe
+          const url = URL.createObjectURL(blob);
+          const pdfViewer = document.getElementById('pdfViewer') as HTMLIFrameElement;
+          if (pdfViewer) pdfViewer.src = url;
+        } else {
+          // descargar CSV o XLSX
+          const link = document.createElement("a");
+          link.href = URL.createObjectURL(blob);
+          link.download = fileName;
+          link.click();
+          URL.revokeObjectURL(link.href);
+        }
+      })
+      .catch((e: any) => console.error(e));
   }
 }
