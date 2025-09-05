@@ -30,4 +30,5 @@ export class Definir {
   clave_firma?: string;
   email?: string;
   clave_email?: string;
+  html?: string;
 }

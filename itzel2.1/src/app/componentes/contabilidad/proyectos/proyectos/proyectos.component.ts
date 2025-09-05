@@ -9,6 +9,8 @@ import { ColoresService } from '../../../servicios/administracion/colores.servic
 import { EliminadosService } from '../../../servicios/administracion/eliminados.service';
 import { Estructura } from '../../../modelos/contabilidad/estructura.model';
 import { FormsModule } from '@angular/forms';
+import { DefinirService } from '../../../servicios/administracion/definir.service';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-proyectos',
@@ -29,19 +31,29 @@ export class ProyectosComponent implements OnInit {
   ordenColumna: keyof ProyectoVisual = 'codigo';
   ordenAscendente: boolean = true;
   estructura: Estructura[] = [];
-
+  saludo!: SafeHtml;
   constructor(
     private proyectosService: ProyectoService,
     private router: Router,
     public authService: AutorizaService,
     private coloresService: ColoresService,
-    private elimService: EliminadosService
+    private elimService: EliminadosService,
+    private definir: DefinirService,
+    private sanitizer: DomSanitizer
   ) {}
   ngOnInit(): void {
-    if (!this.authService.sessionlog) {
+    /*     if (!this.authService.sessionlog) {
       this.router.navigate(['/inicio']);
-    }
-
+    } */
+this.definir.getByIddefinir(1).subscribe({
+      next: (datos: any) => {
+        console.log(datos);
+        this.saludo = this.sanitizer.bypassSecurityTrustHtml(datos.html);
+      },
+      error: (e: any) => {
+        console.error(e.error);
+      },
+    });
     if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {
       sessionStorage.setItem('ventana', '/proyectos');
       let coloresJSON = sessionStorage.getItem('/proyectos');

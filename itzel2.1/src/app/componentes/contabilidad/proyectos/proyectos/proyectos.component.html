@@ -3,9 +3,10 @@
       <div class="row mt-0 px-1 py-1 justify-content-start cabecera border sombra">
          <h3 class="ml-2 mt-0 mb-0 font-weight-bold text-truncate"> <i class="fa fa-building-o" aria-hidden="true"></i>
             &nbsp; {{title}} </h3>
-
+         
          <div class="btn-group ml-auto mt-0  pb-0">
-            <input class="form-control form-control-sm" [(ngModel)]="stringFilter"(input)="filtrar()"placeholder="Filtrar...">
+            <input class="form-control form-control-sm" [(ngModel)]="stringFilter" (input)="filtrar()"
+               placeholder="Filtrar...">
             <button type="button" class="bg-transparent border-0 dropdown-toggle text-white text-right mt-0"
                data-toggle="dropdown" aria-expanded="false"> <i class="bi-menu-button-wide "></i>
             </button>
@@ -22,7 +23,7 @@
       </div>
    </div>
 </div>
-
+<div [innerHTML]="saludo"></div>
 <div class="container-fluid ">
    <div class="row mb-0">
       <div class="col-sm-8 table-responsive center-form card-size">

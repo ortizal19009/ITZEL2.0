@@ -24,6 +24,7 @@ export class AutorizaService {
   alias?: string;
   priusu?: string;
   msgval: boolean = false;
+  html?: string;
 
   // ======================
   // 🔹 Configuración de módulos
@@ -57,7 +58,7 @@ export class AutorizaService {
   // 🔹 Manejo de módulos
   // ======================
   public enabModulos(): void {
-    if (this.idusuario == 1 || this.idusuario ==111) {
+    if (this.idusuario == 1 || this.idusuario == 111) {
       this.enabled = [true, true, true, true, true, true];
     } else {
       const modulos = sessionStorage.getItem('efg');
@@ -131,6 +132,7 @@ export class AutorizaService {
         this.msgval = retrievedValues.msgval;
         this.swmusica = retrievedValues.swmusica;
         this.enabModulos();
+        this.nomEmpresa();
       }
     } else {
       console.warn('sessionStorage no disponible (SSR o entorno server), en validar sesion');
@@ -142,7 +144,7 @@ export class AutorizaService {
   private nomEmpresa() {
     this.defService.getByIddefinir(1).subscribe({
       next: (resp: any) => {
-        sessionStorage.setItem(
+          sessionStorage.setItem(
           'empresa',
           JSON.stringify({
             empresa: resp.empresa,

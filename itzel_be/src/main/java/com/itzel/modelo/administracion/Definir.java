@@ -46,11 +46,12 @@ public class Definir {
     private String ubidigi;
     private String ubimagenes;
     private String swpreingsin;
+    private String html;
 
     public Definir() {
     }
 
-    public Definir(Long iddefinir, String razonsocial, String nombrecomercial, String ruc, String direccion, Byte tipoambiente, float iva, String empresa, String ubirepo, String posiacti, String longacti, String naturaleza, LocalDate fechap, String nombre, String ubicomprobantes, String asunto, String textomail, String dirmatriz, LocalDate fechacierre, String f_i, String f_g, BigDecimal porciva, String ciudad, Long idtabla17, String ubidigi, String ubimagenes, String swpreingsin) {
+    public Definir(Long iddefinir, String razonsocial, String nombrecomercial, String ruc, String direccion, Byte tipoambiente, float iva, String empresa, String ubirepo, String posiacti, String longacti, String naturaleza, LocalDate fechap, String nombre, String ubicomprobantes, String asunto, String textomail, String dirmatriz, LocalDate fechacierre, String f_i, String f_g, BigDecimal porciva, String ciudad, Long idtabla17, String ubidigi, String ubimagenes, String swpreingsin, String html) {
         this.iddefinir = iddefinir;
         this.razonsocial = razonsocial;
         this.nombrecomercial = nombrecomercial;
@@ -78,6 +79,7 @@ public class Definir {
         this.ubidigi = ubidigi;
         this.ubimagenes = ubimagenes;
         this.swpreingsin = swpreingsin;
+        this.html = html;
     }
 
     public Long getIddefinir() {
@@ -294,5 +296,13 @@ public class Definir {
 
     public void setSwpreingsin(String swpreingsin) {
         this.swpreingsin = swpreingsin;
+    }
+
+    public String getHtml() {
+        return html;
+    }
+
+    public void setHtml(String html) {
+        this.html = html;
     }
 }
