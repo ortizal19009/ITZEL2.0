@@ -163,6 +163,8 @@ export class ImpProyectoComponent implements OnInit {
     let opt: number = this.f_reporte.value.reporte;
     let nombre: string = this.f_reporte.value.nombre;
     const doc = new jsPDF();
+    console.log(opt);
+
     switch (opt) {
       case 0:
         this.proyectoService.getAllProyectosReport().subscribe({

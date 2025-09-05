@@ -30,10 +30,6 @@ public class PresupuestoApi {
     public ResponseEntity<Page<Presupuesto>> getByParDenom(@RequestParam String dato, @RequestParam int tippar, @RequestParam int page, @RequestParam int size){
         return ResponseEntity.ok(presuService.findByParDenom( dato.toLowerCase(), tippar, page, size));
     }
-    @PostMapping
-    public ResponseEntity<Presupuesto> savePresupuesto(@RequestBody Presupuesto presupuesto){
-        return  ResponseEntity.ok(presuService.save(presupuesto));
-    }
     @GetMapping("/codpar")
     public ResponseEntity<Presupuesto> getByCodPar(@RequestParam String codpar){
         return ResponseEntity.ok(presuService.findByCodPar(codpar));

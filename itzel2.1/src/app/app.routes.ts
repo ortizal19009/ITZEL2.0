@@ -22,6 +22,8 @@ import { InfoGastoComponent } from './componentes/contabilidad/presupuestos/gast
 import { CargosComponent } from './componentes/rol/cargos/cargos/cargos.component';
 import { ClasificadorComponent } from './componentes/contabilidad/clasificador/clasificador/clasificador.component';
 import { AddClasificadorComponent } from './componentes/contabilidad/clasificador/add-clasificador/add-clasificador.component';
+import { PreingresosComponent } from './componentes/contabilidad/presupuestos/preingresos/preingresos/preingresos.component';
+import { AddPartidaingComponent } from './componentes/contabilidad/presupuestos/preingresos/add-partidaing/add-partidaing.component';
 
 export const routes: Routes = [
   { path: 'inicio', component: AppWrapper },
@@ -55,6 +57,8 @@ export const routes: Routes = [
   { path: 'add-gastos', component: AddGasto },
   { path: 'modi-gasto/:idpresupuesto', component: ModiGasto },
   { path: 'info-gasto/:idpresupuesto', component: InfoGastoComponent },
+  { path: 'preingresos', component: PreingresosComponent },
+  { path: 'addpartidaing', component: AddPartidaingComponent },
   /* ==========CLASIFICADOR========== */
   { path: 'clasificador', component: ClasificadorComponent },
   { path: 'add-clasificador', component: AddClasificadorComponent },

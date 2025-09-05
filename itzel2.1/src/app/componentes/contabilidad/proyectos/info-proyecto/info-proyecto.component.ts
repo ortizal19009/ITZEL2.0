@@ -63,7 +63,6 @@ export class InfoProyectoComponent implements OnInit {
   getPartidasGastos(codigo: string) {
     this.presupuestoService.getByCodigoProyectoLike(codigo).subscribe({
       next: (datos: any) => {
-      console.log(datos.body)
         if (datos.body) {
           this._pgastos = datos.body;
           this.swal(datos.status, datos.message);

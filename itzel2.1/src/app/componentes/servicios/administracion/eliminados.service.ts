@@ -6,14 +6,14 @@ import { Observable } from 'rxjs';
 const apiUrl = environment.API_URL;
 const baseUrl = `${apiUrl}/eliminados`;
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EliminadosService {
-  
-   constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-   save(eliminado: Eliminados): Observable<Object> {
-      return this.http.post(baseUrl, eliminado);
-   }
-   
+  save(eliminado: Eliminados): Observable<Object> {
+    return this.http.post(baseUrl, eliminado);
+  }
+
+
 }
