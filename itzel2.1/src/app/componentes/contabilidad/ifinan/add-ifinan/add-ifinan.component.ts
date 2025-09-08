@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-add-ifinan',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './add-ifinan.component.html',
   styleUrl: './add-ifinan.component.css',
 })
@@ -34,6 +34,10 @@ export class AddIfinanComponent implements OnInit {
   getValidarNombre(e: any) {}
   regresar() {
     this.router.navigate(['/ifinan']);
+  }
+  // atajo para acceder a los controles en el template
+  get f() {
+    return this.f_ifinan.controls;
   }
   save() {
     this.s_ifinan.saveIfinancieras(this.f_ifinan.value).subscribe({
