@@ -21,9 +21,16 @@
                                     <input type="text" class="form-control form-control-sm"
                                         (blur)="showControlError('codigo')" formControlName="codigo"
                                         (change)="getValidacionCodigo($event)" [ngClass]="{
-                    'is-invalid': f['codigo'].invalid && f['codigo'].touched,
-                    'is-valid': f['codigo'].valid && f['codigo'].touched
-                  }" />
+            'is-invalid': f['codigo'].invalid && f['codigo'].touched,
+            'is-valid': f['codigo'].valid && f['codigo'].touched
+          }" />
+                                    <div *ngIf="f['codigo'].invalid && f['codigo'].touched" class="invalid-feedback">
+                                        <div *ngIf="f['codigo'].errors?.['required']">⚠️ El código es obligatorio.</div>
+                                        <div *ngIf="f['codigo'].errors?.['minlength']">⚠️ Debe tener al menos 3
+                                            caracteres.</div>
+                                        <div *ngIf="f['codigo'].errors?.['maxlength']">⚠️ No puede superar los 10
+                                            caracteres.</div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -34,11 +41,19 @@
                                     <input type="text" class="form-control form-control-sm"
                                         (blur)="showControlError('nombre')" formControlName="nombre"
                                         (change)="getValidarNombre($event)" [ngClass]="{
-                    'is-invalid': f['nombre'].invalid && f['nombre'].touched,
-                    'is-valid': f['nombre'].valid && f['nombre'].touched
-                  }" />
+            'is-invalid': f['nombre'].invalid && f['nombre'].touched,
+            'is-valid': f['nombre'].valid && f['nombre'].touched
+          }" />
+                                    <div *ngIf="f['nombre'].invalid && f['nombre'].touched" class="invalid-feedback">
+                                        <div *ngIf="f['nombre'].errors?.['required']">⚠️ El nombre es obligatorio.</div>
+                                        <div *ngIf="f['nombre'].errors?.['minlength']">⚠️ El nombre debe contener al
+                                            menos 3 caracteres.</div>
+                                        <div *ngIf="f['nombre'].errors?.['maxlength']">⚠️ El nombre no puede ser tan
+                                            largo.</div>
+                                    </div>
+                                    <!-- Ícono de error extra opcional -->
                                     <div *ngIf="sw_nombre" class="error d-flex align-items-center ps-2">
-                                        <i class="bi bi-x-circle"></i>
+                                        <i class="bi bi-x-circle text-danger"></i>
                                     </div>
                                 </div>
                             </div>
@@ -49,7 +64,7 @@
                             <div class="col-sm">
                                 <div class="input-group input-group-sm mb-3">
                                     <span class="input-group-text form-control-sm">Movimiento</span>
-                                    <select class="form-control form-control-sm" formControlName="movimiento"> >
+                                    <select class="form-control form-control-sm" formControlName="movimiento">
                                         <option [value]="false">No</option>
                                         <option [value]="true">Sí</option>
                                     </select>
@@ -62,7 +77,7 @@
                                     <span class="input-group-text form-control-sm">Estructura</span>
                                     <select class="form-control form-control-sm" formControlName="estructura">
                                         <option *ngFor="let estructura of _estructuras" [ngValue]="estructura">
-                                            {{estructura.nombre}} - Nivel({{estructura.nivel}})
+                                            {{ estructura.nombre }} - Nivel ({{ estructura.nivel }})
                                         </option>
                                     </select>
                                 </div>

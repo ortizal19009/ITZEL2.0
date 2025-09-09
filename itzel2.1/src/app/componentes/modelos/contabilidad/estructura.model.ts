@@ -3,4 +3,5 @@ export class Estructura {
   nivel!: number;
   nombre?: string;
   longitud?: number;
+  sumlongitud?: number;
 }

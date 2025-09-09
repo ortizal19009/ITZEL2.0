@@ -26,6 +26,7 @@ export class AddProyectoComponent implements OnInit {
   sw_nombre: boolean = false;
   _request!: any;
   date: Date = new Date();
+  maxLongitud!: number;
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -110,6 +111,7 @@ export class AddProyectoComponent implements OnInit {
   getAllEsctructuras() {
     this.estructuraService.estructuraGetAll().subscribe({
       next: (estructuras: any) => {
+        console.log(estructuras);
         this._estructuras = estructuras;
         this.f_proyecto.patchValue({
           estructura: estructuras[0],
@@ -117,9 +119,17 @@ export class AddProyectoComponent implements OnInit {
       },
       error: (e: any) => console.error(e),
     });
+    this.estructuraService.findTopByOrderByNivelDesc().subscribe({
+      next: (estructura: any) => {
+        console.log(estructura);
+        this.maxLongitud = estructura.sumlongitud;
+      },
+      error: (e: any) => console.error(e.error),
+    });
   }
   getValidacionCodigo(codigo: any) {
     const code = codigo.target.value;
+    console.log(code);
     const estructura: any = this.f_proyecto.value;
     const codigoControl = this.f_proyecto.get('codigo');
     this.proyectoService.validarCodigo(code).subscribe({

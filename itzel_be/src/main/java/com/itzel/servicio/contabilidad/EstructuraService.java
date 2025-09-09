@@ -15,4 +15,12 @@ public class EstructuraService {
     public List<Estructura> findAll(){
         return dao.findAll();
     }
+    // Devuelve la entidad con el nivel más alto
+    public Estructura findTopByOrderByNivelDesc(){
+        return dao.findTopByOrderByNivelDesc();
+    }
+    // Devuelve todas las entidades con un nivel específico
+    public List<Estructura> findByNivel(Integer nivel){
+        return dao.findByNivel(nivel);
+    }
 }

@@ -4,10 +4,7 @@ import com.itzel.modelo.contabilidad.Estructura;
 import com.itzel.servicio.contabilidad.EstructuraService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,5 +22,16 @@ public class EstructuraApi {
             return ResponseEntity.ok(estructuras);
         }
         return ResponseEntity.noContent().build();
+    }
+
+    // Devuelve la entidad con el nivel más alto
+    @GetMapping("/maxnivel")
+    public ResponseEntity<Estructura >findTopByOrderByNivelDesc(){
+        return ResponseEntity.ok( estructuraService.findTopByOrderByNivelDesc());
+    }
+    // Devuelve todas las entidades con un nivel específico
+    @GetMapping("/findByNivel")
+    public ResponseEntity<List<Estructura>> findByNivel(@RequestParam Integer nivel){
+        return ResponseEntity.ok( estructuraService.findByNivel(nivel));
     }
 }

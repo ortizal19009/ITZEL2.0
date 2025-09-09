@@ -10,26 +10,28 @@ import lombok.*;
 public class Estructura {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idestructura;
+    private Short idestructura;
     private Long nivel;
     private String nombre;
     private Long longitud;
+    private Long sumlongitud;
 
     public Estructura() {
     }
 
-    public Estructura(Long idestructura, Long nivel, String nombre, Long longitud) {
+    public Estructura(Short idestructura, Long nivel, String nombre, Long longitud, Long sumlongitud) {
         this.idestructura = idestructura;
         this.nivel = nivel;
         this.nombre = nombre;
         this.longitud = longitud;
+        this.sumlongitud = sumlongitud;
     }
 
-    public Long getIdestructura() {
+    public Short getIdestructura() {
         return idestructura;
     }
 
-    public void setIdestructura(Long idestructura) {
+    public void setIdestructura(Short idestructura) {
         this.idestructura = idestructura;
     }
 
@@ -55,6 +57,14 @@ public class Estructura {
 
     public void setLongitud(Long longitud) {
         this.longitud = longitud;
+    }
+
+    public Long getSumlongitud() {
+        return sumlongitud;
+    }
+
+    public void setSumlongitud(Long sumlongitud) {
+        this.sumlongitud = sumlongitud;
     }
 }
 
