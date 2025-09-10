@@ -64,7 +64,8 @@
                             <div class="col-sm">
                                 <div class="input-group input-group-sm mb-3">
                                     <span class="input-group-text form-control-sm">Movimiento</span>
-                                    <select class="form-control form-control-sm" formControlName="movimiento">
+                                    <select class="form-control form-control-sm" [disabled]="true"
+                                        formControlName="movimiento">
                                         <option [value]="false">No</option>
                                         <option [value]="true">Sí</option>
                                     </select>
@@ -75,7 +76,8 @@
                             <div class="col-sm">
                                 <div class="input-group input-group-sm mb-3">
                                     <span class="input-group-text form-control-sm">Estructura</span>
-                                    <select class="form-control form-control-sm" formControlName="estructura">
+                                    <select class="form-control form-control-sm" [disabled]="true"
+                                        formControlName="estructura">
                                         <option *ngFor="let estructura of _estructuras" [ngValue]="estructura">
                                             {{ estructura.nombre }} - Nivel ({{ estructura.nivel }})
                                         </option>

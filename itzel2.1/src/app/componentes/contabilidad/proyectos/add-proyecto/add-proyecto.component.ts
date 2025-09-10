@@ -128,14 +128,40 @@ export class AddProyectoComponent implements OnInit {
     });
   }
   getValidacionCodigo(codigo: any) {
-    const code = codigo.target.value;
-    console.log(code);
-    const estructura: any = this.f_proyecto.value;
+    let code = codigo.target.value;
+    console.log(code.length);
+    const cleanCode = code.replace(/[^a-zA-Z0-9]/g, '');
     const codigoControl = this.f_proyecto.get('codigo');
+
+    console.log(this.maxLongitud);
+    if (code.length === this.maxLongitud) {
+      this.f_proyecto.patchValue({
+        movimiento: true,
+      });
+    } else {
+      this.f_proyecto.patchValue({
+        movimiento: false,
+      });
+    }
+    const estructura: any = this.f_proyecto.value;
+    console.log(estructura);
+    console.log(this._estructuras);
+    let _estructuras = this._estructuras;
+    const estructuraEncontrada = _estructuras.find((e: any) => cleanCode.length === e.sumlongitud);
+    console.log(cleanCode.length);
+    this.f_proyecto.patchValue({
+      estructura: estructuraEncontrada,
+    });
+    if (!estructuraEncontrada) {
+      codigoControl?.setErrors({ codigoNoValido: true });
+    } else {
+      codigoControl?.setErrors(null);
+    }
+
+    console.log('estructura encontrada', estructuraEncontrada);
     this.proyectoService.validarCodigo(code).subscribe({
       next: (validador: any) => {
-        const longitudEsperada = estructura.estructura.longitud * estructura.estructura.nivel;
-        const longitudInvalida = code.length !== longitudEsperada;
+        const longitudInvalida = cleanCode.length !== estructuraEncontrada.sumlongitud;
         const codigoDuplicado = validador;
         const codigoNoValido = codigoDuplicado || longitudInvalida;
         this.sw_codigo = codigoNoValido;

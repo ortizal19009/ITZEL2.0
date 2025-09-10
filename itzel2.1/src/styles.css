@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400&family=IBM+Plex+Mono&display=swap');
+
 .cabecera {
   background-color: var(--bgcolor1, #0d6efd); /* Azul Bootstrap por defecto */
   color: white;
@@ -75,6 +77,8 @@
   z-index: 1;
 }
 /* ============================================================================ */
+/* Estilos Globales. Tambien se pueden importar otros archivos*/
+
 .icoRegresar {
   font-size: 20px;
 }
@@ -85,27 +89,6 @@
 
 .sombraClara {
   box-shadow: 0 0 10px white;
-}
-
-.roboto {
-  font-family: 'Roboto', sans-serif;
-  font-size: 14px;
-}
-
-.robotobold {
-  font-family: 'Roboto', sans-serif;
-  font-size: 15px;
-  font-weight: bold;
-}
-
-.robotosmall {
-  font-family: 'Roboto', sans-serif;
-  font-size: 13px;
-}
-
-.robotomini {
-  font-family: 'Roboto', sans-serif;
-  font-size: 11px;
 }
 
 .fila:hover {
@@ -175,11 +158,16 @@
 
 .tachado {
   text-decoration: line-through;
-  text-decoration-style: solid; /* Estilo de línea sólida */
-  text-decoration-color: rgb(77, 76, 76); /* Color del tachado */
-  text-decoration-thickness: 2px; /* Grosor del tachado */
-  text-decoration-skip-ink: none; /* Evita espacios en blanco en el tachado */
-  background-color: lightgray; /* Color de fondo gris claro */
+  text-decoration-style: solid;
+  /* Estilo de línea sólida */
+  text-decoration-color: rgb(77, 76, 76);
+  /* Color del tachado */
+  text-decoration-thickness: 2px;
+  /* Grosor del tachado */
+  text-decoration-skip-ink: none;
+  /* Evita espacios en blanco en el tachado */
+  background-color: lightgray;
+  /* Color de fondo gris claro */
 }
 
 /* === Popup de una lista === */
@@ -214,6 +202,91 @@
   color: rgb(125, 132, 139);
 }
 
+.robotobig {
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+}
+
+.roboto {
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+}
+
+.robotobold {
+  font-family: 'Roboto', sans-serif;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.robotosmall {
+  font-family: 'Roboto', sans-serif;
+  font-size: 13px;
+}
+
+.robotomini {
+  font-family: 'Roboto', sans-serif;
+  font-size: 11px;
+}
+
+.robotolist {
+  font-family: 'Roboto', sans-serif;
+  font-size: 11px;
+  background-color: #343a40;
+  color: rgb(255, 255, 255);
+}
+
 .force-warning {
   color: #ffc107 !important;
+}
+
+/* Estilos para Sweetalert2 */
+/* #0000A8 azul de Pantallazo Azul de la Muerte Lucida Console o Fixedsys*/
+.retro {
+  font-family: 'IBM Plex Mono', monospace;
+  background-color: #000;
+  color: #0f0;
+  font-size: 0.8rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.9);
+}
+
+.swal2-popup .terminal-footer {
+  position: absolute;
+  right: 10px;
+  bottom: 5px;
+  font-size: 0.75rem;
+  color: #0f0;
+}
+
+.eliminar {
+  background-color: #17a2b8;
+  color: white;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.9);
+}
+
+/* ff6565 */
+.noeliminar {
+  background-color: #ac3b3b;
+  color: white;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.9);
+  font-family: 'Roboto', sans-serif;
+}
+
+/* .swal2-popup .swal2-error {
+  border-color: white !important;
+  background-color: white
+} */
+
+/* El borde del círculo */
+.swal2-popup .swal2-error {
+  border-color: white !important;
+  /* círculo blanco */
+  background-color: transparent !important;
+  /* interior transparente */
+}
+
+/* La X */
+.swal2-popup .swal2-error .swal2-x-mark-line-left,
+.swal2-popup .swal2-error .swal2-x-mark-line-right {
+  background-color: white !important;
+  /* la X en blanco */
 }

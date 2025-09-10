@@ -8,19 +8,19 @@ import { AutorizaService } from '../../../servicios/administracion/autoriza.serv
 import { ColoresService } from '../../../servicios/administracion/colores.service';
 import { EliminadosService } from '../../../servicios/administracion/eliminados.service';
 import { Estructura } from '../../../modelos/contabilidad/estructura.model';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DefinirService } from '../../../servicios/administracion/definir.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-proyectos',
   standalone: true,
-  imports: [RouterLink, CommonModule, FormsModule],
+  imports: [RouterLink, CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './proyectos.component.html',
   styleUrl: './proyectos.component.css',
 })
 export class ProyectosComponent implements OnInit {
-  title?: string = 'Proyectos';
+  title: string = 'Proyectos';
   proyectos: any[] = [];
   stringFilter!: string;
   options: any = {};
@@ -32,6 +32,10 @@ export class ProyectosComponent implements OnInit {
   ordenAscendente: boolean = true;
   estructura: Estructura[] = [];
   saludo!: SafeHtml;
+  txtbuscar: string = 'Buscar';
+  swbuscando?: boolean;
+  formBuscar: any;
+
   constructor(
     private proyectosService: ProyectoService,
     private router: Router,
@@ -39,13 +43,16 @@ export class ProyectosComponent implements OnInit {
     private coloresService: ColoresService,
     private elimService: EliminadosService,
     private definir: DefinirService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private fb: FormBuilder
   ) {}
   ngOnInit(): void {
+    let swbuscar: boolean;
+
     /*     if (!this.authService.sessionlog) {
       this.router.navigate(['/inicio']);
     } */
-this.definir.getByIddefinir(1).subscribe({
+    this.definir.getByIddefinir(1).subscribe({
       next: (datos: any) => {
         console.log(datos);
         this.saludo = this.sanitizer.bypassSecurityTrustHtml(datos.html);
@@ -63,7 +70,29 @@ this.definir.getByIddefinir(1).subscribe({
       console.warn('sessionStorage no disponible (SSR o entorno server)');
       // Opcional: inicializa valores por defecto si quieres
     }
-    this.getAllProyectos();
+    let codpar: string;
+    let nompar: string;
+    const buscarPreingresosJSON = sessionStorage.getItem('buscarPreingresos');
+    if (buscarPreingresosJSON) {
+      swbuscar = true;
+      const buscaPartidas = JSON.parse(buscarPreingresosJSON);
+      codpar = buscaPartidas.codpar;
+      nompar = buscaPartidas.nompar;
+    } else {
+      swbuscar = false;
+      codpar = '';
+      nompar = '';
+    }
+    this.formBuscar = this.fb.group({
+      codpar: codpar,
+      nompar: nompar,
+      filtroControl: '',
+    });
+    // Escucha cada cambio en el input del filtro
+    this.formBuscar.get('filtroControl')?.valueChanges.subscribe((valor?: any) => {
+      console.log(valor);
+      this.filtrar(valor);
+    });
   }
   async buscaColor() {
     try {
@@ -74,6 +103,9 @@ this.definir.getByIddefinir(1).subscribe({
     } catch (error) {
       console.error('Al buscar la ventana: ', error);
     }
+  }
+  buscar() {
+    this.getAllProyectos();
   }
 
   colocaColor(colores: any) {
@@ -98,13 +130,13 @@ this.definir.getByIddefinir(1).subscribe({
     });
   }
 
-  filtrar() {
-    if (!this.stringFilter) {
+  filtrar(valor: any) {
+    if (valor) {
       this.proyectosFiltrados = [...this.proyectos]; // si está vacío, muestro todos
       return;
     }
 
-    const filter = this.stringFilter.toLowerCase();
+    const filter = valor.toLowerCase();
     this.proyectosFiltrados = this.proyectos.filter(
       (proyecto) =>
         proyecto.nombre?.toLowerCase().includes(filter) || // ejemplo campo nombre

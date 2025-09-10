@@ -69,9 +69,10 @@
                         </div>
                     </form>
                     <div class="card-footer mb-0 text-center">
-                        <button type="button" (click)="regresar()" class="btn btn-sm btn-success mr-2">Cancelar</button>
-                        <button type="submit" class="btn btn-sm btn-outline-success" (click)="save()"
+                        <button type="submit" class="btn btn-sm btn-success mr-3" (click)="save()"
                             [disabled]="f_proyecto.invalid">Aceptar</button>
+                        <button type="button" (click)="regresar()" class="btn btn-sm btn-outline-success">Cancelar</button>
+
                     </div>
                 </div>
             </div>
