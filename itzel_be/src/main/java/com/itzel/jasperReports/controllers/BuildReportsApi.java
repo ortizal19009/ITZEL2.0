@@ -9,7 +9,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.sql.DataSource;
 
@@ -181,58 +180,4 @@ public class BuildReportsApi {
         return value;
     }
 
-
-    private Object _normalizeParameterValue(String key, Object value) {
-        if (value instanceof Integer) {
-            return value;
-        } else if (value instanceof Long) {
-            Long longVal = (Long) value;
-            if (longVal >= Integer.MIN_VALUE && longVal <= Integer.MAX_VALUE) {
-                return longVal.intValue();
-            } else {
-                throw new IllegalArgumentException("El valor Long excede el rango de Integer");
-            }
-        } else if (value instanceof java.util.Date) {
-            return value; // Devuelve la fecha tal cual
-        } else if (value instanceof String) {
-            try {
-                Integer intVal = Integer.valueOf((String) value);
-                return intVal;
-            } catch (NumberFormatException e) {
-                return value; // o lanza excepción si sabes que debe ser Integer
-            }
-        }
-        return value;
-    }
-
-    @PostMapping("/comprobante")
-    public ResponseEntity<String> imprimirPDF(@RequestParam("pdf") MultipartFile pdfFile) {
-        try {
-            // Guardar archivo temporal
-            File tempFile = File.createTempFile("comprobante_", ".pdf");
-            pdfFile.transferTo(tempFile);
-
-            // Llamar función de impresión
-            imprimirArchivoPDF(tempFile);
-
-            return ResponseEntity.ok("Impresión enviada correctamente.");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(500).body("Error al imprimir: " + e.getMessage());
-        }
-    }
-
-    private void imprimirArchivoPDF(File pdf) throws IOException {
-        String os = System.getProperty("os.name").toLowerCase();
-
-        if (os.contains("win")) {
-            // Windows: usar comando nativo para imprimir
-            String comando = "cmd /c start /min acrord32 /p /h \"" + pdf.getAbsolutePath() + "\"";
-            Runtime.getRuntime().exec(comando);
-        } else {
-            // Linux o macOS: usar lpr
-            String[] comando = { "lp", "-d", "nombre_impresora", pdf.getAbsolutePath() };
-            Process process = new ProcessBuilder(comando).start();
-        }
-    }
 }

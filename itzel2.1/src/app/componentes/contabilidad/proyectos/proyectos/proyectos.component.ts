@@ -48,10 +48,10 @@ export class ProyectosComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     let swbuscar: boolean;
-
-    /*     if (!this.authService.sessionlog) {
+    if (!this.authService.sessionlog) {
       this.router.navigate(['/inicio']);
-    } */
+    }
+
     this.definir.getByIddefinir(1).subscribe({
       next: (datos: any) => {
         console.log(datos);
@@ -104,9 +104,7 @@ export class ProyectosComponent implements OnInit {
       console.error('Al buscar la ventana: ', error);
     }
   }
-  buscar() {
-    this.getAllProyectos();
-  }
+
 
   colocaColor(colores: any) {
     document.documentElement.style.setProperty('--bgcolor1', colores[0]);
@@ -116,7 +114,9 @@ export class ProyectosComponent implements OnInit {
     const detalle = document.querySelector('.detalle');
     if (detalle) detalle.classList.add('nuevoBG2');
   }
-
+  buscar() {
+    this.getAllProyectos();
+  }
   getAllProyectos() {
     this.proyectosService.proyectosGetAll().subscribe({
       next: (proyectos: any) => {

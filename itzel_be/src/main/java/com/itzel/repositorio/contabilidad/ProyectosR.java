@@ -31,6 +31,8 @@ public interface ProyectosR extends JpaRepository<Proyectos, Long> {
     List<Proyectos> findByCodigoLike(@Param("codigo") String codigo);
 
     List<Proyectos> findByCodigoStartingWith(String codigo);
+    List<Proyectos> findByNombreStartingWith(String nombre);
+
     //Encontrar todos los proyectos menos el de codigo 00
     List<Proyectos> findByCodigoNotOrderByCodigoAsc(String codigo);
 }

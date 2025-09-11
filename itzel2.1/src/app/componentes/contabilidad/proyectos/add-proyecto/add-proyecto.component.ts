@@ -11,6 +11,8 @@ import { Router, RouterLink } from '@angular/router';
 import Swal from 'sweetalert2';
 import { EstructuraService } from '../../../servicios/contabilidad/estructura.service';
 import { ProyectoService } from '../../../servicios/contabilidad/proyecto.service';
+import { AutorizaService } from '../../../servicios/administracion/autoriza.service';
+import { ColoresService } from '../../../servicios/administracion/colores.service';
 
 @Component({
   selector: 'app-add-proyecto',
@@ -31,9 +33,15 @@ export class AddProyectoComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private estructuraService: EstructuraService,
-    private proyectoService: ProyectoService
+    private proyectoService: ProyectoService,
+    public authService: AutorizaService,
+    private coloresService: ColoresService
   ) {}
   ngOnInit(): void {
+    if (!this.authService.sessionlog) {
+      this.router.navigate(['/inicio']);
+    }
+
     this.f_proyecto = this.fb.group({
       codigo: ['', [Validators.minLength(2), Validators.required]], // ojo: minLength, no min (min es para números)
       nombre: ['', [Validators.required]],
@@ -42,9 +50,36 @@ export class AddProyectoComponent implements OnInit {
       usucrea: [1],
       feccrea: [this.date],
     });
-
+    if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {
+      sessionStorage.setItem('ventana', '/add-proyecto');
+      let coloresJSON = sessionStorage.getItem('/add-proyecto');
+      if (coloresJSON) this.colocaColor(JSON.parse(coloresJSON));
+      else this.buscaColor();
+    } else {
+      console.warn('sessionStorage no disponible (SSR o entorno server)');
+      // Opcional: inicializa valores por defecto si quieres
+    }
     this.getAllProyectos();
     this.getAllEsctructuras();
+  }
+  async buscaColor() {
+    try {
+      const datos = await this.coloresService.setcolor(this.authService.idusuario!, 'proyectos');
+      const coloresJSON = JSON.stringify(datos);
+      sessionStorage.setItem('/add-proyecto', coloresJSON);
+      this.colocaColor(datos);
+    } catch (error) {
+      console.error('Al buscar la ventana: ', error);
+    }
+  }
+
+  colocaColor(colores: any) {
+    document.documentElement.style.setProperty('--bgcolor1', colores[0]);
+    const cabecera = document.querySelector('.cabecera');
+    if (cabecera) cabecera.classList.add('nuevoBG1');
+    document.documentElement.style.setProperty('--bgcolor2', colores[1]);
+    const detalle = document.querySelector('.detalle');
+    if (detalle) detalle.classList.add('nuevoBG2');
   }
   get f() {
     return this.f_proyecto.controls;

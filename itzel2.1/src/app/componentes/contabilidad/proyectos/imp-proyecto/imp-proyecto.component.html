@@ -26,7 +26,7 @@
                         </div>
 
                         <div class="col-sm">
-                            <div class="input-group input-group-sm flex-nowrap" *ngIf="f_reporte.value.reporte==1">
+                            <div class="input-group input-group-sm mt-3 flex-nowrap" *ngIf="f_reporte.value.reporte==1">
                                 <span class="input-group-text form-control-sm" id="addon-wrapping">Nivel</span>
                                 <select type="text" class="form-control form-control-sm"
                                     aria-describedby="addon-wrapping" formControlName="nivel">
@@ -35,7 +35,7 @@
                                         ({{estructura.nivel}})</option>
                                 </select>
                             </div>
-                            <div class="input-group input-group-sm form-control-sm flex-nowrap"
+                            <div class="input-group input-group-sm form-control-sm mt-3 flex-nowrap"
                                 *ngIf="f_reporte.value.reporte==2">
                                 <span class="input-group-text form-control-sm" id="addon-wrapping">Grupo</span>
                                 <input type="text" class="form-control" aria-describedby="addon-wrapping"
@@ -43,7 +43,7 @@
                             </div>
                         </div>
                         <div class="col-sm">
-                            <div class="input-group input-group-sm flex-nowrap">
+                            <div class="input-group input-group-sm mt-3 flex-nowrap">
                                 <span class="input-group-text form-control-sm" id="addon-wrapping">Extenciones</span>
                                 <select type="text" class="form-control form-control-sm" aria-label="Reporte"
                                     aria-describedby="addon-wrapping" formControlName="extencion">

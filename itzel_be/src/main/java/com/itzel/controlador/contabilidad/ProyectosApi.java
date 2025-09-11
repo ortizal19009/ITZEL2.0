@@ -119,10 +119,6 @@ public class ProyectosApi {
         return ResponseEntity.ok(response);
     }
 
-
-
-
-
     /*REPORTES DE JASPER REPORT*/
     @GetMapping("/reportes/proyectos/findall")
     public ResponseEntity<Resource> listAll()

@@ -12,6 +12,8 @@ import { EstructuraService } from '../../../servicios/contabilidad/estructura.se
 import { ProyectoService } from '../../../servicios/contabilidad/proyecto.service';
 import { Estructura } from '../../../modelos/contabilidad/estructura.model';
 import Swal from 'sweetalert2';
+import { ColoresService } from '../../../servicios/administracion/colores.service';
+import { AutorizaService } from '../../../servicios/administracion/autoriza.service';
 
 @Component({
   selector: 'app-modi-proyecto',
@@ -31,9 +33,23 @@ export class ModiProyectoComponent implements OnInit {
     private fb: FormBuilder,
     private estructuraService: EstructuraService,
     private proyectoService: ProyectoService,
-    private _params: ActivatedRoute
+    private _params: ActivatedRoute,
+    public authService: AutorizaService,
+    private coloresService: ColoresService
   ) {}
   ngOnInit(): void {
+    if (!this.authService.sessionlog) {
+      this.router.navigate(['/inicio']);
+    }
+    if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {
+      sessionStorage.setItem('ventana', '/modi-proyecto');
+      let coloresJSON = sessionStorage.getItem('/modi-proyecto');
+      if (coloresJSON) this.colocaColor(JSON.parse(coloresJSON));
+      else this.buscaColor();
+    } else {
+      console.warn('sessionStorage no disponible (SSR o entorno server)');
+      // Opcional: inicializa valores por defecto si quieres
+    }
     this.idproyecto = +this._params.snapshot.paramMap.get('idproyecto')!;
     this.f_proyecto = this.fb.group({
       idproyecto: '',
@@ -44,6 +60,25 @@ export class ModiProyectoComponent implements OnInit {
     });
     this.getAllEstructuras();
     this.getByIdProyecto(this.idproyecto);
+  }
+  async buscaColor() {
+    try {
+      const datos = await this.coloresService.setcolor(this.authService.idusuario!, 'modi-proyecto');
+      const coloresJSON = JSON.stringify(datos);
+      sessionStorage.setItem('/modi-proyecto', coloresJSON);
+      this.colocaColor(datos);
+    } catch (error) {
+      console.error('Al buscar la ventana: ', error);
+    }
+  }
+
+  colocaColor(colores: any) {
+    document.documentElement.style.setProperty('--bgcolor1', colores[0]);
+    const cabecera = document.querySelector('.cabecera');
+    if (cabecera) cabecera.classList.add('nuevoBG1');
+    document.documentElement.style.setProperty('--bgcolor2', colores[1]);
+    const detalle = document.querySelector('.detalle');
+    if (detalle) detalle.classList.add('nuevoBG2');
   }
   getAllEstructuras() {
     this.estructuraService.estructuraGetAll().subscribe({

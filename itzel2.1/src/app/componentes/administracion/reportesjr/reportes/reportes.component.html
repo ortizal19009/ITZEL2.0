@@ -1,0 +1,26 @@
+<div class="card p-3 shadow">
+  <h3 class="mb-3">Reportes disponibles</h3>
+
+  <div *ngIf="mensaje" class="alert alert-danger">{{ mensaje }}</div>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let r of reportes">
+        <td>{{ r.nombre }}</td>
+        <td>{{ r.descripcion }}</td>
+        <td>
+          <button class="btn btn-sm btn-primary" (click)="ejecutarReporte(r)">
+            Ejecutar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

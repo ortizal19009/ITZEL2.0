@@ -1,0 +1,32 @@
+<div class="card p-4 shadow">
+  <h3 class="mb-3">Subir nuevo reporte</h3>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label class="form-label">Nombre</label>
+      <input type="text" class="form-control" formControlName="nombre">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Descripción</label>
+      <textarea class="form-control" rows="3" formControlName="descripcion"></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Archivo JRXML</label>
+      <input type="file" class="form-control" (change)="onFileSelected($event, 'jrxml')" accept=".jrxml">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Archivo Jasper</label>
+      <input type="file" class="form-control" (change)="onFileSelected($event, 'jasper')" accept=".jasper">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar Reporte</button>
+  </form>
+
+  <div *ngIf="mensaje" class="alert mt-3" 
+       [ngClass]="{'alert-success': mensaje.includes('✅'), 'alert-danger': mensaje.includes('❌')}">
+    {{ mensaje }}
+  </div>
+</div>

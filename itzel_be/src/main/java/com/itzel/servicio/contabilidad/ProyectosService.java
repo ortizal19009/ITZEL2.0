@@ -196,4 +196,7 @@ public class ProyectosService {
     public List<Proyectos> findByCodigoLike(String codigo){
         return dao.findByCodigoStartingWith(codigo);
     }
+    public List<Proyectos> findByNameLike(String nombre){
+        return dao.findByNombreStartingWith(nombre);
+    }
 }

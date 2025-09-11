@@ -24,6 +24,9 @@ import { ClasificadorComponent } from './componentes/contabilidad/clasificador/c
 import { AddClasificadorComponent } from './componentes/contabilidad/clasificador/add-clasificador/add-clasificador.component';
 import { PreingresosComponent } from './componentes/contabilidad/presupuestos/preingresos/preingresos/preingresos.component';
 import { AddPartidaingComponent } from './componentes/contabilidad/presupuestos/preingresos/add-partidaing/add-partidaing.component';
+import { ReporteUpdateComponent } from './componentes/administracion/reportesjr/reporte-update/reporte-update.component';
+import { ReportesjrComponent } from './componentes/administracion/reportesjr/reporte-viewer/reportesjr.component';
+import { ReportesComponent } from './componentes/administracion/reportesjr/reportes/reportes.component';
 
 export const routes: Routes = [
   { path: 'inicio', component: AppWrapper },
@@ -69,7 +72,15 @@ export const routes: Routes = [
   */
   /* ==========CARGOS========== */
   { path: 'cargos', component: CargosComponent },
-
+  /*
+  ======================================================================
+  ADMINISTRACIÓN CENTRAL
+  ======================================================================
+  */
+  /* ==========JASPER REPORT========== */
+  { path: 'reportesjr', component: ReportesComponent},
+  { path: 'add-reporte', component: ReporteUpdateComponent },
+  { path: 'viewRepot/:id', component: ReportesjrComponent },
   //{ path: '', redirectTo: 'inicio', pathMatch: 'full' },
   { path: '', redirectTo: '/proyectos', pathMatch: 'full' },
 ];

@@ -5,10 +5,12 @@ import { EstructuraService } from '../../../servicios/contabilidad/estructura.se
 import { ProyectoService } from '../../../servicios/contabilidad/proyecto.service';
 import { PdfService } from '../../../servicios/reportes/pdf.service';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Route, Router, RouterLink } from '@angular/router';
 import { jsPDF } from 'jspdf';
 import { JasperreportService } from '../../../servicios/reportes/jasperreport.service';
 import Swal from 'sweetalert2';
+import { AutorizaService } from '../../../servicios/administracion/autoriza.service';
+import { ColoresService } from '../../../servicios/administracion/colores.service';
 @Component({
   selector: 'app-imp-proyecto',
   imports: [FormsModule, CommonModule, ReactiveFormsModule, RouterLink],
@@ -64,9 +66,25 @@ export class ImpProyectoComponent implements OnInit {
     private proyectoService: ProyectoService,
     private pdfService: PdfService,
     private sanitizer: DomSanitizer,
-    private jasperService: JasperreportService
+    private jasperService: JasperreportService,
+    public authService: AutorizaService,
+    private coloresService: ColoresService,
+    private router: Router
   ) {}
   ngOnInit(): void {
+    if (!this.authService.sessionlog) {
+      this.router.navigate(['/inicio']);
+    }
+    if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {
+      sessionStorage.setItem('ventana', '/imp-proyecto');
+      let coloresJSON = sessionStorage.getItem('/imp-proyecto');
+      if (coloresJSON) this.colocaColor(JSON.parse(coloresJSON));
+      else this.buscaColor();
+    } else {
+      console.warn('sessionStorage no disponible (SSR o entorno server)');
+      // Opcional: inicializa valores por defecto si quieres
+    }
+
     this.f_reporte = this.fb.group({
       reporte: 0,
       nivel: 0,
@@ -74,6 +92,25 @@ export class ImpProyectoComponent implements OnInit {
       extencion: '.pdf',
     });
     this.getEstructura();
+  }
+  async buscaColor() {
+    try {
+      const datos = await this.coloresService.setcolor(this.authService.idusuario!, 'imp-proyecto');
+      const coloresJSON = JSON.stringify(datos);
+      sessionStorage.setItem('/imp-proyecto', coloresJSON);
+      this.colocaColor(datos);
+    } catch (error) {
+      console.error('Al buscar la ventana: ', error);
+    }
+  }
+
+  colocaColor(colores: any) {
+    document.documentElement.style.setProperty('--bgcolor1', colores[0]);
+    const cabecera = document.querySelector('.cabecera');
+    if (cabecera) cabecera.classList.add('nuevoBG1');
+    document.documentElement.style.setProperty('--bgcolor2', colores[1]);
+    const detalle = document.querySelector('.detalle');
+    if (detalle) detalle.classList.add('nuevoBG2');
   }
   getEstructura() {
     this.estructuraService.estructuraGetAll().subscribe({
@@ -278,7 +315,7 @@ export class ImpProyectoComponent implements OnInit {
   swalerta(data: any) {
     Swal.fire({
       title: 'vista reporte',
-      html:`` 
+      html: ``,
     });
   }
 }
