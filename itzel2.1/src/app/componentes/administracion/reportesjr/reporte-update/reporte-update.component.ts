@@ -31,20 +31,30 @@ export class ReporteUpdateComponent {
     }
   }
 
-  onSubmit(): void {
-    if (!this.jrxmlFile || !this.jasperFile) {
-      this.mensaje = 'Debe seleccionar ambos archivos (JRXML y Jasper)';
-      return;
-    }
-
-    this.reporteService.uploadReporte(
-      this.form.value.nombre,
-      this.form.value.descripcion,
-      this.jrxmlFile,
-      this.jasperFile
-    ).subscribe({
-      next: () => this.mensaje = 'Reporte cargado correctamente ✅',
-      error: err => this.mensaje = 'Error al cargar el reporte ❌: ' + err.message
-    });
+onSubmit(): void {
+  if (!this.jrxmlFile || !this.jasperFile) {
+    this.mensaje = 'Debe seleccionar ambos archivos (JRXML y Jasper)';
+    return;
   }
+
+  this.reporteService.uploadReporte(
+    this.form.value.nombre,
+    this.form.value.descripcion,
+    this.jrxmlFile,
+    this.jasperFile
+  ).subscribe({
+    next: (res) => {
+      console.log('Respuesta del backend:', res);
+      this.mensaje = 'Reporte cargado correctamente ✅';
+      this.form.reset(); // limpia el formulario
+      this.jrxmlFile = null!;
+      this.jasperFile = null!;
+    },
+    error: (err) => {
+      console.error('Error al subir:', err);
+      this.mensaje = 'Error al cargar el reporte ❌: ' + (err.error?.message || err.message);
+    }
+  });
+}
+
 }

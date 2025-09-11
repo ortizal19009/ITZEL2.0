@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @Setter
 @Builder
 public class Reportes {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idreporte;
@@ -21,7 +22,6 @@ public class Reportes {
     @Column(columnDefinition = "TEXT")
     private String descripcion;
 
-    // Guardamos los binarios de los archivos
     @Lob
     @Column(name = "archivo_jrxml")
     private byte[] archivoJrxml;
@@ -30,9 +30,7 @@ public class Reportes {
     @Column(name = "archivo_jasper")
     private byte[] archivoJasper;
 
-    // Parámetros dinámicos (almacenados como JSON en PostgreSQL)
     @Column(columnDefinition = "jsonb")
-    //@Column(columnDefinition = "TEXT") // Para almacenar JSON de parámetros
     private String parametros;
 
     @Column(name = "creado", updatable = false)
