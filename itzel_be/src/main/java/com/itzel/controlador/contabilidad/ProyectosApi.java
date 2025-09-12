@@ -33,19 +33,18 @@ public class ProyectosApi {
             @RequestParam(required = false) String nombre) {
 
         List<Proyectos> proyectos = new ArrayList<>();
-
         if (codigo == null && nombre == null) {
             proyectos = proyectosService.findByCodigoNotOrderByCodigoAsc("00");
-        } else if (codigo != null) {
-            proyectos = proyectosService.findByCodigoLike(codigo);
-        } else if (nombre != null) {
-            proyectos = proyectosService.findByNameLike(nombre);
         }
-
+        if (codigo != null) {
+            proyectos = proyectosService.findByCodigoLike(codigo);
+        }
+        if (nombre != null) {
+            proyectos = proyectosService.findByNameLike(nombre.toLowerCase());
+        }
         if (proyectos == null || proyectos.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
-
         return ResponseEntity.ok(proyectos);
     }
 
@@ -64,7 +63,7 @@ public class ProyectosApi {
         return ResponseEntity.ok(proyectosService.save(e));
     }
     @PutMapping
-    public ResponseEntity<Proyectos> update(@RequestParam Long idproyecto, @RequestBody Proyectos e) {
+    public ResponseEntity<Proyectos> update(@RequestParam short idproyecto, @RequestBody Proyectos e) {
         Proyectos _e = proyectosService.findById(idproyecto)
                 .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
 
@@ -85,7 +84,7 @@ public class ProyectosApi {
         return ResponseEntity.ok(proyectos != null);
     }
     @GetMapping("/{idproyecto}")
-    public ResponseEntity<Optional<Proyectos>> getById(@PathVariable Long idproyecto){
+    public ResponseEntity<Optional<Proyectos>> getById(@PathVariable short idproyecto){
         Proyectos proyecto = proyectosService.findById(idproyecto).orElse(null);
         if(proyecto != null ){
             return ResponseEntity.ok(Optional.of(proyecto));
@@ -94,7 +93,7 @@ public class ProyectosApi {
         }
     }
     @DeleteMapping("/{idproyecto}")
-    public  ResponseEntity<Object> deleteProyecto(@PathVariable Long idproyecto){
+    public  ResponseEntity<Object> deleteProyecto(@PathVariable short idproyecto){
         return ResponseEntity.ok(proyectosService.delete(idproyecto));
     }
     @GetMapping("/cod-mayor")

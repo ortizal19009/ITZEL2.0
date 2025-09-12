@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 public class Proyectos {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idproyecto;
+    private Short idproyecto;
     private String codigo;
     private String nombre;
     private Boolean movimiento;
@@ -28,7 +28,7 @@ public class Proyectos {
     public Proyectos() {
     }
 
-    public Proyectos(Long idproyecto, String codigo, String nombre, Boolean movimiento, Estructura estructura, Long usucrea, Timestamp feccrea, Long usumodi, Timestamp fecmodi) {
+    public Proyectos(Short idproyecto, String codigo, String nombre, Boolean movimiento, Estructura estructura, Long usucrea, Timestamp feccrea, Long usumodi, Timestamp fecmodi) {
         this.idproyecto = idproyecto;
         this.codigo = codigo;
         this.nombre = nombre;
@@ -40,11 +40,11 @@ public class Proyectos {
         this.fecmodi = fecmodi;
     }
 
-    public Long getIdproyecto() {
+    public Short getIdproyecto() {
         return idproyecto;
     }
 
-    public void setIdproyecto(Long idproyecto) {
+    public void setIdproyecto(Short idproyecto) {
         this.idproyecto = idproyecto;
     }
 

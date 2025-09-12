@@ -114,7 +114,7 @@ export class AddProyectoComponent implements OnInit {
 
   showControlError(field: string) {
     const control = this.f_proyecto.get(field);
-
+    console.log(field);
     if (control && control.invalid && (control.dirty || control.touched)) {
       if (control.errors?.['required']) {
         this.swal('error', `El campo ${field} es obligatorio`);
@@ -178,12 +178,8 @@ export class AddProyectoComponent implements OnInit {
         movimiento: false,
       });
     }
-    const estructura: any = this.f_proyecto.value;
-    console.log(estructura);
-    console.log(this._estructuras);
     let _estructuras = this._estructuras;
     const estructuraEncontrada = _estructuras.find((e: any) => cleanCode.length === e.sumlongitud);
-    console.log(cleanCode.length);
     this.f_proyecto.patchValue({
       estructura: estructuraEncontrada,
     });
@@ -193,9 +189,9 @@ export class AddProyectoComponent implements OnInit {
       codigoControl?.setErrors(null);
     }
 
-    console.log('estructura encontrada', estructuraEncontrada);
     this.proyectoService.validarCodigo(code).subscribe({
       next: (validador: any) => {
+        console.log(validador);
         const longitudInvalida = cleanCode.length !== estructuraEncontrada.sumlongitud;
         const codigoDuplicado = validador;
         const codigoNoValido = codigoDuplicado || longitudInvalida;

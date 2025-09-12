@@ -56,23 +56,16 @@ public class UsuariosApi {
         Usuarios y = usuServicio.findById(idusuario)
                 .orElseThrow(() -> new EntityNotFoundException(
                         ("No existe Usuario con Id: " + idusuario)));
-        y.setIdentificausu(x.getIdentificausu());
+        y.setIdentificacion(x.getIdentificacion());
         y.setNomusu(x.getNomusu());
         y.setCodusu(x.getCodusu());
         y.setFdesde(x.getFdesde());
         y.setFhasta(x.getFhasta());
-        y.setEstado(x.getEstado());
-        y.setEmail(x.getEmail());
         y.setFeccrea(x.getFeccrea());
         y.setUsumodi(x.getUsumodi());
         y.setFecmodi(x.getFecmodi());
-        y.setOtrapestania(x.getOtrapestania());
         y.setAlias(x.getAlias());
         y.setPriusu(x.getPriusu());
-        y.setPerfil(x.getPerfil());
-        y.setToolbarframe(x.getToolbarframe());
-        y.setToolbarsheet(x.getToolbarsheet());
-
         Usuarios actualizar = usuServicio.save(y);
         return ResponseEntity.ok(actualizar);
     }

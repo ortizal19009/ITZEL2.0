@@ -17,7 +17,7 @@ public interface PresupuestoR extends JpaRepository<Presupuesto, Short> {
     @Query(value = "SELECT * FROM presupuesto p WHERE p.codpar = ?1 ORDER BY p.codpar",nativeQuery = true)
     public Presupuesto findByCodpar(String codpar);
     @Query(value = "SELECT * FROM presupuesto where idproyecto = ?1", nativeQuery = true)
-    public List<Presupuesto> findByIdPresupuesto(Long idpresupuesto);
+    public List<Presupuesto> findByIdPresupuesto(short idpresupuesto);
     @Query("""
     SELECT p
     FROM Presupuesto p

@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface ProyectosR extends JpaRepository<Proyectos, Long> {
+public interface ProyectosR extends JpaRepository<Proyectos, Short> {
     @Query(value = "SELECT * FROM proyectos p WHERE p.codigo = ?1 ", nativeQuery = true)
     Proyectos findByCodigo(String codigo);
     @Query(value = "SELECT * FROM proyectos p WHERE p.codigo LIKE ?1% order by codigo asc ", nativeQuery = true)
@@ -31,7 +31,9 @@ public interface ProyectosR extends JpaRepository<Proyectos, Long> {
     List<Proyectos> findByCodigoLike(@Param("codigo") String codigo);
 
     List<Proyectos> findByCodigoStartingWith(String codigo);
-    List<Proyectos> findByNombreStartingWith(String nombre);
+    // Encontrar todos los proyectos por el nombre sin importar mayusculas o minusculas
+    @Query("SELECT p FROM Proyectos p WHERE LOWER(p.nombre) LIKE LOWER(CONCAT(:nombre, '%')) AND not p.codigo = '00' ORDER BY p.nombre ASC")
+    List<Proyectos> buscarPorNombre(@Param("nombre") String nombre);
 
     //Encontrar todos los proyectos menos el de codigo 00
     List<Proyectos> findByCodigoNotOrderByCodigoAsc(String codigo);

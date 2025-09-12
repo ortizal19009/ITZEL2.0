@@ -16,70 +16,39 @@ import java.time.LocalDate;
 @Setter
 @Table(name = "definir")
 public class Definir {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long iddefinir;
+    private String empresa;
     private String razonsocial;
     private String nombrecomercial;
     private String ruc;
     private String direccion;
     private Byte tipoambiente;
     private float iva;
-    private String empresa;
-    private String ubirepo;
-    private String posiacti;
-    private String longacti;
-    private String naturaleza;
     private LocalDate fechap;
-    private String nombre;
-    private String ubicomprobantes;
-    private String asunto;
-    private String textomail;
-    private String dirmatriz;
-    private LocalDate fechacierre;
     private String f_i;
     private String f_g;
-    private BigDecimal porciva;
-    private String ciudad;
-    private Long idtabla17;
-    private String ubidigi;
-    private String ubimagenes;
-    private String swpreingsin;
-    private String html;
+    private Short longparing;
+    private Short longpargas;
 
     public Definir() {
     }
 
-    public Definir(Long iddefinir, String razonsocial, String nombrecomercial, String ruc, String direccion, Byte tipoambiente, float iva, String empresa, String ubirepo, String posiacti, String longacti, String naturaleza, LocalDate fechap, String nombre, String ubicomprobantes, String asunto, String textomail, String dirmatriz, LocalDate fechacierre, String f_i, String f_g, BigDecimal porciva, String ciudad, Long idtabla17, String ubidigi, String ubimagenes, String swpreingsin, String html) {
+    public Definir(Long iddefinir, String empresa, String razonsocial, String nombrecomercial, String ruc, String direccion, Byte tipoambiente, float iva, LocalDate fechap, String f_i, String f_g, Short longparing, Short longpargas) {
         this.iddefinir = iddefinir;
+        this.empresa = empresa;
         this.razonsocial = razonsocial;
         this.nombrecomercial = nombrecomercial;
         this.ruc = ruc;
         this.direccion = direccion;
         this.tipoambiente = tipoambiente;
         this.iva = iva;
-        this.empresa = empresa;
-        this.ubirepo = ubirepo;
-        this.posiacti = posiacti;
-        this.longacti = longacti;
-        this.naturaleza = naturaleza;
         this.fechap = fechap;
-        this.nombre = nombre;
-        this.ubicomprobantes = ubicomprobantes;
-        this.asunto = asunto;
-        this.textomail = textomail;
-        this.dirmatriz = dirmatriz;
-        this.fechacierre = fechacierre;
         this.f_i = f_i;
         this.f_g = f_g;
-        this.porciva = porciva;
-        this.ciudad = ciudad;
-        this.idtabla17 = idtabla17;
-        this.ubidigi = ubidigi;
-        this.ubimagenes = ubimagenes;
-        this.swpreingsin = swpreingsin;
-        this.html = html;
+        this.longparing = longparing;
+        this.longpargas = longpargas;
     }
 
     public Long getIddefinir() {
@@ -88,6 +57,14 @@ public class Definir {
 
     public void setIddefinir(Long iddefinir) {
         this.iddefinir = iddefinir;
+    }
+
+    public String getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(String empresa) {
+        this.empresa = empresa;
     }
 
     public String getRazonsocial() {
@@ -138,100 +115,12 @@ public class Definir {
         this.iva = iva;
     }
 
-    public String getEmpresa() {
-        return empresa;
-    }
-
-    public void setEmpresa(String empresa) {
-        this.empresa = empresa;
-    }
-
-    public String getUbirepo() {
-        return ubirepo;
-    }
-
-    public void setUbirepo(String ubirepo) {
-        this.ubirepo = ubirepo;
-    }
-
-    public String getPosiacti() {
-        return posiacti;
-    }
-
-    public void setPosiacti(String posiacti) {
-        this.posiacti = posiacti;
-    }
-
-    public String getLongacti() {
-        return longacti;
-    }
-
-    public void setLongacti(String longacti) {
-        this.longacti = longacti;
-    }
-
-    public String getNaturaleza() {
-        return naturaleza;
-    }
-
-    public void setNaturaleza(String naturaleza) {
-        this.naturaleza = naturaleza;
-    }
-
     public LocalDate getFechap() {
         return fechap;
     }
 
     public void setFechap(LocalDate fechap) {
         this.fechap = fechap;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getUbicomprobantes() {
-        return ubicomprobantes;
-    }
-
-    public void setUbicomprobantes(String ubicomprobantes) {
-        this.ubicomprobantes = ubicomprobantes;
-    }
-
-    public String getAsunto() {
-        return asunto;
-    }
-
-    public void setAsunto(String asunto) {
-        this.asunto = asunto;
-    }
-
-    public String getTextomail() {
-        return textomail;
-    }
-
-    public void setTextomail(String textomail) {
-        this.textomail = textomail;
-    }
-
-    public String getDirmatriz() {
-        return dirmatriz;
-    }
-
-    public void setDirmatriz(String dirmatriz) {
-        this.dirmatriz = dirmatriz;
-    }
-
-    public LocalDate getFechacierre() {
-        return fechacierre;
-    }
-
-    public void setFechacierre(LocalDate fechacierre) {
-        this.fechacierre = fechacierre;
     }
 
     public String getF_i() {
@@ -250,59 +139,19 @@ public class Definir {
         this.f_g = f_g;
     }
 
-    public BigDecimal getPorciva() {
-        return porciva;
+    public Short getLongparing() {
+        return longparing;
     }
 
-    public void setPorciva(BigDecimal porciva) {
-        this.porciva = porciva;
+    public void setLongparing(Short longparing) {
+        this.longparing = longparing;
     }
 
-    public String getCiudad() {
-        return ciudad;
+    public Short getLongpargas() {
+        return longpargas;
     }
 
-    public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
-    }
-
-    public Long getIdtabla17() {
-        return idtabla17;
-    }
-
-    public void setIdtabla17(Long idtabla17) {
-        this.idtabla17 = idtabla17;
-    }
-
-    public String getUbidigi() {
-        return ubidigi;
-    }
-
-    public void setUbidigi(String ubidigi) {
-        this.ubidigi = ubidigi;
-    }
-
-    public String getUbimagenes() {
-        return ubimagenes;
-    }
-
-    public void setUbimagenes(String ubimagenes) {
-        this.ubimagenes = ubimagenes;
-    }
-
-    public String getSwpreingsin() {
-        return swpreingsin;
-    }
-
-    public void setSwpreingsin(String swpreingsin) {
-        this.swpreingsin = swpreingsin;
-    }
-
-    public String getHtml() {
-        return html;
-    }
-
-    public void setHtml(String html) {
-        this.html = html;
+    public void setLongpargas(Short longpargas) {
+        this.longpargas = longpargas;
     }
 }

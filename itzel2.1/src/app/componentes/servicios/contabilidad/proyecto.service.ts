@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Proyecto } from '../../modelos/contabilidad/proyecto.model';
 const apiUrl = environment.API_URL;
 const baseUrl = `${apiUrl}/proyectos`;
 @Injectable({
@@ -13,7 +14,8 @@ export class ProyectoService {
     return this.http.get(`${baseUrl}`);
   }
   proyectosGetAllBy(codigo: string, nombre: string) {
-    return this.http.get(`${baseUrl}?codigo=${codigo}&nombre=${nombre}`);
+  console.log(codigo, nombre)
+    return this.http.get<Proyecto[]>(`${baseUrl}?codigo=${codigo}&nombre=${nombre}`);
   }
 
   validarCodigo(codigo: string) {

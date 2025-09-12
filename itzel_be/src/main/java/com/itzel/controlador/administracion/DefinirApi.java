@@ -12,27 +12,18 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin("*")
 public class DefinirApi {
     @Autowired
-    private DefinirService defServicio;
+    private DefinirService defService;
 
     @GetMapping("/{iddefinir}")
     public ResponseEntity<Definir> getByIddefinir(@PathVariable Long iddefinir) {
-        Definir definir = defServicio.findById(iddefinir).orElse(null);
+        Definir definir = defService.findById(iddefinir).orElse(null);
         return definir != null ? ResponseEntity.ok(definir) : ResponseEntity.noContent().build();
     }
 
+    // Actualizar
     @PutMapping("/{iddefinir}")
-    public ResponseEntity<Definir> update(@PathVariable Long iddefinir, @RequestBody Definir x) throws Exception {
-        Definir y = defServicio.findById(iddefinir)
-                .orElseThrow(() -> new EntityNotFoundException("No existe: " + iddefinir));
-        y.setRazonsocial(x.getRazonsocial());
-        y.setNombrecomercial(x.getNombrecomercial());
-        y.setRuc(x.getRuc());
-        y.setDireccion(x.getDireccion());
-        y.setTipoambiente(x.getTipoambiente());
-        y.setIva(x.getIva());
-
-        Definir z = defServicio.save(y);
-        return ResponseEntity.ok(z);
+    public Definir actualizarDefinir(@PathVariable Long iddefinir, @RequestBody Definir x) {
+        return defService.actualizarDefinir(iddefinir, x);
     }
 
 }

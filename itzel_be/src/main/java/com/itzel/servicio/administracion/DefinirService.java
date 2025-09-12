@@ -21,5 +21,20 @@ public class DefinirService {
     public <S extends Definir> S save(S entity) {
         return dao.save(entity);
     }
+    // Actualizar
+    public Definir actualizarDefinir(Long iddefinir, Definir x) {
+        Optional<Definir> y = dao.findById(iddefinir);
+        if (y.isPresent()) {
+            Definir definir = y.get();
+            definir.setEmpresa(x.getEmpresa());
+            definir.setFechap(x.getFechap());
+            definir.setF_i(x.getF_i());
+            definir.setF_g(x.getF_g());
+
+            return dao.save(definir);
+        } else {
+            throw new RuntimeException("Definir no encontrado con id " + iddefinir);
+        }
+    }
 
 }

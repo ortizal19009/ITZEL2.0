@@ -31,7 +31,7 @@ public class ProyectosService {
      return dao.findByCodigoNotOrderByCodigoAsc(code);
     }
 
-    public Optional<Proyectos> findById(Long idestrfunc){
+    public Optional<Proyectos> findById(short idestrfunc){
         return dao.findById(idestrfunc);
     }
     public Proyectos findByCodigo(String codigo){
@@ -148,7 +148,7 @@ public class ProyectosService {
         }
         return response;
     }
-    public Map<String, Object> delete(Long idProyecto) {
+    public Map<String, Object> delete(short idProyecto) {
         Map<String, Object> response = new HashMap<>();
     List<Presupuesto> presupuestos = daoP.findByIdPresupuesto(idProyecto);
     System.out.println("Número de presupuestos " + presupuestos.size());
@@ -197,6 +197,6 @@ public class ProyectosService {
         return dao.findByCodigoStartingWith(codigo);
     }
     public List<Proyectos> findByNameLike(String nombre){
-        return dao.findByNombreStartingWith(nombre);
+        return dao.buscarPorNombre(nombre);
     }
 }

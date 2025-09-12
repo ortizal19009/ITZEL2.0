@@ -14,7 +14,7 @@ import { InfoCuenta } from './componentes/contabilidad/cuentas/info-cuenta/info-
 import { Ingresos } from './componentes/contabilidad/presupuestos/ingresos/ingresos/ingresos';
 import { AddIngreso } from './componentes/contabilidad/presupuestos/ingresos/add-ingreso/add-ingreso';
 import { ModiIngreso } from './componentes/contabilidad/presupuestos/ingresos/modi-ingreso/modi-ingreso';
-import { AppWrapper } from './componentes/layout/app-wrapper/app-wrapper';
+import { AppWrapperComponent } from './componentes/layout/app-wrapper/app-wrapper.component';
 import { GastosComponent } from './componentes/contabilidad/presupuestos/gastos/gastos/gastos.component';
 import { AddGastoComponent } from './componentes/contabilidad/presupuestos/gastos/add-gasto/add-gasto.component';
 import { ModiGasto } from './componentes/contabilidad/presupuestos/gastos/modi-gasto/modi-gasto';
@@ -27,9 +27,10 @@ import { AddPartidaingComponent } from './componentes/contabilidad/presupuestos/
 import { ReporteUpdateComponent } from './componentes/administracion/reportesjr/reporte-update/reporte-update.component';
 import { ReportesjrComponent } from './componentes/administracion/reportesjr/reporte-viewer/reportesjr.component';
 import { ReportesComponent } from './componentes/administracion/reportesjr/reportes/reportes.component';
+import { DefinirComponent } from './componentes/administracion/definir/definir/definir.component';
 
 export const routes: Routes = [
-  { path: 'inicio', component: AppWrapper },
+  { path: 'inicio', component: AppWrapperComponent },
   /* 
   ======================================================================
   MODULO DE CONTABILIDAD GUBERNAMENTAL
@@ -81,6 +82,8 @@ export const routes: Routes = [
   { path: 'reportesjr', component: ReportesComponent},
   { path: 'add-reporte', component: ReporteUpdateComponent },
   { path: 'viewRepot/:id', component: ReportesjrComponent },
+    /* ==========DEFINIR========== */
+  { path: 'definir', component: DefinirComponent},
   //{ path: '', redirectTo: 'inicio', pathMatch: 'full' },
   { path: '', redirectTo: '/proyectos', pathMatch: 'full' },
 ];

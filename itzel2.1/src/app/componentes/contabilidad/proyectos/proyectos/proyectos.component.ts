@@ -54,7 +54,6 @@ export class ProyectosComponent implements OnInit {
 
     this.definir.getByIddefinir(1).subscribe({
       next: (datos: any) => {
-        console.log(datos);
         this.saludo = this.sanitizer.bypassSecurityTrustHtml(datos.html);
       },
       error: (e: any) => {
@@ -115,7 +114,8 @@ export class ProyectosComponent implements OnInit {
   }
   buscar() {
     let f = this.formBuscar.value;
-    if (f.codpar == '' || f.nompar == '') {
+    console.log(f.codpar, f.nompar)
+    if (f.codpar == '' && f.nompar == '') {
       this.getAllProyectos();
     } else {
       this.getProyectosByCodeName(f.codpar, f.nompar);

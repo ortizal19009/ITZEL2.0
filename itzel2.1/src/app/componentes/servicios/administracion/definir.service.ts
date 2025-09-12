@@ -6,10 +6,10 @@ import { Definir } from '../../modelos/administracion/definir.model';
 const apiUrl = environment.API_URL;
 const baseUrl = `${apiUrl}/definir`;
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DefinirService {
-    constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getByIddefinir(iddefinir: number) {
     return this.http.get<Definir>(baseUrl + '/' + iddefinir);
@@ -20,11 +20,7 @@ export class DefinirService {
     return lastValueFrom(source$);
   }
 
-
   updateDefinir(iddefinir: number, definir: Definir): Observable<Object> {
     return this.http.put(baseUrl + '/' + iddefinir, definir);
-  }
-  upFirma(iddefinir: number, formData: any) {
-    return firstValueFrom(this.http.put(`${baseUrl}/subir-firma/${iddefinir}`, formData));
   }
 }
