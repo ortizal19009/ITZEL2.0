@@ -16,4 +16,5 @@ export class Usuarios {
   perfil?: string;
   toolbarframe?: number;
   toolbarsheet?: number;
+  modulo?: any;
 }

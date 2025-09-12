@@ -12,6 +12,9 @@ export class ProyectoService {
   proyectosGetAll() {
     return this.http.get(`${baseUrl}`);
   }
+  proyectosGetAllBy(codigo: string, nombre: string) {
+    return this.http.get(`${baseUrl}?codigo=${codigo}&nombre=${nombre}`);
+  }
 
   validarCodigo(codigo: string) {
     return this.http.get(`${baseUrl}/validar/codigo?codigo=${codigo}`);

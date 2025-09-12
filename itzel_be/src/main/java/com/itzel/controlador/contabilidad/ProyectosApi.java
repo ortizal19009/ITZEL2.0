@@ -21,34 +21,44 @@ import org.springframework.core.io.InputStreamResource;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/proyectos")
 @CrossOrigin("*")
 public class ProyectosApi {
-    private static final Logger logger = LoggerFactory.getLogger(ProyectosApi.class);
+    @GetMapping
+    public ResponseEntity<List<Proyectos>> getAll(
+            @RequestParam(required = false) String codigo,
+            @RequestParam(required = false) String nombre) {
 
+        List<Proyectos> proyectos = new ArrayList<>();
+
+        if (codigo == null && nombre == null) {
+            proyectos = proyectosService.findByCodigoNotOrderByCodigoAsc("00");
+        } else if (codigo != null) {
+            proyectos = proyectosService.findByCodigoLike(codigo);
+        } else if (nombre != null) {
+            proyectos = proyectosService.findByNameLike(nombre);
+        }
+
+        if (proyectos == null || proyectos.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(proyectos);
+    }
+
+
+    private static final Logger logger = LoggerFactory.getLogger(ProyectosApi.class);
     @Autowired
     private ProyectosService proyectosService;
+
     @Autowired
     private ReportService jasperReportService;
 
     @Autowired
     private Report_i reportI;
-
-    @GetMapping
-    public ResponseEntity<List<Proyectos>> getAll(){
-        //Encontrar todos los proyectos menos el de codigo 00
-        List<Proyectos> proyectos  = proyectosService.findByCodigoNotOrderByCodigoAsc("00");
-        if (proyectos != null){
-            return ResponseEntity.ok(proyectos);
-        }
-        return  ResponseEntity.noContent().build();
-    }
     @PostMapping
     public ResponseEntity<Object> save(@RequestBody Proyectos e){
         return ResponseEntity.ok(proyectosService.save(e));

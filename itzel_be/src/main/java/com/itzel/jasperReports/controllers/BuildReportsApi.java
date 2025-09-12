@@ -1,8 +1,6 @@
 package com.itzel.jasperReports.controllers;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
 import java.sql.Connection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,10 +22,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.itzel.jasperReports.DTO.JasperDTO;
 import com.itzel.jasperReports.services.BuildReports;
 

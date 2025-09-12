@@ -105,7 +105,6 @@ export class ProyectosComponent implements OnInit {
     }
   }
 
-
   colocaColor(colores: any) {
     document.documentElement.style.setProperty('--bgcolor1', colores[0]);
     const cabecera = document.querySelector('.cabecera');
@@ -115,11 +114,29 @@ export class ProyectosComponent implements OnInit {
     if (detalle) detalle.classList.add('nuevoBG2');
   }
   buscar() {
-    this.getAllProyectos();
+    let f = this.formBuscar.value;
+    if (f.codpar == '' || f.nompar == '') {
+      this.getAllProyectos();
+    } else {
+      this.getProyectosByCodeName(f.codpar, f.nompar);
+    }
   }
   getAllProyectos() {
     this.proyectosService.proyectosGetAll().subscribe({
       next: (proyectos: any) => {
+        this.proyectos = proyectos; // guardo todos los proyectos
+        this.proyectosFiltrados = [...proyectos]; // inicializo lista filtrada
+      },
+      error: (err: any) => {
+        console.error(err.error);
+        this.swal('error', err.error);
+      },
+    });
+  }
+  getProyectosByCodeName(codpar: string, nompar: string) {
+    this.proyectosService.proyectosGetAllBy(codpar, nompar).subscribe({
+      next: (proyectos: any) => {
+        console.log(proyectos);
         this.proyectos = proyectos; // guardo todos los proyectos
         this.proyectosFiltrados = [...proyectos]; // inicializo lista filtrada
       },
