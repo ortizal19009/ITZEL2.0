@@ -2,8 +2,14 @@ package com.itzel.jasperReports.modelo;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.Type;
 
+import java.sql.Types;
 import java.time.LocalDateTime;
+import java.util.Map;
+import com.vladmihalcea.hibernate.type.json.JsonType;
+
 
 @Entity
 @Table(name = "reportes")
@@ -22,16 +28,17 @@ public class Reportes {
     @Column(columnDefinition = "TEXT")
     private String descripcion;
 
-    @Lob
-    @Column(name = "archivo_jrxml")
-    private byte[] archivoJrxml;
-
-    @Lob
+    @JdbcTypeCode(Types.BINARY)
     @Column(name = "archivo_jasper")
     private byte[] archivoJasper;
 
+    @JdbcTypeCode(Types.BINARY)
+    @Column(name = "archivo_jrxml")
+    private byte[] archivoJrxml;
+
+    @Type(JsonType.class) // 👈 Esto hace que maneje JSONB correctamente
     @Column(columnDefinition = "jsonb")
-    private String parametros;
+    private Map<String, Object> parametros;  // O JsonNode si prefieres
 
     @Column(name = "creado", updatable = false)
     private LocalDateTime creado = LocalDateTime.now();
@@ -39,12 +46,12 @@ public class Reportes {
     public Reportes() {
     }
 
-    public Reportes(Long idreporte, String nombre, String descripcion, byte[] archivoJrxml, byte[] archivoJasper, String parametros, LocalDateTime creado) {
+    public Reportes(Long idreporte, String nombre, String descripcion, byte[] archivoJasper, byte[] archivoJrxml, Map<String, Object> parametros, LocalDateTime creado) {
         this.idreporte = idreporte;
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.archivoJrxml = archivoJrxml;
         this.archivoJasper = archivoJasper;
+        this.archivoJrxml = archivoJrxml;
         this.parametros = parametros;
         this.creado = creado;
     }
@@ -89,11 +96,11 @@ public class Reportes {
         this.archivoJasper = archivoJasper;
     }
 
-    public String getParametros() {
+    public Map<String, Object> getParametros() {
         return parametros;
     }
 
-    public void setParametros(String parametros) {
+    public void setParametros(Map<String, Object> parametros) {
         this.parametros = parametros;
     }
 

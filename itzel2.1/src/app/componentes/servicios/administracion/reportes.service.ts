@@ -22,7 +22,7 @@ export class ReportesService {
     formData.append('jrxml', jrxml);
     formData.append('jasper', jasper);
 
-    return this.http.post(`${baseUrl}/upload`, formData);
+    return this.http.post(`${baseUrl}`, formData);
   }
 
   getReportes(): Observable<any[]> {

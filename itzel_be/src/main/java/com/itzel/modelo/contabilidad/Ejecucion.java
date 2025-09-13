@@ -30,25 +30,20 @@ public class Ejecucion {
     private Timestamp feccrea;
     private short usumodi;
     private Timestamp fecmodi;
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idreforma")
-    private Reforma reforma;
-    @ManyToOne(fetch = FetchType.LAZY)
+    private Long reforma;
     @JoinColumn(name = "idtramite")
-    private Tramites tramite;
+    private Long tramite;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idpartixcer")
     private Partixcerti partixcerti;
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idasiento")
-    private Asientos asiento;
-    @ManyToOne(fetch = FetchType.LAZY)
+    private Long asiento;
     @JoinColumn(name = "idtransaccion")
-    private Transaccion transaccion;
+    private Long transaccion;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idpresupuesto")
     private Presupuesto presupuesto;
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idcompromiso")
-    private Compromisos compromisos;
+    private Long compromisos;
 }

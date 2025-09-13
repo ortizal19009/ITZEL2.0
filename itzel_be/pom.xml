@@ -102,8 +102,14 @@
             <artifactId>barbecue</artifactId>
             <version>1.5-beta1</version>
         </dependency>
+        <dependency>
+            <groupId>com.vladmihalcea</groupId>
+            <artifactId>hibernate-types-60</artifactId>
+            <version>2.21.1</version>
+        </dependency>
 
-		<!-- Dependencias adicionales (para formatos de exportación) -->
+
+        <!-- Dependencias adicionales (para formatos de exportación) -->
 		<dependency>
 			<groupId>com.lowagie</groupId>
 			<artifactId>itext</artifactId>
