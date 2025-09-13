@@ -1,7 +1,7 @@
-import { EjecucionModel } from './ejecucion.model';
+import { Ejecucion } from './ejecucion.model';
 
-describe('EjecucionModel', () => {
+describe('Ejecucion', () => {
   it('should create an instance', () => {
-    expect(new EjecucionModel()).toBeTruthy();
+    expect(new Ejecucion()).toBeTruthy();
   });
 });

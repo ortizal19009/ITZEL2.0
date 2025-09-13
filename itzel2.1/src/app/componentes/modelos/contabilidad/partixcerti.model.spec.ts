@@ -1,7 +1,7 @@
-import { PartixcertiModel } from './partixcerti.model';
+import { Partixcerti } from './partixcerti.model';
 
-describe('PartixcertiModel', () => {
+describe('Partixcerti', () => {
   it('should create an instance', () => {
-    expect(new PartixcertiModel()).toBeTruthy();
+    expect(new Partixcerti()).toBeTruthy();
   });
 });

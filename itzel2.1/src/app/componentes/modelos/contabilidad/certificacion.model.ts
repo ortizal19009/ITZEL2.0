@@ -1,2 +1,2 @@
-export class CertificacionModel {
+export class Certificacion {
 }

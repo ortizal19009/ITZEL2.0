@@ -1,7 +1,7 @@
-import { CertificacionModel } from './certificacion.model';
+import { Certificacion } from './certificacion.model';
 
-describe('CertificacionModel', () => {
+describe('Certificacion', () => {
   it('should create an instance', () => {
-    expect(new CertificacionModel()).toBeTruthy();
+    expect(new Certificacion()).toBeTruthy();
   });
 });

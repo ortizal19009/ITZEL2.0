@@ -1,2 +1,2 @@
-export class EjecucionModel {
+export class Ejecucion {
 }
