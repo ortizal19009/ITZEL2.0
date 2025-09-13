@@ -36,7 +36,7 @@ public class Usuarios {
     private boolean swmodulo6;
     private Timestamp feccrea;
     private Timestamp fecmodi;
-    private short usumodi;
+    private Long usumodi;
     private boolean msgval;
     private boolean swhabili;
     private boolean swmusica;
@@ -44,7 +44,7 @@ public class Usuarios {
     public Usuarios() {
     }
 
-    public Usuarios(Short idusuario, String identificacion, String codusu, String nomusu, LocalDate fdesde, LocalDate fhasta, String priusu, String foto, short modulo, String alias, boolean swmodulo1, boolean swmodulo2, boolean swmodulo3, boolean swmodulo4, boolean swmodulo5, boolean swmodulo6, Timestamp feccrea, Timestamp fecmodi, short usumodi, boolean msgval, boolean swhabili, boolean swmusica) {
+    public Usuarios(Short idusuario, String identificacion, String codusu, String nomusu, LocalDate fdesde, LocalDate fhasta, String priusu, String foto, short modulo, String alias, boolean swmodulo1, boolean swmodulo2, boolean swmodulo3, boolean swmodulo4, boolean swmodulo5, boolean swmodulo6, Timestamp feccrea, Timestamp fecmodi, Long usumodi, boolean msgval, boolean swhabili, boolean swmusica) {
         this.idusuario = idusuario;
         this.identificacion = identificacion;
         this.codusu = codusu;
@@ -213,11 +213,11 @@ public class Usuarios {
         this.fecmodi = fecmodi;
     }
 
-    public short getUsumodi() {
+    public Long getUsumodi() {
         return usumodi;
     }
 
-    public void setUsumodi(short usumodi) {
+    public void setUsumodi(Long usumodi) {
         this.usumodi = usumodi;
     }
 

@@ -5,7 +5,7 @@
 -- Dumped from database version 16.3
 -- Dumped by pg_dump version 16.3
 
--- Started on 2025-09-04 10:38:20
+-- Started on 2025-09-13 07:40:38
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -73,7 +73,7 @@ CREATE SEQUENCE public.beneficiarios_idbene_seq
 ALTER SEQUENCE public.beneficiarios_idbene_seq OWNER TO postgres;
 
 --
--- TOC entry 5040 (class 0 OID 0)
+-- TOC entry 5061 (class 0 OID 0)
 -- Dependencies: 216
 -- Name: beneficiarios_idbene_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -117,7 +117,7 @@ CREATE SEQUENCE public.cargos_idcargo_seq
 ALTER SEQUENCE public.cargos_idcargo_seq OWNER TO postgres;
 
 --
--- TOC entry 5041 (class 0 OID 0)
+-- TOC entry 5062 (class 0 OID 0)
 -- Dependencies: 235
 -- Name: cargos_idcargo_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -126,7 +126,7 @@ ALTER SEQUENCE public.cargos_idcargo_seq OWNED BY public.cargos.idcargo;
 
 
 --
--- TOC entry 245 (class 1259 OID 6597780)
+-- TOC entry 242 (class 1259 OID 6597780)
 -- Name: certificaciones; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -151,7 +151,7 @@ CREATE TABLE public.certificaciones (
 ALTER TABLE public.certificaciones OWNER TO postgres;
 
 --
--- TOC entry 244 (class 1259 OID 6597779)
+-- TOC entry 241 (class 1259 OID 6597779)
 -- Name: certificaciones_idcertificacion_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -167,8 +167,8 @@ CREATE SEQUENCE public.certificaciones_idcertificacion_seq
 ALTER SEQUENCE public.certificaciones_idcertificacion_seq OWNER TO postgres;
 
 --
--- TOC entry 5042 (class 0 OID 0)
--- Dependencies: 244
+-- TOC entry 5063 (class 0 OID 0)
+-- Dependencies: 241
 -- Name: certificaciones_idcertificacion_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -221,7 +221,7 @@ CREATE SEQUENCE public.clasificador_idclasificador_seq
 ALTER SEQUENCE public.clasificador_idclasificador_seq OWNER TO postgres;
 
 --
--- TOC entry 5043 (class 0 OID 0)
+-- TOC entry 5064 (class 0 OID 0)
 -- Dependencies: 218
 -- Name: clasificador_idclasificador_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -274,7 +274,7 @@ CREATE SEQUENCE public.cuentas_idcuenta_seq
 ALTER SEQUENCE public.cuentas_idcuenta_seq OWNER TO postgres;
 
 --
--- TOC entry 5044 (class 0 OID 0)
+-- TOC entry 5065 (class 0 OID 0)
 -- Dependencies: 231
 -- Name: cuentas_idcuenta_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -283,45 +283,47 @@ ALTER SEQUENCE public.cuentas_idcuenta_seq OWNED BY public.cuentas.idcuenta;
 
 
 --
--- TOC entry 241 (class 1259 OID 6595443)
+-- TOC entry 249 (class 1259 OID 6933649)
 -- Name: definir; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.definir (
-    iddefinir integer NOT NULL,
-    razonsocial character varying(100) NOT NULL,
-    nombrecomercial character varying(100) NOT NULL,
-    ruc character varying(13) NOT NULL,
-    direccion character varying(100) NOT NULL,
-    tipoambiente character(1) NOT NULL,
+    iddefinir smallint NOT NULL,
+    nombre character varying(100) NOT NULL,
     iva double precision NOT NULL,
-    empresa character varying,
-    ubirepo character varying,
+    tipoambiente character(1) NOT NULL,
+    ubicomprobantes character varying(100),
+    asunto character varying(80) NOT NULL,
+    textomail character varying(254),
+    dirmatriz character varying(100),
+    razonsocial character varying(100),
+    empresa character varying(60),
+    ubirepo character varying(80),
     posiacti character varying,
     longacti character varying,
     naturaleza character varying,
     fechap date,
-    nombre character varying,
-    ubicomprobantes character varying,
-    asunto character varying,
-    textomail character varying,
-    dirmatriz character varying,
     fechacierre date,
-    f_i character varying,
-    f_g character varying,
+    f_i character varying(50),
+    f_g character varying(50),
     porciva real,
-    ciudad character varying,
+    ciudad character varying(15),
     idtabla17 integer,
-    ubidigi character varying,
-    ubimagenes character varying,
-    swpreingsin character varying
+    ubidigi character varying(80),
+    ubimagenes character varying(80),
+    swpreingsin smallint,
+    ruc character varying(13),
+    direccion character varying(80),
+    nombrecomercial character varying(80),
+    longparing smallint,
+    longpargas smallint
 );
 
 
 ALTER TABLE public.definir OWNER TO postgres;
 
 --
--- TOC entry 247 (class 1259 OID 6597787)
+-- TOC entry 244 (class 1259 OID 6597787)
 -- Name: documentos; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -340,7 +342,7 @@ CREATE TABLE public.documentos (
 ALTER TABLE public.documentos OWNER TO postgres;
 
 --
--- TOC entry 246 (class 1259 OID 6597786)
+-- TOC entry 243 (class 1259 OID 6597786)
 -- Name: documentos_iddocumento_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -356,8 +358,8 @@ CREATE SEQUENCE public.documentos_iddocumento_seq
 ALTER SEQUENCE public.documentos_iddocumento_seq OWNER TO postgres;
 
 --
--- TOC entry 5045 (class 0 OID 0)
--- Dependencies: 246
+-- TOC entry 5066 (class 0 OID 0)
+-- Dependencies: 243
 -- Name: documentos_iddocumento_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -398,7 +400,7 @@ CREATE SEQUENCE public.eliminados_ideliminado_seq
 ALTER SEQUENCE public.eliminados_ideliminado_seq OWNER TO postgres;
 
 --
--- TOC entry 5046 (class 0 OID 0)
+-- TOC entry 5067 (class 0 OID 0)
 -- Dependencies: 237
 -- Name: eliminados_ideliminado_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -415,7 +417,8 @@ CREATE TABLE public.estructura (
     idestructura smallint NOT NULL,
     nivel smallint NOT NULL,
     nombre character varying(50) NOT NULL,
-    longitud smallint NOT NULL
+    longitud smallint NOT NULL,
+    sumlongitud integer
 );
 
 
@@ -438,7 +441,7 @@ CREATE SEQUENCE public.estructura_idestructura_seq
 ALTER SEQUENCE public.estructura_idestructura_seq OWNER TO postgres;
 
 --
--- TOC entry 5047 (class 0 OID 0)
+-- TOC entry 5068 (class 0 OID 0)
 -- Dependencies: 220
 -- Name: estructura_idestructura_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -483,7 +486,7 @@ CREATE SEQUENCE public.gruposbene_idgrupo_seq
 ALTER SEQUENCE public.gruposbene_idgrupo_seq OWNER TO postgres;
 
 --
--- TOC entry 5048 (class 0 OID 0)
+-- TOC entry 5069 (class 0 OID 0)
 -- Dependencies: 222
 -- Name: gruposbene_idgrupo_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -523,7 +526,7 @@ CREATE SEQUENCE public.ifinan_idifinan_seq
 ALTER SEQUENCE public.ifinan_idifinan_seq OWNER TO postgres;
 
 --
--- TOC entry 5049 (class 0 OID 0)
+-- TOC entry 5070 (class 0 OID 0)
 -- Dependencies: 224
 -- Name: ifinan_idifinan_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -562,12 +565,62 @@ CREATE SEQUENCE public.niveles_idnivel_seq
 ALTER SEQUENCE public.niveles_idnivel_seq OWNER TO postgres;
 
 --
--- TOC entry 5050 (class 0 OID 0)
+-- TOC entry 5071 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: niveles_idnivel_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public.niveles_idnivel_seq OWNED BY public.niveles.idnivel;
+
+
+--
+-- TOC entry 253 (class 1259 OID 6933664)
+-- Name: partixcerti; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.partixcerti (
+    idparxcer integer NOT NULL,
+    valor double precision NOT NULL,
+    reintegro double precision NOT NULL,
+    descripcion character varying(254),
+    totprmisos double precision NOT NULL,
+    saldo double precision NOT NULL,
+    idejecucion integer,
+    usucrea smallint NOT NULL,
+    feccrea timestamp without time zone NOT NULL,
+    usumodi smallint,
+    fecmodi timestamp without time zone,
+    idcertificacion integer NOT NULL,
+    idpresupuesto smallint NOT NULL,
+    idparxcer_ integer
+);
+
+
+ALTER TABLE public.partixcerti OWNER TO postgres;
+
+--
+-- TOC entry 252 (class 1259 OID 6933663)
+-- Name: partixcerti_idparxcer_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.partixcerti_idparxcer_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.partixcerti_idparxcer_seq OWNER TO postgres;
+
+--
+-- TOC entry 5072 (class 0 OID 0)
+-- Dependencies: 252
+-- Name: partixcerti_idparxcer_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.partixcerti_idparxcer_seq OWNED BY public.partixcerti.idparxcer;
 
 
 --
@@ -616,7 +669,7 @@ CREATE SEQUENCE public.presupuesto_idpresupuesto_seq
 ALTER SEQUENCE public.presupuesto_idpresupuesto_seq OWNER TO postgres;
 
 --
--- TOC entry 5051 (class 0 OID 0)
+-- TOC entry 5073 (class 0 OID 0)
 -- Dependencies: 228
 -- Name: presupuesto_idpresupuesto_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -661,7 +714,7 @@ CREATE SEQUENCE public.proyectos_idproyecto_seq
 ALTER SEQUENCE public.proyectos_idproyecto_seq OWNER TO postgres;
 
 --
--- TOC entry 5052 (class 0 OID 0)
+-- TOC entry 5074 (class 0 OID 0)
 -- Dependencies: 230
 -- Name: proyectos_idproyecto_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -670,7 +723,50 @@ ALTER SEQUENCE public.proyectos_idproyecto_seq OWNED BY public.proyectos.idproye
 
 
 --
--- TOC entry 249 (class 1259 OID 6597795)
+-- TOC entry 248 (class 1259 OID 6917261)
+-- Name: reportes; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.reportes (
+    idreporte integer NOT NULL,
+    nombre character varying(100) NOT NULL,
+    descripcion text,
+    archivo_jrxml bytea,
+    archivo_jasper bytea,
+    parametros jsonb,
+    creado timestamp without time zone DEFAULT now()
+);
+
+
+ALTER TABLE public.reportes OWNER TO postgres;
+
+--
+-- TOC entry 247 (class 1259 OID 6917260)
+-- Name: reportes_idreporte_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.reportes_idreporte_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.reportes_idreporte_seq OWNER TO postgres;
+
+--
+-- TOC entry 5075 (class 0 OID 0)
+-- Dependencies: 247
+-- Name: reportes_idreporte_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.reportes_idreporte_seq OWNED BY public.reportes.idreporte;
+
+
+--
+-- TOC entry 246 (class 1259 OID 6597795)
 -- Name: tabla4; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -688,7 +784,7 @@ CREATE TABLE public.tabla4 (
 ALTER TABLE public.tabla4 OWNER TO postgres;
 
 --
--- TOC entry 248 (class 1259 OID 6597794)
+-- TOC entry 245 (class 1259 OID 6597794)
 -- Name: tabla4_idtabla4_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -704,8 +800,8 @@ CREATE SEQUENCE public.tabla4_idtabla4_seq
 ALTER SEQUENCE public.tabla4_idtabla4_seq OWNER TO postgres;
 
 --
--- TOC entry 5053 (class 0 OID 0)
--- Dependencies: 248
+-- TOC entry 5076 (class 0 OID 0)
+-- Dependencies: 245
 -- Name: tabla4_idtabla4_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -741,38 +837,40 @@ ALTER TABLE public.tiptran ALTER COLUMN numero ADD GENERATED ALWAYS AS IDENTITY 
 
 
 --
--- TOC entry 240 (class 1259 OID 6595432)
+-- TOC entry 251 (class 1259 OID 6933657)
 -- Name: usuarios; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.usuarios (
     idusuario smallint NOT NULL,
-    identificausu character varying(20) NOT NULL,
-    codusu character varying(150) NOT NULL,
-    nomusu character varying(100) NOT NULL,
-    email character varying(80),
-    pregunta character varying(254),
-    respuesta character varying(254),
-    feccrea timestamp without time zone NOT NULL,
-    usumodi bigint,
-    fecmodi timestamp without time zone,
-    estado boolean DEFAULT true NOT NULL,
+    identificacion character varying(20) NOT NULL,
+    codusu character varying(50) NOT NULL,
+    nomusu character varying(80) NOT NULL,
     fdesde date,
     fhasta date,
-    otrapestania boolean DEFAULT false NOT NULL,
-    alias character varying(20),
-    codusu1 character varying(150),
-    priusu character varying(300),
-    perfil character varying(10),
-    toolbarframe integer,
-    toolbarsheet integer
+    priusu character varying(254),
+    foto character varying(30),
+    modulo smallint NOT NULL,
+    alias character varying(20) NOT NULL,
+    swmodulo1 boolean NOT NULL,
+    swmodulo2 boolean NOT NULL,
+    swmodulo3 boolean NOT NULL,
+    swmodulo4 boolean NOT NULL,
+    swmodulo5 boolean NOT NULL,
+    feccrea timestamp without time zone NOT NULL,
+    usumodi smallint,
+    fecmodi timestamp without time zone,
+    msgval boolean NOT NULL,
+    swhabili boolean NOT NULL,
+    swmusica boolean NOT NULL,
+    swmodulo6 boolean NOT NULL
 );
 
 
 ALTER TABLE public.usuarios OWNER TO postgres;
 
 --
--- TOC entry 239 (class 1259 OID 6595431)
+-- TOC entry 250 (class 1259 OID 6933656)
 -- Name: usuarios_idusuario_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -788,8 +886,8 @@ CREATE SEQUENCE public.usuarios_idusuario_seq
 ALTER SEQUENCE public.usuarios_idusuario_seq OWNER TO postgres;
 
 --
--- TOC entry 5054 (class 0 OID 0)
--- Dependencies: 239
+-- TOC entry 5077 (class 0 OID 0)
+-- Dependencies: 250
 -- Name: usuarios_idusuario_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -797,7 +895,7 @@ ALTER SEQUENCE public.usuarios_idusuario_seq OWNED BY public.usuarios.idusuario;
 
 
 --
--- TOC entry 243 (class 1259 OID 6595452)
+-- TOC entry 240 (class 1259 OID 6595452)
 -- Name: ventanas; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -813,7 +911,7 @@ CREATE TABLE public.ventanas (
 ALTER TABLE public.ventanas OWNER TO postgres;
 
 --
--- TOC entry 242 (class 1259 OID 6595451)
+-- TOC entry 239 (class 1259 OID 6595451)
 -- Name: ventanas_idventana_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -829,8 +927,8 @@ CREATE SEQUENCE public.ventanas_idventana_seq
 ALTER SEQUENCE public.ventanas_idventana_seq OWNER TO postgres;
 
 --
--- TOC entry 5055 (class 0 OID 0)
--- Dependencies: 242
+-- TOC entry 5078 (class 0 OID 0)
+-- Dependencies: 239
 -- Name: ventanas_idventana_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -838,7 +936,7 @@ ALTER SEQUENCE public.ventanas_idventana_seq OWNED BY public.ventanas.idventana;
 
 
 --
--- TOC entry 4772 (class 2604 OID 5986472)
+-- TOC entry 4782 (class 2604 OID 5986472)
 -- Name: beneficiarios idbeneficiario; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -846,7 +944,7 @@ ALTER TABLE ONLY public.beneficiarios ALTER COLUMN idbeneficiario SET DEFAULT ne
 
 
 --
--- TOC entry 4813 (class 2604 OID 5994728)
+-- TOC entry 4823 (class 2604 OID 5994728)
 -- Name: cargos idcargo; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -854,7 +952,7 @@ ALTER TABLE ONLY public.cargos ALTER COLUMN idcargo SET DEFAULT nextval('public.
 
 
 --
--- TOC entry 4819 (class 2604 OID 6597783)
+-- TOC entry 4826 (class 2604 OID 6597783)
 -- Name: certificaciones idcertificacion; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -862,7 +960,7 @@ ALTER TABLE ONLY public.certificaciones ALTER COLUMN idcertificacion SET DEFAULT
 
 
 --
--- TOC entry 4786 (class 2604 OID 5986473)
+-- TOC entry 4796 (class 2604 OID 5986473)
 -- Name: clasificador idclasificador; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -870,7 +968,7 @@ ALTER TABLE ONLY public.clasificador ALTER COLUMN idclasificador SET DEFAULT nex
 
 
 --
--- TOC entry 4811 (class 2604 OID 5986516)
+-- TOC entry 4821 (class 2604 OID 5986516)
 -- Name: cuentas idcuenta; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -878,7 +976,7 @@ ALTER TABLE ONLY public.cuentas ALTER COLUMN idcuenta SET DEFAULT nextval('publi
 
 
 --
--- TOC entry 4820 (class 2604 OID 6597790)
+-- TOC entry 4827 (class 2604 OID 6597790)
 -- Name: documentos iddocumento; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -886,7 +984,7 @@ ALTER TABLE ONLY public.documentos ALTER COLUMN iddocumento SET DEFAULT nextval(
 
 
 --
--- TOC entry 4814 (class 2604 OID 5994735)
+-- TOC entry 4824 (class 2604 OID 5994735)
 -- Name: eliminados ideliminado; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -894,7 +992,7 @@ ALTER TABLE ONLY public.eliminados ALTER COLUMN ideliminado SET DEFAULT nextval(
 
 
 --
--- TOC entry 4792 (class 2604 OID 5986474)
+-- TOC entry 4802 (class 2604 OID 5986474)
 -- Name: estructura idestructura; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -902,7 +1000,7 @@ ALTER TABLE ONLY public.estructura ALTER COLUMN idestructura SET DEFAULT nextval
 
 
 --
--- TOC entry 4793 (class 2604 OID 5986475)
+-- TOC entry 4803 (class 2604 OID 5986475)
 -- Name: gruposbene idgrupo; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -910,7 +1008,7 @@ ALTER TABLE ONLY public.gruposbene ALTER COLUMN idgrupo SET DEFAULT nextval('pub
 
 
 --
--- TOC entry 4800 (class 2604 OID 5986476)
+-- TOC entry 4810 (class 2604 OID 5986476)
 -- Name: ifinan idifinan; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -918,7 +1016,7 @@ ALTER TABLE ONLY public.ifinan ALTER COLUMN idifinan SET DEFAULT nextval('public
 
 
 --
--- TOC entry 4801 (class 2604 OID 5986477)
+-- TOC entry 4811 (class 2604 OID 5986477)
 -- Name: niveles idnivel; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -926,7 +1024,15 @@ ALTER TABLE ONLY public.niveles ALTER COLUMN idnivel SET DEFAULT nextval('public
 
 
 --
--- TOC entry 4802 (class 2604 OID 5986478)
+-- TOC entry 4833 (class 2604 OID 6933667)
+-- Name: partixcerti idparxcer; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.partixcerti ALTER COLUMN idparxcer SET DEFAULT nextval('public.partixcerti_idparxcer_seq'::regclass);
+
+
+--
+-- TOC entry 4812 (class 2604 OID 5986478)
 -- Name: presupuesto idpresupuesto; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -934,7 +1040,7 @@ ALTER TABLE ONLY public.presupuesto ALTER COLUMN idpresupuesto SET DEFAULT nextv
 
 
 --
--- TOC entry 4810 (class 2604 OID 5986479)
+-- TOC entry 4820 (class 2604 OID 5986479)
 -- Name: proyectos idproyecto; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -942,7 +1048,15 @@ ALTER TABLE ONLY public.proyectos ALTER COLUMN idproyecto SET DEFAULT nextval('p
 
 
 --
--- TOC entry 4822 (class 2604 OID 6597798)
+-- TOC entry 4830 (class 2604 OID 6917264)
+-- Name: reportes idreporte; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.reportes ALTER COLUMN idreporte SET DEFAULT nextval('public.reportes_idreporte_seq'::regclass);
+
+
+--
+-- TOC entry 4829 (class 2604 OID 6597798)
 -- Name: tabla4 idtabla4; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -950,7 +1064,7 @@ ALTER TABLE ONLY public.tabla4 ALTER COLUMN idtabla4 SET DEFAULT nextval('public
 
 
 --
--- TOC entry 4815 (class 2604 OID 6595435)
+-- TOC entry 4832 (class 2604 OID 6933660)
 -- Name: usuarios idusuario; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -958,7 +1072,7 @@ ALTER TABLE ONLY public.usuarios ALTER COLUMN idusuario SET DEFAULT nextval('pub
 
 
 --
--- TOC entry 4818 (class 2604 OID 6595455)
+-- TOC entry 4825 (class 2604 OID 6595455)
 -- Name: ventanas idventana; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -966,7 +1080,7 @@ ALTER TABLE ONLY public.ventanas ALTER COLUMN idventana SET DEFAULT nextval('pub
 
 
 --
--- TOC entry 5000 (class 0 OID 5986407)
+-- TOC entry 5017 (class 0 OID 5986407)
 -- Dependencies: 215
 -- Data for Name: beneficiarios; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -2003,7 +2117,7 @@ COPY public.beneficiarios (idbeneficiario, codben, nomben, tpidben, rucben, cibe
 
 
 --
--- TOC entry 5021 (class 0 OID 5994725)
+-- TOC entry 5038 (class 0 OID 5994725)
 -- Dependencies: 236
 -- Data for Name: cargos; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -2017,8 +2131,8 @@ COPY public.cargos (idcargo, nomcargo, valor, descargo, usucrea, feccrea, usumod
 
 
 --
--- TOC entry 5030 (class 0 OID 6597780)
--- Dependencies: 245
+-- TOC entry 5044 (class 0 OID 6597780)
+-- Dependencies: 242
 -- Data for Name: certificaciones; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -2027,7 +2141,7 @@ COPY public.certificaciones (idcertificacion, tipo, numero, fecha, valor, descri
 
 
 --
--- TOC entry 5002 (class 0 OID 5986424)
+-- TOC entry 5019 (class 0 OID 5986424)
 -- Dependencies: 217
 -- Data for Name: clasificador; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3480,7 +3594,7 @@ COPY public.clasificador (idclasificador, codpar, nivpar, grupar, nompar, despar
 
 
 --
--- TOC entry 5017 (class 0 OID 5986513)
+-- TOC entry 5034 (class 0 OID 5986513)
 -- Dependencies: 232
 -- Data for Name: cuentas; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -5503,19 +5617,19 @@ COPY public.cuentas (idcuenta, codcue, nomcue, movcue, idnivel, grucue, asodebe,
 
 
 --
--- TOC entry 5026 (class 0 OID 6595443)
--- Dependencies: 241
+-- TOC entry 5051 (class 0 OID 6933649)
+-- Dependencies: 249
 -- Data for Name: definir; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.definir (iddefinir, razonsocial, nombrecomercial, ruc, direccion, tipoambiente, iva, empresa, ubirepo, posiacti, longacti, naturaleza, fechap, nombre, ubicomprobantes, asunto, textomail, dirmatriz, fechacierre, f_i, f_g, porciva, ciudad, idtabla17, ubidigi, ubimagenes, swpreingsin) FROM stdin;
-1	EMPRESA PUBLICA MUNICIPAL DE AGUA POTABLE Y ALCANTARILLADO DE TULCAN	EPMAPA-T	0460028810001	JUAN RAMON ARELLANO Y BOLIVAR	2	0.15000000596046448	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	JUAN RAMON ARELLANO Y BOLIVAR	\N	\N	\N	\N	\N	\N	\N	\N	\N
+COPY public.definir (iddefinir, nombre, iva, tipoambiente, ubicomprobantes, asunto, textomail, dirmatriz, razonsocial, empresa, ubirepo, posiacti, longacti, naturaleza, fechap, fechacierre, f_i, f_g, porciva, ciudad, idtabla17, ubidigi, ubimagenes, swpreingsin, ruc, direccion, nombrecomercial, longparing, longpargas) FROM stdin;
+1	ITZEL 2.0	15	1		Retencion EP-EMAPAR	Envio la retención			EP-EMAPAR		1	6	4	2025-01-01	2023-12-31	##.##.##.##.##	^\\\\d{2}\\\\.\\\\d{2}\\\\.\\\\d{2}\\\\.\\\\d{4}$	0.15	Quito	4			1	0460028810001		ITZEL 2.0	14	13
 \.
 
 
 --
--- TOC entry 5032 (class 0 OID 6597787)
--- Dependencies: 247
+-- TOC entry 5046 (class 0 OID 6597787)
+-- Dependencies: 244
 -- Data for Name: documentos; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -5547,7 +5661,7 @@ COPY public.documentos (iddocumento, nomdoc, tipdoc, idtabla4, usucrea, feccrea,
 
 
 --
--- TOC entry 5023 (class 0 OID 5994732)
+-- TOC entry 5040 (class 0 OID 5994732)
 -- Dependencies: 238
 -- Data for Name: eliminados; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -5579,20 +5693,23 @@ COPY public.eliminados (ideliminado, idusuario, modulo, fecha, routerlink, tabla
 
 
 --
--- TOC entry 5004 (class 0 OID 5986435)
+-- TOC entry 5021 (class 0 OID 5986435)
 -- Dependencies: 219
 -- Data for Name: estructura; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.estructura (idestructura, nivel, nombre, longitud) FROM stdin;
-1	1	PROCESOS	2
-2	2	PROYECTO O GESTION	2
-3	3	UNIDAD DE GESTION	2
+COPY public.estructura (idestructura, nivel, nombre, longitud, sumlongitud) FROM stdin;
+1	1	GESTION	2	2
+2	2	PROGRAMA	2	4
+3	3	PROVINCIA	2	6
+4	4	PROYECTO	3	9
+5	5	INTERVENCION	3	12
+6	6	ACTIVIDAD	3	15
 \.
 
 
 --
--- TOC entry 5006 (class 0 OID 5986439)
+-- TOC entry 5023 (class 0 OID 5986439)
 -- Dependencies: 221
 -- Data for Name: gruposbene; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -5610,7 +5727,7 @@ COPY public.gruposbene (idgrupo, codgru, nomgru, modulo1, modulo2, modulo3, modu
 
 
 --
--- TOC entry 5008 (class 0 OID 5986449)
+-- TOC entry 5025 (class 0 OID 5986449)
 -- Dependencies: 223
 -- Data for Name: ifinan; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -5694,7 +5811,7 @@ COPY public.ifinan (idifinan, codifinan, nomifinan, foto) FROM stdin;
 
 
 --
--- TOC entry 5010 (class 0 OID 5986453)
+-- TOC entry 5027 (class 0 OID 5986453)
 -- Dependencies: 225
 -- Data for Name: niveles; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -5711,7 +5828,17 @@ COPY public.niveles (idnivel, nomniv, longniv) FROM stdin;
 
 
 --
--- TOC entry 5012 (class 0 OID 5986457)
+-- TOC entry 5055 (class 0 OID 6933664)
+-- Dependencies: 253
+-- Data for Name: partixcerti; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.partixcerti (idparxcer, valor, reintegro, descripcion, totprmisos, saldo, idejecucion, usucrea, feccrea, usumodi, fecmodi, idcertificacion, idpresupuesto, idparxcer_) FROM stdin;
+\.
+
+
+--
+-- TOC entry 5029 (class 0 OID 5986457)
 -- Dependencies: 227
 -- Data for Name: presupuesto; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -6207,7 +6334,7 @@ COPY public.presupuesto (idpresupuesto, tippar, codpar, codigo, nompar, inicial,
 
 
 --
--- TOC entry 5014 (class 0 OID 5986468)
+-- TOC entry 5031 (class 0 OID 5986468)
 -- Dependencies: 229
 -- Data for Name: proyectos; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -6258,8 +6385,18 @@ COPY public.proyectos (idproyecto, codigo, nombre, movimiento, idestructura, usu
 
 
 --
--- TOC entry 5034 (class 0 OID 6597795)
--- Dependencies: 249
+-- TOC entry 5050 (class 0 OID 6917261)
+-- Dependencies: 248
+-- Data for Name: reportes; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.reportes (idreporte, nombre, descripcion, archivo_jrxml, archivo_jasper, parametros, creado) FROM stdin;
+\.
+
+
+--
+-- TOC entry 5048 (class 0 OID 6597795)
+-- Dependencies: 246
 -- Data for Name: tabla4; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -6299,7 +6436,7 @@ COPY public.tabla4 (idtabla4, tipocomprobante, nomcomprobante, usucrea, feccrea,
 
 
 --
--- TOC entry 5018 (class 0 OID 5986520)
+-- TOC entry 5035 (class 0 OID 5986520)
 -- Dependencies: 233
 -- Data for Name: tiptran; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -6323,133 +6460,30 @@ COPY public.tiptran (numero, nombre) FROM stdin;
 
 
 --
--- TOC entry 5025 (class 0 OID 6595432)
--- Dependencies: 240
+-- TOC entry 5053 (class 0 OID 6933657)
+-- Dependencies: 251
 -- Data for Name: usuarios; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.usuarios (idusuario, identificausu, codusu, nomusu, email, pregunta, respuesta, feccrea, usumodi, fecmodi, estado, fdesde, fhasta, otrapestania, alias, codusu1, priusu, perfil, toolbarframe, toolbarsheet) FROM stdin;
-1	SAUL RUALES	868738867681139655226553	RUALES SAUL		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-03-03 12:20:35.351	t	2023-06-16	2024-08-01	f	SAUL RUALES	1e586084aed2ba60	220973234260412313428412101200911320030402122121215613033223732004431294230411315620121143901420323073044003215597230202732000312264113004127044342312570123224382302601202132477214104127214232210741223090357595586568231487869133301220104114144231211334133203440140041124003031223143203101031142314424	\N	\N	\N
-2	SOFIA PILLAJO	8777638777677139456630253093	PILLAJO SOFIA		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-03-18 07:47:00.2	t	2023-06-16	2024-08-01	f	SOFIA PILLAJO	f8d45a53fc219a761119c00a20c05d59	130874040394400123207034241300713144141144123021419612014030600331232332300422012204424012823313144070022131049573040331301332024300240221044032243423871343322272002544201312477320310349102142034522112393196577787788004421442323040242411303111243100142104030324240421034220023204342334032023030440403	\N	\N	\N
-3	NANCYRODRIGUEZ	767688768778691409513289297858	RODRIGUEZ NANCY		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-03-05 14:31:37.887	t	2023-06-16	2024-08-01	f	NANCYRODRIGUEZ	7fcd1911ff965c34	101561143354401402205240341110533004222114131421449504003043743433314484340024212610334111902301214264144034426551020002242334130040203310108332412024671232314204120502201422197222444346100142033901124173365996765766341463700331011044220000444423223314331313222104122413323404310123211301200000414213	\N	\N	\N
-4	JCARDENAS	7668667689358982574	CARDENAS JEFFERSON		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-04-24 07:34:46.357	t	2023-06-16	2024-08-01	f	JCARDENAS	8139a72ac3e802598272538d7eb6aee2	131432424142103213033234310400200112310400312001315131203320614003124340414213134111130000222033043400214121210170411120332314030042202201435241323200023103230414341144231334322300044014140124344330404462414434443221440261801032243042302412301233401243023234344240024411402440410434422212032424002241	\N	\N	\N
-5	DIEGO DELGADO	6767736677667139851698291938	DELGADO DIEGO		7fcd1911ff965c34	7fcd1911ff965c34	2023-08-31 00:00:00	1	2024-03-11 16:40:45.878	t	\N	2024-08-01	f	DIEGO DELGADO	cebf4db6f61acddd	222891034371020004246023421303740021413430310222018644130114512031044250233040411321301034103041124184040031447692123131922001303144024411249040044000561204041460040522114223376344112145422443213602434393489656966979333421624233012314041443423431331332010401022413444211402321344431412124324310123000	\N	\N	\N
-6	GENNY CALDERON	767783667668771489298657298891	CALDERON GENNY		7fcd1911ff965c34	7fcd1911ff965c34	2024-01-10 08:52:58.501	1	2024-07-05 10:50:04.297	f	\N	2024-08-01	f	GENNY CALDERON	\N	\N	\N	\N	\N
-7	GABY PAGUAY	766838678681195515029651	GABY PAGUAY	\N	\N	\N	2024-10-21 07:37:00	1	2025-02-10 16:33:00.278	f	2024-10-21	2025-10-21	f	GABY PAGUAY	\N	\N	\N	\N	\N
-8	PPUETATE	88868686894549500	PUETATE PEDRO		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-03-04 12:11:23.968	t	2023-06-16	2024-08-01	f	Pedro	62de61560769c667f09db89b82cc5e20	240752244251423421309204243113704342034311041311106513402442741103432091124431329740200333921401134383323214249959440301004331244094224212005212232310651442031073212534042143086402213237314042243844222250475956557687244134900342243214134141003434024132324004044110002011304320120142203043413134322230	\N	\N	\N
-9	Joana Jojoa	711719371101171171101173917117	Joana Jojoa	\N	7fcd1911ff965c34	7fcd1911ff965c34	2024-06-16 00:00:00	1	2025-07-21 10:43:23.528	t	\N	2024-08-01	f	Joana Jojoa	7fcd1911ff965c34	201332002113301424114213313212123314220300420042436810402034940102211200141142133340020232232024444242440011325910240111403420132031124331220141233340104343404232401311210423023324242412132314042044002404111033403242110131013022101002232222223341433023422244220012010302202424411322334122431430140121	\N	\N	\N
-10	EVELYN CHENAS	6867873676768133589272896969	EVELYN CHENAS	\N	7fcd1911ff965c34	7fcd1911ff965c34	2025-01-13 07:37:00	1	2025-01-13 09:00:45.844	t	2025-01-13	2026-01-13	f	EVELYN CHENAS	\N	304422300124113144033011341043320302330103221002237804421303640302131031432223223310442232240400434034132344204181124404444214144123310102045444013333342240223020414204124430134031421024311411012100443362300111131102113376701430204211310341422130401033413322023434022444424340213014423100104231414202	\N	\N	\N
-11	RIGOBERTONARVAEZ	877766887376886691709562582942969132	RIGOBERTO NARVAEZ	ng@mail.com	7fcd1911ff965c34	7fcd1911ff965c34	2025-01-22 21:17:19.574	1	2025-01-23 11:54:43.03	t	2025-01-13	2026-01-13	f	RIGOBERTO NARVAEZ	\N	300004241134431133412021240304434030303443242340345623303421724324123342244300310233144010430233422242113001218083340343132143312283113313024041214412554024412232013923343102140014233343210210112100142301212340434111221392610213404000212421144112423141122042000023100322030114123030421340120124022424	\N	\N	\N
-12	GISELLA CANACUAN	77867636676686715855758572569331	GISELLA CANACUAN	\N	7fcd1911ff965c34	7fcd1911ff965c34	2024-08-01 00:00:00	1	2024-08-01 09:31:38.028	t	2024-08-01	2025-08-01	f	GISELA CANACUAN	\N	101994113261322113102424224234740104041203201023037624023044810341442323142332002132243434343121134032431024028690301203431422022400112000448031012314764044014233223804124004188410132345330434443612214151324202043300143375823210302341003242031101043042234004331020402230440040043120110311111133231024	\N	\N	\N
-13	VERONICA TATES	868777663868681439454257389296	VERONICA TATES	\N	7fcd1911ff965c34	7fcd1911ff965c34	2024-10-21 07:37:00	1	2024-10-21 07:38:59.68	t	2024-10-21	2025-10-21	f	VERONICA TATES	\N	032123221133042332111230310434403003112213221432138012124121821130103443312443330100234334013430122324310444324473042123220201132423223203037042133344301412322214004244113221432133302120120040440044423160344233344431010360623332141013034001042243431214201133034440222430234013403041312420404011401413	\N	\N	\N
-14	Alejandro Bolivar	4544455554108042589828	Alejandro Bolívar	\N	7fcd1911ff965c34	7fcd1911ff965c34	2024-06-16 00:00:00	1	2024-11-05 09:31:35.293	f	2024-06-16	2024-08-01	f	Alejandro Bolivar	7fcd1911ff965c34	\N	\N	\N	\N
-15	ORTEGA ANDREA	7886764676866135928856519429	ORTEGA ANDREA	ng@gmail.com	\N	\N	2025-07-02 09:04:00	1	2025-07-02 09:03:43.157	t	\N	\N	f	ORTEGA ANDREA	\N	423851203171313032326223023101632143242411214024307503134102942144430181111131134023133343212102113060432114225661420120431212214420122210015404244021860134310123423804434231388401233137020303312943221450379977959568400062122310042324331132041340210440310310210134001300044420232034104221111142312114	\N	\N	\N
-16	JPERUGACHI	7868876677103275152904	PERUGACHI JOFFRE		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2025-01-22 21:17:02.195	f	2023-06-16	2024-08-01	f	JPERUGACHI	e38cb202874b3a2ba8f5968154811a63	\N	\N	\N	\N
-17	JOHANA PORTILLA	77767638788777615566342902585294	JOHANA PORTILLA		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2025-02-13 15:48:17.873	t	2023-06-16	2024-08-01	f	JOHANA PORTILLA	7fcd1911ff965c34	124134120211302131404202000402440001032203330100107604321103843401231054344203029611420041330440441210041140010854211020634034000080142343246222032210712310410412213531114030197000424329101142421904330322284335411022222190711340134324442113102342031234403331033044411434133124001203411032402042022224	\N	\N	\N
-18	ORTEGAESTACIO	4544555559105658828	ORTEGA ESTACIO AMPARO		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2025-07-28 12:03:58.097	t	2023-06-16	2024-08-01	f	ORTEGAESTACIO	7fcd1911ff965c34	212441214310034401133013240043032011124444303420045504341113503143013001210432442010302214202442434403341323111780431012412333132341421433139103110422242032230140114431431320443034044303232331331230340151131121302142142177834322312440210012013240432023021030043104301221011220004100403033030043112214	\N	\N	\N
-55	RODRIGUEZN	7fcd1911ff965c34	RODRIGUEZ NANCY		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	RODRIGUEZN	7fcd1911ff965c34	\N	1000000000	\N	\N
-56		7fcd1911ff965c34	INSTITUCIONES INSTITUCIONES		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f		7fcd1911ff965c34	\N	1000000000	\N	\N
-19	NORTHON BURBANO	77887773688667715985625628924298	BURBANO ORTIZ NORTHON RAMIRO		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-06-04 08:59:55.633	t	2023-06-16	2024-08-01	f	NORTHON BURBANO	7fcd1911ff965c34	240753002284104132135103021232721140421411314003037522412421901042333282024402232203434010011104100173423044135896011141804320144492313231428143141034982032314452234701020133014442024331102431222210143171399886985878304076768301414022212330341334402012121100310140413223233430012110034140244214431423	\N	\N	\N
-20	ALEXIS ORTIZ	67687837887912034292338965	ORTIZ ALEXIS		7fcd1911ff965c34	7fcd1911ff965c34	2024-02-09 16:15:41.872	1	2025-02-11 21:54:45.189	t	\N	2024-08-01	f	ALEXIS ORTIZ	\N	\N	\N	\N	\N
-21	RcR	19018970601990511	CADENA RENE		7fcd1911ff965c34	7fcd1911ff965c34	2023-08-31 00:00:00	1	2024-02-24 13:59:13.295	t	\N	2024-08-01	f	René Cadena R.	cebf4db6f61acddd	144672311160314004315411214211704441030421342233025724203213513234114054143020127712204221524212032350224424339669243043641434111072111032445403040241553401002193440843340004485022030447001203332632113070197559987765100158699221433443120122422122001311322102102403024130243114231203204404041222233423	\N	\N	\N
-22	JORGE ALMEIDA	7787636776766135839765291294	JORGE ALMEIDA	jorge.almeida@epmapatulcan.gob.ec	\N	\N	2025-08-04 15:15:33.109	1	\N	t	\N	\N	t	JORGE ALMEIDA	\N	402864124083234402237231214314544121003023101314329724210121540212124494432130036900424110040321124153413130417668220011532313442292030134227003421012682142421450014542104444165413342345211003414932232292434320341242421398814020103013020331412401340243331123041233423243040224132313201040422301214400	\N	\N	\N
-23	NB	7fcd1911ff965c34	B N		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	NB	7fcd1911ff965c34	\N	1000000000	\N	\N
-24	CARTOON	7fcd1911ff965c34	VIZCAINO CARLOS ANDRES	cartoonvizc@gmail.com	7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	CARTOON	7fcd1911ff965c34	\N	1000000000	\N	\N
-25	ORTEGAM	7fcd1911ff965c34	ORTEGA AMPARO		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	ORTEGAM	7fcd1911ff965c34	\N	1000000000	\N	\N
-26	CARLOS SANCHEZ	7fcd1911ff965c34	SANCHEZ CARLOS	latro09@hotmail.com	7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	CARLOS SANCHEZ	7fcd1911ff965c34	\N	1000000000	\N	\N
-27	CVIZCAINO	7fcd1911ff965c34	VIZCAINO CARLOS		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	CVIZCAINO	7fcd1911ff965c34	\N	1000000000	\N	\N
-28	RHUERA	7fcd1911ff965c34	HUERA RAUL		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	RHUERA	7fcd1911ff965c34	\N	1000000000	\N	\N
-29	SILVIA ARELLANO	7fcd1911ff965c34	ARELLANO SILVIA		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	SILVIA ARELLANO	7fcd1911ff965c34	\N	1000000000	\N	\N
-30	XIMENA BOLAÑOS	7fcd1911ff965c34	BOLAÑOS XIMENA 		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	XIMENA BOLAÑOS	7fcd1911ff965c34	\N	1000000000	\N	\N
-31	RCADENA	19018970601990511	CADENA RENE		7fcd1911ff965c34	7fcd1911ff965c34	2023-08-31 00:00:00	1	2024-11-11 08:54:57.328	f	\N	2024-08-01	f	Ing.Rene Cadena	24154f49e2abafa2	\N	\N	\N	\N
-32	MNARVAEZ	77688669809562587	NARVAEZ MARTHA	mnarvaez@epmapat.ec	7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-04-05 11:36:19.467	t	2023-06-16	2024-08-01	f	MNARVAEZ	0c18b23a5d4efd1fa5ee566fa595568f	301774013432133302222313323013030400341332422022417530313102704201320151311011132044233300024244234014402423430182020104610134241061214342036422203113952242210491333732011134333120310043401332330143100234431144301321122156668432402010423423440240241130031304233244344434414014322140031023343111202023	\N	\N	\N
-33	XIME BOLAÑOS	7fcd1911ff965c34	BOLAÑOS XIME 		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	XIME BOLAÑOS	7fcd1911ff965c34	\N	1000000000	\N	\N
-34	BOLAÑOS XIMENA	7fcd1911ff965c34	BOLAÑOS XIMENA		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	BOLAÑOS XIMENA	7fcd1911ff965c34	\N	1000000000	\N	\N
-35	XBOLAÑOS	7fcd1911ff965c34	bolaños xime		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	XBOLAÑOS	7fcd1911ff965c34	\N	1000000000	\N	\N
-36	CAJA1	7fcd1911ff965c34	CAJA1 CAJA1		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	CAJA1	7fcd1911ff965c34	\N	1000000000	\N	\N
-37	XIMENA BOLANIOS	7fcd1911ff965c34	BOLAÑOS XIMENA		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	XIMENA BOLANIOS	7fcd1911ff965c34	\N	1000000000	\N	\N
-38	MARCELO DAVILA	7fcd1911ff965c34	DAVILA MARCELO	aud_lexasesores@hotmail.es	5f7a8f5ede02df836d4adf8889548fa1	5f7a8f5ede02df836d4adf8889548fa1	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	MARCELO DAVILA	7fcd1911ff965c34	\N	1000000000	\N	\N
-39	MDAVILA	7fcd1911ff965c34	DAVILA MARCELO	aud_lexasesores@hotmail.es	5f7a8f5ede02df836d4adf8889548fa1	5f7a8f5ede02df836d4adf8889548fa1	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	MDAVILA	7fcd1911ff965c34	\N	1000000000	\N	\N
-40	MARDAVILA	7fcd1911ff965c34	DAVILA MARCELO		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	MARDAVILA	7fcd1911ff965c34	\N	1000000000	\N	\N
-41	MADIVILA	7fcd1911ff965c34	DAVILA MARCELO	aud_lexasesores@hotmail.es	5f7a8f5ede02df836d4adf8889548fa1	5f7a8f5ede02df836d4adf8889548fa1	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	MADIVILA	7fcd1911ff965c34	\N	1000000000	\N	\N
-42	ATUZ	7fcd1911ff965c34	TUZ ANDRES 		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	ATUZ	7fcd1911ff965c34	\N	1000000000	\N	\N
-43	JCAGUIRRE	7fcd1911ff965c34	AGUIRRE JUAN CARLOS		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	JCAGUIRRE	7fcd1911ff965c34	\N	1000000000	\N	\N
-44	RAMIRO CHINGAL	7fcd1911ff965c34	CHINGAL RAMIRO		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	RAMIRO CHINGAL	7fcd1911ff965c34	\N	1000000000	\N	\N
-45	MELISSA TAPIA	7fcd1911ff965c34	TAPIA MELISSA		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	MELISSA TAPIA	7fcd1911ff965c34	\N	1000000000	\N	\N
-46	MARIANA CHUNES	7fcd1911ff965c34	chunes mariana		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	MARIANA CHUNES	7fcd1911ff965c34	\N	1000000000	\N	\N
-47	JOHNNY CHAMORRO	7fcd1911ff965c34	chamorro johnny		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	JOHNNY CHAMORRO	7fcd1911ff965c34	\N	1000000000	\N	\N
-48	MARITZA MENESES	7fcd1911ff965c34	MENESES MARITZA		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	MARITZA MENESES	7fcd1911ff965c34	\N	1000000000	\N	\N
-49	JOSE LUIS LOPEZ	7fcd1911ff965c34	LOPEZ JOSE LUIS		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	JOSE LUIS LOPEZ	7fcd1911ff965c34	\N	1000000000	\N	\N
-50	AOBANDO	7fcd1911ff965c34	OBANDO ALEJANDRO		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	AOBANDO	7fcd1911ff965c34	\N	1000000000	\N	\N
-51	ORTEGAMP	7fcd1911ff965c34	ORTEGA AMPARO		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	ORTEGAMP	7fcd1911ff965c34	\N	1000000000	\N	\N
-52	ORTAMP	7fcd1911ff965c34	ORTE AMPAR		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	ORTAMP	7fcd1911ff965c34	\N	1000000000	\N	\N
-53	NRODRIGUEZ 	7fcd1911ff965c34	RODRIGUEZ NANCY		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	NRODRIGUEZ 	7fcd1911ff965c34	\N	1000000000	\N	\N
-54	RODRIGUEZ NANCY	7fcd1911ff965c34	rodriguez nancy		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	RODRIGUEZ NANCY	7fcd1911ff965c34	\N	1000000000	\N	\N
-57	MCASTRO	7fcd1911ff965c34	CASTRO MIROS		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	MCASTRO	7fcd1911ff965c34	\N	1000000000	\N	\N
-58	PARGOTI	7fcd1911ff965c34	ARGOTI PAOLA		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	PARGOTI	7fcd1911ff965c34	\N	1000000000	\N	\N
-59	AUTORIZACIONES	7fcd1911ff965c34	AUTORIZACIONES AUTORIZACIONES		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	AUTORIZACIONES	7fcd1911ff965c34	\N	1000000000	\N	\N
-60	FTOBAR	7fcd1911ff965c34	TOBAR ING FERNANDO		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	FTOBAR	7fcd1911ff965c34	\N	1000000000	\N	\N
-61	XPRADO	7fcd1911ff965c34	PRADO XAVIER		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	XPRADO	7fcd1911ff965c34	\N	1000000000	\N	\N
-62	ESTEBAN	7fcd1911ff965c34	CUZCO ESTEBAN	prueba@hotmail.com	602cd4dd032df2c9	1ea1336ffd93273c	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	ESTEBAN	7fcd1911ff965c34	\N	1000000000	\N	\N
-63	WISE	7fcd1911ff965c34	SOLIS WILLIAM		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	WISE	7fcd1911ff965c34	\N	1000000000	\N	\N
-64	CARLOS VIZCAINO	7fcd1911ff965c34	VIZCAINO ARMAS CARLOS ANDRES		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	CARLOS VIZCAINO	7fcd1911ff965c34	\N	1000000000	\N	\N
-65	PMURILLO	7fcd1911ff965c34	MURILLO PABLO		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	PMURILLO	7fcd1911ff965c34	\N	1000000000	\N	\N
-66	FVIZUETE	7fcd1911ff965c34	VIZUETE FERNANDA		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	FVIZUETE	7fcd1911ff965c34	\N	1000000000	\N	\N
-67	AVELASCO	7fcd1911ff965c34	VELASCO ANDRES		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	AVELASCO	7fcd1911ff965c34	\N	1000000000	\N	\N
-68	JROBLES	7fcd1911ff965c34	ROBLES JAIRO		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	JROBLES	7fcd1911ff965c34	\N	1000000000	\N	\N
-69	GNOBOA	7fcd1911ff965c34	NOBOA GALO		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	GNOBOA	7fcd1911ff965c34	\N	1000000000	\N	\N
-70	ABOLAÑOS	7fcd1911ff965c34	BOLAÑOS ANITA		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	Anita B.	7fcd1911ff965c34	\N	1000000000	\N	\N
-71	AMERA	7fcd1911ff965c34	MERA ALBERTO	mera@epmapat.ec	7fcd1911ff965c34	7fcd1911ff965c34	2022-10-13 00:00:00	1	2024-11-05 09:31:48.678	f	2023-06-16	2024-08-01	t	Alberto	7fcd1911ff965c34	\N	\N	\N	\N
-72	TROSERO	7fcd1911ff965c34	ROSERO TATIANA		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	TROSERO	7fcd1911ff965c34	\N	1000000000	\N	\N
-73	RNARVAEZ	7fcd1911ff965c34	NARVAEZ RUBEN		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	RNARVAEZ	7fcd1911ff965c34	\N	1000000000	\N	\N
-74	BOT	phasma	Automaticacion BOT	bot@planerp.ec	phasma	phasma	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	BOT	phasma	\N	1000000000	\N	\N
-75	BOLANIOS MAGALY	62395765ef58d84d75f23674f5e14a81	bolanios magaly		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-11-05 09:32:08.181	f	2023-06-16	2024-08-01	f	BOLANIOS MAGALY	62395765ef58d84d75f23674f5e14a81	\N	\N	\N	\N
-76	DQUEZADA	68869666858509518	QUEZADA DARIO		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2025-02-12 07:44:48.156	t	2023-06-16	2024-08-01	f	Dario	a3a152f15ec7d1c9	303652213070440100026033233432533214230023420110209813131324634122400180313140005743443422914333144293104200328989343013520431101411302301225414302101950104220432003803203430186002042037033102022830300473498663001134433365985333133043403433344203003421421123400341423030321232104124343332442420213120	\N	\N	\N
-77	WHIGUERA	7fcd1911ff965c34	HIGUERA WLADIMIR		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	WHIGUERA	7fcd1911ff965c34	\N	1000000000	\N	\N
-78	LTRUJILLO	7fcd1911ff965c34	TRUJILLO LEONOR		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	LTRUJILLO	7fcd1911ff965c34	\N	1000000000	\N	\N
-79	DBURBANO	7fcd1911ff965c34	BURBANO DAVID		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	DBURBANO	7fcd1911ff965c34	\N	1000000000	\N	\N
-80	FREDDY	7fcd1911ff965c34	NAUTA FREDDY	freddy777@aucas.com	d55551452d312d19edc8e1a552155b1d	d97221e884df9300376dbaf5fbe8e01c	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	FREDDY	7fcd1911ff965c34	\N	1000000000	\N	\N
-81	CONSULTAS	99e95eacc6da06e58af2286947b9c6d1	CONTRALORIA CONTRALORIA		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-11-11 08:49:12.001	f	2023-06-16	2024-08-01	f	CONSULTAS	99e95eacc6da06e58af2286947b9c6d1	\N	\N	\N	\N
-82	PRUEBA1	cebf4db6f61acddd	prueba prueba		7fcd1911ff965c34	7fcd1911ff965c34	2023-08-31 00:00:00	1	2024-11-11 08:54:35.575	f	\N	2024-08-01	f	PRUEBA1	cebf4db6f61acddd	\N	\N	\N	\N
-83	CINTHYA ORBE	6d4e81cf435bc06e84b1c9e5f5130d68	ORBE CINTHYA 		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-11-11 08:48:41.73	f	2023-06-16	2024-08-01	f	CINTHYA ORBE	6d4e81cf435bc06e84b1c9e5f5130d68	\N	\N	\N	\N
-84	HCASTRO	766888779243572	CASTRO HUMBERTO		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-05-01 14:17:40.803	t	2023-06-16	2024-08-01	f	HCASTRO	0bfd691b6221fc18e46a336b4f7c54a8	130331033341301320240122442003142322300224411204404124110313134422012241422124413344410213141032042201420004020284320224131300324034203231016200010111330343224402423443044040101012241100211242142241221120112043140323443283641212023042143311334022110113022233323211331441111200110414002411303424340140	\N	\N	\N
-85	FACILITO	7db36c2c420086303b404a59da378f5a	FACILITO FACILITO		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	t	2023-06-16	2024-08-01	f	FACILITO	7db36c2c420086303b404a59da378f5a	\N	1000000000	\N	\N
-86	LODY RODRIGUEZ	bcdefafa2aa576368fa874cb0ff171df	RODRIGUEZ LODY		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	t	2023-06-16	2024-08-01	f	LODY RODRIGUEZ	bcdefafa2aa576368fa874cb0ff171df	\N	1000000000	\N	\N
-87	EDUARDO TUBON	7fcd1911ff965c34	TUBON EDUARDO		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-11-11 08:49:32.76	f	2023-06-16	2024-08-01	f	EDUARDO TUBON	7fcd1911ff965c34	\N	\N	\N	\N
-88	ANDRES MONTENEGRO	676868377786767871792198948972392885	MONTENEGRO ANDRES		7fcd1911ff965c34	7fcd1911ff965c34	2024-01-15 10:53:18.065	1	2025-01-22 21:17:16.676	f	\N	2024-08-01	f	Montenegro A.	\N	\N	\N	\N	\N
-89	JOHANA NARVAEZ	7fcd1911ff965c34	narvaez johana		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	JOHANA NARVAEZ	7fcd1911ff965c34	\N	1000000000	\N	\N
-90	BERNARDO	7fcd1911ff965c34	Leon Bernardo	bbernardoleon@gmail.com	5fe0b4808c4e0dfb7b9a5c29fbb2aab8	452f501e6bf29dba	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	BERNARDO	7fcd1911ff965c34	\N	1000000000	\N	\N
-91	AORTEGA	7fcd1911ff965c34	FTOBAR AORTEGA		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	AORTEGA	7fcd1911ff965c34	\N	1000000000	\N	\N
-92	GGUERRON	7fcd1911ff965c34	GUERRÓN AB. GABRIELA		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	GGUERRON	7fcd1911ff965c34	\N	1000000000	\N	\N
-93	CONTRALORIA2021	7fcd1911ff965c34	contraloria contraloria		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	CONTRALORIA2021	7fcd1911ff965c34	\N	1000000000	\N	\N
-94	JORGE CUMBAL	80d047016a196f89f77227611d8ae1fc	CUMBAL JORGE		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	JORGE CUMBAL	80d047016a196f89f77227611d8ae1fc	\N	1000000000	\N	\N
-95	BOLANIOS XIMENAM	7fcd1911ff965c34	bolanios ximena		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	BOLANIOS XIMENAM	7fcd1911ff965c34	\N	1000000000	\N	\N
-96	RIGOBERTO NARVAEZ	877766887376886691709562582942969132	NARVAEZ RIGOBERTO		7fcd1911ff965c34	7fcd1911ff965c34	2023-12-27 11:37:34.378	1	2024-11-11 08:55:23.111	f	\N	2024-08-01	f	RIGOBERTO NARVAEZ	\N	\N	\N	\N	\N
-97	MANUEL VIVANCO	cebf4db6f61acddd	VIVANCO MANUEL 		7fcd1911ff965c34	7fcd1911ff965c34	2024-01-15 10:54:12.856	1	2024-11-11 08:52:46.96	f	\N	2024-08-01	f	MANUEL VIVANCO	\N	\N	\N	\N	\N
-98	ANTHONY QUIRANZA	7fcd1911ff965c34	QUIRANZA ANTHONY		7fcd1911ff965c34	7fcd1911ff965c34	2023-08-31 00:00:00	\N	\N	f	\N	2024-08-01	f	ANTHONY QUIRANZA	7fcd1911ff965c34	\N	1000000000	\N	\N
-99	ANDRES SERRANO	cd2c69b22e9bdbd3b2e30bbe7d0921f5	SERRANO ANDRES		7fcd1911ff965c34	7fcd1911ff965c34	2023-12-20 11:40:59.624	\N	\N	t	\N	2024-08-01	f	\N	\N	\N	1000000000	\N	\N
-100	MONICA MORA	7a017ac8817b17941b74f6794a02ea1c	MORA LARREA MONICA FERNANDA		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-11-11 08:53:16.759	f	2023-06-16	2024-08-01	f	MONICA MORA	7a017ac8817b17941b74f6794a02ea1c	\N	\N	\N	\N
-101	YOHANNA CADENA	ebe4f0f8edee583a	CADENA YOHANNA		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-11-11 08:55:42.791	f	2023-06-16	2024-08-01	f	YOHANNA CADENA	ebe4f0f8edee583a	\N	\N	\N	\N
-102	AMPARO ORTEGA	7fcd1911ff965c34	Ortega Amparo		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-02-22 17:18:40.062	f	2023-06-16	2024-08-01	f	Ortega A.	7fcd1911ff965c34	\N	1000000000	\N	\N
-103	JUAN CHAVEZ	eb671caa5f0015382e050e37cc3232eb	CHAVEZ JUAN		7fcd1911ff965c34	7fcd1911ff965c34	2023-08-31 00:00:00	1	2024-11-11 08:52:02.247	f	\N	2024-08-01	f	JUAN CHAVEZ	eb671caa5f0015382e050e37cc3232eb	\N	\N	\N	\N
-104	ABOLANIOS	7fcd1911ff965c34	bolanios anita		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	\N	\N	f	2023-06-16	2024-08-01	f	Anita B.	7fcd1911ff965c34	444134204430004320011331431343440030124204000220024173313133043230101101042314432021102343022222102110021224230204232213012332224123342030024420211142421321431214234100103240122222001013031312201012001043234342322103024044100321300341033023344420302440042441331240321021400323014342204201231000224404	1000000000	\N	\N
-105	RVILLARREAL	887776886671165922566362	VILLARREAL RENE		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-03-03 12:21:10.325	t	2023-06-16	2024-08-01	f	RVILLARREAL	79fe708380f79fe5b436bc8ef22e6450	113332133104042332142034120231033132030044420310109332203400614412012304022101011022224144434034113222434032220150401243230141111233244422035413124203340040324233223240112221230120132341333221200240112461123221023402022344831241004333041001011012401021143123001413124142110243010103021144311113112200	\N	\N	\N
-106	WAGUILAR	86787768825635157	AGUILAR WILMER		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-03-03 12:14:08.91	t	2023-06-16	2024-08-01	f	WAGUILAR	54edd04b89ef26c8	011012131313423110243401034314421130004040024033227232414201744031012020201330131323422031142212301340430344024494301301004111243314100200349400401321212312113032144423023042123412404034132432204231210482103311011003122082924000044202031431404434314320332443144320211122220304434043222223404234330424	\N	\N	\N
-107	BOLANIOS XIMENA	67767778387767615589738239385696	bolanios ximena		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-03-18 11:31:58.392	t	2023-06-16	2024-08-01	f	BOLANIOS XIMENA	7fcd1911ff965c34	102030003132022043440003204212430044402124310340307700000224833222014032413233010442143221200243240212430102203391133014200140224221114221008000044113044201201231410130443221230241042042034331444110311482024432402204000252914031041320031033112330141214240334430034340401040202133424001004201444240312	\N	\N	\N
-108	NORTEGA	778867675194298	ORTEGA NUBY		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-03-03 12:15:04.753	t	2023-06-16	2024-08-01	f	NORTEGA	dcf9e2554141f33a	401213000102322130013431204110431414444204310343335224134313933041443112401241311111332121444330430423210443040350420012540402112342314320009302420404420212024103044403212204444142434421413401210142040071430413123031444011033300410323211424320321213001224340301301200113441131443143240102202340334304	\N	\N	\N
-109	PAOLA PUETATE	8677638868686139454950256950	PUETATE PAOLA		7fcd1911ff965c34	7fcd1911ff965c34	2023-08-31 00:00:00	1	2024-04-29 12:09:24.431	t	\N	2024-08-01	f	PAOLA PUETATE	cebf4db6f61acddd	341301404210434443212404333443024443232331441203118904440323544324241340144120320010443113410401203400443403021182220340010130222340134044136223401233114122014214220240340421234244422444200420200024200483241143221010310471941421321431102310213321221314001312214310134314222202112132121404210043102231	\N	\N	\N
-110	SMORILLO	87787777896632973	MORILLO SAIDA		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-03-08 11:48:18.717	t	2023-06-16	2024-08-01	f	SMORILLO	7fcd1911ff965c34	000421140144044444243401214401102103433244022033415011400223612324402012431221423341303242213331321243324304434352122301124234111030243343419123303401302224442124011220214242022244001300214123030134120073044331000432021251910120324221244412042020040232413023012410103322221400344100441314241212001203	\N	\N	\N
-111	Administrador	612091271654551220804619179119	Administrador		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-13 00:00:00	\N	\N	f	\N	\N	f	Administrador	7fcd1911ff965c34	\N	1000000000	\N	\N
-112	JJACOME	b747b762ba8b0d4b3df7427af8e3551f	JACOME JEFFERSON	jefferson.jacome@epmapatulcan.gob.ec	7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-11-11 08:50:50.471	f	2023-06-16	2024-08-01	f	Jácome J.	b747b762ba8b0d4b3df7427af8e3551f	\N	\N	\N	\N
-113	JOBANDO	776676779885694	OBANDO JACKSON		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2024-07-10 12:49:26.096	t	2023-06-16	2024-08-01	f	JOBANDO	8465fd74fb8143890018dfc01b27e760	020881222273200134323213444033612021313101133031107631120321742203101304204302119911110130814241404251034410339596010100001412132262221112426434023322661112311251143822003414095234131046021444444730011150441202321313023083701432313123123340422021410400330141112024020014023031303021142042341134141130	\N	\N	\N
-114	JHOANA SOTO	777676387871194932585924	SOTO JHOANA		7fcd1911ff965c34	7fcd1911ff965c34	2024-01-31 14:41:32.492	1	2024-03-03 12:11:34.356	t	\N	2024-08-01	f	JHOANA SOTO	\N	230951024351014410406224401121713014242401023102009612032332834212032311121220431443140300442002211202100104048652401032011133022014404300236242234020690314001141112402302323031323222141120210242201111390214113000403422250921013402211120022442021101120300131002120120344302000243021030111020311334301	\N	\N	\N
-115	RICHARD GUDINIO	87676863786777715938385128252732	GUDINIO RICHARD		7fcd1911ff965c34	7fcd1911ff965c34	2022-10-14 00:00:00	1	2025-01-23 15:04:31.939	f	2023-06-16	2024-08-01	f	RICHARD GUDINIO	6ed753678beecf83	121120300330340132322004022031213212122123414341040042314212044243014034230141012421442303320403114241003124221044231333203424214021242212140203144432010300141423021003023241314342101103120413013214144144211243402002002342423303443401204121143431004431414100223204044122031011033133131214042242212304	\N	\N	\N
+COPY public.usuarios (idusuario, identificacion, codusu, nomusu, fdesde, fhasta, priusu, foto, modulo, alias, swmodulo1, swmodulo2, swmodulo3, swmodulo4, swmodulo5, feccrea, usumodi, fecmodi, msgval, swhabili, swmusica, swmodulo6) FROM stdin;
+4	PPelotes	PPelotes	Palito de los Pelotes	\N	\N	\N	\N	1	Palito	f	f	f	f	f	2025-02-03 00:12:33.551	\N	\N	f	t	t	t
+6	FMenganes	FMenganes	Fulanito MenganÃ©s	\N	\N	\N	\N	1	Fulanito	t	f	f	f	f	2025-02-04 13:42:24.445	\N	\N	f	f	t	t
+7	ACastro	ACastro	Aquiles Castro	\N	\N	\N	\N	1	Aquiles	f	t	f	f	f	2025-02-04 13:48:20.058	\N	\N	t	t	t	t
+8	JJPerez	7781111127210410044	Juan JosÃ© PÃ©rez	\N	\N	\N	\N	1	Juan Jose	f	f	t	f	f	2025-02-04 14:16:14.136	\N	\N	t	t	t	t
+5	UMas	UMas1	Antonio Mas	\N	\N	\N	\N	1	Mas	t	f	f	f	f	2025-02-03 13:41:19.806	1	2025-02-04 14:33:25.185	f	t	t	t
+10	CCobo	6611815119177	Carlos Cobo	2025-01-01	2025-12-31	\N	\N	1	Carlos	f	t	t	f	f	2025-02-04 22:28:22.673	\N	\N	t	t	t	t
+11	RLazo	8791215112762	Lazo Rita	2025-01-01	2025-12-31	\N	\N	1	LaZorrita	f	f	t	f	f	2025-02-05 22:29:16.617	\N	\N	t	t	t	t
+9	ZZurita	9917115197761041100	Zoila Zurita	2025-01-01	2025-12-31	\N	\N	5	SoyZurita	t	t	t	f	t	2025-02-04 22:26:44.294	1	2025-06-05 17:45:29.514	t	t	t	t
+3	MLopez	77755530677	Mario LÃ³pez	\N	\N	\N	\N	1	Marito	t	t	t	t	t	2025-02-03 00:07:46.203	1	2025-06-09 17:04:12.413	f	f	t	t
+12	BJuarez	6717711127210419146	Juarez Benito	2025-01-01	2025-12-31	\N	\N	1	Benito	t	t	t	t	t	2025-08-26 17:13:31.038	\N	\N	t	t	t	t
+13	Otrito	7161151116111511617	Otrito	2025-01-01	2025-12-31	\N	\N	3	Otro	f	f	t	f	f	2025-08-26 12:21:01.643	\N	\N	t	t	t	f
+1	Administrador	612091271654551220804619179119	Administrador	\N	\N			1	Super Usuario	t	f	t	t	t	2025-01-31 00:00:00	\N	\N	t	t	t	t
 \.
 
 
 --
--- TOC entry 5028 (class 0 OID 6595452)
--- Dependencies: 243
+-- TOC entry 5042 (class 0 OID 6595452)
+-- Dependencies: 240
 -- Data for Name: ventanas; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -6620,11 +6654,15 @@ COPY public.ventanas (idventana, nombre, color1, color2, idusuario) FROM stdin;
 164	cargos	rgb(128,143,82)	rgb(227,242,183)	1
 165	proyectos	rgb(128,143,82)	rgb(227,242,183)	1
 166	proyectos	rgb(128,143,82)	rgb(227,242,183)	111
+167	clasificador	rgb(128,143,82)	rgb(227,242,183)	111
+168	preingresos	rgb(128,143,82)	rgb(227,242,183)	111
+169	gastos	rgb(128,143,82)	rgb(227,242,183)	111
+170	info-gasto	rgb(128,143,82)	rgb(227,242,183)	111
 \.
 
 
 --
--- TOC entry 5056 (class 0 OID 0)
+-- TOC entry 5079 (class 0 OID 0)
 -- Dependencies: 216
 -- Name: beneficiarios_idbene_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -6633,7 +6671,7 @@ SELECT pg_catalog.setval('public.beneficiarios_idbene_seq', 1027, true);
 
 
 --
--- TOC entry 5057 (class 0 OID 0)
+-- TOC entry 5080 (class 0 OID 0)
 -- Dependencies: 235
 -- Name: cargos_idcargo_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -6642,8 +6680,8 @@ SELECT pg_catalog.setval('public.cargos_idcargo_seq', 1, false);
 
 
 --
--- TOC entry 5058 (class 0 OID 0)
--- Dependencies: 244
+-- TOC entry 5081 (class 0 OID 0)
+-- Dependencies: 241
 -- Name: certificaciones_idcertificacion_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -6651,7 +6689,7 @@ SELECT pg_catalog.setval('public.certificaciones_idcertificacion_seq', 1, false)
 
 
 --
--- TOC entry 5059 (class 0 OID 0)
+-- TOC entry 5082 (class 0 OID 0)
 -- Dependencies: 218
 -- Name: clasificador_idclasificador_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -6660,7 +6698,7 @@ SELECT pg_catalog.setval('public.clasificador_idclasificador_seq', 1, false);
 
 
 --
--- TOC entry 5060 (class 0 OID 0)
+-- TOC entry 5083 (class 0 OID 0)
 -- Dependencies: 231
 -- Name: cuentas_idcuenta_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -6669,8 +6707,8 @@ SELECT pg_catalog.setval('public.cuentas_idcuenta_seq', 1, false);
 
 
 --
--- TOC entry 5061 (class 0 OID 0)
--- Dependencies: 246
+-- TOC entry 5084 (class 0 OID 0)
+-- Dependencies: 243
 -- Name: documentos_iddocumento_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -6678,7 +6716,7 @@ SELECT pg_catalog.setval('public.documentos_iddocumento_seq', 1, false);
 
 
 --
--- TOC entry 5062 (class 0 OID 0)
+-- TOC entry 5085 (class 0 OID 0)
 -- Dependencies: 237
 -- Name: eliminados_ideliminado_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -6687,16 +6725,16 @@ SELECT pg_catalog.setval('public.eliminados_ideliminado_seq', 1, false);
 
 
 --
--- TOC entry 5063 (class 0 OID 0)
+-- TOC entry 5086 (class 0 OID 0)
 -- Dependencies: 220
 -- Name: estructura_idestructura_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.estructura_idestructura_seq', 1, false);
+SELECT pg_catalog.setval('public.estructura_idestructura_seq', 1, true);
 
 
 --
--- TOC entry 5064 (class 0 OID 0)
+-- TOC entry 5087 (class 0 OID 0)
 -- Dependencies: 222
 -- Name: gruposbene_idgrupo_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -6705,7 +6743,7 @@ SELECT pg_catalog.setval('public.gruposbene_idgrupo_seq', 8, true);
 
 
 --
--- TOC entry 5065 (class 0 OID 0)
+-- TOC entry 5088 (class 0 OID 0)
 -- Dependencies: 224
 -- Name: ifinan_idifinan_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -6714,7 +6752,7 @@ SELECT pg_catalog.setval('public.ifinan_idifinan_seq', 74, true);
 
 
 --
--- TOC entry 5066 (class 0 OID 0)
+-- TOC entry 5089 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: niveles_idnivel_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -6723,7 +6761,16 @@ SELECT pg_catalog.setval('public.niveles_idnivel_seq', 1, false);
 
 
 --
--- TOC entry 5067 (class 0 OID 0)
+-- TOC entry 5090 (class 0 OID 0)
+-- Dependencies: 252
+-- Name: partixcerti_idparxcer_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.partixcerti_idparxcer_seq', 1, false);
+
+
+--
+-- TOC entry 5091 (class 0 OID 0)
 -- Dependencies: 228
 -- Name: presupuesto_idpresupuesto_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -6732,7 +6779,7 @@ SELECT pg_catalog.setval('public.presupuesto_idpresupuesto_seq', 1, false);
 
 
 --
--- TOC entry 5068 (class 0 OID 0)
+-- TOC entry 5092 (class 0 OID 0)
 -- Dependencies: 230
 -- Name: proyectos_idproyecto_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -6741,8 +6788,17 @@ SELECT pg_catalog.setval('public.proyectos_idproyecto_seq', 42, true);
 
 
 --
--- TOC entry 5069 (class 0 OID 0)
--- Dependencies: 248
+-- TOC entry 5093 (class 0 OID 0)
+-- Dependencies: 247
+-- Name: reportes_idreporte_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.reportes_idreporte_seq', 1, false);
+
+
+--
+-- TOC entry 5094 (class 0 OID 0)
+-- Dependencies: 245
 -- Name: tabla4_idtabla4_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -6750,7 +6806,7 @@ SELECT pg_catalog.setval('public.tabla4_idtabla4_seq', 41, true);
 
 
 --
--- TOC entry 5070 (class 0 OID 0)
+-- TOC entry 5095 (class 0 OID 0)
 -- Dependencies: 234
 -- Name: tiptran_numero_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -6759,25 +6815,25 @@ SELECT pg_catalog.setval('public.tiptran_numero_seq', 1, false);
 
 
 --
--- TOC entry 5071 (class 0 OID 0)
--- Dependencies: 239
+-- TOC entry 5096 (class 0 OID 0)
+-- Dependencies: 250
 -- Name: usuarios_idusuario_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.usuarios_idusuario_seq', 115, true);
+SELECT pg_catalog.setval('public.usuarios_idusuario_seq', 1, false);
 
 
 --
--- TOC entry 5072 (class 0 OID 0)
--- Dependencies: 242
+-- TOC entry 5097 (class 0 OID 0)
+-- Dependencies: 239
 -- Name: ventanas_idventana_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.ventanas_idventana_seq', 166, true);
+SELECT pg_catalog.setval('public.ventanas_idventana_seq', 170, true);
 
 
 --
--- TOC entry 4839 (class 2606 OID 5994730)
+-- TOC entry 4850 (class 2606 OID 5994730)
 -- Name: cargos cargos_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -6786,7 +6842,7 @@ ALTER TABLE ONLY public.cargos
 
 
 --
--- TOC entry 4849 (class 2606 OID 6597785)
+-- TOC entry 4856 (class 2606 OID 6597785)
 -- Name: certificaciones certificaciones_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -6795,7 +6851,7 @@ ALTER TABLE ONLY public.certificaciones
 
 
 --
--- TOC entry 4824 (class 2606 OID 5986481)
+-- TOC entry 4835 (class 2606 OID 5986481)
 -- Name: clasificador clasificador_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -6804,7 +6860,7 @@ ALTER TABLE ONLY public.clasificador
 
 
 --
--- TOC entry 4836 (class 2606 OID 5986519)
+-- TOC entry 4847 (class 2606 OID 5986519)
 -- Name: cuentas cuentas_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -6813,7 +6869,7 @@ ALTER TABLE ONLY public.cuentas
 
 
 --
--- TOC entry 4845 (class 2606 OID 6595449)
+-- TOC entry 4864 (class 2606 OID 6933655)
 -- Name: definir definir_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -6822,7 +6878,7 @@ ALTER TABLE ONLY public.definir
 
 
 --
--- TOC entry 4851 (class 2606 OID 6597793)
+-- TOC entry 4858 (class 2606 OID 6597793)
 -- Name: documentos documentos_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -6831,7 +6887,7 @@ ALTER TABLE ONLY public.documentos
 
 
 --
--- TOC entry 4841 (class 2606 OID 5994737)
+-- TOC entry 4852 (class 2606 OID 5994737)
 -- Name: eliminados eliminados_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -6840,7 +6896,7 @@ ALTER TABLE ONLY public.eliminados
 
 
 --
--- TOC entry 4834 (class 2606 OID 5986483)
+-- TOC entry 4845 (class 2606 OID 5986483)
 -- Name: proyectos estrfunc_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -6849,7 +6905,7 @@ ALTER TABLE ONLY public.proyectos
 
 
 --
--- TOC entry 4828 (class 2606 OID 5986485)
+-- TOC entry 4839 (class 2606 OID 5986485)
 -- Name: estructura estructura_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -6858,7 +6914,7 @@ ALTER TABLE ONLY public.estructura
 
 
 --
--- TOC entry 4830 (class 2606 OID 5986487)
+-- TOC entry 4841 (class 2606 OID 5986487)
 -- Name: niveles niveles_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -6867,7 +6923,16 @@ ALTER TABLE ONLY public.niveles
 
 
 --
--- TOC entry 4832 (class 2606 OID 5986489)
+-- TOC entry 4868 (class 2606 OID 6933669)
+-- Name: partixcerti partixcerti_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.partixcerti
+    ADD CONSTRAINT partixcerti_pk PRIMARY KEY (idparxcer);
+
+
+--
+-- TOC entry 4843 (class 2606 OID 5986489)
 -- Name: presupuesto presupue_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -6876,7 +6941,16 @@ ALTER TABLE ONLY public.presupuesto
 
 
 --
--- TOC entry 4853 (class 2606 OID 6597800)
+-- TOC entry 4862 (class 2606 OID 6917269)
+-- Name: reportes reportes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.reportes
+    ADD CONSTRAINT reportes_pkey PRIMARY KEY (idreporte);
+
+
+--
+-- TOC entry 4860 (class 2606 OID 6597800)
 -- Name: tabla4 tabla4_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -6885,7 +6959,7 @@ ALTER TABLE ONLY public.tabla4
 
 
 --
--- TOC entry 4826 (class 2606 OID 5986491)
+-- TOC entry 4837 (class 2606 OID 5986491)
 -- Name: clasificador uc_codpar; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -6894,7 +6968,7 @@ ALTER TABLE ONLY public.clasificador
 
 
 --
--- TOC entry 4843 (class 2606 OID 6595441)
+-- TOC entry 4866 (class 2606 OID 6933662)
 -- Name: usuarios usuarios_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -6903,7 +6977,7 @@ ALTER TABLE ONLY public.usuarios
 
 
 --
--- TOC entry 4847 (class 2606 OID 6595457)
+-- TOC entry 4854 (class 2606 OID 6595457)
 -- Name: ventanas ventanas_pk; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -6912,7 +6986,7 @@ ALTER TABLE ONLY public.ventanas
 
 
 --
--- TOC entry 4837 (class 1259 OID 5986526)
+-- TOC entry 4848 (class 1259 OID 5986526)
 -- Name: tiptran_numero_idx; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -6920,7 +6994,7 @@ CREATE INDEX tiptran_numero_idx ON public.tiptran USING btree (numero);
 
 
 --
--- TOC entry 4856 (class 2606 OID 5986492)
+-- TOC entry 4871 (class 2606 OID 5986492)
 -- Name: proyectos estrfunc_estructura_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -6929,7 +7003,25 @@ ALTER TABLE ONLY public.proyectos
 
 
 --
--- TOC entry 4854 (class 2606 OID 5986497)
+-- TOC entry 4872 (class 2606 OID 6933670)
+-- Name: partixcerti partixcerti_certificaciones_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.partixcerti
+    ADD CONSTRAINT partixcerti_certificaciones_fk FOREIGN KEY (idcertificacion) REFERENCES public.certificaciones(idcertificacion);
+
+
+--
+-- TOC entry 4873 (class 2606 OID 6933675)
+-- Name: partixcerti partixcerti_presupuesto_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.partixcerti
+    ADD CONSTRAINT partixcerti_presupuesto_fk FOREIGN KEY (idpresupuesto) REFERENCES public.presupuesto(idpresupuesto);
+
+
+--
+-- TOC entry 4869 (class 2606 OID 5986497)
 -- Name: presupuesto presupuesto_clasificador_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -6938,7 +7030,7 @@ ALTER TABLE ONLY public.presupuesto
 
 
 --
--- TOC entry 4855 (class 2606 OID 5986502)
+-- TOC entry 4870 (class 2606 OID 5986502)
 -- Name: presupuesto presupuesto_proyectos_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -6946,7 +7038,7 @@ ALTER TABLE ONLY public.presupuesto
     ADD CONSTRAINT presupuesto_proyectos_fk FOREIGN KEY (idproyecto) REFERENCES public.proyectos(idproyecto);
 
 
--- Completed on 2025-09-04 10:38:21
+-- Completed on 2025-09-13 07:40:38
 
 --
 -- PostgreSQL database dump complete
