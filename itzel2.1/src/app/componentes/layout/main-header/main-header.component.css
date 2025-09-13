@@ -1,0 +1,19 @@
+.fondo1-background {
+   background-color: #563d7c;
+}
+
+.fondo1-texto {
+   color: white;
+}
+
+.disabled {
+   opacity: 0.4;
+}
+
+.ancho {
+   width: 740%;
+}
+
+.fondoDefinir {
+   background-color: #434b4b;
+}
