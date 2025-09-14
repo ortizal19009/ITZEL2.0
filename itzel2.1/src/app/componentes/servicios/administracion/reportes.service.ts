@@ -33,6 +33,14 @@ export class ReportesService {
     return this.http.post(`${baseUrl}/${id}/ejecutar`, params, { responseType: 'blob' });
   }
   ejecutarReporteDB(dto: any): Observable<Blob> {
-    return this.http.post(`http://localhost:8080/jasperReports/descargar`, dto, { responseType: 'blob' });
+    return this.http.post(`http://localhost:8080/jasperReports/descargar`, dto, {
+      responseType: 'blob',
+    });
+  }
+  deleteReporte(id: number) {
+    return this.http.delete(`${baseUrl}/${id}`);
+  }
+  getOneReporte(id: number) {
+    return this.http.get(`${baseUrl}/${id}`);
   }
 }

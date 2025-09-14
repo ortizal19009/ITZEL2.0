@@ -116,4 +116,13 @@ export class ReportesComponent implements OnInit {
       error: (err) => console.error('Error al ejecutar reporte:', err),
     });
   }
+  eliminar(reporte: any) {
+    console.log(reporte);
+    this.reporteService.deleteReporte(reporte.idreporte).subscribe({
+      next: (dato: any) => {
+        this.cargarReportes();
+      },
+      error: (e: any) => console.error(e),
+    });
+  }
 }
