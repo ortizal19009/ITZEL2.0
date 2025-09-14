@@ -1,38 +1,51 @@
 <div class="card p-3 shadow">
-  <h3 class="mb-3">Reportes disponibles</h3>
-  <button class="btn btn-sm btn-primary" (click)="cargarReportes()">reload</button>
+  <div class="card-header">
+    <div class="row">
+      <div class="col-sm-10">
+        <h3 class="mb-3">Reportes disponibles</h3>
 
-  <div *ngIf="mensaje" class="alert alert-danger">{{ mensaje }}</div>
+      </div>
+      <div class="col-sm">
+        <button class="btn btn-sm btn-outline-primary" (click)="cargarReportes()">Recargar</button>
+        <button class="btn btn-sm btn-primary" [routerLink]="['/add-reporte']">Nuevo reporte</button>
 
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Descripción</th>
-        <th>Parámetros</th>
-        <th>Acción</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let r of reportes">
-        <td>{{ r.nombre }}</td>
-        <td>{{ r.descripcion }}</td>
-        <td>{{ r.parametros }}</td>
-        <td>
-          <button class="btn btn-xs btn-primary mr-2" data-toggle="modal" data-target="#exampleModal"
-            (click)="ejecutarReporte(r)">
-            Ejecutar
-          </button>
-          <button class="btn btn-xs btn-warning mr-2">
-            Modificar
-          </button>
-          <button class="btn btn-xs btn-danger">
-            Eliminar
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div *ngIf="mensaje" class="alert alert-danger">{{ mensaje }}</div>
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Parámetros</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let r of reportes">
+          <td>{{ r.nombre }}</td>
+          <td>{{ r.descripcion }}</td>
+          <td>{{ r.parametros }}</td>
+          <td>
+            <button class="btn btn-xs btn-primary mr-2" data-toggle="modal" data-target="#exampleModal"
+              (click)="ejecutarReporte(r)">
+              Ejecutar
+            </button>
+            <button class="btn btn-xs btn-warning mr-2">
+              Modificar
+            </button>
+            <button class="btn btn-xs btn-danger">
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
 </div>
 
 
@@ -43,39 +56,42 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Parametros del reporte</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form [formGroup]="report" (ngSubmit)="onSubmit()">
+        <form [formGroup]="report">
           <div *ngFor="let p of parametros">
             <label>{{ p.nombre }}</label>
 
             <ng-container [ngSwitch]="p.tipo">
-              <input *ngSwitchCase="'java.lang.String'" type="text" [formControlName]="p.nombre" />
-              <input *ngSwitchCase="'java.lang.Integer'" type="number" [formControlName]="p.nombre" />
-              <input *ngSwitchCase="'java.util.Date'" type="date" [formControlName]="p.nombre" />
-              <input *ngSwitchCase="'java.lang.Boolean'" type="checkbox" [formControlName]="p.nombre" />
-              <input *ngSwitchDefault type="text" [formControlName]="p.nombre" />
+              <input class="form-control form-control-sm" *ngSwitchCase="'java.lang.String'" type="text"
+                [formControlName]="p.nombre" />
+              <input class="form-control form-control-sm" *ngSwitchCase="'java.lang.Integer'" type="number"
+                [formControlName]="p.nombre" />
+              <input class="form-control form-control-sm" *ngSwitchCase="'java.util.Date'" type="date"
+                [formControlName]="p.nombre" />
+              <input class="form-control form-control-sm" *ngSwitchCase="'java.lang.Boolean'" type="checkbox"
+                [formControlName]="p.nombre" />
+              <input class="form-control form-control-sm" *ngSwitchDefault type="text" [formControlName]="p.nombre" />
             </ng-container>
           </div>
 
-          <!-- Selector para extensión -->
-          <label>Formato:</label>
-          <select formControlName="extension">
-            <option value="pdf">PDF</option>
-            <option value="xlsx">Excel</option>
-            <option value="csv">CSV</option>
-          </select>
 
-          <button type="submit">Generar Reporte</button>
         </form>
+        <!-- Selector para extensión -->
+        <label>Formato:</label>
+        <select class="form-control form-control-sm" [(ngModel)]="extension">
+          <option value="pdf">PDF</option>
+          <option value="xlsx">Excel</option>
+          <option value="csv">CSV</option>
+        </select>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-sm btn-outline-success" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-sm btn-success" (click)="onSubmit()">Aceptar</button>
       </div>
     </div>
   </div>

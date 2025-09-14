@@ -7,7 +7,7 @@ import java.util.Map;
 public class JasperDTO {
     private String reportName;
     private Map<String, Object> parameters = new HashMap<>();
-    private String extencion;
+    private String extension;
 
     public Long getReporteId() {
         return reporteId;
@@ -35,11 +35,11 @@ public class JasperDTO {
         this.parameters = parameters;
     }
 
-    public String getExtencion() {
-        return extencion;
+    public String getExtension() {
+        return extension;
     }
 
-    public void setExtencion(String extencion) {
-        this.extencion = extencion;
+    public void setExtension(String extension) {
+        this.extension = extension;
     }
 }

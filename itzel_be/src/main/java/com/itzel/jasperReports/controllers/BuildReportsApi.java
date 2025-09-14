@@ -43,7 +43,7 @@ public class BuildReportsApi {
         try {
             JasperDTO dto = new JasperDTO();
             dto.setReportName(jasperDTO.getReportName());
-            dto.setExtencion(jasperDTO.getExtencion());
+            dto.setExtension(jasperDTO.getExtension());
 
             Map<String, Object> params = new HashMap<>();
 
@@ -65,9 +65,9 @@ public class BuildReportsApi {
 
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             try (Connection conn = dataSource.getConnection()) {
-                if (".xlsx".equalsIgnoreCase(dto.getExtencion())) {
+                if (".xlsx".equalsIgnoreCase(dto.getExtension())) {
                     outputStream = buildReports.buildXlsxReport(dto, conn);
-                } else if (".csv".equalsIgnoreCase(dto.getExtencion())) {
+                } else if (".csv".equalsIgnoreCase(dto.getExtension())) {
                     outputStream = buildReports.buildCsvReport(dto, conn);
                 } else { // por defecto PDF
                     outputStream = buildReports.buildPdfReport(dto, conn);
@@ -77,10 +77,10 @@ public class BuildReportsApi {
             ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
             InputStreamResource resource = new InputStreamResource(inputStream);
 
-            String fileName = jasperDTO.getReportName() + jasperDTO.getExtencion();
+            String fileName = jasperDTO.getReportName() + jasperDTO.getExtension();
             MediaType mediaType;
 
-            switch (dto.getExtencion().toLowerCase()) {
+            switch (dto.getExtension().toLowerCase()) {
                 case ".xlsx":
                     mediaType = MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
                     break;
@@ -209,8 +209,9 @@ public class BuildReportsApi {
         ByteArrayOutputStream outputStream;
         String filename;
         MediaType mediaType;
+        System.out.println(jasperDTO.getExtension());
 
-        switch (jasperDTO.getExtencion().toLowerCase()) {
+        switch (jasperDTO.getExtension().toLowerCase()) {
             case "pdf":
                 outputStream = buildReports.buildPdfReport(jasperDTO);
                 filename = "reporte.pdf";

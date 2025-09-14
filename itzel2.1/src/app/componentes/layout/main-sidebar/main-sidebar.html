@@ -126,6 +126,25 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item has-treeview" routerLinkActive="menu-open">
+                    <a href="#" class="nav-link bg-info">
+                        <i class="bi-droplet-half nav-icon" style="font-size: 15px;"></i>
+                        <p> JASPER REPORT
+                            <i class="fas fa-angle-right right"></i>
+                            <span class="badge badge-warning right">1</span>
+                        </p>
+                    </a>
+
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item" routerLinkActive="menu-open">
+                            <a [routerLink]="['/reportejr']" class="nav-link" routerLinkActive="active"
+                                [routerLinkActiveOptions]="{ exact: true }">
+                                <i class="bi-person-circle nav-icon"></i>
+                                <p class="text-warning"> Reportes</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </nav>
 

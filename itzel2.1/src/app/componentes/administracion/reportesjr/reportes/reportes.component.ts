@@ -8,10 +8,10 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-
+import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-reportes.component',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterLink],
   templateUrl: './reportes.component.html',
   styleUrl: './reportes.component.css',
 })
@@ -21,6 +21,7 @@ export class ReportesComponent implements OnInit {
   parametros: any[] = [];
   report!: FormGroup;
   reporteSeleccionado!: any;
+  extension: string = 'pdf';
 
   constructor(private reporteService: ReportesService, private fb: FormBuilder) {}
 
@@ -33,19 +34,22 @@ export class ReportesComponent implements OnInit {
   cargarReportes(): void {
     this.reporteService.getReportes().subscribe({
       next: (data: any) => {
-        console.log(data);
         this.reportes = data;
       },
       error: (err: any) => (this.mensaje = 'Error al cargar reportes: ' + err.message),
     });
   }
   ejecutarReporte(reporte: any): void {
+    this.parametros = [];
     this.reporteSeleccionado = reporte;
     // Convierte el objeto en array [{nombre, tipo}]
-    this.parametros = Object.entries(reporte.parametros).map(([nombre, tipo]) => ({
-      nombre,
-      tipo,
-    }));
+    console.log(reporte.parametros);
+    if (reporte.parametros) {
+      this.parametros = Object.entries(reporte.parametros).map(([nombre, tipo]) => ({
+        nombre,
+        tipo,
+      }));
+    }
 
     console.log('Parametros procesados:', this.parametros);
 
@@ -80,9 +84,6 @@ export class ReportesComponent implements OnInit {
       }
     });
 
-    // Siempre añade extensión
-    group['extension'] = new FormControl('pdf');
-
     this.report = this.fb.group(group);
   }
 
@@ -90,11 +91,11 @@ export class ReportesComponent implements OnInit {
     const valores = this.report.value;
     console.log(this.report.value);
     console.log(this.reporteSeleccionado);
-
+    console.log(this.extension);
     const dto = {
       reportName: this.reporteSeleccionado.nombre, // 👈 debes guardar el reporte seleccionado
       parametros: valores,
-      extension: valores.extension,
+      extension: this.extension,
     };
 
     this.reporteService.ejecutarReporteDB(dto).subscribe({
