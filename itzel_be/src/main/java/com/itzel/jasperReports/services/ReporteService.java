@@ -33,6 +33,10 @@ private ReportesR repo;
     public Optional<Reportes> buscarPorId(Long id) {
         return repo.findById(id);
     }
+    public Reportes findByNombre(String nombre) {
+        return repo.findByNombre(nombre);
+    }
+
 
     public void eliminar(Long id) {
         repo.deleteById(id);

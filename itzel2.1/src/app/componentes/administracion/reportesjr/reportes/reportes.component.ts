@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ReportesService } from '../../../servicios/administracion/reportes.service';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-reportes.component',
@@ -12,11 +18,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 export class ReportesComponent implements OnInit {
   reportes: any[] = [];
   mensaje = '';
+  parametros: any[] = [];
+  report!: FormGroup;
+  reporteSeleccionado!: any;
 
-  constructor(private reporteService: ReportesService) {}
+  constructor(private reporteService: ReportesService, private fb: FormBuilder) {}
 
   ngOnInit(): void {
+    this.report = this.fb.group({});
     this.cargarReportes();
+    this.crearFormulario(this.parametros);
   }
 
   cargarReportes(): void {
@@ -28,26 +39,80 @@ export class ReportesComponent implements OnInit {
       error: (err: any) => (this.mensaje = 'Error al cargar reportes: ' + err.message),
     });
   }
-
   ejecutarReporte(reporte: any): void {
-    const params: any = {};
+    this.reporteSeleccionado = reporte;
+    // Convierte el objeto en array [{nombre, tipo}]
+    this.parametros = Object.entries(reporte.parametros).map(([nombre, tipo]) => ({
+      nombre,
+      tipo,
+    }));
 
-    // si el reporte tiene parámetros, aquí podrías mostrar un modal dinámico
-    if (reporte.parametros) {
-      const parsed = JSON.parse(reporte.parametros);
-      parsed.forEach((p: any) => {
-        const valor = prompt(`Ingrese valor para ${p.nombre} (${p.tipo})`);
-        params[p.nombre] = valor;
-      });
-    }
+    console.log('Parametros procesados:', this.parametros);
 
-    this.reporteService.ejecutarReporte(reporte.id, params).subscribe({
-      next: (pdf: any) => {
-        const blob = new Blob([pdf], { type: 'application/pdf' });
+    this.crearFormulario(this.parametros);
+  }
+
+  crearFormulario(params: any[]): void {
+    const group: { [key: string]: FormControl } = {};
+
+    params.forEach((param) => {
+      console.log('Creando control para:', param);
+
+      switch (param.tipo) {
+        case 'java.lang.String':
+          group[param.nombre] = new FormControl('');
+          break;
+
+        case 'java.lang.Integer':
+          group[param.nombre] = new FormControl(0);
+          break;
+
+        case 'java.util.Date':
+          group[param.nombre] = new FormControl('');
+          break;
+
+        case 'java.lang.Boolean':
+          group[param.nombre] = new FormControl(false);
+          break;
+
+        default:
+          group[param.nombre] = new FormControl('');
+      }
+    });
+
+    // Siempre añade extensión
+    group['extension'] = new FormControl('pdf');
+
+    this.report = this.fb.group(group);
+  }
+
+  onSubmit() {
+    const valores = this.report.value;
+    console.log(this.report.value);
+    console.log(this.reporteSeleccionado);
+
+    const dto = {
+      reportName: this.reporteSeleccionado.nombre, // 👈 debes guardar el reporte seleccionado
+      parametros: valores,
+      extension: valores.extension,
+    };
+
+    this.reporteService.ejecutarReporteDB(dto).subscribe({
+      next: (data: Blob) => {
+        let tipo = 'application/pdf';
+        if (dto.extension === 'xlsx')
+          tipo = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+        if (dto.extension === 'csv') tipo = 'text/plain';
+
+        const blob = new Blob([data], { type: tipo });
         const url = window.URL.createObjectURL(blob);
-        window.open(url, '_blank');
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `reporte.${dto.extension}`;
+        a.click();
+        window.URL.revokeObjectURL(url);
       },
-      error: (err: any) => (this.mensaje = 'Error al ejecutar reporte: ' + err.message),
+      error: (err) => console.error('Error al ejecutar reporte:', err),
     });
   }
 }

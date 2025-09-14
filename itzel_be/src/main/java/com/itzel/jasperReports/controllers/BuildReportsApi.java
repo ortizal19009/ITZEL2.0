@@ -176,31 +176,68 @@ public class BuildReportsApi {
 
 
 
-    @GetMapping("/{id}/pdf")
-    public ResponseEntity<byte[]> descargarPdf(@PathVariable Long id) throws JRException, SQLException {
-        ByteArrayOutputStream outputStream = buildReports.buildPdfReport(id);
+    @PostMapping("/{id}/pdf")
+    public ResponseEntity<byte[]> descargarPdf(@RequestBody JasperDTO jasperDTO) throws JRException, SQLException {
+        ByteArrayOutputStream outputStream = buildReports.buildPdfReport(jasperDTO);
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=reporte.pdf")
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(outputStream.toByteArray());
     }
 
-    @GetMapping("/{id}/xlsx")
-    public ResponseEntity<byte[]> descargarXlsx(@PathVariable Long id) throws JRException, SQLException {
-        ByteArrayOutputStream outputStream = buildReports.buildXlsxReport(id);
+    @PostMapping("/{id}/xlsx")
+    public ResponseEntity<byte[]> descargarXlsx(@RequestBody JasperDTO jasperDTO) throws JRException, SQLException {
+        ByteArrayOutputStream outputStream = buildReports.buildXlsxReport(jasperDTO);
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=reporte.xlsx")
                 .contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
                 .body(outputStream.toByteArray());
     }
 
-    @GetMapping("/{id}/csv")
-    public ResponseEntity<byte[]> descargarCsv(@PathVariable Long id) throws JRException, SQLException {
-        ByteArrayOutputStream outputStream = buildReports.buildCsvReport(id);
+    @PostMapping("/{id}/csv")
+    public ResponseEntity<byte[]> descargarCsv(@RequestBody JasperDTO jasperDTO) throws JRException, SQLException {
+        ByteArrayOutputStream outputStream = buildReports.buildCsvReport(jasperDTO);
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=reporte.csv")
                 .contentType(MediaType.TEXT_PLAIN)
                 .body(outputStream.toByteArray());
     }
+
+    //Este post tiene integrado todos los archivos de acuerdo con la extencion que el fron envie
+    @PostMapping("/descargar")
+    public ResponseEntity<byte[]> descargarReporte(@RequestBody JasperDTO jasperDTO) throws JRException, SQLException {
+        ByteArrayOutputStream outputStream;
+        String filename;
+        MediaType mediaType;
+
+        switch (jasperDTO.getExtencion().toLowerCase()) {
+            case "pdf":
+                outputStream = buildReports.buildPdfReport(jasperDTO);
+                filename = "reporte.pdf";
+                mediaType = MediaType.APPLICATION_PDF;
+                break;
+
+            case "xlsx":
+                outputStream = buildReports.buildXlsxReport(jasperDTO);
+                filename = "reporte.xlsx";
+                mediaType = MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+                break;
+
+            case "csv":
+                outputStream = buildReports.buildCsvReport(jasperDTO);
+                filename = "reporte.csv";
+                mediaType = MediaType.TEXT_PLAIN;
+                break;
+
+            default:
+                return ResponseEntity.badRequest().build();
+        }
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
+                .contentType(mediaType)
+                .body(outputStream.toByteArray());
+    }
+
 
 }

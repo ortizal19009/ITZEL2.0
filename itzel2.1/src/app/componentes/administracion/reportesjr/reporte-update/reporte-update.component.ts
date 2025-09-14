@@ -1,13 +1,20 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { ReportesService } from '../../../servicios/administracion/reportes.service';
 import { CommonModule } from '@angular/common';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-reporte-update.component',
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './reporte-update.component.html',
-  styleUrl: './reporte-update.component.css'
+  styleUrl: './reporte-update.component.css',
 })
 export class ReporteUpdateComponent {
   form: FormGroup;
@@ -15,10 +22,14 @@ export class ReporteUpdateComponent {
   jasperFile?: File;
   mensaje = '';
 
-  constructor(private fb: FormBuilder, private reporteService: ReportesService) {
+  constructor(
+    private fb: FormBuilder,
+    private reporteService: ReportesService,
+    private router: Router
+  ) {
     this.form = this.fb.group({
       nombre: ['', Validators.required],
-      descripcion: ['', Validators.required]
+      descripcion: ['', Validators.required],
     });
   }
 
@@ -30,31 +41,38 @@ export class ReporteUpdateComponent {
       this.jasperFile = file;
     }
   }
-
-onSubmit(): void {
-  if (!this.jrxmlFile || !this.jasperFile) {
-    this.mensaje = 'Debe seleccionar ambos archivos (JRXML y Jasper)';
-    return;
+  regresar() {
+    this.router.navigate(['/reportesjr']);
   }
-
-  this.reporteService.uploadReporte(
-    this.form.value.nombre,
-    this.form.value.descripcion,
-    this.jrxmlFile,
-    this.jasperFile
-  ).subscribe({
-    next: (res) => {
-      console.log('Respuesta del backend:', res);
-      this.mensaje = 'Reporte cargado correctamente ✅';
-      this.form.reset(); // limpia el formulario
-      this.jrxmlFile = null!;
-      this.jasperFile = null!;
-    },
-    error: (err) => {
-      console.error('Error al subir:', err);
-      this.mensaje = 'Error al cargar el reporte ❌: ' + (err.error?.message || err.message);
+  onSubmit(): void {
+    if (!this.jrxmlFile || !this.jasperFile) {
+      this.mensaje = 'Debe seleccionar ambos archivos (JRXML y Jasper)';
+      return;
     }
-  });
-}
 
+    this.reporteService
+      .uploadReporte(
+        this.form.value.nombre,
+        this.form.value.descripcion,
+        this.jrxmlFile,
+        this.jasperFile
+      )
+      .subscribe({
+        next: (res) => {
+          console.log('Respuesta del backend:', res);
+
+          this.mensaje = 'Reporte cargado correctamente ✅';
+          this.form.reset(); // limpia el formulario
+          this.jrxmlFile = null!;
+          this.jasperFile = null!;
+
+          this.regresar();
+        },
+
+        error: (err) => {
+          console.error('Error al subir:', err);
+          this.mensaje = 'Error al cargar el reporte ❌: ' + (err.error?.message || err.message);
+        },
+      });
+  }
 }

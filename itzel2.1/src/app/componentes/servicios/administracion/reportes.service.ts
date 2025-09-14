@@ -14,7 +14,7 @@ export class ReportesService {
   getReporte(id: number): Observable<any> {
     return this.http.get<any>(`${baseUrl}/${id}`);
   }
-  
+
   uploadReporte(nombre: string, descripcion: string, jrxml: File, jasper: File): Observable<any> {
     const formData = new FormData();
     formData.append('nombre', nombre);
@@ -31,5 +31,8 @@ export class ReportesService {
 
   ejecutarReporte(id: number, params: any): Observable<Blob> {
     return this.http.post(`${baseUrl}/${id}/ejecutar`, params, { responseType: 'blob' });
+  }
+  ejecutarReporteDB(dto: any): Observable<Blob> {
+    return this.http.post(`http://localhost:8080/jasperReports/descargar`, dto, { responseType: 'blob' });
   }
 }
