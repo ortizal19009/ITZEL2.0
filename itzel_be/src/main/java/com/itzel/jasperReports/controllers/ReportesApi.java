@@ -9,11 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 
 import java.io.ByteArrayInputStream;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -61,18 +60,20 @@ public class ReportesApi {
             reporte.setArchivoJasper(jasper.getBytes());
 
             // 1️⃣ Compilar el JRXML en memoria
-            JasperReport jasperReport = JasperCompileManager.compileReport(new ByteArrayInputStream(jrxml.getBytes()));
+            JasperReport jasperReport = JasperCompileManager.compileReport(
+                    new ByteArrayInputStream(jrxml.getBytes())
+            );
 
-            // 2️⃣ Obtener los parámetros del reporte
-            Map<String, Object> parametrosMap = new HashMap<>();
+            // 2️⃣ Obtener los parámetros del reporte y su tipo
+            Map<String, Object> parametrosMap = new LinkedHashMap<>();
             for (JRParameter param : jasperReport.getParameters()) {
-                // Ignoramos los parámetros internos como REPORT_LOCALE, REPORT_CONNECTION, etc.
                 if (!param.isSystemDefined()) {
-                    parametrosMap.put(param.getName(), null); // Puedes poner null o un valor por defecto
+                    // Guardamos el nombre del parámetro y su tipo (className)
+                    parametrosMap.put(param.getName(), param.getValueClassName());
                 }
             }
 
-            // 3️⃣ Guardamos los parámetros en el reporte
+            // 3️⃣ Guardamos los parámetros en la columna JSONB
             reporte.setParametros(parametrosMap);
 
             // 4️⃣ Guardar en la DB
@@ -80,7 +81,7 @@ public class ReportesApi {
             return ResponseEntity.ok(guardado);
 
         } catch (Exception e) {
-            e.printStackTrace(); // útil para debug
+            e.printStackTrace();
             return ResponseEntity.badRequest().build();
         }
     }

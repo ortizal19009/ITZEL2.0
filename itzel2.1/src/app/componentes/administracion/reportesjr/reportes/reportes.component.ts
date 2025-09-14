@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ReportesService } from '../../../servicios/administracion/reportes.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -9,7 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   templateUrl: './reportes.component.html',
   styleUrl: './reportes.component.css',
 })
-export class ReportesComponent {
+export class ReportesComponent implements OnInit {
   reportes: any[] = [];
   mensaje = '';
 

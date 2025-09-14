@@ -9,6 +9,16 @@ public class JasperDTO {
     private Map<String, Object> parameters = new HashMap<>();
     private String extencion;
 
+    public Long getReporteId() {
+        return reporteId;
+    }
+
+    public void setReporteId(Long reporteId) {
+        this.reporteId = reporteId;
+    }
+
+    private Long reporteId;
+
     public String getReportName() {
         return reportName;
     }
