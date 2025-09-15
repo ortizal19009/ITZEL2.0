@@ -7,10 +7,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
 
+import com.itzel.jasperReports.DTO.ReportParameterDTO;
 import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -38,70 +40,6 @@ public class BuildReportsApi {
                 .body("El método GET no está permitido en este endpoint. Usa POST.");
     }
 
-    @PostMapping("/reportes")
-    public ResponseEntity<Resource> generarReporte(@RequestBody JasperDTO jasperDTO) {
-        try {
-            JasperDTO dto = new JasperDTO();
-            dto.setReportName(jasperDTO.getReportName());
-            dto.setExtension(jasperDTO.getExtension());
-
-            Map<String, Object> params = new HashMap<>();
-
-            for (Map.Entry<String, Object> entry : jasperDTO.getParameters().entrySet()) {
-                String key = entry.getKey();
-                Object value = entry.getValue();
-                if (value == null) continue;
-
-                if ("desde".equalsIgnoreCase(key) || "hasta".equalsIgnoreCase(key) || "tope".equalsIgnoreCase(key)) {
-                    params.put(key, parseDateToSQLType(value.toString()));
-                } else if ("hdesde".equalsIgnoreCase(key) || "hhasta".equalsIgnoreCase(key)) {
-                    params.put(key, parseToSqlTime(value.toString()));
-                } else {
-                    params.put(key, normalizeParameterValue(key, value));
-                }
-            }
-
-            dto.setParameters(params);
-
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            try (Connection conn = dataSource.getConnection()) {
-                if (".xlsx".equalsIgnoreCase(dto.getExtension())) {
-                    outputStream = buildReports.buildXlsxReport(dto, conn);
-                } else if (".csv".equalsIgnoreCase(dto.getExtension())) {
-                    outputStream = buildReports.buildCsvReport(dto, conn);
-                } else { // por defecto PDF
-                    outputStream = buildReports.buildPdfReport(dto, conn);
-                }
-            }
-
-            ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
-            InputStreamResource resource = new InputStreamResource(inputStream);
-
-            String fileName = jasperDTO.getReportName() + jasperDTO.getExtension();
-            MediaType mediaType;
-
-            switch (dto.getExtension().toLowerCase()) {
-                case ".xlsx":
-                    mediaType = MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-                    break;
-                case ".csv":
-                    mediaType = MediaType.parseMediaType("text/csv");
-                    break;
-                default:
-                    mediaType = MediaType.APPLICATION_PDF;
-            }
-
-            return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName)
-                    .contentType(mediaType)
-                    .contentLength(outputStream.size())
-                    .body(resource);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
 
 
     private Object parseDateToSQLType(String value) throws ParseException {
@@ -203,60 +141,89 @@ public class BuildReportsApi {
                 .body(outputStream.toByteArray());
     }
 
-    //Este post tiene integrado todos los archivos de acuerdo con la extencion que el fron envie
     @PostMapping("/descargar")
-    public ResponseEntity<byte[]> descargarReporte(@RequestBody JasperDTO jasperDTO) throws JRException, SQLException {
-        ByteArrayOutputStream outputStream;
-        String filename;
-        MediaType mediaType;
-        Map<String, Object> params = new HashMap<>();
+    public ResponseEntity<byte[]> descargarReporte(@RequestBody JasperDTO jasperDTO) {
+        try {
+            ByteArrayOutputStream outputStream;
+            String filename;
+            MediaType mediaType;
 
-        for (Map.Entry<String, Object> entry : jasperDTO.getParameters().entrySet()) {
+            // Generar el reporte llamando al servicio; el servicio se encarga de la conversión de parámetros
+            switch (jasperDTO.getExtension().toLowerCase()) {
+                case "pdf":
+                    outputStream = buildReports.buildPdfReport(jasperDTO);
+                    filename = jasperDTO.getReportName() + ".pdf";
+                    mediaType = MediaType.APPLICATION_PDF;
+                    break;
 
-            String key = entry.getKey();
-            Object value = entry.getValue();
-            System.out.println(key);
-            System.out.println(value);
+                case "xlsx":
+                    outputStream = buildReports.buildXlsxReport(jasperDTO);
+                    filename = jasperDTO.getReportName() + ".xlsx";
+                    mediaType = MediaType.parseMediaType(
+                            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                    );
+                    break;
 
-            /*if (value == null) continue;
+                case "csv":
+                    outputStream = buildReports.buildCsvReport(jasperDTO);
+                    filename = jasperDTO.getReportName() + ".csv";
+                    mediaType = MediaType.TEXT_PLAIN;
+                    break;
 
-            if ("desde".equalsIgnoreCase(key) || "hasta".equalsIgnoreCase(key) || "tope".equalsIgnoreCase(key)) {
-                params.put(key, parseDateToSQLType(value.toString()));
-            } else if ("hdesde".equalsIgnoreCase(key) || "hhasta".equalsIgnoreCase(key)) {
-                params.put(key, parseToSqlTime(value.toString()));
-            } else {
-                params.put(key, normalizeParameterValue(key, value));
-            }*/
+                default:
+                    return ResponseEntity.badRequest().build();
+            }
+
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
+                    .contentType(mediaType)
+                    .body(outputStream.toByteArray());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    public Map<String, Object> convertirParametros(List<ReportParameterDTO> parametros) {
+        Map<String, Object> result = new HashMap<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        for (ReportParameterDTO p : parametros) {
+            Object valorConvertido = null;
+            try {
+                switch (p.getType()) {
+                    case "java.lang.String":
+                        valorConvertido = String.valueOf(p.getValue());
+                        break;
+
+                    case "java.lang.Integer":
+                        valorConvertido = Integer.valueOf(p.getValue().toString());
+                        break;
+
+                    case "java.lang.Long":
+                        valorConvertido = Long.valueOf(p.getValue().toString());
+                        break;
+
+                    case "java.lang.Boolean":
+                        valorConvertido = Boolean.valueOf(p.getValue().toString());
+                        break;
+
+                    case "java.util.Date":
+                        valorConvertido = sdf.parse(p.getValue().toString());
+                        break;
+
+                    default:
+                        valorConvertido = p.getValue(); // fallback
+                }
+            } catch (Exception e) {
+                throw new RuntimeException("Error convirtiendo parámetro: " + p.getName(), e);
+            }
+
+            result.put(p.getName(), valorConvertido);
         }
 
-        //dto.setParameters(params);
-        switch (jasperDTO.getExtension().toLowerCase()) {
-            case "pdf":
-                outputStream = buildReports.buildPdfReport(jasperDTO);
-                filename = "reporte.pdf";
-                mediaType = MediaType.APPLICATION_PDF;
-                break;
-
-            case "xlsx":
-                outputStream = buildReports.buildXlsxReport(jasperDTO);
-                filename = "reporte.xlsx";
-                mediaType = MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-                break;
-
-            case "csv":
-                outputStream = buildReports.buildCsvReport(jasperDTO);
-                filename = "reporte.csv";
-                mediaType = MediaType.TEXT_PLAIN;
-                break;
-
-            default:
-                return ResponseEntity.badRequest().build();
-        }
-
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
-                .contentType(mediaType)
-                .body(outputStream.toByteArray());
+        return result;
     }
 
 

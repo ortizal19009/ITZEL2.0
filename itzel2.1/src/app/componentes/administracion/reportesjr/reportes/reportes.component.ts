@@ -93,10 +93,16 @@ export class ReportesComponent implements OnInit {
     this.swViewer = false;
     const valores = this.report.value;
     console.log(this.swVerReporte);
+    // Armamos los parámetros con nombre, tipo y valor
+    const parametrosConTipo = this.parametros.map((p) => ({
+      name: p.nombre,
+      type: p.tipo,
+      value: valores[p.nombre],
+    }));
 
     const dto = {
-      reportName: this.reporteSeleccionado.nombre, // 👈 debes guardar el reporte seleccionado
-      parameters: valores,
+      reportName: this.reporteSeleccionado.nombre,
+      parameters: parametrosConTipo, // 👈 ya tiene name, type, value
       extension: this.extension,
     };
 

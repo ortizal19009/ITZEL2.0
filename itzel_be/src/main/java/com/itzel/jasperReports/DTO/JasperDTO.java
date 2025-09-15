@@ -2,11 +2,12 @@ package com.itzel.jasperReports.DTO;
 import lombok.Data;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 @Data
 public class JasperDTO {
     private String reportName;
-    private Map<String, Object> parameters = new HashMap<>();
+    private List<ReportParameterDTO> parameters;
     private String extension;
 
     public Long getReporteId() {
@@ -27,19 +28,19 @@ public class JasperDTO {
         this.reportName = reportName;
     }
 
-    public Map<String, Object> getParameters() {
-        return parameters;
-    }
-
-    public void setParameters(Map<String, Object> parameters) {
-        this.parameters = parameters;
-    }
-
     public String getExtension() {
         return extension;
     }
 
     public void setExtension(String extension) {
         this.extension = extension;
+    }
+
+    public List<ReportParameterDTO> getParameters() {
+        return parameters;
+    }
+
+    public void setParameters(List<ReportParameterDTO> parameters) {
+        this.parameters = parameters;
     }
 }

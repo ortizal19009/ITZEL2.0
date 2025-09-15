@@ -6,8 +6,13 @@ import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import com.itzel.jasperReports.DTO.JasperDTO;
+import com.itzel.jasperReports.DTO.ReportParameterDTO;
 import com.itzel.jasperReports.modelo.Reportes;
 import com.itzel.jasperReports.repositories.ReportesR;
 import net.sf.jasperreports.engine.*;
@@ -27,23 +32,32 @@ public class BuildReports {
     private ReporteService reportesService;
     @Autowired
     private DataSource dataSource; // Para la conexión a la DB
+
     // PDF
-    public ByteArrayOutputStream buildPdfReport(JasperDTO dto, Connection conn) throws JRException {
+    // PDF
+    public ByteArrayOutputStream _buildPdfReport(JasperDTO dto, Connection conn) throws JRException {
         JasperReport jasperReport = JasperCompileManager.compileReport(
                 getClass().getResourceAsStream("/reports/" + dto.getReportName() + ".jrxml")
         );
-        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, dto.getParameters(), conn);
+
+        Map<String, Object> params = convertParams(dto.getParameters());
+
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, conn);
+
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         JasperExportManager.exportReportToPdfStream(jasperPrint, outputStream);
         return outputStream;
     }
 
     // XLSX
-    public ByteArrayOutputStream buildXlsxReport(JasperDTO dto, Connection conn) throws JRException {
+    public ByteArrayOutputStream _buildXlsxReport(JasperDTO dto, Connection conn) throws JRException {
         JasperReport jasperReport = JasperCompileManager.compileReport(
                 getClass().getResourceAsStream("/reports/" + dto.getReportName() + ".jrxml")
         );
-        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, dto.getParameters(), conn);
+
+        Map<String, Object> params = convertParams(dto.getParameters());
+
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, conn);
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         JRXlsxExporter exporter = new JRXlsxExporter();
@@ -52,7 +66,7 @@ public class BuildReports {
         exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputStream));
 
         SimpleXlsxReportConfiguration configuration = new SimpleXlsxReportConfiguration();
-        configuration.setDetectCellType(true);   // Detecta tipo de celda
+        configuration.setDetectCellType(true);
         configuration.setCollapseRowSpan(false);
         exporter.setConfiguration(configuration);
 
@@ -61,11 +75,14 @@ public class BuildReports {
     }
 
     // CSV
-    public ByteArrayOutputStream buildCsvReport(JasperDTO dto, Connection conn) throws JRException {
+    public ByteArrayOutputStream _buildCsvReport(JasperDTO dto, Connection conn) throws JRException {
         JasperReport jasperReport = JasperCompileManager.compileReport(
                 getClass().getResourceAsStream("/reports/" + dto.getReportName() + ".jrxml")
         );
-        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, dto.getParameters(), conn);
+
+        Map<String, Object> params = convertParams(dto.getParameters());
+
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, conn);
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         Writer writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);
@@ -92,77 +109,15 @@ public class BuildReports {
         return dataSource.getConnection();
     }
 
-    public ByteArrayOutputStream _buildPdfReport(Long reporteId) throws JRException, SQLException {
-        Reportes reporte = buscarPorId(reporteId);
-        try (Connection conn = getConnection()) {
-            JasperReport jasperReport = JasperCompileManager.compileReport(
-                    new ByteArrayInputStream(reporte.getArchivoJrxml())
-            );
-            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, conn);
-
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            JasperExportManager.exportReportToPdfStream(jasperPrint, outputStream);
-            return outputStream;
-        }
-    }
-
-    public ByteArrayOutputStream _buildXlsxReport(Long reporteId) throws JRException, SQLException {
-        Reportes reporte = buscarPorId(reporteId);
-        try (Connection conn = getConnection()) {
-            JasperReport jasperReport = JasperCompileManager.compileReport(
-                    new ByteArrayInputStream(reporte.getArchivoJrxml())
-            );
-            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, conn);
-
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            JRXlsxExporter exporter = new JRXlsxExporter();
-            exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
-            exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputStream));
-
-            SimpleXlsxReportConfiguration configuration = new SimpleXlsxReportConfiguration();
-            configuration.setDetectCellType(true);
-            configuration.setCollapseRowSpan(false);
-            exporter.setConfiguration(configuration);
-            exporter.exportReport();
-
-            return outputStream;
-        }
-    }
-
-    public ByteArrayOutputStream _buildCsvReport(Long reporteId) throws JRException, SQLException {
-        Reportes reporte = buscarPorId(reporteId);
-        try (Connection conn = getConnection()) {
-            JasperReport jasperReport = JasperCompileManager.compileReport(
-                    new ByteArrayInputStream(reporte.getArchivoJrxml())
-            );
-            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, conn);
-
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            Writer writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);
-
-            JRCsvExporter exporter = new JRCsvExporter();
-            exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
-            exporter.setExporterOutput(new SimpleWriterExporterOutput(writer));
-
-            SimpleCsvExporterConfiguration configuration = new SimpleCsvExporterConfiguration();
-            exporter.setConfiguration(configuration);
-            exporter.exportReport();
-
-            return outputStream;
-        }
-    }
-
-
-    // PDF
     public ByteArrayOutputStream buildPdfReport(JasperDTO dto) throws JRException, SQLException {
         Reportes reporte = reportesService.findByNombre(dto.getReportName());
+        Map<String, Object> params = convertParams(dto.getParameters());
 
         try (Connection conn = getConnection()) {
             JasperReport jasperReport = JasperCompileManager.compileReport(
                     new ByteArrayInputStream(reporte.getArchivoJrxml())
             );
-
-            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, dto.getParameters(), conn);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, conn);
 
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             JasperExportManager.exportReportToPdfStream(jasperPrint, outputStream);
@@ -170,19 +125,18 @@ public class BuildReports {
         }
     }
 
-    // XLSX
     public ByteArrayOutputStream buildXlsxReport(JasperDTO dto) throws JRException, SQLException {
         Reportes reporte = reportesService.findByNombre(dto.getReportName());
+        Map<String, Object> params = convertParams(dto.getParameters());
+
         try (Connection conn = getConnection()) {
             JasperReport jasperReport = JasperCompileManager.compileReport(
                     new ByteArrayInputStream(reporte.getArchivoJrxml())
             );
-
-            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, dto.getParameters(), conn);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, conn);
 
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             JRXlsxExporter exporter = new JRXlsxExporter();
-
             exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
             exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputStream));
 
@@ -196,15 +150,15 @@ public class BuildReports {
         }
     }
 
-    // CSV
     public ByteArrayOutputStream buildCsvReport(JasperDTO dto) throws JRException, SQLException {
         Reportes reporte = reportesService.findByNombre(dto.getReportName());
+        Map<String, Object> params = convertParams(dto.getParameters());
+
         try (Connection conn = getConnection()) {
             JasperReport jasperReport = JasperCompileManager.compileReport(
                     new ByteArrayInputStream(reporte.getArchivoJrxml())
             );
-
-            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, dto.getParameters(), conn);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, conn);
 
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             Writer writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);
@@ -219,5 +173,44 @@ public class BuildReports {
             exporter.exportReport();
             return outputStream;
         }
+    }
+
+
+    private Map<String, Object> convertParams(List<ReportParameterDTO> parametros) throws JRException {
+        Map<String, Object> params = new HashMap<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        if (parametros != null) {
+            for (ReportParameterDTO p : parametros) {
+                if (p.getValue() == null) continue;
+
+                Object valorConvertido;
+                switch (p.getType()) {
+                    case "java.lang.String":
+                        valorConvertido = p.getValue().toString();
+                        break;
+                    case "java.lang.Integer":
+                        valorConvertido = Integer.valueOf(p.getValue().toString());
+                        break;
+                    case "java.lang.Long":
+                        valorConvertido = Long.valueOf(p.getValue().toString());
+                        break;
+                    case "java.lang.Boolean":
+                        valorConvertido = Boolean.valueOf(p.getValue().toString());
+                        break;
+                    case "java.util.Date":
+                        try {
+                            valorConvertido = sdf.parse(p.getValue().toString());
+                        } catch (Exception e) {
+                            throw new JRException("Error parseando fecha para parámetro " + p.getName(), e);
+                        }
+                        break;
+                    default:
+                        valorConvertido = p.getValue();
+                }
+                params.put(p.getName(), valorConvertido);
+            }
+        }
+        return params;
     }
 }
