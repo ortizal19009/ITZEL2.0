@@ -22,6 +22,8 @@ export class ReportesComponent implements OnInit {
   report!: FormGroup;
   reporteSeleccionado!: any;
   extension: string = 'pdf';
+  swViewer: boolean = true;
+  swVerReporte?: boolean;
 
   constructor(private reporteService: ReportesService, private fb: FormBuilder) {}
 
@@ -88,30 +90,43 @@ export class ReportesComponent implements OnInit {
   }
 
   onSubmit() {
+    this.swViewer = false;
     const valores = this.report.value;
-    console.log(this.report.value);
-    console.log(this.reporteSeleccionado);
-    console.log(this.extension);
+    console.log(this.swVerReporte);
+
     const dto = {
       reportName: this.reporteSeleccionado.nombre, // 👈 debes guardar el reporte seleccionado
-      parametros: valores,
+      parameters: valores,
       extension: this.extension,
     };
 
     this.reporteService.ejecutarReporteDB(dto).subscribe({
       next: (data: Blob) => {
         let tipo = 'application/pdf';
-        if (dto.extension === 'xlsx')
+        if (dto.extension === 'xlsx') {
           tipo = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
-        if (dto.extension === 'csv') tipo = 'text/plain';
+          this.swVerReporte = true;
+        }
+        if (dto.extension === 'csv') {
+          tipo = 'text/plain';
+          this.swVerReporte = true;
+        }
 
         const blob = new Blob([data], { type: tipo });
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `reporte.${dto.extension}`;
-        a.click();
-        window.URL.revokeObjectURL(url);
+
+        if (this.swVerReporte) {
+          console.log(this.swVerReporte);
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.click();
+          window.URL.revokeObjectURL(url);
+          a.href = url;
+          a.download = `reporte.${dto.extension}`;
+        } else {
+          const url = URL.createObjectURL(blob);
+          const pdfViewer = document.getElementById('pdfViewer') as HTMLIFrameElement;
+          pdfViewer.src = url;
+        }
       },
       error: (err) => console.error('Error al ejecutar reporte:', err),
     });

@@ -57,37 +57,49 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Parametros del reporte</h5>
+        <button type="button" *ngIf="!swViewer" (click)="swViewer = !swViewer" class="close">
+          <i class="fa fa-retweet" aria-hidden="true"></i>
+        </button>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form [formGroup]="report">
-          <div *ngFor="let p of parametros">
-            <label>{{ p.nombre }}</label>
+        <div class="card card-body" *ngIf="swViewer; else viewer">
+          <form [formGroup]="report">
+            <div *ngFor="let p of parametros">
+              <label>{{ p.nombre }}</label>
 
-            <ng-container [ngSwitch]="p.tipo">
-              <input class="form-control form-control-sm" *ngSwitchCase="'java.lang.String'" type="text"
-                [formControlName]="p.nombre" />
-              <input class="form-control form-control-sm" *ngSwitchCase="'java.lang.Integer'" type="number"
-                [formControlName]="p.nombre" />
-              <input class="form-control form-control-sm" *ngSwitchCase="'java.util.Date'" type="date"
-                [formControlName]="p.nombre" />
-              <input class="form-control form-control-sm" *ngSwitchCase="'java.lang.Boolean'" type="checkbox"
-                [formControlName]="p.nombre" />
-              <input class="form-control form-control-sm" *ngSwitchDefault type="text" [formControlName]="p.nombre" />
-            </ng-container>
-          </div>
+              <ng-container [ngSwitch]="p.tipo">
+                <input class="form-control form-control-sm" *ngSwitchCase="'java.lang.String'" type="text"
+                  [formControlName]="p.nombre" />
+                <input class="form-control form-control-sm" *ngSwitchCase="'java.lang.Integer'" type="number"
+                  [formControlName]="p.nombre" />
+                <input class="form-control form-control-sm" *ngSwitchCase="'java.util.Date'" type="date"
+                  [formControlName]="p.nombre" />
+                <input class="form-control form-control-sm" *ngSwitchCase="'java.lang.Boolean'" type="checkbox"
+                  [formControlName]="p.nombre" />
+                <input class="form-control form-control-sm" *ngSwitchDefault type="text" [formControlName]="p.nombre" />
+              </ng-container>
+            </div>
 
 
-        </form>
-        <!-- Selector para extensión -->
-        <label>Formato:</label>
-        <select class="form-control form-control-sm" [(ngModel)]="extension">
-          <option value="pdf">PDF</option>
-          <option value="xlsx">Excel</option>
-          <option value="csv">CSV</option>
-        </select>
+          </form>
+          <!-- Selector para extensión -->
+          <label>Formato:</label>
+          <select class="form-control form-control-sm" [(ngModel)]="extension">
+            <option value="pdf">PDF</option>
+            <option value="xlsx">Excel</option>
+            <option value="csv">CSV</option>
+          </select>
+          <label *ngIf="extension =='pdf' ">Descargar :</label>
+          <input type="checkbox" *ngIf="extension =='pdf' " [(ngModel)]="swVerReporte" name="" id="">
+        </div>
+
+        <ng-template #viewer>
+          <iframe id="pdfViewer" class="pdfViewer" frameborder="0" height="300px" style="border:none;"></iframe>
+
+        </ng-template>
       </div>
       <div class="modal-footer justify-content-center">
         <button type="button" class="btn btn-sm btn-outline-success" data-dismiss="modal">Cancelar</button>

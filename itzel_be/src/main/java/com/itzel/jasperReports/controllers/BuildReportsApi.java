@@ -209,6 +209,27 @@ public class BuildReportsApi {
         ByteArrayOutputStream outputStream;
         String filename;
         MediaType mediaType;
+        Map<String, Object> params = new HashMap<>();
+
+        for (Map.Entry<String, Object> entry : jasperDTO.getParameters().entrySet()) {
+
+            String key = entry.getKey();
+            Object value = entry.getValue();
+            System.out.println(key);
+            System.out.println(value);
+
+            /*if (value == null) continue;
+
+            if ("desde".equalsIgnoreCase(key) || "hasta".equalsIgnoreCase(key) || "tope".equalsIgnoreCase(key)) {
+                params.put(key, parseDateToSQLType(value.toString()));
+            } else if ("hdesde".equalsIgnoreCase(key) || "hhasta".equalsIgnoreCase(key)) {
+                params.put(key, parseToSqlTime(value.toString()));
+            } else {
+                params.put(key, normalizeParameterValue(key, value));
+            }*/
+        }
+
+        //dto.setParameters(params);
         switch (jasperDTO.getExtension().toLowerCase()) {
             case "pdf":
                 outputStream = buildReports.buildPdfReport(jasperDTO);
