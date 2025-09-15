@@ -209,8 +209,6 @@ public class BuildReportsApi {
         ByteArrayOutputStream outputStream;
         String filename;
         MediaType mediaType;
-        System.out.println(jasperDTO.getExtension());
-
         switch (jasperDTO.getExtension().toLowerCase()) {
             case "pdf":
                 outputStream = buildReports.buildPdfReport(jasperDTO);
