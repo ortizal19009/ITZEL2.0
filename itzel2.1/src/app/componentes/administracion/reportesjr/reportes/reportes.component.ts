@@ -109,29 +109,33 @@ export class ReportesComponent implements OnInit {
     this.reporteService.ejecutarReporteDB(dto).subscribe({
       next: (data: Blob) => {
         let tipo = 'application/pdf';
+
         if (dto.extension === 'xlsx') {
+          this.swVerReporte = true;
           tipo = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+        } else if (dto.extension === 'csv') {
           this.swVerReporte = true;
-        }
-        if (dto.extension === 'csv') {
-          tipo = 'text/plain';
-          this.swVerReporte = true;
+          tipo = 'text/csv'; // más correcto que text/plain
         }
 
         const blob = new Blob([data], { type: tipo });
+        const url = window.URL.createObjectURL(blob);
 
         if (this.swVerReporte) {
-          console.log(this.swVerReporte);
-          const url = window.URL.createObjectURL(blob);
+          // 👉 descarga directa
           const a = document.createElement('a');
-          a.click();
-          window.URL.revokeObjectURL(url);
           a.href = url;
           a.download = `reporte.${dto.extension}`;
+          document.body.appendChild(a); // ⚡️ necesario
+          a.click();
+          document.body.removeChild(a); // limpiar
+          window.URL.revokeObjectURL(url);
         } else {
-          const url = URL.createObjectURL(blob);
+          // 👉 mostrar en el visor PDF embebido
           const pdfViewer = document.getElementById('pdfViewer') as HTMLIFrameElement;
-          pdfViewer.src = url;
+          if (pdfViewer) {
+            pdfViewer.src = url;
+          }
         }
       },
       error: (err) => console.error('Error al ejecutar reporte:', err),

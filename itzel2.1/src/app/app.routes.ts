@@ -28,6 +28,7 @@ import { ReporteUpdateComponent } from './componentes/administracion/reportesjr/
 import { ReportesjrComponent } from './componentes/administracion/reportesjr/reporte-viewer/reportesjr.component';
 import { ReportesComponent } from './componentes/administracion/reportesjr/reportes/reportes.component';
 import { DefinirComponent } from './componentes/administracion/definir/definir/definir.component';
+import { CertificacionesComponent } from './componentes/contabilidad/certificaciones/certificaciones/certificaciones.component';
 
 export const routes: Routes = [
   { path: 'inicio', component: AppWrapperComponent },
@@ -66,6 +67,10 @@ export const routes: Routes = [
   /* ==========CLASIFICADOR========== */
   { path: 'clasificador', component: ClasificadorComponent },
   { path: 'add-clasificador', component: AddClasificadorComponent },
+  /* ==========CERTIFICACIONES========== */
+  { path: 'certificaciones', component: CertificacionesComponent},
+  /* ==========RE INTEGROS========== */
+
   /* 
   ======================================================================
   MODULO ROLES
@@ -79,11 +84,11 @@ export const routes: Routes = [
   ======================================================================
   */
   /* ==========JASPER REPORT========== */
-  { path: 'reportesjr', component: ReportesComponent},
+  { path: 'reportesjr', component: ReportesComponent },
   { path: 'add-reporte', component: ReporteUpdateComponent },
   { path: 'viewRepot/:id', component: ReportesjrComponent },
-    /* ==========DEFINIR========== */
-  { path: 'definir', component: DefinirComponent},
+  /* ==========DEFINIR========== */
+  { path: 'definir', component: DefinirComponent },
   //{ path: '', redirectTo: 'inicio', pathMatch: 'full' },
   { path: '', redirectTo: '/proyectos', pathMatch: 'full' },
 ];

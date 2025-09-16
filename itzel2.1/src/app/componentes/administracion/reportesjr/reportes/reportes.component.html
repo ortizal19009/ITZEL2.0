@@ -51,7 +51,7 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="exampleModal" *ngIf="!swVerReporte" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
   aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -93,7 +93,7 @@
             <option value="csv">CSV</option>
           </select>
           <label *ngIf="extension =='pdf' ">Descargar :</label>
-          <input type="checkbox" *ngIf="extension =='pdf' " [(ngModel)]="swVerReporte" name="" id="">
+          <input type="checkbox" *ngIf="extension =='pdf' " [(ngModel)]="swVerReporte" (change)="!swVerReporte" name="" id="">
         </div>
 
         <ng-template #viewer>
