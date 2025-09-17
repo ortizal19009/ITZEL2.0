@@ -14,7 +14,7 @@ import java.time.LocalDate;
 public class Certificaciones {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idcetifiacion;
+    private Long idcertificacion;
     private int tipo;
     private int numero;
     private LocalDate fecha;
@@ -38,8 +38,8 @@ public class Certificaciones {
     public Certificaciones() {
     }
 
-    public Certificaciones(Long idcetifiacion, int tipo, int numero, LocalDate fecha, BigDecimal valor, String descripcion, String numdoc, Long usucrea, LocalDate feccrea, Long usumodi, LocalDate fecmodi, Beneficiarios beneficiario, Beneficiarios beneficiariore, Documentos documento) {
-        this.idcetifiacion = idcetifiacion;
+    public Certificaciones(Long idcertificacion, int tipo, int numero, LocalDate fecha, BigDecimal valor, String descripcion, String numdoc, Long usucrea, LocalDate feccrea, Long usumodi, LocalDate fecmodi, Beneficiarios beneficiario, Beneficiarios beneficiariore, Documentos documento) {
+        this.idcertificacion = idcertificacion;
         this.tipo = tipo;
         this.numero = numero;
         this.fecha = fecha;
@@ -55,12 +55,12 @@ public class Certificaciones {
         this.documento = documento;
     }
 
-    public Long getIdcetifiacion() {
-        return idcetifiacion;
+    public Long getIdcertificacion() {
+        return idcertificacion;
     }
 
-    public void setIdcetifiacion(Long idcetifiacion) {
-        this.idcetifiacion = idcetifiacion;
+    public void setIdcertificacion(Long idcertificacion) {
+        this.idcertificacion = idcertificacion;
     }
 
     public int getTipo() {

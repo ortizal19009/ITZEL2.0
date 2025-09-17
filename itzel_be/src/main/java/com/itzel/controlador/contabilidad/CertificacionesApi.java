@@ -1,10 +1,14 @@
 package com.itzel.controlador.contabilidad;
 
+import com.itzel.modelo.contabilidad.Certificaciones;
 import com.itzel.servicio.contabilidad.CertificacionService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/certificaciones")
@@ -12,4 +16,27 @@ import org.springframework.web.bind.annotation.RestController;
 public class CertificacionesApi {
     @Autowired
     private CertificacionService certificacionService;
+    @GetMapping("/tipo")
+    public ResponseEntity<List<Certificaciones>> findFirstByTipoOrderByNumeroAsc(@RequestParam short tipo){
+        List<Certificaciones> certificacion = certificacionService.findFirstByTipoOrderByNumeroAsc(tipo);
+        if(certificacion.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }else{
+            return ResponseEntity.ok(certificacion);
+        }
+    }
+    @PostMapping
+    ResponseEntity<Certificaciones> saveCertificacion(@RequestBody Certificaciones c){
+        return ResponseEntity.ok(certificacionService.save(c));
+    }
+    @DeleteMapping("/{idcertificacion}")
+    public ResponseEntity<Void> deleteCertificacionById(@PathVariable Long idcertificacion) {
+        try {
+            certificacionService.deleteByIdCertificacion(idcertificacion);
+            return ResponseEntity.noContent().build(); // 204 si se eliminó
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build(); // 404 si no existe
+        }
+    }
+
 }
