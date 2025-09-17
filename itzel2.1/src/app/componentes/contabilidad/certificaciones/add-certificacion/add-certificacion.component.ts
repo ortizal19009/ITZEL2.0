@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Certificacion } from '../../../modelos/contabilidad/certificacion.model';
+import { CertificacionesService } from '../../../servicios/contabilidad/certificaciones.service';
+import { DocumentoService } from '../../../servicios/administracion/documento.service';
 
 @Component({
   selector: 'app-add-certificacion.component',
@@ -21,7 +23,9 @@ export class AddCertificacionComponent implements OnInit {
     public authService: AutorizaService,
     private router: Router,
     private coloresService: ColoresService,
-    private fb: FormBuilder
+    private fb: FormBuilder, 
+    private s_certificaciones: CertificacionesService, 
+    private s_documentos: DocumentoService
   ) {}
   ngOnInit(): void {
     if (!this.authService.sessionlog) {
