@@ -1,0 +1,17 @@
+package com.itzel.servicio.administracion;
+
+import com.itzel.modelo.administracion.Documentos;
+import com.itzel.repositorio.administracion.DocumentosR;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class DocumentoService {
+    @Autowired
+    private DocumentosR documentosR;
+    public Object save(Documentos d){
+        return documentosR.save(d);
+    }
+}

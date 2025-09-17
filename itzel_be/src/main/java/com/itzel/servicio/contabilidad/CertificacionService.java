@@ -13,7 +13,7 @@ import java.util.Optional;
 public class CertificacionService {
     @Autowired
     private CertificacionesR certificacionesR;
-
+    //Consultar todas las certificaciones por tipo, para consultar las certificaciones o los reintegros
     public List<Certificaciones> findFirstByTipoOrderByNumeroAsc(short tipo) {
         return certificacionesR.findFirstByTipoOrderByNumeroAsc(tipo);
     }

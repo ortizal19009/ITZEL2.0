@@ -16,6 +16,7 @@ import java.util.Optional;
 public class CertificacionesApi {
     @Autowired
     private CertificacionService certificacionService;
+    //Consultar todas las certificaciones por tipo, para consultar las certificaciones o los reintegros
     @GetMapping("/tipo")
     public ResponseEntity<List<Certificaciones>> findFirstByTipoOrderByNumeroAsc(@RequestParam short tipo){
         List<Certificaciones> certificacion = certificacionService.findFirstByTipoOrderByNumeroAsc(tipo);
