@@ -14,4 +14,7 @@ export class CertificacionesService {
   getCertificacionesByTipo(tipo: number): Observable<Certificacion> {
     return this.http.get<Certificacion>(`${baseUrl}/tipo?tipo=${tipo}`);
   }
+  saveCertificacion(certificacion: Certificacion) {
+    return this.http.post(`${baseUrl}`, certificacion);
+  }
 }

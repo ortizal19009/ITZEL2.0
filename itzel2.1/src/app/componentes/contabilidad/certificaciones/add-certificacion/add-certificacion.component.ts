@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { Certificacion } from '../../../modelos/contabilidad/certificacion.model';
 import { CertificacionesService } from '../../../servicios/contabilidad/certificaciones.service';
 import { DocumentoService } from '../../../servicios/administracion/documento.service';
+import { Documentos } from '../../../modelos/administracion/documentos.model';
 
 @Component({
   selector: 'app-add-certificacion.component',
@@ -19,12 +20,13 @@ export class AddCertificacionComponent implements OnInit {
   f_certificacion!: FormGroup;
   certificacion: Certificacion = new Certificacion();
   date: Date = new Date();
+  _documentos: Documentos[] = [];
   constructor(
     public authService: AutorizaService,
     private router: Router,
     private coloresService: ColoresService,
-    private fb: FormBuilder, 
-    private s_certificaciones: CertificacionesService, 
+    private fb: FormBuilder,
+    private s_certificaciones: CertificacionesService,
     private s_documentos: DocumentoService
   ) {}
   ngOnInit(): void {
@@ -51,6 +53,7 @@ export class AddCertificacionComponent implements OnInit {
       beneficiariores: '',
       documento: '',
     });
+    this.getAllDocumentos();
   }
   async buscaColor() {
     try {
@@ -81,4 +84,14 @@ export class AddCertificacionComponent implements OnInit {
     this.router.navigate(['/certificaciones']);
   }
   save() {}
+  getAllDocumentos() {
+    this.s_documentos.getAllDocumentos().subscribe({
+      next: (documentos: Documentos[]) => {
+        this._documentos = documentos;
+      },
+      error: (e: any) => {
+        console.error(e.error);
+      },
+    });
+  }
 }

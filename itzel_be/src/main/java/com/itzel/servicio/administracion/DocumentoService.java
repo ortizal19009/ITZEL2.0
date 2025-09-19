@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class DocumentoService {
@@ -13,5 +15,8 @@ public class DocumentoService {
     private DocumentosR documentosR;
     public Object save(Documentos d){
         return documentosR.save(d);
+    }
+    public List<Documentos> findAll(){
+        return documentosR.findAll();
     }
 }

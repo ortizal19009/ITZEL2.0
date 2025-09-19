@@ -45,14 +45,14 @@
 
 
                         <div class="row">
-                            <!-- Movimiento -->
+                            <!-- Documentos -->
                             <div class="col-sm">
                                 <div class="input-group input-group-sm mb-3">
                                     <span class="input-group-text form-control-sm">Documento</span>
-                                    <select class="form-control form-control-sm col-3" [disabled]="true"
+                                    <select class="form-control form-control-sm col-3"
                                         formControlName="documento">
-                                        <option [value]="false">No</option>
-                                        <option [value]="true">Sí</option>
+                                        <option [value]="documento" *ngFor="let documento of _documentos">
+                                            {{documento.nomdoc}}</option>
                                     </select>
                                     <input type="text" class="form-control form-control-sm" formControlName="numdoc" />
                                 </div>
