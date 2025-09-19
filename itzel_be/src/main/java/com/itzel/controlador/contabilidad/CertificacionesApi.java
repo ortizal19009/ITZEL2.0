@@ -40,4 +40,14 @@ public class CertificacionesApi {
         }
     }
 
+    @GetMapping("/lastbytipo")
+    public ResponseEntity<Certificaciones> findLastByTipo(@RequestParam short tipo){
+        try {
+            certificacionService.findLastByTipo(tipo);
+            return ResponseEntity.noContent().build(); // 204 si se eliminó
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build(); // 404 si no existe
+        }
+    }
+
 }

@@ -88,6 +88,9 @@ export class AddCertificacionComponent implements OnInit {
     this.s_documentos.getAllDocumentos().subscribe({
       next: (documentos: Documentos[]) => {
         this._documentos = documentos;
+        this.f_certificacion.patchValue({
+          documento: documentos[0],
+        });
       },
       error: (e: any) => {
         console.error(e.error);

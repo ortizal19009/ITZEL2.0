@@ -18,6 +18,10 @@ public class CertificacionService {
         return certificacionesR.findFirstByTipoOrderByNumeroAsc(tipo);
     }
 
+    public Certificaciones findLastByTipo(short tipo){
+        return certificacionesR.findFirstByTipoOrderByNumeroDesc(tipo);
+    }
+
     public Certificaciones save(Certificaciones c) {
         return certificacionesR.save(c);
     }
