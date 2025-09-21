@@ -17,4 +17,18 @@ export class CertificacionesService {
   saveCertificacion(certificacion: Certificacion) {
     return this.http.post(`${baseUrl}`, certificacion);
   }
+  findLastByTipo(tipo: number): Observable<Certificacion> {
+    return this.http.get<Certificacion>(`${baseUrl}/lastbytipo?tipo=${tipo}`);
+  }
+  getByNumDate(
+    t: number,
+    fd: Date,
+    fh: Date,
+    min: number,
+    max: number
+  ): Observable<Certificacion[]> {
+    return this.http.get<Certificacion[]>(
+      `${baseUrl}/findall?tipo=${t}&fechaInicio=${fd}&fechaFin${fh}&min=${min}&max=${max}`
+    );
+  }
 }

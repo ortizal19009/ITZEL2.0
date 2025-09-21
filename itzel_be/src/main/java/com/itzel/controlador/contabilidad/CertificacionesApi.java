@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,11 +44,15 @@ public class CertificacionesApi {
     @GetMapping("/lastbytipo")
     public ResponseEntity<Certificaciones> findLastByTipo(@RequestParam short tipo){
         try {
-            certificacionService.findLastByTipo(tipo);
-            return ResponseEntity.noContent().build(); // 204 si se eliminó
+            Certificaciones c = certificacionService.findLastByTipo(tipo);
+            return ResponseEntity.ok(c); // 204 si se eliminó
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build(); // 404 si no existe
         }
+    }
+    @GetMapping("/findall")
+    public ResponseEntity<List<Certificaciones>> getByNumDate(@RequestParam short tipo, @RequestParam LocalDate fechaInicio, @RequestParam LocalDate fechaFin, @RequestParam short min, @RequestParam short max){
+        return ResponseEntity.ok(certificacionService.getByNumDate(tipo, fechaInicio, fechaFin, min, max));
     }
 
 }

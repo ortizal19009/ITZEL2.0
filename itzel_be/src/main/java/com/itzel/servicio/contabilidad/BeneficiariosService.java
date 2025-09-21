@@ -89,6 +89,12 @@ public class BeneficiariosService {
     }
 
     public Optional<Beneficiarios> findById(Long id) {
+        Optional<Beneficiarios> bene = dao.findById(id);
+        if(bene.isEmpty()) {
+            System.out.println("Beneficiiario no encontrado");
+        }else{
+            System.out.println("Beneficiario encontrado");
+        }
         return dao.findById(id);
     }
 

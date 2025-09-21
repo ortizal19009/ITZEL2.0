@@ -6,6 +6,9 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,5 +34,12 @@ public class CertificacionService {
             throw new EntityNotFoundException("Certificación con id " + idcertificacion + " no encontrada");
         }
         certificacionesR.deleteById(idcertificacion);
+    }
+    public List<Certificaciones> getByNumDate(short tipo, LocalDate fechaInicio, LocalDate fechaFin, short min, short max){
+    List<Certificaciones> result = new ArrayList<>();
+result.addAll(certificacionesR.findByTipoAndFechaBetweenOrderByNumeroDesc(tipo, fechaInicio, fechaFin));
+result.addAll(certificacionesR.findByTipoAndNumeroBetweenOrderByNumeroDesc(tipo, min, max));
+result.sort(Comparator.comparing(Certificaciones::getNumero).reversed());
+    return result;
     }
 }

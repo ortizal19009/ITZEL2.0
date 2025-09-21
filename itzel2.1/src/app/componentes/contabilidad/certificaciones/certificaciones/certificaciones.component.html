@@ -11,12 +11,17 @@
                <div class="row my-0">
 
                   <div class="input-group col-sm-6">
-                     <input type="text" class="form-control form-control-sm col-sm-3" formControlName="codpar"
-                        placeholder="Código">
-                     <input type="text" class="form-control form-control-sm text-center col-sm-9"
-                        formControlName="nompar" placeholder="Nombre">
+                     <input type="text" class="form-control form-control-sm col-sm-2" formControlName="min"
+                        placeholder="desde">
+                     <input type="text" class="form-control form-control-sm col-sm-2" formControlName="max"
+                        placeholder="hasta">
+                     <input type="date" class="form-control form-control-sm " formControlName="fechaInicio">
+                     <input type="date" class="form-control form-control-sm " formControlName="fechaFin">
                   </div>
-
+                  <div *ngIf="certificacionesFiltradas?.length" class="input-group col-sm-3">
+                     <input type="text" class="form-control form-control-sm text-center" formControlName="filtroControl"
+                        placeholder="Filtrar...">
+                  </div>
                   <div class="input-group col-sm-2">
                      <button class="btn btn-primary btn-sm">
                         <i *ngIf="swbuscando" class="fa fa-spinner"></i>
@@ -51,21 +56,24 @@
 <!-- <div [innerHTML]="saludo"></div> -->
 <div class="container-fluid ">
    <div class="row mb-0">
-      <div class="col-sm-8 table-responsive center-form card-size">
-         <table class="table table-sm table-hover table-striped table-head-fixed table-bordered sombra"
-            *ngIf="certificacionesFiltradas.length > 0">
+      <div class="col-sm-11 table-responsive center-form card-size">
+         <table class="table table-sm table-hover table-striped table-head-fixed table-bordered sombra">
+            <!--           *ngIf="certificacionesFiltradas.length > 0"> -->
             <thead class="">
                <tr class="text-center">
-                  <th (click)="ordenarPor('codigo')">Código
+                  <th>Nro.</th>
+                  <th (click)="ordenarPor('codigo')">Fecha
                      <i *ngIf="ordenColumna === 'codigo'"
                         [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
                   </th>
-                  <th (click)="ordenarPor('nombre')">Nombre
+                  <th (click)="ordenarPor('nombre')">Documento
                      <i *ngIf="ordenColumna === 'nombre'"
                         [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
                   </th>
-                  <th>Movimiento</th>
-                  <th>Nivel </th>
+                  <th>Beneficiario</th>
+                  <th>Valor</th>
+                  <th>Responsable</th>
+                  <th>Descripción</th>
                   <th></th>
                </tr>
             </thead>
