@@ -157,7 +157,7 @@ export class AddProyectoComponent implements OnInit {
       });
     }
     let _estructuras = this._estructuras;
-    const estructuraEncontrada = _estructuras.find((e: any) => cleanCode.length === e.sumlongitud);
+    const estructuraEncontrada = _estructuras.find((e: any) => cleanCode.nglength === e.sumlongitud);
     this.f_proyecto.patchValue({
       estructura: estructuraEncontrada,
     });
