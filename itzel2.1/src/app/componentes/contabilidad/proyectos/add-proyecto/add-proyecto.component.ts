@@ -113,28 +113,6 @@ export class AddProyectoComponent implements OnInit {
     return true;
   }
 
-  showControlError(field: string) {
-    const control = this.f_proyecto.get(field);
-    console.log(field);
-    if (control && control.invalid && (control.dirty || control.touched)) {
-      if (control.errors?.['required']) {
-        this.swal('error', `El campo ${field} es obligatorio`);
-      }
-      if (control.errors?.['minlength']) {
-        this.swal(
-          'error',
-          `El campo ${field} debe tener mínimo ${control.errors['minlength'].requiredLength} caracteres`
-        );
-      }
-      if (control.errors?.['maxlength']) {
-        this.swal(
-          'error',
-          `El campo ${field} debe tener máximo ${control.errors['maxlength'].requiredLength} caracteres`
-        );
-      }
-    }
-  }
-
   getAllProyectos() {
     this.proyectoService.proyectosGetAll().subscribe({
       next: (proyectos: any) => {},
@@ -147,7 +125,6 @@ export class AddProyectoComponent implements OnInit {
   getAllEsctructuras() {
     this.estructuraService.estructuraGetAll().subscribe({
       next: (estructuras: any) => {
-        console.log(estructuras);
         this._estructuras = estructuras;
         this.f_proyecto.patchValue({
           estructura: estructuras[0],
@@ -192,19 +169,19 @@ export class AddProyectoComponent implements OnInit {
 
     this.proyectoService.validarCodigo(code).subscribe({
       next: (validador: any) => {
-        console.log(validador);
+        let message: string | null = null;
         const longitudInvalida = cleanCode.length !== estructuraEncontrada.sumlongitud;
         const codigoDuplicado = validador;
         const codigoNoValido = codigoDuplicado || longitudInvalida;
         this.sw_codigo = codigoNoValido;
         if (codigoDuplicado) {
-          this.swal('error', 'El código ya existe');
+          message = 'El codigo ya existe';
         }
         if (longitudInvalida) {
-          this.swal('error', 'Error en la longitud del codigo ');
+          message = 'Longitud invalida';
         }
         if (codigoNoValido) {
-          codigoControl?.setErrors({ codigoNoValido: true });
+          codigoControl?.setErrors({ customError: message });
         } else {
           codigoControl?.setErrors(null);
         }
