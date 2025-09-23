@@ -138,7 +138,6 @@ export class AddCertificacionComponent implements OnInit {
     certificacion.beneficiario = f.beneficiario;
     certificacion.beneficiariore = f.beneficiariore;
     certificacion.documento = f.documento;
-    console.log(certificacion);
     this.s_certificaciones.saveCertificacion(certificacion).subscribe({
       next: (c: any) => {
         this.swal('success', 'Certificación guardada con exito');

@@ -95,8 +95,8 @@ export class ModiCertificacionComponent {
       .subscribe((beneficiarios) => (this._beneficiarios = beneficiarios));
 
     this.getAllDocumentos();
-    this.getLastCertificacionByTipo();
-    this.getBeneById(1);
+   // this.getBeneById(1);
+    this.getCertificacionById(this.idcertificacion!);
   }
   async buscaColor() {
     try {
@@ -129,6 +129,7 @@ export class ModiCertificacionComponent {
   save() {
     let certificacion: Certificacion = new Certificacion();
     let f = this.f_certificacion.value;
+    certificacion.idcertificacion = this.idcertificacion;
     certificacion.numero = f.numero;
     certificacion.valor = f.valor;
     certificacion.fecha = f.fecha;
@@ -150,21 +151,31 @@ export class ModiCertificacionComponent {
       },
     });
   }
-  getLastCertificacionByTipo() {
-    this.s_certificaciones.findLastByTipo(1).subscribe({
+  getCertificacionById(idcertificacion: number) {
+    this.s_certificaciones.getByIdCertificacion(idcertificacion).subscribe({
       next: (certificacion: Certificacion) => {
         console.log(certificacion);
-        let numero: number = 1;
-        if (certificacion != null) {
-          numero = certificacion.numero + 1;
-        }
         this.f_certificacion.patchValue({
-          numero: numero,
-        });
+        numero: certificacion.numero,
+        valor: certificacion.valor,
+        fecha: certificacion.fecha?.toString().substring(0,10),
+        descripcion: certificacion.descripcion,
+        numdoc: certificacion.numdoc,
+        usucrea: certificacion.usucrea, 
+        feccrea: certificacion.feccrea,
+        beneficiario: certificacion.beneficiario,
+        nombene: certificacion.beneficiario?.nomben,
+        beneficiariore: certificacion.beneficiariore,
+        nomresponsable: certificacion.beneficiariore?.nomben,
+        documento: certificacion.documento,
+        })
       },
-      error: (e: any) => console.error(e),
+      error: (e: any) => {
+        this.authService.mostrarError('error', e.error);
+      },
     });
   }
+
   getAllDocumentos() {
     this.s_documentos.getAllDocumentos().subscribe({
       next: (documentos: Documentos[]) => {
@@ -220,17 +231,7 @@ export class ModiCertificacionComponent {
       });
     }
   }
-  getBeneById(id: number) {
-    this.s_beneficiario.getById(id).subscribe({
-      next: (bene: Beneficiario) => {
-        this.f_certificacion.patchValue({
-          beneficiario: bene,
-          nombene: bene.nomben,
-        });
-      },
-      error: (e: any) => console.error(e.error),
-    });
-  }
+
   swal(icon: any, mensaje: any) {
     Swal.fire({
       toast: true,

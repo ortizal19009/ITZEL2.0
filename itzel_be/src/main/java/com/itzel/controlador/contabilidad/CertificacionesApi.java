@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/certificaciones")
@@ -55,5 +56,13 @@ public class CertificacionesApi {
     public ResponseEntity<List<Certificaciones>> getByNumDate(@RequestParam short tipo, @RequestParam LocalDate fechaInicio, @RequestParam LocalDate fechaFin, @RequestParam short min, @RequestParam short max){
         return ResponseEntity.ok(certificacionService.getByNumDate(tipo, fechaInicio, fechaFin, min, max));
     }
+
+    @GetMapping
+    public ResponseEntity<Certificaciones> findById(@RequestParam Long idcertificacion) {
+        return certificacionService.findById(idcertificacion)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
 
 }

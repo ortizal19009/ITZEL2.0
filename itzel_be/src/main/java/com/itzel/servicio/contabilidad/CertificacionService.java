@@ -37,9 +37,12 @@ public class CertificacionService {
     }
     public List<Certificaciones> getByNumDate(short tipo, LocalDate fechaInicio, LocalDate fechaFin, short min, short max){
     List<Certificaciones> result = new ArrayList<>();
-result.addAll(certificacionesR.findByTipoAndFechaBetweenOrderByNumeroDesc(tipo, fechaInicio, fechaFin));
-result.addAll(certificacionesR.findByTipoAndNumeroBetweenOrderByNumeroDesc(tipo, min, max));
-result.sort(Comparator.comparing(Certificaciones::getNumero).reversed());
+        result.addAll(certificacionesR.findByTipoAndFechaBetweenOrderByNumeroDesc(tipo, fechaInicio, fechaFin));
+        result.addAll(certificacionesR.findByTipoAndNumeroBetweenOrderByNumeroDesc(tipo, min, max));
+        result.sort(Comparator.comparing(Certificaciones::getNumero).reversed());
     return result;
+    }
+    public Optional<Certificaciones> findById(Long idcertificacion){
+        return certificacionesR.findById(idcertificacion);
     }
 }

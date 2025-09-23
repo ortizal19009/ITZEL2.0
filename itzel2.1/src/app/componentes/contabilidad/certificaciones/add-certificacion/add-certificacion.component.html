@@ -84,7 +84,7 @@
                                 <div class="input-group input-group-sm mt-3">
                                     <span class="input-group-text form-control-sm">Documento</span>
                                     <select class="form-control form-control-sm col-3" formControlName="documento">
-                                        <option [value]="documento" *ngFor="let documento of _documentos">
+                                        <option [ngValue]="documento" *ngFor="let documento of _documentos">
                                             {{documento.nomdoc}}</option>
                                     </select>
                                     <input type="text" class="form-control form-control-sm" formControlName="numdoc"

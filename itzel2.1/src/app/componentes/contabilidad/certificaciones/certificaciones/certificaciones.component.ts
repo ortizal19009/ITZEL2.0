@@ -83,11 +83,9 @@ export class CertificacionesComponent implements OnInit {
   }
   getAllCertificaciones() {}
   buscar() {
-    console.log(this.formBuscar.value);
     let f = this.formBuscar.value;
     this.s_certificaciones.getByNumDate(1, f.fechaInicio, f.fechaFin, f.min, f.max).subscribe({
       next: (datos: any) => {
-        console.log(datos);
         this._certificaciones = datos;
         this.certificacionesFiltradas = [...datos];
       },
@@ -100,7 +98,6 @@ export class CertificacionesComponent implements OnInit {
   getLastCertificacion() {
     this.s_certificaciones.findLastByTipo(1).subscribe({
       next: (certificacion: Certificacion) => {
-        console.log(certificacion);
         let minimo = certificacion.numero - 20;
         if (minimo <= 0) {
           minimo = 1;

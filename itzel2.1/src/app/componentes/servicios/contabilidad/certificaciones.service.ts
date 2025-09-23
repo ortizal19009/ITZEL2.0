@@ -31,4 +31,7 @@ export class CertificacionesService {
       `${baseUrl}/findall?tipo=${t}&fechaInicio=${fd}&fechaFin=${fh}&min=${min}&max=${max}`
     );
   }
+  getByIdCertificacion(idcertificacion: number): Observable<Certificacion> {
+    return this.http.get<Certificacion>(`${baseUrl}?idcertificacion=${idcertificacion}`);
+  }
 }
