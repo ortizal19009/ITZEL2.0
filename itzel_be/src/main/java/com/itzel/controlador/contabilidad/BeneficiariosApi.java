@@ -81,7 +81,6 @@ public class BeneficiariosApi {
 
     @GetMapping("/{idbene}")
     public Optional<Beneficiarios> findByIdBene(@PathVariable Long idbene) {
-        System.out.println(idbene);
         return beneServicio.findById(idbene);
     }
 

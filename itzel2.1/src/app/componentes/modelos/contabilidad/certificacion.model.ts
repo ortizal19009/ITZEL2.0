@@ -14,6 +14,6 @@ export class Certificacion {
   usumodi?: number; 
   fecmodi?: Date; 
   beneficiario?: Beneficiario; 
-  beneficiariores?: Beneficiario; 
+  beneficiariore?: Beneficiario; 
   documento?: Documentos
 }

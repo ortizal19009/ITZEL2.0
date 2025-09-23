@@ -78,7 +78,7 @@ export class AddCertificacionComponent implements OnInit {
       feccrea: [this.date],
       beneficiario: [''],
       nombene: ['', [Validators.required, Validators.minLength(5)]],
-      beneficiariores: [''],
+      beneficiariore: [''],
       nomresponsable: ['', [Validators.required, Validators.minLength(5)]],
       documento: null,
     });
@@ -136,8 +136,9 @@ export class AddCertificacionComponent implements OnInit {
     certificacion.tipo = 1;
     certificacion.feccrea = f.feccrea;
     certificacion.beneficiario = f.beneficiario;
-    certificacion.beneficiariores = f.beneficiariores;
+    certificacion.beneficiariore = f.beneficiariore;
     certificacion.documento = f.documento;
+    console.log(certificacion);
     this.s_certificaciones.saveCertificacion(certificacion).subscribe({
       next: (c: any) => {
         this.swal('success', 'Certificación guardada con exito');
@@ -151,7 +152,6 @@ export class AddCertificacionComponent implements OnInit {
   getLastCertificacionByTipo() {
     this.s_certificaciones.findLastByTipo(1).subscribe({
       next: (certificacion: Certificacion) => {
-        console.log(certificacion);
         let numero: number = 1;
         if (certificacion != null) {
           numero = certificacion.numero + 1;
@@ -199,22 +199,22 @@ export class AddCertificacionComponent implements OnInit {
     }
   }
   // cada vez que el usuario escribe
-  getBeneficiariores(event: any) {
+  getBeneficiariore(event: any) {
     const value = event.target.value;
     // si escribió más de 2 letras, buscar en el backend
     this.s_beneficiario.findByNomben(value).subscribe({
-      next: (beneficiariores: Beneficiario[]) => {
-        this._responsable = beneficiariores;
+      next: (beneficiariore: Beneficiario[]) => {
+        this._responsable = beneficiariore;
       },
       error: (e: any) => console.error(e),
     });
 
     // si seleccionó uno exacto de la lista
-    const beneficiariores = this._responsable.find((b) => b.nomben === value);
-    if (beneficiariores) {
+    const beneficiariore = this._responsable.find((b) => b.nomben === value);
+    if (beneficiariore) {
       this.f_certificacion.patchValue({
-        beneficiariores: beneficiariores,
-        nomresponsable: beneficiariores.nomben,
+        beneficiariore: beneficiariore,
+        nomresponsable: beneficiariore.nomben,
       });
     }
   }

@@ -32,5 +32,7 @@ public class Partixcerti {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idpresupuesto")
     private Presupuesto presupuesto;
+    private Short idparxcer_;
+
 
 }

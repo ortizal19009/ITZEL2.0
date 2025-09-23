@@ -80,7 +80,7 @@ export class ModiCertificacionComponent {
       feccrea: [this.date],
       beneficiario: [''],
       nombene: ['', [Validators.required, Validators.minLength(5)]],
-      beneficiariores: [''],
+      beneficiariore: [''],
       nomresponsable: ['', [Validators.required, Validators.minLength(5)]],
       documento: null,
     });
@@ -138,7 +138,7 @@ export class ModiCertificacionComponent {
     certificacion.tipo = 1;
     certificacion.feccrea = f.feccrea;
     certificacion.beneficiario = f.beneficiario;
-    certificacion.beneficiariores = f.beneficiariores;
+    certificacion.beneficiariore = f.beneficiariore;
     certificacion.documento = f.documento;
     this.s_certificaciones.saveCertificacion(certificacion).subscribe({
       next: (c: any) => {
@@ -201,22 +201,22 @@ export class ModiCertificacionComponent {
     }
   }
   // cada vez que el usuario escribe
-  getBeneficiariores(event: any) {
+  getBeneficiariore(event: any) {
     const value = event.target.value;
     // si escribió más de 2 letras, buscar en el backend
     this.s_beneficiario.findByNomben(value).subscribe({
-      next: (beneficiariores: Beneficiario[]) => {
-        this._responsable = beneficiariores;
+      next: (beneficiariore: Beneficiario[]) => {
+        this._responsable = beneficiariore;
       },
       error: (e: any) => console.error(e),
     });
 
     // si seleccionó uno exacto de la lista
-    const beneficiariores = this._responsable.find((b) => b.nomben === value);
-    if (beneficiariores) {
+    const beneficiariore = this._responsable.find((b) => b.nomben === value);
+    if (beneficiariore) {
       this.f_certificacion.patchValue({
-        beneficiariores: beneficiariores,
-        nomresponsable: beneficiariores.nomben,
+        beneficiariore: beneficiariore,
+        nomresponsable: beneficiariore.nomben,
       });
     }
   }
