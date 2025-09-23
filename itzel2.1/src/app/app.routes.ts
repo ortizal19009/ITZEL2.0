@@ -30,6 +30,7 @@ import { ReportesComponent } from './componentes/administracion/reportesjr/repor
 import { DefinirComponent } from './componentes/administracion/definir/definir/definir.component';
 import { CertificacionesComponent } from './componentes/contabilidad/certificaciones/certificaciones/certificaciones.component';
 import { AddCertificacionComponent } from './componentes/contabilidad/certificaciones/add-certificacion/add-certificacion.component';
+import { ModiCertificacionComponent } from './componentes/contabilidad/certificaciones/modi-certificacion/modi-certificacion.component';
 
 export const routes: Routes = [
   { path: 'inicio', component: AppWrapperComponent },
@@ -69,8 +70,9 @@ export const routes: Routes = [
   { path: 'clasificador', component: ClasificadorComponent },
   { path: 'add-clasificador', component: AddClasificadorComponent },
   /* ==========CERTIFICACIONES========== */
-  { path: 'certificaciones', component: CertificacionesComponent},
-  { path: 'add-certificacion', component: AddCertificacionComponent},
+  { path: 'certificaciones', component: CertificacionesComponent },
+  { path: 'add-certificacion', component: AddCertificacionComponent },
+  { path: 'modi-certificacion/:idcertificacion', component: ModiCertificacionComponent },
   /* ==========RE INTEGROS========== */
 
   /* 

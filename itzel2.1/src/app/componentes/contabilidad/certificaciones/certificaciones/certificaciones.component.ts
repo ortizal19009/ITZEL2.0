@@ -20,7 +20,8 @@ export class CertificacionesComponent implements OnInit {
   swbuscando?: boolean;
   txtbuscar: string = 'Buscar';
   certificacionesFiltradas: any[] = [];
-  ordenColumna: keyof CertificacionVisual = 'codigo';
+  _certificaciones: any[] = [];
+  ordenColumna: keyof CertificacionVisual = 'fecha';
   ordenAscendente: boolean = true;
   today = new Date().toISOString().substring(0, 10); // ejemplo: "2025-09-19"
 
@@ -54,6 +55,7 @@ export class CertificacionesComponent implements OnInit {
       max: '',
       fechaInicio: date.toISOString().substring(0, 10),
       fechaFin: [this.today],
+      filtroControl: '',
     });
     this.getLastCertificacion();
   }
@@ -84,10 +86,12 @@ export class CertificacionesComponent implements OnInit {
     console.log(this.formBuscar.value);
     let f = this.formBuscar.value;
     this.s_certificaciones.getByNumDate(1, f.fechaInicio, f.fechaFin, f.min, f.max).subscribe({
-      next: (datos: Certificacion[]) => {
+      next: (datos: any) => {
         console.log(datos);
+        this._certificaciones = datos;
+        this.certificacionesFiltradas = [...datos];
       },
-      error: (e: any) => console.error(e),
+      error: (e: any) => console.error(e.errro),
     });
   }
   cerrar() {
@@ -135,8 +139,23 @@ export class CertificacionesComponent implements OnInit {
       }
     });
   }
+  filtrar(valor: any) {
+    if (valor) {
+      this.certificacionesFiltradas = [...this._certificaciones]; // si está vacío, muestro todos
+      return;
+    }
+
+    const filter = valor.toLowerCase();
+    this.certificacionesFiltradas = this._certificaciones.filter(
+      (certificaciones) =>
+        certificaciones.fecha?.toLowerCase().includes(filter) || // ejemplo campo nombre
+        certificaciones.beneficiario?.toLowerCase().includes(filter) ||
+        certificaciones.responsable?.toLowerCase().includes(filter)
+    );
+  }
 }
 interface CertificacionVisual {
-  codigo: string;
-  nombre: string;
+  fecha: Date;
+  beneficiario: string;
+  responsable: string;
 }

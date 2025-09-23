@@ -134,7 +134,6 @@ export class AddProyectoComponent implements OnInit {
     });
     this.estructuraService.findTopByOrderByNivelDesc().subscribe({
       next: (estructura: any) => {
-        console.log(estructura);
         this.maxLongitud = estructura.sumlongitud;
       },
       error: (e: any) => console.error(e.error),
@@ -142,76 +141,146 @@ export class AddProyectoComponent implements OnInit {
   }
   getValidacionCodigo(codigo: any) {
     let code = codigo.target.value;
-    console.log(code.length);
     const cleanCode = code.replace(/[^a-zA-Z0-9]/g, '');
     const codigoControl = this.f_proyecto.get('codigo');
 
-    console.log(this.maxLongitud);
+    // Movimiento según longitud
     if (code.length === this.maxLongitud) {
-      this.f_proyecto.patchValue({
-        movimiento: true,
-      });
+      this.f_proyecto.patchValue({ movimiento: true });
     } else {
-      this.f_proyecto.patchValue({
-        movimiento: false,
-      });
-    }
-    let _estructuras = this._estructuras;
-    const estructuraEncontrada = _estructuras.find((e: any) => cleanCode.nglength === e.sumlongitud);
-    this.f_proyecto.patchValue({
-      estructura: estructuraEncontrada,
-    });
-    if (!estructuraEncontrada) {
-      codigoControl?.setErrors({ codigoNoValido: true });
-    } else {
-      codigoControl?.setErrors(null);
+      this.f_proyecto.patchValue({ movimiento: false });
     }
 
+    // Buscar estructura
+    const estructuraEncontrada = this._estructuras.find(
+      (e: any) => cleanCode.length === e.sumlongitud
+    );
+    this.f_proyecto.patchValue({ estructura: estructuraEncontrada });
+
+    // Validación inicial de estructura
+    if (!estructuraEncontrada) {
+      codigoControl?.setErrors({ ...(codigoControl?.errors || {}), codigoNoValido: true });
+    }
+
+    // Validación en backend
     this.proyectoService.validarCodigo(code).subscribe({
       next: (validador: any) => {
         let message: string | null = null;
-        const longitudInvalida = cleanCode.length !== estructuraEncontrada.sumlongitud;
+        const longitudInvalida =
+          estructuraEncontrada && cleanCode.length !== estructuraEncontrada.sumlongitud;
         const codigoDuplicado = validador;
         const codigoNoValido = codigoDuplicado || longitudInvalida;
-        this.sw_codigo = codigoNoValido;
-        if (codigoDuplicado) {
-          message = 'El codigo ya existe';
-        }
-        if (longitudInvalida) {
-          message = 'Longitud invalida';
-        }
+
+        const currentErrors = codigoControl?.errors || {};
+
         if (codigoNoValido) {
-          codigoControl?.setErrors({ customError: message });
+          if (codigoDuplicado) {
+            message = 'El código ya existe';
+          }
+          if (longitudInvalida) {
+            message = 'Longitud inválida';
+          }
+
+          codigoControl?.setErrors({
+            ...currentErrors,
+            customError: message,
+          });
         } else {
-          codigoControl?.setErrors(null);
+          // Si no hay error de backend, quitar solo customError
+          if (currentErrors['customError']) {
+            delete currentErrors['customError'];
+            codigoControl?.setErrors(Object.keys(currentErrors).length > 0 ? currentErrors : null);
+          }
         }
+
         codigoControl?.markAsTouched();
       },
       error: (e: any) => console.error(e),
     });
   }
 
+  getCodigoErrors(): string[] {
+    const errors = this.f['codigo'].errors;
+    if (!errors) return [];
+
+    const mensajes: string[] = [];
+
+    if (errors['required']) {
+      mensajes.push('Valor obligatorio');
+    }
+    if (errors['minlength']) {
+      mensajes.push('El valor debe tener más de 1 caracter');
+    }
+    if (errors['customError']) {
+      mensajes.push(errors['customError']);
+    }
+    if (errors['codigoNoValido']) {
+      mensajes.push('La estructura del código no es válida');
+    }
+
+    // Eliminar duplicados usando Set
+    return [...new Set(mensajes)];
+  }
+
   getValidarNombre(nombre: any) {
-    const name = nombre.target.value;
+    const name = nombre.target.value.trim();
     const nameControl = this.f_proyecto.get('nombre');
+
+    // Llamada al backend
     this.proyectoService.validarNombre(name).subscribe({
       next: (validador: any) => {
         this.sw_nombre = validador;
 
+        // Recuperamos errores actuales (ej: required, minlength)
+        const currentErrors = nameControl?.errors || {};
+
         if (validador) {
-          // Poner error personalizado cuando el nombre es inválido
+          // Nombre inválido por duplicado o formato
+          nameControl?.setErrors({
+            ...currentErrors,
+            nombreNoValido: 'El nombre ya existe o no cumple el formato',
+          });
+
           this.swal(
             'error',
-            'Nombre no valido <br> Nombre ya existe o no cumple con el formato necesario'
+            'Nombre no válido <br> Nombre ya existe o no cumple con el formato necesario'
           );
-          nameControl?.setErrors({ nombreNoValido: true });
         } else {
-          // Quitar errores si es válido
-          nameControl?.setErrors(null);
+          // Si estaba marcado el error nombreNoValido lo quitamos
+          if (currentErrors['nombreNoValido']) {
+            delete currentErrors['nombreNoValido'];
+            // Reasignamos los errores restantes (si existen) o null
+            if (Object.keys(currentErrors).length > 0) {
+              nameControl?.setErrors(currentErrors);
+            } else {
+              nameControl?.setErrors(null);
+            }
+          }
         }
+
+        nameControl?.markAsTouched();
       },
       error: (e: any) => console.error(e),
     });
+  }
+  getNombreErrors(): string[] {
+    const errors = this.f['nombre'].errors;
+    if (!errors) return [];
+
+    const mensajes: string[] = [];
+
+    if (errors['required']) {
+      mensajes.push('El nombre es obligatorio');
+    }
+    if (errors['minlength']) {
+      mensajes.push('El nombre es demasiado corto');
+    }
+    if (errors['nombreNoValido']) {
+      mensajes.push(errors['nombreNoValido']);
+    }
+
+    // Eliminar duplicados
+    return [...new Set(mensajes)];
   }
 
   save() {

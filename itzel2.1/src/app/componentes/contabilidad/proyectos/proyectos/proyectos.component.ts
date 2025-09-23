@@ -89,7 +89,6 @@ export class ProyectosComponent implements OnInit {
     });
     // Escucha cada cambio en el input del filtro
     this.formBuscar.get('filtroControl')?.valueChanges.subscribe((valor?: any) => {
-      console.log(valor);
       this.filtrar(valor);
     });
   }
@@ -129,20 +128,19 @@ export class ProyectosComponent implements OnInit {
       },
       error: (err: any) => {
         console.error(err.error);
-        this.swal('error', err.error);
+        this.authService.mostrarError('error', err.error);
       },
     });
   }
   getProyectosByCodeName(codpar: string, nompar: string) {
     this.proyectosService.proyectosGetAllBy(codpar, nompar).subscribe({
       next: (proyectos: any) => {
-        console.log(proyectos);
         this.proyectos = proyectos; // guardo todos los proyectos
         this.proyectosFiltrados = [...proyectos]; // inicializo lista filtrada
       },
       error: (err: any) => {
         console.error(err.error);
-        this.swal('error', err.error);
+        this.authService.mostrarError('error', err.error);
       },
     });
   }

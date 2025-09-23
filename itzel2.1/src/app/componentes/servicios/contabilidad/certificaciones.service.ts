@@ -28,7 +28,7 @@ export class CertificacionesService {
     max: number
   ): Observable<Certificacion[]> {
     return this.http.get<Certificacion[]>(
-      `${baseUrl}/findall?tipo=${t}&fechaInicio=${fd}&fechaFin${fh}&min=${min}&max=${max}`
+      `${baseUrl}/findall?tipo=${t}&fechaInicio=${fd}&fechaFin=${fh}&min=${min}&max=${max}`
     );
   }
 }
