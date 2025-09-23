@@ -95,7 +95,7 @@ export class ModiCertificacionComponent {
       .subscribe((beneficiarios) => (this._beneficiarios = beneficiarios));
 
     this.getAllDocumentos();
-   // this.getBeneById(1);
+    // this.getBeneById(1);
     this.getCertificacionById(this.idcertificacion!);
   }
   async buscaColor() {
@@ -156,19 +156,19 @@ export class ModiCertificacionComponent {
       next: (certificacion: Certificacion) => {
         console.log(certificacion);
         this.f_certificacion.patchValue({
-        numero: certificacion.numero,
-        valor: certificacion.valor,
-        fecha: certificacion.fecha?.toString().substring(0,10),
-        descripcion: certificacion.descripcion,
-        numdoc: certificacion.numdoc,
-        usucrea: certificacion.usucrea, 
-        feccrea: certificacion.feccrea,
-        beneficiario: certificacion.beneficiario,
-        nombene: certificacion.beneficiario?.nomben,
-        beneficiariore: certificacion.beneficiariore,
-        nomresponsable: certificacion.beneficiariore?.nomben,
-        documento: certificacion.documento,
-        })
+          numero: certificacion.numero,
+          valor: certificacion.valor,
+          fecha: certificacion.fecha?.toString().substring(0, 10),
+          descripcion: certificacion.descripcion,
+          numdoc: certificacion.numdoc,
+          usucrea: certificacion.usucrea,
+          feccrea: certificacion.feccrea,
+          beneficiario: certificacion.beneficiario,
+          nombene: certificacion.beneficiario?.nomben,
+          beneficiariore: certificacion.beneficiariore,
+          nomresponsable: certificacion.beneficiariore?.nomben,
+          documento: certificacion.documento,
+        });
       },
       error: (e: any) => {
         this.authService.mostrarError('error', e.error);
@@ -190,7 +190,9 @@ export class ModiCertificacionComponent {
       },
     });
   }
-
+  compareDocumento(u1: Documentos, u2: Documentos): boolean {
+    return u1 && u2 ? u1.iddocumento === u2.iddocumento : u1 === u2;
+  }
   // cada vez que el usuario escribe
   getBeneficiario(event: any) {
     const value = event.target.value;

@@ -83,7 +83,7 @@
                             <div class="col-sm">
                                 <div class="input-group input-group-sm mt-3">
                                     <span class="input-group-text form-control-sm">Documento</span>
-                                    <select class="form-control form-control-sm col-3" formControlName="documento">
+                                    <select class="form-control form-control-sm col-3" [compareWith]="compareDocumento" formControlName="documento">
                                         <option [ngValue]="documento" *ngFor="let documento of _documentos">
                                             {{documento.nomdoc}}</option>
                                     </select>
