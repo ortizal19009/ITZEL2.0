@@ -121,7 +121,7 @@ export class AddReintegroComponent {
     return this.f_certificacion.controls;
   }
   regresar() {
-    this.router.navigate(['/certificaciones']);
+    this.router.navigate(['/reintegros']);
   }
   save() {
     let certificacion: Certificacion = new Certificacion();

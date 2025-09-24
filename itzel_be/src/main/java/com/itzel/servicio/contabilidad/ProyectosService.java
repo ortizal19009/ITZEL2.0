@@ -151,14 +151,11 @@ public class ProyectosService {
     public Map<String, Object> delete(short idProyecto) {
         Map<String, Object> response = new HashMap<>();
     List<Presupuesto> presupuestos = daoP.findByIdPresupuesto(idProyecto);
-    System.out.println("Número de presupuestos " + presupuestos.size());
     if(presupuestos.isEmpty()) {
         Optional<Proyectos> optionalProject = dao.findById(idProyecto);
 
         if (optionalProject.isPresent()) {
             Proyectos project = optionalProject.get();
-            System.out.println("Project Code: " + project.getCodigo());
-
             // Fetch count directly instead of fetching the list
             List<Proyectos> relatedProjectCount = dao.findByCodigoMayor(project.getCodigo());
 

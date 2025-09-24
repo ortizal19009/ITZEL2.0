@@ -34,10 +34,8 @@ public class CuentasApi {
     public ResponseEntity<Page<Cuentas>> getByCodOrDenom(@RequestParam String codcue, @RequestParam String nomcue, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
         Page<Cuentas> cuentas = null;
         if(codcue != null){
-            System.out.println("codcue: "+codcue);
             cuentas =cuentasService.findByCod(codcue,page, size);
         }else if (nomcue != null) {
-            System.out.println("nomcue: "+nomcue);
             cuentas = cuentasService.findByDenom(nomcue.toLowerCase(),page, size);
         }
         return ResponseEntity.ok(cuentas);

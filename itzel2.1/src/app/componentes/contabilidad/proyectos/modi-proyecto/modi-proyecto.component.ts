@@ -155,11 +155,14 @@ export class ModiProyectoComponent implements OnInit {
             validador = false;
           }
         }
-        const codigoDuplicado = validador;
+        let codigoDuplicado: boolean = validador;
         const codigoNoValido = codigoDuplicado || longitudInvalida;
 
         const currentErrors = codigoControl?.errors || {};
-
+        console.log(codigoDuplicado);
+        if (this._proyecto.codigo == f.codigo) {
+          codigoDuplicado = false;
+        }
         if (codigoNoValido) {
           if (codigoDuplicado) {
             message = 'El código ya existe';

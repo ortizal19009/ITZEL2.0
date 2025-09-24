@@ -29,7 +29,6 @@ public class BeneficiariosApi {
     // Busca por Nombre para los datalist
     @GetMapping("/nomben")
     public List<Beneficiarios> findByNomben(@Param(value = "nomben") String nomben) {
-        System.out.println(nomben);
         return beneServicio.findByNomben(nomben.toLowerCase());
     }
 

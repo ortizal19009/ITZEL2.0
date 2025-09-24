@@ -20,11 +20,11 @@
                                     <span class="input-group-text form-control-sm">Código</span>
                                     <input type="text" class="form-control form-control-sm" formControlName="codigo"
                                         (change)="getValidacionCodigo($event)" [ngClass]="{
-            'is-invalid': f['codigo'].invalid && f['codigo'].touched,
-            'is-valid': f['codigo'].valid && f['codigo'].touched
+            'is-invalid': f['codigo'].invalid ,
+            'is-valid': f['codigo'].valid 
           }" />
                                 </div>
-                                <div *ngIf="f['codigo'].errors && f['codigo'].touched" class="mt-0 py-0">
+                                <div *ngIf="f['codigo'].errors " class="mt-0 py-0">
                                     <div class="alert alert-warning py-0 mt-0 robotomini"
                                         *ngFor="let error of getCodigoErrors()" role="alert">
                                         <strong>Ups!</strong> {{ error }}
@@ -38,15 +38,15 @@
                                     <span class="input-group-text form-control-sm">Nombre</span>
                                     <input type="text" class="form-control form-control-sm" formControlName="nombre"
                                         (change)="getValidarNombre($event)" [ngClass]="{
-            'is-invalid': f['nombre'].invalid && f['nombre'].touched,
-            'is-valid': f['nombre'].valid && f['nombre'].touched
+            'is-invalid': f['nombre'].invalid ,
+            'is-valid': f['nombre'].valid 
           }" />
                                     <!-- Ícono de error extra opcional -->
                                     <div *ngIf="sw_nombre" class="error d-flex align-items-center ps-2">
                                         <i class="bi bi-x-circle text-danger"></i>
                                     </div>
                                 </div>
-                                <div *ngIf="f['nombre'].errors && f['nombre'].touched" class="mt-0 py-0">
+                                <div *ngIf="f['nombre'].errors " class="mt-0 py-0">
                                     <div class="alert alert-warning py-0 mt-0 robotomini"
                                         *ngFor="let error of getNombreErrors()" role="alert">
                                         <strong>Ups!</strong> {{ error }}
