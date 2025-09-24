@@ -31,6 +31,10 @@ import { DefinirComponent } from './componentes/administracion/definir/definir/d
 import { CertificacionesComponent } from './componentes/contabilidad/certificaciones/certificaciones/certificaciones.component';
 import { AddCertificacionComponent } from './componentes/contabilidad/certificaciones/add-certificacion/add-certificacion.component';
 import { ModiCertificacionComponent } from './componentes/contabilidad/certificaciones/modi-certificacion/modi-certificacion.component';
+import { ReintegrosComponent } from './componentes/contabilidad/reintegros/reintegros/reintegros.component';
+import { AddReintegroComponent } from './componentes/contabilidad/reintegros/add-reintegro/add-reintegro.component';
+import { ModiReintegroComponent } from './componentes/contabilidad/reintegros/modi-reintegro/modi-reintegro.component';
+import { InfoReintegroComponent } from './componentes/contabilidad/reintegros/info-reintegro/info-reintegro.component';
 
 export const routes: Routes = [
   { path: 'inicio', component: AppWrapperComponent },
@@ -74,7 +78,10 @@ export const routes: Routes = [
   { path: 'add-certificacion', component: AddCertificacionComponent },
   { path: 'modi-certificacion/:idcertificacion', component: ModiCertificacionComponent },
   /* ==========RE INTEGROS========== */
-
+  { path: 'reintegros', component: ReintegrosComponent },
+  { path: 'add-reintegro', component: AddReintegroComponent },
+  { path: 'modi-reintegro/:idreintegro', component: ModiReintegroComponent },
+  { path: 'info-reintegro/:idreintegro', component: InfoReintegroComponent },
   /* 
   ======================================================================
   MODULO ROLES

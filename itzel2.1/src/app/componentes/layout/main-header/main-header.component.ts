@@ -90,8 +90,6 @@ export class MainHeaderComponent implements OnInit {
 
   ngOnInit(): void {
     //Fondo
-
-    console.log(sessionStorage);
     let fondoActual = sessionStorage.getItem('fondoActual')?.toString();
     if (!fondoActual) {
       fondoActual = '1';

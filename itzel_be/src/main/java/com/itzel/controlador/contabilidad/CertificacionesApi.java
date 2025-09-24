@@ -29,8 +29,6 @@ public class CertificacionesApi {
     }
     @PostMapping
     ResponseEntity<Certificaciones> saveCertificacion(@RequestBody Certificaciones c){
-        System.out.println("Numero "+c.getNumero());
-        System.out.println("Descripcion "+ c.getDescripcion());
         return ResponseEntity.ok(certificacionService.save(c));
     }
     @DeleteMapping("/{idcertificacion}")

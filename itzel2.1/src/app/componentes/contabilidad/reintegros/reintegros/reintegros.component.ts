@@ -1,21 +1,21 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Certificacion } from '../../../modelos/contabilidad/certificacion.model';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
 import { AutorizaService } from '../../../servicios/administracion/autoriza.service';
 import { ColoresService } from '../../../servicios/administracion/colores.service';
 import { EliminadosService } from '../../../servicios/administracion/eliminados.service';
 import { CertificacionesService } from '../../../servicios/contabilidad/certificaciones.service';
-import { Certificacion } from '../../../modelos/contabilidad/certificacion.model';
+import { Router, RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-certificaciones.component',
+  selector: 'app-reintegros.component',
   imports: [RouterLink, CommonModule, FormsModule, ReactiveFormsModule],
-  templateUrl: './certificaciones.component.html',
-  styleUrl: './certificaciones.component.css',
+  templateUrl: './reintegros.component.html',
+  styleUrl: './reintegros.component.css',
 })
-export class CertificacionesComponent implements OnInit {
-  title: string = 'Certificaciones ';
+export class ReintegrosComponent {
+  title: string = 'Reintegros';
   formBuscar!: FormGroup;
   swbuscando?: boolean;
   txtbuscar: string = 'Buscar';
@@ -51,8 +51,8 @@ export class CertificacionesComponent implements OnInit {
       // Opcional: inicializa valores por defecto si quieres
     }
     this.formBuscar = this.fb.group({
-      min: '',
-      max: '',
+      min: 0,
+      max: 0,
       fechaInicio: date.toISOString().substring(0, 10),
       fechaFin: [this.today],
       filtroControl: '',
@@ -83,7 +83,7 @@ export class CertificacionesComponent implements OnInit {
   }
   buscar() {
     let f = this.formBuscar.value;
-    this.s_certificaciones.getByNumDate(1, f.fechaInicio, f.fechaFin, f.min, f.max).subscribe({
+    this.s_certificaciones.getByNumDate(2, f.fechaInicio, f.fechaFin, f.min, f.max).subscribe({
       next: (datos: any) => {
         if (datos.length === 0) {
           this.authService.mostrarError('No se encontraron registros', 'Atención');
@@ -98,16 +98,18 @@ export class CertificacionesComponent implements OnInit {
     this.router.navigate(['/inicio']);
   }
   getLastCertificacion() {
-    this.s_certificaciones.findLastByTipo(1).subscribe({
+    this.s_certificaciones.findLastByTipo(2).subscribe({
       next: (certificacion: Certificacion) => {
-        let minimo = certificacion.numero - 20;
-        if (minimo <= 0) {
-          minimo = 1;
+        if (certificacion !== null) {
+          let minimo = certificacion.numero - 20;
+          if (minimo <= 0) {
+            minimo = 1;
+          }
+          this.formBuscar.patchValue({
+            min: minimo,
+            max: certificacion.numero,
+          });
         }
-        this.formBuscar.patchValue({
-          min: minimo,
-          max: certificacion.numero,
-        });
       },
     });
   }

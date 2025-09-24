@@ -10,26 +10,26 @@ import {
 } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { Beneficiario } from '../../../modelos/contabilidad/beneficiario.model';
-import { Certificacion } from '../../../modelos/contabilidad/certificacion.model';
 import { Documentos } from '../../../modelos/administracion/documentos.model';
-import { debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs';
+import { Certificacion } from '../../../modelos/contabilidad/certificacion.model';
+import { CommonModule } from '@angular/common';
+import { VisualFormatDirective } from '../../../directives/visual-format.directive';
 import { AutorizaService } from '../../../servicios/administracion/autoriza.service';
 import { ColoresService } from '../../../servicios/administracion/colores.service';
 import { CertificacionesService } from '../../../servicios/contabilidad/certificaciones.service';
 import { DocumentoService } from '../../../servicios/administracion/documento.service';
 import { BeneficiarioService } from '../../../servicios/contabilidad/beneficiario.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { VisualFormatDirective } from '../../../directives/visual-format.directive';
+import { Router } from '@angular/router';
+import { debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs';
 
 @Component({
-  selector: 'app-modi-certificacion.component',
+  selector: 'app-add-reintegro.component',
   imports: [CommonModule, FormsModule, ReactiveFormsModule, VisualFormatDirective],
-  templateUrl: './modi-certificacion.component.html',
-  styleUrl: './modi-certificacion.component.css',
+  templateUrl: './add-reintegro.component.html',
+  styleUrl: './add-reintegro.component.css',
 })
-export class ModiCertificacionComponent {
-  title: string = 'Neva Certificación';
+export class AddReintegroComponent {
+  title: string = 'Nevo Reintegro';
   f_certificacion!: FormGroup;
   certificacion: Certificacion = new Certificacion();
   date: Date = new Date();
@@ -37,7 +37,7 @@ export class ModiCertificacionComponent {
   _beneficiarios: Beneficiario[] = [];
   _responsable: Beneficiario[] = [];
   today = new Date().toISOString().substring(0, 10); // ejemplo: "2025-09-19"
-  idcertificacion?: number;
+
   constructor(
     public authService: AutorizaService,
     private router: Router,
@@ -45,8 +45,7 @@ export class ModiCertificacionComponent {
     private fb: FormBuilder,
     private s_certificaciones: CertificacionesService,
     private s_documentos: DocumentoService,
-    private s_beneficiario: BeneficiarioService,
-    private _params: ActivatedRoute
+    private s_beneficiario: BeneficiarioService
   ) {}
   ngOnInit(): void {
     if (!this.authService.sessionlog) {
@@ -61,8 +60,6 @@ export class ModiCertificacionComponent {
       console.warn('sessionStorage no disponible (SSR o entorno server)');
       // Opcional: inicializa valores por defecto si quieres
     }
-    this.idcertificacion = +this._params.snapshot.paramMap.get('idcertificacion')!;
-
     this.f_certificacion = this.fb.group({
       numero: ['', [Validators.required, Validators.minLength(1)]],
       valor: [0.0, [Validators.required, Validators.minLength(1)]],
@@ -95,8 +92,8 @@ export class ModiCertificacionComponent {
       .subscribe((beneficiarios) => (this._beneficiarios = beneficiarios));
 
     this.getAllDocumentos();
-    // this.getBeneById(1);
-    this.getCertificacionById(this.idcertificacion!);
+    this.getLastCertificacionByTipo();
+    this.getBeneById(1);
   }
   async buscaColor() {
     try {
@@ -129,14 +126,13 @@ export class ModiCertificacionComponent {
   save() {
     let certificacion: Certificacion = new Certificacion();
     let f = this.f_certificacion.value;
-    certificacion.idcertificacion = this.idcertificacion;
     certificacion.numero = f.numero;
     certificacion.valor = f.valor;
     certificacion.fecha = f.fecha;
     certificacion.descripcion = f.descripcion;
     certificacion.numdoc = f.numdoc;
     certificacion.usucrea = f.usucrea;
-    certificacion.tipo = 1;
+    certificacion.tipo = 2;
     certificacion.feccrea = f.feccrea;
     certificacion.beneficiario = f.beneficiario;
     certificacion.beneficiariore = f.beneficiariore;
@@ -151,31 +147,20 @@ export class ModiCertificacionComponent {
       },
     });
   }
-  getCertificacionById(idcertificacion: number) {
-    this.s_certificaciones.getByIdCertificacion(idcertificacion).subscribe({
+  getLastCertificacionByTipo() {
+    this.s_certificaciones.findLastByTipo(2).subscribe({
       next: (certificacion: Certificacion) => {
-        console.log(certificacion);
+        let numero: number = 1;
+        if (certificacion != null) {
+          numero = certificacion.numero + 1;
+        }
         this.f_certificacion.patchValue({
-          numero: certificacion.numero,
-          valor: certificacion.valor,
-          fecha: certificacion.fecha?.toString().substring(0, 10),
-          descripcion: certificacion.descripcion,
-          numdoc: certificacion.numdoc,
-          usucrea: certificacion.usucrea,
-          feccrea: certificacion.feccrea,
-          beneficiario: certificacion.beneficiario,
-          nombene: certificacion.beneficiario?.nomben,
-          beneficiariore: certificacion.beneficiariore,
-          nomresponsable: certificacion.beneficiariore?.nomben,
-          documento: certificacion.documento,
+          numero: numero,
         });
       },
-      error: (e: any) => {
-        this.authService.mostrarError('error', e.error);
-      },
+      error: (e: any) => console.error(e),
     });
   }
-
   getAllDocumentos() {
     this.s_documentos.getAllDocumentos().subscribe({
       next: (documentos: Documentos[]) => {
@@ -190,9 +175,7 @@ export class ModiCertificacionComponent {
       },
     });
   }
-  compareDocumento(u1: Documentos, u2: Documentos): boolean {
-    return u1 && u2 ? u1.iddocumento === u2.iddocumento : u1 === u2;
-  }
+
   // cada vez que el usuario escribe
   getBeneficiario(event: any) {
     const value = event.target.value;
@@ -233,7 +216,17 @@ export class ModiCertificacionComponent {
       });
     }
   }
-
+  getBeneById(id: number) {
+    this.s_beneficiario.getById(id).subscribe({
+      next: (bene: Beneficiario) => {
+        this.f_certificacion.patchValue({
+          beneficiario: bene,
+          nombene: bene.nomben,
+        });
+      },
+      error: (e: any) => console.error(e.error),
+    });
+  }
   swal(icon: any, mensaje: any) {
     Swal.fire({
       toast: true,

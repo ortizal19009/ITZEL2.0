@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class CertificacionService {
@@ -35,13 +32,17 @@ public class CertificacionService {
         }
         certificacionesR.deleteById(idcertificacion);
     }
-    public List<Certificaciones> getByNumDate(short tipo, LocalDate fechaInicio, LocalDate fechaFin, short min, short max){
-    List<Certificaciones> result = new ArrayList<>();
+    public List<Certificaciones> getByNumDate(short tipo, LocalDate fechaInicio, LocalDate fechaFin, short min, short max) {
+        Set<Certificaciones> result = new HashSet<>();
         result.addAll(certificacionesR.findByTipoAndFechaBetweenOrderByNumeroDesc(tipo, fechaInicio, fechaFin));
         result.addAll(certificacionesR.findByTipoAndNumeroBetweenOrderByNumeroDesc(tipo, min, max));
-        result.sort(Comparator.comparing(Certificaciones::getNumero).reversed());
-    return result;
+
+        // Convertir a lista y ordenar
+        return result.stream()
+                .sorted(Comparator.comparing(Certificaciones::getNumero).reversed())
+                .toList();
     }
+
     public Optional<Certificaciones> findById(Long idcertificacion){
         return certificacionesR.findById(idcertificacion);
     }

@@ -7,7 +7,6 @@ import {
   FormBuilder,
   FormGroup,
   FormsModule,
-  MinLengthValidator,
   ReactiveFormsModule,
   ValidationErrors,
   Validators,
@@ -72,8 +71,8 @@ export class AddCertificacionComponent implements OnInit {
           maxDateValidator(new Date()), // no después de hoy
         ],
       ],
-      descripcion: ['', [Validators.required, Validators.minLength(10)]],
-      numdoc: ['', [Validators.required, Validators.minLength(3)]],
+      descripcion: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(254)]],
+      numdoc: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
       usucrea: [this.authService.idusuario],
       feccrea: [this.date],
       beneficiario: [''],

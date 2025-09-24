@@ -59,7 +59,6 @@
             'is-invalid': f['valor'].invalid,
             'is-valid': f['valor'].valid
           }" />
-
                                 </div>
                                 <div *ngIf="authService.msgval && f['valor'].errors" class="mt-0 py-0">
                                     <div *ngIf="f['valor'].errors['required']"
@@ -101,7 +100,11 @@
                                     </div>
                                     <div *ngIf="f['numdoc'].errors['minlength']"
                                         class="alert alert-warning py-0 mt-0 robotomini" role="alert">
-                                        <strong>Ups!</strong> No puede ser negativo
+                                        <strong>Ups!</strong> No puede tener menos de 3 caracteres
+                                    </div>
+                                    <div *ngIf="f['numdoc'].errors['maxlength']"
+                                        class="alert alert-warning py-0 mt-0 robotomini" role="alert">
+                                        <strong>Ups!</strong> No puede tener mas de 20 caracteres
                                     </div>
                                 </div>
                             </div>
@@ -187,6 +190,10 @@
                                         class="alert alert-warning py-0 mt-0 robotomini" role="alert">
                                         <strong>Ups!</strong> El valor debe tener mas de 10 caracteres
                                     </div>
+                                    <div *ngIf="f['descripcion'].errors['maxlength']"
+                                        class="alert alert-warning py-0 mt-0 robotomini" role="alert">
+                                        <strong>Ups!</strong> El valor debe tener maximo 254 caracteres
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -195,7 +202,7 @@
                 </div>
                 <div class="card-footer text-center">
                     <button type="button" (click)="regresar()" class="btn btn-sm btn-success mr-2">Cancelar</button>
-                    <button type="submit" class="btn btn-sm btn-outline-success" (click)="save()"
+                    <button type="button" class="btn btn-sm btn-outline-success" (click)="save()"
                         [disabled]="f_certificacion.invalid">Aceptar</button>
                 </div>
             </div>
