@@ -1,4 +1,4 @@
-import { Certificacion } from "./certificacion.model";
+import { Certificaciones } from "./certificaciones.model";
 import { Ejecucion } from "./ejecucion.model";
 import { Presupuesto } from "./presupuesto.model";
 
@@ -14,7 +14,7 @@ export class Partixcerti {
   feccrea?: Date; 
   usumodi?: number; 
   fecmodi?: Date; 
-  certificaion?: Certificacion;
+  certificaion?: Certificaciones;
   presupuesto?: Presupuesto;
 }
 

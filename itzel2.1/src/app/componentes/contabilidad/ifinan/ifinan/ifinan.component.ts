@@ -4,7 +4,7 @@ import { AbstractControl, FormBuilder, FormGroup, FormsModule, Validators } from
 import { FilterPipe } from '../../../pipes/filter.pipe';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { IfinanService } from '../../../servicios/contabilidad/ifinan.service';
-import { BeneficiarioService } from '../../../servicios/contabilidad/beneficiario.service';
+import { BeneficiariosService } from '../../../servicios/contabilidad/beneficiarios.service';
 import { map } from 'rxjs';
 
 @Component({
@@ -28,7 +28,7 @@ export class IfinanComponent implements OnInit {
     public fb: FormBuilder,
     private ifinanService: IfinanService,
     private router: Router,
-    private beneService: BeneficiarioService,
+    private beneService: BeneficiariosService,
   ) {}
   ngOnInit(): void {
     this.creaForm();
@@ -58,7 +58,7 @@ export class IfinanComponent implements OnInit {
     });
   }
 
-  get f() {
+  get f() { 
     return this.formIfinan.controls;
   }
 

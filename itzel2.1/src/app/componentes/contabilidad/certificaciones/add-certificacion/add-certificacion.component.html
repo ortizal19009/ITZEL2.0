@@ -1,213 +1,183 @@
 <div class="content-header">
-    <div class="container-fluid">
-        <div class="row mt-5 justify-content-center text-center">
-            <div class="col-sm-6 sombra cabecera border">
-                <h5 class="font-weight-bold mt-2">{{title}}</h5>
-            </div>
-        </div>
-    </div>
+   <div class="container-fluid">
+      <div class="row mt-5 justify-content-center text-center">
+         <div class="col-sm-6 sombra cabecera border">
+            <h5 class="font-weight-bold mt-2">Nueva Certificación</h5>
+         </div>
+      </div>
+   </div>
 </div>
 
 <div class="content">
-    <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="card col-sm-6 detalle sombra">
-                <div class="card-body">
-                    <form [formGroup]="f_certificacion" class="mt-3 mb-0">
-                        <div class="row">
-                            <!-- Numero -->
-                            <div class="col-sm-4">
-                                <div class="input-group input-group-sm ">
-                                    <span class="input-group-text form-control-sm">Número</span>
-                                    <input type="text" class="form-control form-control-sm" formControlName="numero"
-                                        readonly />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mt-3">
-                            <!-- fecha -->
-                            <div class="col-sm">
-                                <div class="input-group input-group-sm ">
-                                    <span class="input-group-text form-control-sm">Fecha</span>
-                                    <input type="date" class="form-control form-control-sm" formControlName="fecha"
-                                        [ngClass]="{
-            'is-invalid': f['fecha'].invalid ,
-            'is-valid': f['fecha'].valid 
-          }" />
-                                </div>
-                                <div *ngIf="authService.msgval && f['fecha'].errors " class="mt-0 py-0">
-                                    <div *ngIf="f['fecha'].errors['required']"
-                                        class="alert alert-warning py-0 mt-0 robotomini" role="alert">
-                                        <strong>Ups!</strong> Fecha es obligatoria
-                                    </div>
-                                    <div *ngIf="f['fecha'].errors['pattern']"
-                                        class="alert alert-warning py-0 mt-0 robotomini" role="alert">
-                                        <strong>Ups!</strong> Formato inválido (use YYYY-MM-DD)
-                                    </div>
-                                    <div *ngIf="f['fecha'].errors['maxDate']"
-                                        class="alert alert-warning py-0 mt-0 robotomini" role="alert">
-                                        <strong>Ups!</strong> La fecha no puede ser posterior a hoy
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Valor -->
-                            <div class="col-sm">
-                                <div class="input-group input-group-sm ">
-                                    <span class="input-group-text form-control-sm">Valor</span>
-                                    <input type="text" class="form-control form-control-sm" appVisualFormat
-                                        [minDecimals]="2" [maxDecimals]="2" formControlName="valor" [ngClass]="{
-            'is-invalid': f['valor'].invalid && f['valor'].touched,
-            'is-valid': f['valor'].valid && f['valor'].touched
-          }" />
-                                </div>
-                                <div *ngIf="authService.msgval && f['valor'].errors && f['valor'].touched"
-                                    class="mt-0 py-0">
-                                    <div *ngIf="f['valor'].errors['required']"
-                                        class="alert alert-warning py-0 mt-0 robotomini" role="alert">
-                                        <strong>Ups!</strong> Valor obligatorio
-                                    </div>
-                                    <div *ngIf="f['valor'].errors['pattern']"
-                                        class="alert alert-warning py-0 mt-0 robotomini" role="alert">
-                                        <strong>Ups!</strong> Debe ser un numérico con 2 decimales
-                                    </div>
-                                    <div *ngIf="f['valor'].errors['minlength']"
-                                        class="alert alert-warning py-0 mt-0 robotomini" role="alert">
-                                        <strong>Ups!</strong> No puede ser negativo
-                                    </div>
+   <div class="container-fluid">
+      <div class="row justify-content-center">
+         <div class="card card-body col-sm-6 detalle sombra">
+            <form [formGroup]="formCertificacion">
+               <div class="row">
 
-                                </div>
-                            </div>
+                  <div class="form-group col-md-5">
+                     <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                           <label class="input-group-text" for="numero">Número<sup class="green">*</sup></label>
                         </div>
-                        <div class="row">
-                            <!-- Documentos -->
-                            <div class="col-sm">
-                                <div class="input-group input-group-sm mt-3">
-                                    <span class="input-group-text form-control-sm">Documento</span>
-                                    <select class="form-control form-control-sm col-3" formControlName="documento">
-                                        <option [ngValue]="documento" *ngFor="let documento of _documentos">
-                                            {{documento.nomdoc}}</option>
-                                    </select>
-                                    <input type="text" class="form-control form-control-sm" formControlName="numdoc"
-                                        [ngClass]="{
-            'is-invalid': f['numdoc'].invalid && f['numdoc'].touched,
-            'is-valid': f['numdoc'].valid && f['numdoc'].touched
-          }" />
-                                </div>
-                                <div *ngIf="authService.msgval && f['numdoc'].errors && f['numdoc'].touched"
-                                    class="mt-0 py-0">
-                                    <div *ngIf="f['numdoc'].errors['required']"
-                                        class="alert alert-warning py-0 mt-0 robotomini" role="alert">
-                                        <strong>Ups!</strong> Valor obligatorio
-                                    </div>
-                                    <div *ngIf="f['numdoc'].errors['minlength']"
-                                        class="alert alert-warning py-0 mt-0 robotomini" role="alert">
-                                        <strong>Ups!</strong> Debe tener mas de 3 caracteres
-                                    </div>
-                                    <div *ngIf="f['numdoc'].errors['maxlength']"
-                                        class="alert alert-warning py-0 mt-0 robotomini" role="alert">
-                                        <strong>Ups!</strong> No puede tener mas de 20 caracteres
-                                    </div>
-                                </div>
-                            </div>
+                        <input type="number" class="form-control text-center" formControlName="numero" min="1"
+                           [ngClass]="{'is-invalid': f['numero'].invalid && f['numero'].touched, 'is-valid': f['numero'].valid, '': f['numero'].untouched}">
+                     </div>
+                     <div *ngIf="authService.msgval && f['numero'].errors && f['numero'].touched">
+                        <div *ngIf="f['numero'].errors['required']"
+                           class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                           <strong>Ups!</strong> Número obligatorio
                         </div>
-                        <div class="row">
-                            <!-- BENEFICIARIOS -->
-                            <div class="col-sm">
-                                <div class="input-group input-group-sm mt-3">
-                                    <span class="input-group-text form-control-sm">Beneficiario</span>
-                                    <input id="beneficiario" list="beneficiarios" (input)="getBeneficiario($event)"
-                                        formControlName="nombene" class="form-control form-control-sm" [ngClass]="{
-            'is-invalid': f['nombene'].invalid && f['nombene'].touched,
-            'is-valid': f['nombene'].valid && f['nombene'].touched}">
-                                    <datalist id="beneficiarios">
-                                        <option *ngFor="let b of _beneficiarios" [value]="b.nomben"
-                                            [attr.data-id]="b.codben">{{b.codben}}</option>
-                                    </datalist>
-                                </div>
-                                <div *ngIf="authService.msgval && f['nombene'].errors && f['nombene'].touched"
-                                    class="mt-0 py-0">
-                                    <div *ngIf="f['nombene'].errors['required']"
-                                        class="alert alert-warning py-0 mt-0 robotomini" role="alert">
-                                        <strong>Ups!</strong> Valor obligatorio
-                                    </div>
-                                    <div *ngIf="f['nombene'].errors['pattern']"
-                                        class="alert alert-warning py-0 mt-0 robotomini" role="alert">
-                                        <strong>Ups!</strong> Debe ser un numérico con 2 decimales
-                                    </div>
-                                    <div *ngIf="f['nombene'].errors['minlength']"
-                                        class="alert alert-warning py-0 mt-0 robotomini" role="alert">
-                                        <strong>Ups!</strong> No puede ser negativo
-                                    </div>
+                        <div *ngIf="f['numero'].errors['min']"
+                           class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                           <strong>Ups!</strong> Número incorrecto
+                        </div>
+                        <div *ngIf="f['numero'].errors['existe']"
+                           class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                           <strong>Ups!</strong> Ese Número ya existe
+                        </div>
+                     </div>
+                  </div>
 
-                                </div>
-                            </div>
+                  <div class="form-group col-md-6">
+                     <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                           <label class="input-group-text" for="fecha">Fecha<sup class="green">*</sup></label>
                         </div>
-                        <div class="row">
-                            <!-- RESPONSABLE-->
-                            <div class="col-sm">
-                                <div class="input-group input-group-sm mt-3">
-                                    <span class="input-group-text form-control-sm">Responsable</span>
-                                    <input id="beneficiario" list="responsable" (input)="getBeneficiariore($event)"
-                                        formControlName="nomresponsable" class="form-control form-control-sm" [ngClass]="{
-            'is-invalid': f['nomresponsable'].invalid && f['nomresponsable'].touched,
-            'is-valid': f['nomresponsable'].valid && f['nomresponsable'].touched}">
-                                    <datalist id="responsable">
-                                        <option *ngFor="let b of _responsable" [value]="b.nomben"
-                                            [attr.data-id]="b.codben">{{b.codben}}</option>
-                                    </datalist>
-                                </div>
-                                <div *ngIf="authService.msgval && f['nomresponsable'].errors && f['nomresponsable'].touched"
-                                    class="mt-0 py-0">
-                                    <div *ngIf="f['nomresponsable'].errors['required']"
-                                        class="alert alert-warning py-0 mt-0 robotomini" role="alert">
-                                        <strong>Ups!</strong> Valor obligatorio
-                                    </div>
-                                    <div *ngIf="f['nomresponsable'].errors['pattern']"
-                                        class="alert alert-warning py-0 mt-0 robotomini" role="alert">
-                                        <strong>Ups!</strong> Debe ser un numérico con 2 decimales
-                                    </div>
-                                    <div *ngIf="f['nomresponsable'].errors['minlength']"
-                                        class="alert alert-warning py-0 mt-0 robotomini" role="alert">
-                                        <strong>Ups!</strong> No puede ser negativo
-                                    </div>
-                                </div>
-                            </div>
+                        <input type="date" class="form-control text-center" formControlName="fecha"
+                           [ngClass]="{'is-invalid': f['fecha'].invalid && f['fecha'].touched, 'is-valid': f['fecha'].valid, '': f['fecha'].untouched}">
+                     </div>
+                     <div *ngIf="authService.msgval && f['fecha'].errors && f['fecha'].touched">
+                        <div *ngIf="f['fecha'].errors['required']"
+                           class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                           <strong>Ups!</strong> Fecha obligatoria
                         </div>
-                        <div class="row">
-                            <div class="col-sm">
-                                <span class="input-group-text form-control-sm mt-3">Descripción</span>
-                                <textarea type="text" class="form-control form-control-sm" formControlName="descripcion"
-                                    [ngClass]="{
-            'is-invalid': f['descripcion'].invalid && f['descripcion'].touched,
-            'is-valid': f['descripcion'].valid && f['descripcion'].touched
-          }">
+                        <div *ngIf="f['fecha'].errors['añoinvalido']"
+                           class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                           <strong>Ups!</strong> El Período (año) es incorrecto
+                        </div>
+                     </div>
+                  </div>
+
+                  <div class="form-group col-md-10">
+                     <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                           <label class="input-group-text" for="tipdoc">Documento<sup class="green">*</sup></label>
+                        </div>
+                        <select class="custom-select robotosmall" formControlName="documento">
+                           <option class="documentos robotosmall" *ngFor="let docu of _documentos"
+                              [ngValue]="docu.iddocumento">
+                              {{ docu.nomdoc }}
+                           </option>
+                        </select>
+                        <input type="text" class="form-control text-center" formControlName="numdoc" maxlength="12"
+                           [ngClass]="{'is-invalid': f['numdoc'].invalid && f['numdoc'].touched, 'is-valid': f['numdoc'].valid, '': f['numdoc'].untouched}">
+                     </div>
+                     <div *ngIf="authService.msgval && f['numdoc'].errors && f['numdoc'].touched">
+                        <div *ngIf="f['numdoc'].errors['required']"
+                           class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                           <strong>Ups!</strong> Número de Documento obligatorio
+                        </div>
+                     </div>
+                  </div>
+
+                  <div class="form-group col-md-12">
+                     <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                           <label class="input-group-text" for="beneficarios">Beneficiario<sup
+                                 class="green">*</sup></label>
+                        </div>
+                        <input type="text" class="form-control form-control-sm" formControlName="beneficiario"
+                           list="beneficiarioList"
+                           (input)="onBeneficiarioSelected($event); beneficiariosxNomben($event)"
+                           [ngClass]="{'is-invalid': f['beneficiario'].invalid && f['beneficiario'].touched,'is-valid': f['beneficiario'].valid, '': f['beneficiario'].untouched}">
+                        <datalist role="listbox" id="beneficiarioList">
+                           <option *ngFor="let bene of _beneficiarios" [value]="bene.nomben">
+                           </option>
+                        </datalist>
+                     </div>
+                     <div *ngIf="authService.msgval && f['beneficiario'].errors && f['beneficiario'].touched">
+                        <div *ngIf="f['beneficiario'].errors['required']"
+                           class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                           <strong>Ups!</strong> Beneficiario obligatorio
+                        </div>
+                        <div *ngIf="f['beneficiario'].errors['invalido']"
+                           class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                           <strong>Ups!</strong> No ha seleccionado un Beneficiario
+                        </div>
+                     </div>
+                  </div>
+
+                  <div class="form-group col-md-12">
+                     <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                           <label class="input-group-text" for="beneficarios">Responsable<sup
+                                 class="green">*</sup></label>
+                        </div>
+                        <input type="text" class="form-control form-control-sm" formControlName="responsable"
+                           list="resposableList"
+                           (input)="onResponsableSelected($event); responsablesxNomben($event)"
+                           [ngClass]="{'is-invalid': f['responsable'].invalid && f['responsable'].touched,'is-valid': f['responsable'].valid, '': f['responsable'].untouched}">
+                        <datalist role="listbox" id="resposableList">
+                           <option *ngFor="let bene of _responsables" [value]="bene.nomben">
+                           </option>
+                        </datalist>
+                     </div>
+                     <div *ngIf="authService.msgval && f['responsable'].errors && f['responsable'].touched">
+                        <div *ngIf="f['responsable'].errors['required']"
+                           class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                           <strong>Ups!</strong> Responsable obligatorio
+                        </div>
+                        <div *ngIf="f['responsable'].errors['invalido']"
+                           class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                           <strong>Ups!</strong> No ha seleccionado un Responsable
+                        </div>
+                     </div>
+                  </div>
+
+                  <div class="form-group col-md-12">
+                     <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                           <label class="input-group-text" for="beneficarios">Descripción<sup
+                                 class="green">*</sup></label>
+                        </div>
+                        <textarea type="text" class="form-control form-control-sm" formControlName="descripcion"
+                           [ngClass]="{'is-invalid': f['descripcion'].invalid && f['descripcion'].touched,'is-valid': f['descripcion'].valid && f['descripcion'].touched}">
                             </textarea>
-                                <div *ngIf="authService.msgval && f['descripcion'].errors && f['descripcion'].touched"
-                                    class="mt-0 py-0">
-                                    <div *ngIf="f['descripcion'].errors['required']"
-                                        class="alert alert-warning py-0 mt-0 robotomini" role="alert">
-                                        <strong>Ups!</strong> Valor obligatorio
-                                    </div>
-                                    <div *ngIf="f['descripcion'].errors['minlength']"
-                                        class="alert alert-warning py-0 mt-0 robotomini" role="alert">
-                                        <strong>Ups!</strong> El valor debe tener mas de 10 caracteres
-                                    </div>
-                                    <div *ngIf="f['descripcion'].errors['maxlength']"
-                                        class="alert alert-warning py-0 mt-0 robotomini" role="alert">
-                                        <strong>Ups!</strong> El valor debe tener maximo 254 caracteres
-                                    </div>
-                                </div>
-                            </div>
+                     </div>
+                     <div *ngIf="authService.msgval && f['descripcion'].errors && f['descripcion'].touched"
+                        class="mt-0 py-0">
+                        <div *ngIf="f['descripcion'].errors['required']"
+                           class="alert alert-warning py-0 mt-0 robotosmall" role="alert">
+                           <strong>Ups!</strong> Descripción obligatoria
                         </div>
-                    </form>
+                        <div *ngIf="f['descripcion'].errors['minlength']"
+                           class="alert alert-warning py-0 mt-0 robotosmall" role="alert">
+                           <strong>Ups!</strong> El valor debe tener mas de 10 caracteres
+                        </div>
+                        <div *ngIf="f['descripcion'].errors['maxlength']"
+                           class="alert alert-warning py-0 mt-0 robotosmall" role="alert">
+                           <strong>Ups!</strong> El valor debe tener maximo 254 caracteres
+                        </div>
+                     </div>
+                  </div>
 
-                </div>
-                <div class="card-footer text-center">
-                    <button type="button" (click)="regresar()" class="btn btn-sm btn-success mr-2">Cancelar</button>
-                    <button type="button" class="btn btn-sm btn-outline-success" (click)="save()"
-                        [disabled]="f_certificacion.invalid">Aceptar</button>
-                </div>
+               </div>
+            </form>
+            <div *ngIf="formCertificacion" class="mt-1 mb-0 text-center">
+               <button type="button" class="btn btn-success btn-sm" [disabled]="!formCertificacion.valid"
+                  (click)="guardar()">
+                  <i class="fa fa-check-circle"></i> Aceptar</button>
+               <button class="btn btn-outline-success btn-sm mx-2 btn-sm" (click)="regresar()">
+                  <i class="fa fa-times-circle"></i> Cancelar</button>
             </div>
-        </div>
-    </div>
+            <!-- <div class="card-footer text-center">
+               <button type="button" (click)="regresar()" class="btn btn-sm btn-success mr-2">Cancelar</button>
+               <button type="button" class="btn btn-sm btn-outline-success" (click)="save()"
+                  [disabled]="formCertificacion.invalid">Aceptar</button>
+            </div> -->
+
+         </div>
+      </div>
+   </div>
 </div>

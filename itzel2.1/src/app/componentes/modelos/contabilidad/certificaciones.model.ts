@@ -1,7 +1,7 @@
 import { Documentos } from "../administracion/documentos.model";
-import { Beneficiario } from "./beneficiario.model";
+import { Beneficiarios } from "./beneficiarios.model";
 
-export class Certificacion {
+export class Certificaciones {
   idcertificacion?: number;
   tipo?: number;
   numero!: number;
@@ -13,7 +13,7 @@ export class Certificacion {
   feccrea?: Date; 
   usumodi?: number; 
   fecmodi?: Date; 
-  beneficiario?: Beneficiario; 
-  beneficiariore?: Beneficiario; 
+  beneficiario?: Beneficiarios; 
+  beneficiariores?: Beneficiarios; 
   documento?: Documentos
 }

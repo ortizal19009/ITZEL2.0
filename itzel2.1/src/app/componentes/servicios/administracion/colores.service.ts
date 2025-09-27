@@ -9,7 +9,9 @@ export class ColoresService {
    constructor(private venService: VentanasService) { }
 
    public async setcolor(idusuario: number, ventana: string): Promise<string[]> {
+      // console.log('idusuario: ', idusuario, 'ventana: ', ventana)
       let ventanas = await this.venService.getByIdusuarioyNombre(idusuario, ventana);
+      // console.log('ventanas: ', ventanas)
       if (ventanas) return Promise.resolve([ventanas.color1!, ventanas.color2!]);
       else {
          let newVentana = {} as Ventana; //Interface para los datos de la nueva Ventana
@@ -25,6 +27,14 @@ export class ColoresService {
          }
       }
       return Promise.resolve(['0']);
+   }
+
+   public async getcolor(idusuario: number, ventana: string): Promise<string> {
+      let ventanas = await this.venService.getByIdusuarioyNombre(idusuario, ventana);
+      // console.log('ventanas: ', ventanas)
+      if (ventanas) return Promise.resolve(ventanas.color2!);
+      // return Promise.resolve('rgb(128,143,82)');
+      return Promise.resolve('rgb(227,242,183)');
    }
 
 }

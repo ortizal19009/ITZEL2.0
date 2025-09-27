@@ -52,7 +52,7 @@ public class CertificacionesApi {
     }
     @GetMapping("/findall")
     public ResponseEntity<List<Certificaciones>> getByNumDate(@RequestParam short tipo, @RequestParam LocalDate fechaInicio, @RequestParam LocalDate fechaFin, @RequestParam short min, @RequestParam short max){
-        return ResponseEntity.ok(certificacionService.getByNumDate(tipo, fechaInicio, fechaFin, min, max));
+        return ResponseEntity.ok(certificacionService.findByTipoAndNumeroBetweenAndFechaBetweenOrderByNumeroAsc(tipo, fechaInicio, fechaFin, min, max));
     }
 
     @GetMapping

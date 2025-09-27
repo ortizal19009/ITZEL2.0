@@ -1,22 +1,21 @@
 <div class="content mt-1 pt-1 pl-0">
    <div class="container-fluid">
       <div class="row m-0 px-0 py-1 justify-content-start cabecera border sombra">
-         <div class="col-sm-4">
+         <div class="col-sm-3">
             <h5 class="font-weight-bold text-truncate mt-0 my-0"> <i
-                  class="bi bi-info-circle-fill text-warning"></i>&nbsp;
-               {{title}}</h5>
+                  class="bi bi-bookmark-check-fill text-warning"></i>&nbsp; Certificaciones</h5>
          </div>
-         <div class="col-sm-8">
+         <div class="col-sm-9">
             <form [formGroup]="formBuscar" (ngSubmit)="buscar()">
                <div class="row my-0">
 
-                  <div class="input-group col-sm-6">
-                     <input type="text" class="form-control form-control-sm col-sm-2" formControlName="min"
-                        placeholder="desde">
-                     <input type="text" class="form-control form-control-sm col-sm-2" formControlName="max"
-                        placeholder="hasta">
-                     <input type="date" class="form-control form-control-sm " formControlName="fechaInicio">
-                     <input type="date" class="form-control form-control-sm " formControlName="fechaFin">
+                  <div class="input-group col-sm-7">
+                     <input type="text" class="form-control form-control-sm text-center col-sm-2" formControlName="min"
+                        placeholder="Desde">
+                     <input type="text" class="form-control form-control-sm text-center col-sm-2" formControlName="max"
+                        placeholder="Hasta">
+                     <input type="date" class="form-control form-control-sm text-center" formControlName="fechaInicio">
+                     <input type="date" class="form-control form-control-sm text-center" formControlName="fechaFin">
                   </div>
 
                   <div class="input-group col-sm-2">
@@ -24,18 +23,19 @@
                         <i *ngIf="swbuscando" class="fa fa-spinner"></i>
                         <i *ngIf="!swbuscando" class="fa fa-search"></i> {{txtbuscar}}
                      </button>
-
                   </div>
-                  <div *ngIf="certificacionesFiltradas?.length" class="input-group col-sm-3">
+
+                  <div *ngIf="_certificaciones.length" class="input-group col-sm-2">
                      <input type="text" class="form-control form-control-sm text-center" formControlName="filtroControl"
                         placeholder="Filtrar...">
                   </div>
+
                   <div class="btn-group ml-auto mt-0">
                      <button type="button" class="bg-transparent border-0 dropdown-toggle text-white text-right"
                         data-toggle="dropdown" aria-expanded="false"> <i class="bi-menu-button-wide text-white"></i>
                      </button>
                      <div class="dropdown-menu dropdown-menu-right bg-dark roboto ">
-                        <button class="dropdown-item" type="button" [routerLink]="['/add-certificacion']">
+                        <button class="dropdown-item" type="button" (click)="nuevo()">
                            <i class="bi-file-earmark-plus text-info"></i>&nbsp; Nuevo</button>
                         <button class="dropdown-item" type="button" [routerLink]="['/imp-certificacion']">
                            <i class="bi bi-printer text-info"></i>&nbsp; Imprimir / Exportar</button>
@@ -49,60 +49,90 @@
       </div>
    </div>
 </div>
-<!-- <div [innerHTML]="saludo"></div> -->
+
 <div class="container-fluid ">
    <div class="row mb-0">
-      <div class="col-sm-11 table-responsive center-form card-size">
-         <table class="table table-sm table-hover table-striped table-head-fixed table-bordered sombra">
-            <!--           *ngIf="certificacionesFiltradas.length > 0"> -->
-            <thead class="">
-               <tr class="text-center">
-                  <th>Nro.</th>
-                  <th (click)="ordenarPor('fecha')">Fecha
+      <div class="col-sm-12 table-responsive center-form card-size">
+         <!-- <table class="table table-sm table-hover table-striped table-head-fixed table-bordered sombra"> -->
+         <table class="table table-sm table-hover table-bordered sombra">
+
+            <thead class="cabecera">
+               <tr class="pad0">
+
+                  <th class="cursor text-truncate" (click)="ordenarPor('numero')">Nro.
+                     <i *ngIf="ordenColumna === 'numero'"
+                        [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
+                  </th>
+
+                  <th class="cursor text-truncate" (click)="ordenarPor('fecha')">Fecha
                      <i *ngIf="ordenColumna === 'fecha'"
                         [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
                   </th>
-                  <th>Documento</th>
-                  <th (click)="ordenarPor('beneficiario')">Beneficiario
+
+                  <th class="col-md-2 cursor" (click)="ordenarPor('documentonum')">Documento
+                     <i *ngIf="ordenColumna === 'documentonum'"
+                        [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
+                  </th>
+
+                  <th class="cursor" (click)="ordenarPor('beneficiario')">Beneficiario
                      <i *ngIf="ordenColumna === 'beneficiario'"
                         [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
                   </th>
 
-                  <th>Valor</th>
+                  <th class="cursor text-right" (click)="ordenarPor('valor')">Valor
+                     <i *ngIf="ordenColumna === 'valor'"
+                        [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
+                  </th>
+
                   <th (click)="ordenarPor('responsable')">Responsable
                      <i *ngIf="ordenColumna === 'responsable'"
                         [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
                   </th>
-                  <th>Descripción</th>
+                  
+                  <th (click)="ordenarPor('descripcion')">Descripción
+                     <i *ngIf="ordenColumna === 'descripcion'"
+                        [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
+                  </th>
+
                   <th></th>
                </tr>
             </thead>
             <tbody class="detalle roboto">
-               <tr class="fila pad0" *ngFor="let certificacion of certificacionesFiltradas; let i = index">
-                  <td class="text-center ">{{certificacion.numero}}</td>
-                  <td class="text-center">{{certificacion.fecha}}</td>
-                  <td class="">
-                     {{certificacion.numdoc}}
+               <tr class="fila pad0" *ngFor="let certi of certiFiltradas;">
+                  <td class="text-center ">{{certi.numero}}</td>
+                  <td class="text-center col-sm-1">{{certi.fecha | date: 'dd-MM-y'}}</td>
+
+                  <td>{{ certi.documento.nomdoc +' '+ certi.numdoc}}</td>
+
+                  <td class="text-truncate ancho200" data-toggle="tooltip"
+                     [title]="certi.beneficiario.nomben && certi.beneficiario.nomben.length > 25 ? certi.beneficiario.nomben : ''">
+                     {{ certi.beneficiario.nomben }}
                   </td>
-                  <td class="truncate-text" [attr.title]="certificacion.beneficiario?.nomben">{{certificacion.beneficiario?.nomben}}</td>
-                  <td class="text-right">{{certificacion.valor}} $</td>
-                  <td class="truncate-text" [attr.title]="certificacion.beneficiariore?.nomben">{{certificacion.beneficiariore?.nomben}}</td>
-                  <td class="truncate-text">{{certificacion.descripcion}}</td>
 
+                  <td class="text-right">{{certi.valor | number: '1.2-2'}}</td>
 
+                  <td class="text-truncate ancho200" data-toggle="tooltip"
+                     [title]="certi.beneficiariores.nomben && certi.beneficiariores.nomben.length > 25 ? certi.beneficiariores.nomben : ''">
+                     {{ certi.beneficiariores.nomben }}
+                  </td>
+
+                  <td class="text-truncate ancho200" data-toggle="tooltip"
+                     [title]="certi.descripcion && certi.descripcion.length > 24 ? certi.descripcion : ''">
+                     {{ certi.descripcion }}
+                  </td>
                   <td class="text-center">
                      <div class="btn-group py-0">
                         <button type="button" class="btn btn-xs btn-warning btn-badged dropdown-toggle py-0"
                            data-toggle="dropdown" aria-expanded="false">
                         </button>
                         <div class="dropdown-menu dropdown-menu-right popLista">
-                           <button [disabled]="certificacion.codigo == '00'" class="dropdown-item"
-                              [routerLink]="['/modi-certificacion', certificacion.idcertificacion]" type="button">
+                           <button [disabled]="certi.codigo == '00'" class="dropdown-item"
+                              [routerLink]="['/modi-certificacion', certi.idcertificacion]" type="button">
                               <i class="bi bi-pencil"></i>&nbsp; Modificar</button>
-                           <button [disabled]="certificacion.codigo == '00'" class="dropdown-item"
-                              [routerLink]="['/info-certificacion', certificacion.codigo]" type="button">
+                           <button [disabled]="certi.codigo == '00'" class="dropdown-item"
+                              [routerLink]="['/info-certificacion', certi.codigo]" type="button">
                               <i class="bi bi-pencil"></i>&nbsp; Info.</button>
-                           <button [disabled]="certificacion.codigo == '00'" class="dropdown-item" type="button"
+                           <button [disabled]="certi.codigo == '00'" class="dropdown-item" type="button"
                               data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
                               <i class="bi bi-file-minus"></i>&nbsp; Eliminar</button>
                         </div>
@@ -111,6 +141,14 @@
 
                </tr>
             </tbody>
+                        <tfoot class="font-weight-bold detalle roboto small pad0">
+               <td></td>
+               <td>TOTAL: {{certiFiltradas.length}}</td>
+               <td></td>
+               <td></td>
+               <td class="text-right">{{sumTotal | number: '1.2-2'}} </td>
+               <td colspan="3"></td>
+            </tfoot>
          </table>
       </div>
    </div>

@@ -1,7 +1,7 @@
-import { Beneficiario } from './beneficiario.model';
+import { Beneficiarios } from './beneficiarios.model';
 
-describe('Beneficiario', () => {
+describe('Beneficiarios', () => {
   it('should create an instance', () => {
-    expect(new Beneficiario()).toBeTruthy();
+    expect(new Beneficiarios()).toBeTruthy();
   });
 });

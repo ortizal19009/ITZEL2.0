@@ -9,16 +9,16 @@ import {
   Validators,
 } from '@angular/forms';
 import Swal from 'sweetalert2';
-import { Beneficiario } from '../../../modelos/contabilidad/beneficiario.model';
+import { Beneficiarios } from '../../../modelos/contabilidad/beneficiarios.model';
 import { Documentos } from '../../../modelos/administracion/documentos.model';
-import { Certificacion } from '../../../modelos/contabilidad/certificacion.model';
+import { Certificaciones } from '../../../modelos/contabilidad/certificaciones.model';
 import { CommonModule } from '@angular/common';
 import { VisualFormatDirective } from '../../../directives/visual-format.directive';
 import { AutorizaService } from '../../../servicios/administracion/autoriza.service';
 import { ColoresService } from '../../../servicios/administracion/colores.service';
 import { CertificacionesService } from '../../../servicios/contabilidad/certificaciones.service';
-import { DocumentoService } from '../../../servicios/administracion/documento.service';
-import { BeneficiarioService } from '../../../servicios/contabilidad/beneficiario.service';
+import { DocumentosService } from '../../../servicios/administracion/documentos.service';
+import { BeneficiariosService } from '../../../servicios/contabilidad/beneficiarios.service';
 import { Router } from '@angular/router';
 import { debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs';
 
@@ -31,11 +31,11 @@ import { debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs';
 export class AddReintegroComponent {
   title: string = 'Nevo Reintegro';
   f_certificacion!: FormGroup;
-  certificacion: Certificacion = new Certificacion();
+  certificacion: Certificaciones = new Certificaciones();
   date: Date = new Date();
   _documentos: Documentos[] = [];
-  _beneficiarios: Beneficiario[] = [];
-  _responsable: Beneficiario[] = [];
+  _beneficiarios: Beneficiarios[] = [];
+  _responsable: Beneficiarios[] = [];
   today = new Date().toISOString().substring(0, 10); // ejemplo: "2025-09-19"
 
   constructor(
@@ -44,8 +44,8 @@ export class AddReintegroComponent {
     private coloresService: ColoresService,
     private fb: FormBuilder,
     private s_certificaciones: CertificacionesService,
-    private s_documentos: DocumentoService,
-    private s_beneficiario: BeneficiarioService
+    private s_documentos: DocumentosService,
+    private s_beneficiario: BeneficiariosService
   ) {}
   ngOnInit(): void {
     if (!this.authService.sessionlog) {
@@ -124,7 +124,7 @@ export class AddReintegroComponent {
     this.router.navigate(['/reintegros']);
   }
   save() {
-    let certificacion: Certificacion = new Certificacion();
+    let certificacion: Certificaciones = new Certificaciones();
     let f = this.f_certificacion.value;
     certificacion.numero = f.numero;
     certificacion.valor = f.valor;
@@ -135,7 +135,7 @@ export class AddReintegroComponent {
     certificacion.tipo = 2;
     certificacion.feccrea = f.feccrea;
     certificacion.beneficiario = f.beneficiario;
-    certificacion.beneficiariore = f.beneficiariore;
+    certificacion.beneficiariores= f.beneficiariore;
     certificacion.documento = f.documento;
     this.s_certificaciones.saveCertificacion(certificacion).subscribe({
       next: (c: any) => {
@@ -149,7 +149,7 @@ export class AddReintegroComponent {
   }
   getLastCertificacionByTipo() {
     this.s_certificaciones.findLastByTipo(2).subscribe({
-      next: (certificacion: Certificacion) => {
+      next: (certificacion: Certificaciones) => {
         let numero: number = 1;
         if (certificacion != null) {
           numero = certificacion.numero + 1;
@@ -162,7 +162,7 @@ export class AddReintegroComponent {
     });
   }
   getAllDocumentos() {
-    this.s_documentos.getAllDocumentos().subscribe({
+    this.s_documentos.getListaDocumentos().subscribe({
       next: (documentos: Documentos[]) => {
         this._documentos = documentos;
         this.f_certificacion.patchValue({
@@ -181,7 +181,7 @@ export class AddReintegroComponent {
     const value = event.target.value;
     // si escribió más de 2 letras, buscar en el backend
     this.s_beneficiario.findByNomben(value).subscribe({
-      next: (beneficiarios: Beneficiario[]) => {
+      next: (beneficiarios: Beneficiarios[]) => {
         this._beneficiarios = beneficiarios;
       },
       error: (e: any) => console.error(e),
@@ -201,7 +201,7 @@ export class AddReintegroComponent {
     const value = event.target.value;
     // si escribió más de 2 letras, buscar en el backend
     this.s_beneficiario.findByNomben(value).subscribe({
-      next: (beneficiariore: Beneficiario[]) => {
+      next: (beneficiariore: Beneficiarios[]) => {
         this._responsable = beneficiariore;
       },
       error: (e: any) => console.error(e),
@@ -218,7 +218,7 @@ export class AddReintegroComponent {
   }
   getBeneById(id: number) {
     this.s_beneficiario.getById(id).subscribe({
-      next: (bene: Beneficiario) => {
+      next: (bene: Beneficiarios) => {
         this.f_certificacion.patchValue({
           beneficiario: bene,
           nombene: bene.nomben,

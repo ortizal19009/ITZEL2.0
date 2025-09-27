@@ -6,6 +6,7 @@ import { UsuariosService } from './usuarios.service';
 import { ReturnStatement } from '@angular/compiler';
 import { Usuarios } from '../../modelos/administracion/usuarios.model';
 import Swal from 'sweetalert2';
+import { Definir } from '../../modelos/administracion/definir.model';
 const backend = environment.BACK;
 
 @Injectable({
@@ -45,10 +46,12 @@ export class AutorizaService {
       else {
          const modulos = sessionStorage.getItem('efg');
          // const modulos1 = JSON.parse(atob(sessionStorage.getItem('abc')!));
+         console.log('modulosGuardados: ', modulos)
          if (modulos) {
             this.enabled = JSON.parse(modulos!);
             // console.log('m: ', m)
             // this.enabled = [m.swmodulo1, m.swmodulo2, m.swmodulo3, m.swmodulo4, m.swmodulo5];
+            console.log('this.enabled: ', this.enabled)
          }
          else this.enabled = [this.swmodulo1, this.swmodulo2, this.swmodulo3, this.swmodulo4, this.swmodulo5, this.swmodulo6];
       }
@@ -108,16 +111,16 @@ export class AutorizaService {
    //Obtiene y valida el nombre de la Empresa
    getEmpresa() {
       this.defService.getByIddefinir(1).subscribe({
-         next: (resp:any) => {
+         next: (definir: Definir) => {
             // OJO: Falta validar la Empresa con la licencia
             this.setDatosEmpresa({ 
-               empresa: resp.empresa,
-               ruc: resp.ruc ?? '',
-               fechap: resp.fechap as Date,
-               f_i: resp.f_i ?? '',
-               f_g: resp.f_g ?? '',
-               longparing:  resp.longparing ?? 0,
-               longpargas:  resp.longpargas ?? 0,
+               empresa: definir.empresa,
+               ruc: definir.ruc ?? '',
+               fechap: definir.fechap as Date,
+               f_i: definir.f_i ?? '',
+               f_g: definir.f_g ?? '',
+               longparing: definir.longparing ?? 0,
+               longpargas: definir.longpargas ?? 0,
             });
          },
          error: err => {

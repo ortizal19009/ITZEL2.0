@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Certificacion } from '../../modelos/contabilidad/certificacion.model';
+import { Certificaciones } from '../../modelos/contabilidad/certificaciones.model';
 const apiUrl = environment.API_URL;
 const baseUrl = `${apiUrl}/certificaciones`;
 @Injectable({
@@ -11,14 +11,14 @@ const baseUrl = `${apiUrl}/certificaciones`;
 export class CertificacionesService {
   constructor(private http: HttpClient) {}
   //Consultar todas las certificaciones por tipo, para consultar las certificaciones o los reintegros
-  getCertificacionesByTipo(tipo: number): Observable<Certificacion> {
-    return this.http.get<Certificacion>(`${baseUrl}/tipo?tipo=${tipo}`);
+  getCertificacionesByTipo(tipo: number): Observable<Certificaciones> {
+    return this.http.get<Certificaciones>(`${baseUrl}/tipo?tipo=${tipo}`);
   }
-  saveCertificacion(certificacion: Certificacion) {
+  saveCertificacion(certificacion: Certificaciones) {
     return this.http.post(`${baseUrl}`, certificacion);
   }
-  findLastByTipo(tipo: number): Observable<Certificacion> {
-    return this.http.get<Certificacion>(`${baseUrl}/lastbytipo?tipo=${tipo}`);
+  findLastByTipo(tipo: number): Observable<Certificaciones> {
+    return this.http.get<Certificaciones>(`${baseUrl}/lastbytipo?tipo=${tipo}`);
   }
   getByNumDate(
     t: number,
@@ -26,12 +26,12 @@ export class CertificacionesService {
     fh: Date,
     min: number,
     max: number
-  ): Observable<Certificacion[]> {
-    return this.http.get<Certificacion[]>(
+  ): Observable<Certificaciones[]> {
+    return this.http.get<Certificaciones[]>(
       `${baseUrl}/findall?tipo=${t}&fechaInicio=${fd}&fechaFin=${fh}&min=${min}&max=${max}`
     );
   }
-  getByIdCertificacion(idcertificacion: number): Observable<Certificacion> {
-    return this.http.get<Certificacion>(`${baseUrl}?idcertificacion=${idcertificacion}`);
+  getByIdCertificacion(idcertificacion: number): Observable<Certificaciones> {
+    return this.http.get<Certificaciones>(`${baseUrl}?idcertificacion=${idcertificacion}`);
   }
 }

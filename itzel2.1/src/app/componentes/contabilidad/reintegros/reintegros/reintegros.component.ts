@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Certificacion } from '../../../modelos/contabilidad/certificacion.model';
+import { Certificaciones } from '../../../modelos/contabilidad/certificaciones.model';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AutorizaService } from '../../../servicios/administracion/autoriza.service';
 import { ColoresService } from '../../../servicios/administracion/colores.service';
@@ -99,7 +99,7 @@ export class ReintegrosComponent {
   }
   getLastCertificacion() {
     this.s_certificaciones.findLastByTipo(2).subscribe({
-      next: (certificacion: Certificacion) => {
+      next: (certificacion: Certificaciones) => {
         if (certificacion !== null) {
           let minimo = certificacion.numero - 20;
           if (minimo <= 0) {

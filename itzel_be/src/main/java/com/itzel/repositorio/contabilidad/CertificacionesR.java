@@ -12,4 +12,5 @@ public interface CertificacionesR extends JpaRepository<Certificaciones , Long> 
     Certificaciones findFirstByTipoOrderByNumeroDesc(short tipo);
     List<Certificaciones> findByTipoAndFechaBetweenOrderByNumeroDesc(int tipo, LocalDate start, LocalDate end);
     List<Certificaciones> findByTipoAndNumeroBetweenOrderByNumeroDesc(int tipo, int min, int max);
+    List<Certificaciones> findByTipoAndFechaBetweenAndNumeroBetweenOrderByNumeroAsc(int tipo, LocalDate start, LocalDate end, int min, int max);
 }

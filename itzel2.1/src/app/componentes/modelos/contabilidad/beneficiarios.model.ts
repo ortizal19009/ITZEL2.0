@@ -1,10 +1,10 @@
 import { Gruposbene } from "./gruposbene.model";
 import { Ifinan } from "./ifinan.model";
 
-export class Beneficiario {
-  idbene?: number;
+export class Beneficiarios {
+  idbeneficiario!: number;
   codben?: string;
-  nomben?: string;
+  nomben!: string;
   tipdben?: string;
   rucben?: string;
   ciben?: string;

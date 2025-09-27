@@ -8,9 +8,9 @@ const baseUrl = `${apiUrl}/documentos`;
 @Injectable({
   providedIn: 'root',
 })
-export class DocumentoService {
+export class DocumentosService {
   constructor(private http: HttpClient) {}
-  getAllDocumentos():Observable <Documentos[]> {
+  getListaDocumentos():Observable <Documentos[]> {
     return this.http.get<Documentos[]>(`${baseUrl}`);
   }
 }

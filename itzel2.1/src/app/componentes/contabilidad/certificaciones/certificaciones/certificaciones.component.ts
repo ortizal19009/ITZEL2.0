@@ -6,7 +6,7 @@ import { AutorizaService } from '../../../servicios/administracion/autoriza.serv
 import { ColoresService } from '../../../servicios/administracion/colores.service';
 import { EliminadosService } from '../../../servicios/administracion/eliminados.service';
 import { CertificacionesService } from '../../../servicios/contabilidad/certificaciones.service';
-import { Certificacion } from '../../../modelos/contabilidad/certificacion.model';
+import { Certificaciones } from '../../../modelos/contabilidad/certificaciones.model';
 
 @Component({
   selector: 'app-certificaciones.component',
@@ -15,146 +15,178 @@ import { Certificacion } from '../../../modelos/contabilidad/certificacion.model
   styleUrl: './certificaciones.component.css',
 })
 export class CertificacionesComponent implements OnInit {
-  title: string = 'Certificaciones ';
-  formBuscar!: FormGroup;
-  swbuscando?: boolean;
-  txtbuscar: string = 'Buscar';
-  certificacionesFiltradas: any[] = [];
-  _certificaciones: any[] = [];
-  ordenColumna: keyof CertificacionVisual = 'fecha';
-  ordenAscendente: boolean = true;
-  today = new Date().toISOString().substring(0, 10); // ejemplo: "2025-09-19"
 
-  constructor(
-    private router: Router,
-    private fb: FormBuilder,
-    public authService: AutorizaService,
-    private coloresService: ColoresService,
-    private elimService: EliminadosService,
-    private s_certificaciones: CertificacionesService
-  ) {}
+   formBuscar!: FormGroup;
+   swbuscando?: boolean;
+   txtbuscar: string = 'Buscar';
+   certiFiltradas: any[] = [];
+   _certificaciones: any[] = [];
+   ordenColumna: keyof CertificacionVisual = 'numero';
+   ordenAscendente: boolean = true;
+   today = new Date().toISOString().substring(0, 10); // ejemplo: "2025-09-19"
+   sumTotal = 0;
 
-  ngOnInit(): void {
-    if (!this.authService.sessionlog) {
-      this.router.navigate(['/inicio']);
-    }
-    const date = new Date();
-    date.setDate(date.getDate() - 20); // restar 20 días
+   constructor(private router: Router, private fb: FormBuilder, public authService: AutorizaService,
+      private coloresService: ColoresService, private elimService: EliminadosService, private certiService: CertificacionesService) { }
 
-    if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {
-      sessionStorage.setItem('ventana', '/certificaciones');
-      let coloresJSON = sessionStorage.getItem('/certificaciones');
-      if (coloresJSON) this.colocaColor(JSON.parse(coloresJSON));
-      else this.buscaColor();
-    } else {
-      console.warn('sessionStorage no disponible (SSR o entorno server)');
-      // Opcional: inicializa valores por defecto si quieres
-    }
-    this.formBuscar = this.fb.group({
-      min: '',
-      max: '',
-      fechaInicio: date.toISOString().substring(0, 10),
-      fechaFin: [this.today],
-      filtroControl: '',
-    });
-    this.getLastCertificacion();
-  }
-  async buscaColor() {
-    try {
-      const datos = await this.coloresService.setcolor(
-        this.authService.idusuario!,
-        'certificaciones'
-      );
-      const coloresJSON = JSON.stringify(datos);
-      sessionStorage.setItem('/certificaciones', coloresJSON);
-      this.colocaColor(datos);
-    } catch (error) {
-      console.error('Al buscar la ventana: ', error);
-    }
-  }
+   ngOnInit(): void {
+      if (!this.authService.sessionlog) { this.router.navigate(['/inicio']); }
+      const date = new Date();
+      date.setDate(date.getDate() - 30);
 
-  colocaColor(colores: any) {
-    document.documentElement.style.setProperty('--bgcolor1', colores[0]);
-    const cabecera = document.querySelector('.cabecera');
-    if (cabecera) cabecera.classList.add('nuevoBG1');
-    document.documentElement.style.setProperty('--bgcolor2', colores[1]);
-    const detalle = document.querySelector('.detalle');
-    if (detalle) detalle.classList.add('nuevoBG2');
-  }
-  buscar() {
-    let f = this.formBuscar.value;
-    this.s_certificaciones.getByNumDate(1, f.fechaInicio, f.fechaFin, f.min, f.max).subscribe({
-      next: (datos: any) => {
-        if (datos.length === 0) {
-          this.authService.mostrarError('No se encontraron registros', 'Atención');
-        }
-        //this._certificaciones = datos;
-        this.certificacionesFiltradas = [...datos];
-      },
-      error: (e: any) => console.error(e.error),
-    });
-  }
-  cerrar() {
-    this.router.navigate(['/inicio']);
-  }
-  getLastCertificacion() {
-    this.s_certificaciones.findLastByTipo(1).subscribe({
-      next: (certificacion: Certificacion) => {
-        let minimo = certificacion.numero - 20;
-        if (minimo <= 0) {
-          minimo = 1;
-        }
-        this.formBuscar.patchValue({
-          min: minimo,
-          max: certificacion.numero,
-        });
-      },
-    });
-  }
-  ordenarPor(campo: keyof CertificacionVisual): void {
-    if (this.ordenColumna === campo) {
-      this.ordenAscendente = !this.ordenAscendente;
-    } else {
-      this.ordenColumna = campo;
-      this.ordenAscendente = true;
-    }
-
-    this.certificacionesFiltradas.sort((a: any, b: any) => {
-      const valorA = a[campo];
-      const valorB = b[campo];
-
-      if (valorA == null && valorB == null) return 0;
-      if (valorA == null) return 1;
-      if (valorB == null) return -1;
-
-      const esNumero = typeof valorA === 'number' && typeof valorB === 'number';
-
-      if (esNumero) {
-        return this.ordenAscendente ? valorA - valorB : valorB - valorA;
+      if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {
+         sessionStorage.setItem('ventana', '/certificaciones');
+         let coloresJSON = sessionStorage.getItem('/certificaciones');
+         if (coloresJSON) this.colocaColor(JSON.parse(coloresJSON));
+         else this.buscaColor();
       } else {
-        return this.ordenAscendente
-          ? String(valorA).localeCompare(String(valorB))
-          : String(valorB).localeCompare(String(valorA));
+         console.warn('sessionStorage no disponible (SSR o entorno server)');
       }
-    });
-  }
-  filtrar(valor: any) {
-    if (valor) {
-      this.certificacionesFiltradas = [...this._certificaciones]; // si está vacío, muestro todos
-      return;
-    }
+      this.formBuscar = this.fb.group({
+         min: '',
+         max: '',
+         fechaInicio: date.toISOString().substring(0, 10),
+         fechaFin: [this.today],
+         filtroControl: '',
+      });
 
-    const filter = valor.toLowerCase();
-    this.certificacionesFiltradas = this._certificaciones.filter(
-      (certificaciones) =>
-        certificaciones.fecha?.toLowerCase().includes(filter) || // ejemplo campo nombre
-        certificaciones.beneficiario?.toLowerCase().includes(filter) ||
-        certificaciones.responsable?.toLowerCase().includes(filter)
-    );
-  }
+      this.getLastCertificacion();
+
+      this.formBuscar.get('filtroControl')?.valueChanges.subscribe((valor: any) => { this.filtrar(valor) });
+   }
+
+   async buscaColor() {
+      try {
+         const datos = await this.coloresService.setcolor(this.authService.idusuario!, 'certificaciones');
+         const coloresJSON = JSON.stringify(datos);
+         sessionStorage.setItem('/certificaciones', coloresJSON);
+         this.colocaColor(datos);
+      } catch (error) {
+         console.error('Al buscar la ventana: ', error);
+      }
+   }
+
+   colocaColor(colores: any) {
+      document.documentElement.style.setProperty('--bgcolor1', colores[0]);
+      const cabecera = document.querySelector('.cabecera');
+      if (cabecera) cabecera.classList.add('nuevoBG1');
+      document.documentElement.style.setProperty('--bgcolor2', colores[1]);
+      const detalle = document.querySelector('.detalle');
+      if (detalle) detalle.classList.add('nuevoBG2');
+   }
+
+   getLastCertificacion() {
+      this.certiService.findLastByTipo(1).subscribe({
+         next: (certificacion: Certificaciones) => {
+            let minimo = certificacion.numero - 20;
+            if (minimo <= 0) {
+               minimo = 1;
+            }
+            this.formBuscar.patchValue({
+               min: minimo,
+               max: certificacion.numero,
+            });
+            this.buscar();
+         },
+      });
+   }
+
+   buscar() {
+      let f = this.formBuscar.value;
+      this.certiService.getByNumDate(1, f.fechaInicio, f.fechaFin, f.min, f.max).subscribe({
+         next: (datos: Certificaciones[]) => {
+         console.log(datos);
+            if (datos.length === 0) {
+               this.authService.mostrarError('No se encontraron registros', 'Atención');
+            }
+            this._certificaciones = datos;
+            this.certiFiltradas = [...datos];
+            this.calcTotales();
+         },
+         error: (e: any) => console.error(e.error),
+      });
+   }
+
+   calcTotales(): void {
+      this.sumTotal = 0;
+      for (const certi of this.certiFiltradas) { this.sumTotal += certi.valor || 0; }
+   }
+
+   ordenarPor(campo: keyof CertificacionVisual): void {
+      if (this.ordenColumna === campo) {
+         this.ordenAscendente = !this.ordenAscendente;
+      } else {
+         this.ordenColumna = campo;
+         this.ordenAscendente = true;
+      }
+
+      this.certiFiltradas.sort((a: any, b: any) => {
+         let valorA: any;
+         let valorB: any;
+         switch (campo) {
+            case 'documentonum':
+               valorA = `${a.documento.nomdoc}.${a.numdoc}`;
+               valorB = `${b.documento.nomdoc}.${b.numdoc}`;
+               break;
+            case 'beneficiario':
+               valorA = a.beneficiario?.nomben;
+               valorB = b.beneficiario?.nomben;
+               break;
+            case 'responsable':
+               valorA = a.beneficiariores?.nomben;
+               valorB = b.beneficiariores?.nomben;
+               break;
+            default:
+               valorA = a[campo];
+               valorB = b[campo];
+               break;
+         }
+         if (valorA == null && valorB == null) return 0;
+         if (valorA == null) return 1;
+         if (valorB == null) return -1;
+
+         const esNumero = typeof valorA === 'number' && typeof valorB === 'number';
+
+         if (esNumero) {
+            return this.ordenAscendente ? valorA - valorB : valorB - valorA;
+         } else {
+            return this.ordenAscendente
+               ? String(valorA).localeCompare(String(valorB))
+               : String(valorB).localeCompare(String(valorA));
+         }
+      });
+   }
+
+   filtrar(valor: any) {
+      const filtro = valor.toLowerCase();
+      if (!filtro) {
+         if (this.certiFiltradas.length > 0) this.certiFiltradas = [...this._certificaciones];
+         this.calcTotales();
+         return;
+      }
+      this.certiFiltradas = this._certificaciones.filter(a => {
+         const documentonum = `${a.documento.nomdoc} ${a.numdoc}`;
+         const beneficiario = a.beneficiario.nomben;
+         const responsable = a.beneficiariores.nomben;
+         return [a.numero, documentonum, beneficiario, responsable, a.fecha, a.valor, a.descripcion].some(campo =>
+            String(campo).toLowerCase().includes(filtro)
+         );
+      });
+      this.calcTotales();
+   }
+
+   nuevo() { this.router.navigate(['/add-certificacion']); }
+
+   cerrar() { this.router.navigate(['/inicio']); }
+
 }
+
 interface CertificacionVisual {
-  fecha: Date;
-  beneficiario: string;
-  responsable: string;
+   numero: number;
+   fecha: Date;
+   documentonum: string;
+   beneficiario: string;
+   valor: number;
+   responsable: string;
+   descripcion: string;
 }

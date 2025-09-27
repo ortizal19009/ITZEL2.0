@@ -43,6 +43,10 @@ public class CertificacionService {
                 .toList();
     }
 
+    public List<Certificaciones> findByTipoAndNumeroBetweenAndFechaBetweenOrderByNumeroAsc(int tipo, LocalDate start, LocalDate end, int min, int max){
+        return  certificacionesR.findByTipoAndFechaBetweenAndNumeroBetweenOrderByNumeroAsc(tipo, start, end, min, max);
+    }
+
     public Optional<Certificaciones> findById(Long idcertificacion){
         return certificacionesR.findById(idcertificacion);
     }
