@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.cert.CertificateFactory;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -61,6 +62,13 @@ public class CertificacionesApi {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+    @GetMapping("/available")
+    public ResponseEntity<Boolean> isAvailable(
+            @RequestParam int tipo,
+            @RequestParam int numero) {
 
+        boolean available = certificacionService.findByTipoAndNumero(tipo, numero) == null;
+        return ResponseEntity.ok(available);
+    }
 
 }

@@ -50,4 +50,7 @@ public class CertificacionService {
     public Optional<Certificaciones> findById(Long idcertificacion){
         return certificacionesR.findById(idcertificacion);
     }
+    public Certificaciones findByTipoAndNumero(int tipo, int numero){
+        return certificacionesR.findByTipoAndNumero(tipo, numero);
+    }
 }

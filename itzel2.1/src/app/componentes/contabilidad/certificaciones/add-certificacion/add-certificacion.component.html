@@ -20,7 +20,7 @@
                         <div class="input-group-prepend">
                            <label class="input-group-text" for="numero">Número<sup class="green">*</sup></label>
                         </div>
-                        <input type="number" class="form-control text-center" formControlName="numero" min="1"
+                        <input type="number" class="form-control text-center" (change)="valNumero($event)" formControlName="numero" min="1"
                            [ngClass]="{'is-invalid': f['numero'].invalid && f['numero'].touched, 'is-valid': f['numero'].valid, '': f['numero'].untouched}">
                      </div>
                      <div *ngIf="authService.msgval && f['numero'].errors && f['numero'].touched">

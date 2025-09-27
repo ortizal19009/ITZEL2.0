@@ -34,4 +34,8 @@ export class CertificacionesService {
   getByIdCertificacion(idcertificacion: number): Observable<Certificaciones> {
     return this.http.get<Certificaciones>(`${baseUrl}?idcertificacion=${idcertificacion}`);
   }
+  isAvailable(tipo: number, numero: number): Observable<boolean> {
+    console.log(tipo, numero);
+    return this.http.get<boolean>(`${baseUrl}/available?tipo=${tipo}&numero=${numero}`);
+  }
 }
