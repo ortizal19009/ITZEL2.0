@@ -250,7 +250,7 @@ export class AddCertificacionComponent implements OnInit {
     this.s_certificaciones.isAvailable(1, value).subscribe({
       next: (res: boolean) => {
         console.log(res);
-        if (res) {
+        if (!res) {
           control.setErrors({ existe: true });
         } else {
           control.setErrors(null);

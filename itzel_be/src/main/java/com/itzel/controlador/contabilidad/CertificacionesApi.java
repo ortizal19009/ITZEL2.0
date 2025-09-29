@@ -4,6 +4,7 @@ import com.itzel.modelo.contabilidad.Certificaciones;
 import com.itzel.servicio.contabilidad.CertificacionService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -67,8 +68,15 @@ public class CertificacionesApi {
             @RequestParam int tipo,
             @RequestParam int numero) {
 
-        boolean available = certificacionService.findByTipoAndNumero(tipo, numero) == null;
-        return ResponseEntity.ok(available);
+        try {
+            Certificaciones certificacion = certificacionService.findByTipoAndNumero(tipo, numero);
+            boolean available = (certificacion == null);
+            return ResponseEntity.ok(available);
+
+        } catch (Exception e) {
+            // Log del error en lugar de solo imprimir en consola
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
+        }
     }
 
 }
