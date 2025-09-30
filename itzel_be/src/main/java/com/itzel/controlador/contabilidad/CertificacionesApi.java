@@ -63,6 +63,7 @@ public class CertificacionesApi {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+    //Valida si el el numero ya existe haciendo una consulta por tipo y numero. Retorna booleano
     @GetMapping("/available")
     public ResponseEntity<Boolean> isAvailable(
             @RequestParam int tipo,

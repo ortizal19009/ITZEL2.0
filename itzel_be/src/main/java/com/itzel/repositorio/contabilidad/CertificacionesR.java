@@ -17,6 +17,6 @@ public interface CertificacionesR extends JpaRepository<Certificaciones , Long> 
     List<Certificaciones> findByTipoAndNumeroBetweenOrderByNumeroDesc(int tipo, int min, int max);
     //Buscar la certificacion por el tipo, entre la fecha y entre el numero
     List<Certificaciones> findByTipoAndFechaBetweenAndNumeroBetweenOrderByNumeroAsc(int tipo, LocalDate start, LocalDate end, int min, int max);
-    //Buscar la certificacion por numero y tipo, para validar si ya existe o no
+    //Valida si el el numero ya existe haciendo una consulta por tipo y numero. retorna el objeto encontrado
     Certificaciones findByTipoAndNumero(int tipo, int numero);
 }

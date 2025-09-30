@@ -37,6 +37,7 @@ export class ModiCertificacionComponent {
   _responsables: Beneficiarios[] = [];
   idresponsable: number | null = null;
   idcertificacion!: number;
+  _certificacion: Certificaciones = new Certificaciones();
   constructor(
     public authService: AutorizaService,
     private router: Router,
@@ -68,7 +69,7 @@ export class ModiCertificacionComponent {
     this.formCertificacion = this.fb.group(
       {
         idcertificacion: this.idcertificacion,
-        numero: ['', [Validators.required, Validators.minLength(1)]],
+        numero: [0, [Validators.required, Validators.minLength(1)], [this.valNumero.bind(this)]],
         valor: [0.0, [Validators.required, Validators.minLength(1)]],
         fecha: [fecha, Validators.required, this.valAño.bind(this)],
         documento: null,
@@ -120,6 +121,7 @@ export class ModiCertificacionComponent {
     this.s_certificaciones.getByIdCertificacion(idcertificacion).subscribe({
       next: (certificacion: Certificaciones) => {
         console.log(certificacion);
+        this._certificacion = certificacion;
         this.formCertificacion.patchValue({
           idcertificacion: certificacion.idcertificacion,
           numero: certificacion.numero,
@@ -252,5 +254,27 @@ export class ModiCertificacionComponent {
   valResponsable(control: AbstractControl) {
     if (this.idresponsable == null) return of({ invalido: true });
     else return of(null);
+  }
+  //Valida si el numero ya existe o si es el mismo que tenia para que se pueda modificar ese numero. 
+  async valNumero(control: AbstractControl): Promise<any> {
+    const value = control.value;
+    if (!value || value.toString().trim() === '') {
+      return Promise.resolve(null); // no hay error si está vacío
+    }
+    console.log(this._certificacion.numero);
+    if (this._certificacion.numero === value) {
+      return Promise.resolve(null);
+    }
+    return this.s_certificaciones
+      .isAvailable(1, value)
+      .then((res: boolean) => {
+        const error = res ? null : { existe: true };
+
+        // Posponer para evitar NG0100
+        setTimeout(() => control.setErrors(error), 0);
+
+        return error;
+      })
+      .catch(() => null);
   }
 }
