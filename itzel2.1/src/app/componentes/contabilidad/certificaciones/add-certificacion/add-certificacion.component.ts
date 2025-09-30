@@ -19,7 +19,6 @@ import { DocumentosService } from '../../../servicios/administracion/documentos.
 import { Documentos } from '../../../modelos/administracion/documentos.model';
 import { BeneficiariosService } from '../../../servicios/contabilidad/beneficiarios.service';
 import { Beneficiarios } from '../../../modelos/contabilidad/beneficiarios.model';
-import { VisualFormatDirective } from '../../../directives/visual-format.directive';
 import Swal from 'sweetalert2';
 import {
   catchError,
@@ -54,7 +53,6 @@ export class AddCertificacionComponent implements OnInit {
     private s_certificaciones: CertificacionesService,
     private docuService: DocumentosService,
     private beneService: BeneficiariosService,
-    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {

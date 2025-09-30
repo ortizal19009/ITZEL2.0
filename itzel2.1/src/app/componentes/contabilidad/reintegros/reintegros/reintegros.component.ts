@@ -15,15 +15,15 @@ import { CommonModule } from '@angular/common';
   styleUrl: './reintegros.component.css',
 })
 export class ReintegrosComponent {
-  title: string = 'Reintegros';
   formBuscar!: FormGroup;
   swbuscando?: boolean;
   txtbuscar: string = 'Buscar';
-  certificacionesFiltradas: any[] = [];
+  certiFiltradas: any[] = [];
   _certificaciones: any[] = [];
-  ordenColumna: keyof CertificacionVisual = 'fecha';
+  ordenColumna: keyof CertificacionVisual = 'numero';
   ordenAscendente: boolean = true;
   today = new Date().toISOString().substring(0, 10); // ejemplo: "2025-09-19"
+  sumTotal = 0;
 
   constructor(
     private router: Router,
@@ -31,7 +31,7 @@ export class ReintegrosComponent {
     public authService: AutorizaService,
     private coloresService: ColoresService,
     private elimService: EliminadosService,
-    private s_certificaciones: CertificacionesService
+    private certiService: CertificacionesService
   ) {}
 
   ngOnInit(): void {
@@ -39,7 +39,7 @@ export class ReintegrosComponent {
       this.router.navigate(['/inicio']);
     }
     const date = new Date();
-    date.setDate(date.getDate() - 20); // restar 20 días
+    date.setDate(date.getDate() - 30);
 
     if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {
       sessionStorage.setItem('ventana', '/certificaciones');
@@ -48,17 +48,22 @@ export class ReintegrosComponent {
       else this.buscaColor();
     } else {
       console.warn('sessionStorage no disponible (SSR o entorno server)');
-      // Opcional: inicializa valores por defecto si quieres
     }
     this.formBuscar = this.fb.group({
-      min: 0,
-      max: 0,
+      min: '',
+      max: '',
       fechaInicio: date.toISOString().substring(0, 10),
       fechaFin: [this.today],
       filtroControl: '',
     });
+
     this.getLastCertificacion();
+
+    this.formBuscar.get('filtroControl')?.valueChanges.subscribe((valor: any) => {
+      this.filtrar(valor);
+    });
   }
+
   async buscaColor() {
     try {
       const datos = await this.coloresService.setcolor(
@@ -81,38 +86,46 @@ export class ReintegrosComponent {
     const detalle = document.querySelector('.detalle');
     if (detalle) detalle.classList.add('nuevoBG2');
   }
+
+  getLastCertificacion() {
+    this.certiService.findLastByTipo(2).subscribe({
+      next: (certificacion: Certificaciones) => {
+        let minimo = certificacion.numero - 20;
+        if (minimo <= 0) {
+          minimo = 1;
+        }
+        this.formBuscar.patchValue({
+          min: minimo,
+          max: certificacion.numero,
+        });
+        this.buscar();
+      },
+    });
+  }
+
   buscar() {
     let f = this.formBuscar.value;
-    this.s_certificaciones.getByNumDate(2, f.fechaInicio, f.fechaFin, f.min, f.max).subscribe({
-      next: (datos: any) => {
+    this.certiService.getByNumDate(2, f.fechaInicio, f.fechaFin, f.min, f.max).subscribe({
+      next: (datos: Certificaciones[]) => {
+        console.log(datos);
         if (datos.length === 0) {
           this.authService.mostrarError('No se encontraron registros', 'Atención');
         }
-        //this._certificaciones = datos;
-        this.certificacionesFiltradas = [...datos];
+        this._certificaciones = datos;
+        this.certiFiltradas = [...datos];
+        this.calcTotales();
       },
       error: (e: any) => console.error(e.error),
     });
   }
-  cerrar() {
-    this.router.navigate(['/inicio']);
+
+  calcTotales(): void {
+    this.sumTotal = 0;
+    for (const certi of this.certiFiltradas) {
+      this.sumTotal += certi.valor || 0;
+    }
   }
-  getLastCertificacion() {
-    this.s_certificaciones.findLastByTipo(2).subscribe({
-      next: (certificacion: Certificaciones) => {
-        if (certificacion !== null) {
-          let minimo = certificacion.numero - 20;
-          if (minimo <= 0) {
-            minimo = 1;
-          }
-          this.formBuscar.patchValue({
-            min: minimo,
-            max: certificacion.numero,
-          });
-        }
-      },
-    });
-  }
+
   ordenarPor(campo: keyof CertificacionVisual): void {
     if (this.ordenColumna === campo) {
       this.ordenAscendente = !this.ordenAscendente;
@@ -121,10 +134,27 @@ export class ReintegrosComponent {
       this.ordenAscendente = true;
     }
 
-    this.certificacionesFiltradas.sort((a: any, b: any) => {
-      const valorA = a[campo];
-      const valorB = b[campo];
-
+    this.certiFiltradas.sort((a: any, b: any) => {
+      let valorA: any;
+      let valorB: any;
+      switch (campo) {
+        case 'documentonum':
+          valorA = `${a.documento.nomdoc}.${a.numdoc}`;
+          valorB = `${b.documento.nomdoc}.${b.numdoc}`;
+          break;
+        case 'beneficiario':
+          valorA = a.beneficiario?.nomben;
+          valorB = b.beneficiario?.nomben;
+          break;
+        case 'responsable':
+          valorA = a.beneficiariores?.nomben;
+          valorB = b.beneficiariores?.nomben;
+          break;
+        default:
+          valorA = a[campo];
+          valorB = b[campo];
+          break;
+      }
       if (valorA == null && valorB == null) return 0;
       if (valorA == null) return 1;
       if (valorB == null) return -1;
@@ -140,23 +170,46 @@ export class ReintegrosComponent {
       }
     });
   }
+
   filtrar(valor: any) {
-    if (valor) {
-      this.certificacionesFiltradas = [...this._certificaciones]; // si está vacío, muestro todos
+    const filtro = valor.toLowerCase();
+    if (!filtro) {
+      if (this.certiFiltradas.length > 0) this.certiFiltradas = [...this._certificaciones];
+      this.calcTotales();
       return;
     }
+    this.certiFiltradas = this._certificaciones.filter((a) => {
+      const documentonum = `${a.documento.nomdoc} ${a.numdoc}`;
+      const beneficiario = a.beneficiario.nomben;
+      const responsable = a.beneficiariores.nomben;
+      return [
+        a.numero,
+        documentonum,
+        beneficiario,
+        responsable,
+        a.fecha,
+        a.valor,
+        a.descripcion,
+      ].some((campo) => String(campo).toLowerCase().includes(filtro));
+    });
+    this.calcTotales();
+  }
 
-    const filter = valor.toLowerCase();
-    this.certificacionesFiltradas = this._certificaciones.filter(
-      (certificaciones) =>
-        certificaciones.fecha?.toLowerCase().includes(filter) || // ejemplo campo nombre
-        certificaciones.beneficiario?.toLowerCase().includes(filter) ||
-        certificaciones.responsable?.toLowerCase().includes(filter)
-    );
+  nuevo() {
+    this.router.navigate(['/add-reintegro']);
+  }
+
+  cerrar() {
+    this.router.navigate(['/inicio']);
   }
 }
+
 interface CertificacionVisual {
+  numero: number;
   fecha: Date;
+  documentonum: string;
   beneficiario: string;
+  valor: number;
   responsable: string;
+  descripcion: string;
 }
