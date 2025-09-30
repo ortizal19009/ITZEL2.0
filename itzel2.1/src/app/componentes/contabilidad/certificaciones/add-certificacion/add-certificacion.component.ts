@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ColoresService } from '../../../servicios/administracion/colores.service';
 import { AutorizaService } from '../../../servicios/administracion/autoriza.service';
 import { Router } from '@angular/router';
 import {
   AbstractControl,
+  AsyncValidatorFn,
   FormBuilder,
   FormGroup,
   FormsModule,
@@ -20,7 +21,16 @@ import { BeneficiariosService } from '../../../servicios/contabilidad/beneficiar
 import { Beneficiarios } from '../../../modelos/contabilidad/beneficiarios.model';
 import { VisualFormatDirective } from '../../../directives/visual-format.directive';
 import Swal from 'sweetalert2';
-import { debounceTime, distinctUntilChanged, filter, of, switchMap } from 'rxjs';
+import {
+  catchError,
+  debounceTime,
+  delay,
+  distinctUntilChanged,
+  filter,
+  map,
+  of,
+  switchMap,
+} from 'rxjs';
 
 @Component({
   selector: 'app-add-certificacion.component',
@@ -43,7 +53,8 @@ export class AddCertificacionComponent implements OnInit {
     private fb: FormBuilder,
     private s_certificaciones: CertificacionesService,
     private docuService: DocumentosService,
-    private beneService: BeneficiariosService
+    private beneService: BeneficiariosService,
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -63,7 +74,7 @@ export class AddCertificacionComponent implements OnInit {
     this.idbeneficiario = 1;
     this.formCertificacion = this.fb.group(
       {
-        numero: ['', [Validators.required, Validators.minLength(1)]],
+        numero: [0, [Validators.required, Validators.minLength(1)], [this.valNumero.bind(this)]],
         valor: [0.0, [Validators.required, Validators.minLength(1)]],
         fecha: [fecha, Validators.required, this.valAño.bind(this)],
         documento: null,
@@ -118,7 +129,10 @@ export class AddCertificacionComponent implements OnInit {
         if (certificacion != null) {
           numero = certificacion.numero + 1;
         }
-        this.formCertificacion.patchValue({ numero: numero });
+        this.formCertificacion.patchValue(
+          { numero: numero },
+          { emitEvent: true } // <- asegura que dispare validaciones
+        );
       },
       error: (e: any) => console.error(e),
     });
@@ -239,25 +253,23 @@ export class AddCertificacionComponent implements OnInit {
     else return of(null);
   }
   //Valida si el numero ya existe
-  valNumero(e: any): ValidationErrors | null {
-    const value = +e.target.value!;
-    const control: any = this.formCertificacion.get('numero');
-    console.log('entre a la validacion: ', value);
-    if (!value) {
-      return null; // No valida si está vacío
+  async valNumero(control: AbstractControl): Promise<any> {
+    const value = control.value;
+
+    if (!value || value.toString().trim() === '') {
+      return Promise.resolve(null); // no hay error si está vacío
     }
 
-    this.s_certificaciones.isAvailable(1, value).subscribe({
-      next: (res: boolean) => {
-        console.log(res);
-        if (!res) {
-          control.setErrors({ existe: true });
-        } else {
-          control.setErrors(null);
-        }
-      },
-    });
+    return this.s_certificaciones
+      .isAvailable(1, value)
+      .then((res: boolean) => {
+        const error = res ? null : { existe: true };
 
-    return null;
+        // Posponer para evitar NG0100
+        setTimeout(() => control.setErrors(error), 0);
+
+        return error;
+      })
+      .catch(() => null);
   }
 }

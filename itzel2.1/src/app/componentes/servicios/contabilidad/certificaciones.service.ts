@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 import { Certificaciones } from '../../modelos/contabilidad/certificaciones.model';
 const apiUrl = environment.API_URL;
 const baseUrl = `${apiUrl}/certificaciones`;
@@ -34,8 +34,7 @@ export class CertificacionesService {
   getByIdCertificacion(idcertificacion: number): Observable<Certificaciones> {
     return this.http.get<Certificaciones>(`${baseUrl}?idcertificacion=${idcertificacion}`);
   }
-  isAvailable(tipo: number, numero: number): Observable<boolean> {
-    console.log(tipo, numero);
-    return this.http.get<boolean>(`${baseUrl}/available?tipo=${tipo}&numero=${numero}`);
+  async isAvailable(tipo: number, numero: number): Promise<boolean>{
+    return await firstValueFrom (this.http.get<boolean>(`${baseUrl}/available?tipo=${tipo}&numero=${numero}`));
   }
 }

@@ -20,7 +20,7 @@
                         <div class="input-group-prepend">
                            <label class="input-group-text" for="numero">Número<sup class="green">*</sup></label>
                         </div>
-                        <input type="number" class="form-control text-center" (change)="valNumero($event)" formControlName="numero" min="1"
+                        <input type="number" class="form-control text-center" formControlName="numero" min="1"
                            [ngClass]="{'is-invalid': f['numero'].invalid && f['numero'].touched, 'is-valid': f['numero'].valid, '': f['numero'].untouched}">
                      </div>
                      <div *ngIf="authService.msgval && f['numero'].errors && f['numero'].touched">
@@ -32,8 +32,8 @@
                            class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
                            <strong>Ups!</strong> Número incorrecto
                         </div>
-                        <div *ngIf="f['numero'].errors['existe']"
-                           class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                        <div *ngIf="f['numero']?.errors?.['existe']"
+                           class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border">
                            <strong>Ups!</strong> Ese Número ya existe
                         </div>
                      </div>
@@ -115,8 +115,7 @@
                                  class="green">*</sup></label>
                         </div>
                         <input type="text" class="form-control form-control-sm" formControlName="responsable"
-                           list="resposableList"
-                           (input)="onResponsableSelected($event); responsablesxNomben($event)"
+                           list="resposableList" (input)="onResponsableSelected($event); responsablesxNomben($event)"
                            [ngClass]="{'is-invalid': f['responsable'].invalid && f['responsable'].touched,'is-valid': f['responsable'].valid, '': f['responsable'].untouched}">
                         <datalist role="listbox" id="resposableList">
                            <option *ngFor="let bene of _responsables" [value]="bene.nomben">
