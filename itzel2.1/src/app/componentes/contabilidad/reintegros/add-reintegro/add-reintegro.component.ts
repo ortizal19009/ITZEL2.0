@@ -13,7 +13,6 @@ import { Beneficiarios } from '../../../modelos/contabilidad/beneficiarios.model
 import { Documentos } from '../../../modelos/administracion/documentos.model';
 import { Certificaciones } from '../../../modelos/contabilidad/certificaciones.model';
 import { CommonModule } from '@angular/common';
-import { VisualFormatDirective } from '../../../directives/visual-format.directive';
 import { AutorizaService } from '../../../servicios/administracion/autoriza.service';
 import { ColoresService } from '../../../servicios/administracion/colores.service';
 import { CertificacionesService } from '../../../servicios/contabilidad/certificaciones.service';
@@ -183,7 +182,7 @@ export class AddReintegroComponent {
   guardar() {
     let newCerti: Certificaciones; //Para evitar los mensaje de validacion en el formulario
     newCerti = this.formCertificacion.value;
-    newCerti.tipo = 1;
+    newCerti.tipo = 2;
     const docSeleccionado = this._documentos.find(
       (d) => d.iddocumento === this.formCertificacion.value.documento
     );
@@ -196,7 +195,7 @@ export class AddReintegroComponent {
     newCerti.beneficiariores = responsable;
     this.s_certificaciones.saveCertificacion(newCerti).subscribe({
       next: () => {
-        this.swal('success', 'Certificación guardada con exito');
+        this.swal('success', 'Reintegro guardado con exito');
         this.regresar();
       },
       error: (err) => {

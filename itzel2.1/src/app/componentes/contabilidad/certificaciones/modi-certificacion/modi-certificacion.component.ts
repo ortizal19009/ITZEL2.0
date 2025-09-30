@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -28,7 +28,7 @@ import { VisualFormatDirective } from '../../../directives/visual-format.directi
   templateUrl: './modi-certificacion.component.html',
   styleUrl: './modi-certificacion.component.css',
 })
-export class ModiCertificacionComponent {
+export class ModiCertificacionComponent implements OnInit {
   formCertificacion!: FormGroup;
   date: Date = new Date();
   _documentos: Documentos[] = [];
@@ -120,7 +120,11 @@ export class ModiCertificacionComponent {
   getCertificacionByIdCertificacion(idcertificacion: number) {
     this.s_certificaciones.getByIdCertificacion(idcertificacion).subscribe({
       next: (certificacion: Certificaciones) => {
-        console.log(certificacion);
+        if (certificacion.tipo != 1) {
+          this.swal('warning', 'No es una Certificación');
+          this.regresar();
+          return;
+        }
         this._certificacion = certificacion;
         this.formCertificacion.patchValue({
           idcertificacion: certificacion.idcertificacion,
@@ -255,7 +259,7 @@ export class ModiCertificacionComponent {
     if (this.idresponsable == null) return of({ invalido: true });
     else return of(null);
   }
-  //Valida si el numero ya existe o si es el mismo que tenia para que se pueda modificar ese numero. 
+  //Valida si el numero ya existe o si es el mismo que tenia para que se pueda modificar ese numero.
   async valNumero(control: AbstractControl): Promise<any> {
     const value = control.value;
     if (!value || value.toString().trim() === '') {

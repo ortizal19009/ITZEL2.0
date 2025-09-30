@@ -1,6 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { VisualFormatDirective } from '../../../directives/visual-format.directive';
 import { Certificaciones } from '../../../modelos/contabilidad/certificaciones.model';
 import { Documentos } from '../../../modelos/administracion/documentos.model';
@@ -12,96 +20,75 @@ import { CertificacionesService } from '../../../servicios/contabilidad/certific
 import { DocumentosService } from '../../../servicios/administracion/documentos.service';
 import { BeneficiariosService } from '../../../servicios/contabilidad/beneficiarios.service';
 import Swal from 'sweetalert2';
-import { debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-modi-reintegro.component',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, VisualFormatDirective],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './modi-reintegro.component.html',
-  styleUrl: './modi-reintegro.component.css'
+  styleUrl: './modi-reintegro.component.css',
 })
 export class ModiReintegroComponent {
-  title: string = 'Neva Certificación';
-  f_certificacion!: FormGroup;
-  certificacion: Certificaciones = new Certificaciones();
+  formCertificacion!: FormGroup;
   date: Date = new Date();
   _documentos: Documentos[] = [];
   _beneficiarios: Beneficiarios[] = [];
-  _responsable: Beneficiarios[] = [];
-  today = new Date().toISOString().substring(0, 10); // ejemplo: "2025-09-19"
-  idcertificacion?: number;
+  idbeneficiario: number | null = null;
+  _responsables: Beneficiarios[] = [];
+  idresponsable: number | null = null;
+  idcertificacion!: number;
+  _certificacion: Certificaciones = new Certificaciones();
   constructor(
     public authService: AutorizaService,
     private router: Router,
-    private coloresService: ColoresService,
+    private colorService: ColoresService,
     private fb: FormBuilder,
     private s_certificaciones: CertificacionesService,
-    private s_documentos: DocumentosService,
-    private s_beneficiario: BeneficiariosService,
+    private docuService: DocumentosService,
+    private beneService: BeneficiariosService,
     private _params: ActivatedRoute
   ) {}
+
   ngOnInit(): void {
     if (!this.authService.sessionlog) {
       this.router.navigate(['/inicio']);
     }
+    this.idcertificacion = +this._params.snapshot.params['idreintegro']!;
     if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {
-      sessionStorage.setItem('ventana', '/add-certificacion');
-      let coloresJSON = sessionStorage.getItem('/add-certificacion');
+      sessionStorage.setItem('ventana', '/certificaciones');
+      let coloresJSON = sessionStorage.getItem('/certificaciones');
       if (coloresJSON) this.colocaColor(JSON.parse(coloresJSON));
-      else this.buscaColor();
     } else {
       console.warn('sessionStorage no disponible (SSR o entorno server)');
       // Opcional: inicializa valores por defecto si quieres
     }
-    this.idcertificacion = +this._params.snapshot.paramMap.get('idreintegro')!;
-
-    this.f_certificacion = this.fb.group({
-      numero: ['', [Validators.required, Validators.minLength(1)]],
-      valor: [0.0, [Validators.required, Validators.minLength(1)]],
-      fecha: [
-        this.today,
-        [
-          Validators.required,
-          Validators.pattern(/^\d{4}-\d{2}-\d{2}$/),
-          maxDateValidator(new Date()), // no después de hoy
+    const fechaObj: Date = new Date();
+    const fecha = fechaObj.toISOString().substring(0, 10);
+    this.idbeneficiario = 1;
+    console.log(this.idcertificacion);
+    this.formCertificacion = this.fb.group(
+      {
+        idcertificacion: this.idcertificacion,
+        numero: [0, [Validators.required, Validators.minLength(1)], [this.valNumero.bind(this)]],
+        valor: [0.0, [Validators.required, Validators.minLength(1)]],
+        fecha: [fecha, Validators.required, this.valAño.bind(this)],
+        documento: null,
+        numdoc: ['', [Validators.required, Validators.maxLength(12)]],
+        beneficiario: ['(Ninguno)', [Validators.required], [this.valBeneficiario.bind(this)]],
+        responsable: ['', [Validators.required], [this.valResponsable.bind(this)]],
+        descripcion: [
+          '',
+          [Validators.required, Validators.minLength(10), Validators.maxLength(254)],
         ],
-      ],
-      descripcion: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(254)]],
-      numdoc: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
-      usucrea: [this.authService.idusuario],
-      feccrea: [this.date],
-      beneficiario: [''],
-      nombene: ['', [Validators.required, Validators.minLength(5)]],
-      beneficiariore: [''],
-      nomresponsable: ['', [Validators.required, Validators.minLength(5)]],
-      documento: null,
-    });
-    this.f_certificacion
-      .get('nombene')
-      ?.valueChanges.pipe(
-        filter((val) => val && val.length > 2),
-        debounceTime(300),
-        distinctUntilChanged(),
-        switchMap((val) => this.s_beneficiario.findByNomben(val))
-      )
-      .subscribe((beneficiarios) => (this._beneficiarios = beneficiarios));
+
+        usucrea: [this.authService.idusuario],
+        feccrea: [this.date],
+      },
+      { updateOn: 'blur' }
+    );
 
     this.getAllDocumentos();
-    // this.getBeneById(1);
-    this.getCertificacionById(this.idcertificacion!);
-  }
-  async buscaColor() {
-    try {
-      const datos = await this.coloresService.setcolor(
-        this.authService.idusuario!,
-        'add-certificacion'
-      );
-      const coloresJSON = JSON.stringify(datos);
-      sessionStorage.setItem('/add-certificacion', coloresJSON);
-      this.colocaColor(datos);
-    } catch (error) {
-      console.error('Al buscar la ventana: ', error);
-    }
+    this.getCertificacionByIdCertificacion(this.idcertificacion);
   }
 
   colocaColor(colores: any) {
@@ -111,70 +98,58 @@ export class ModiReintegroComponent {
     document.documentElement.style.setProperty('--bgcolor2', colores[1]);
     const detalle = document.querySelector('.detalle');
     if (detalle) detalle.classList.add('nuevoBG2');
+    this.colorForaneas();
   }
+
+  async colorForaneas() {
+    try {
+      let datos: string;
+      datos = await this.colorService.getcolor(this.authService.idusuario!, 'documentos');
+      document.documentElement.style.setProperty('--bgcolor3', datos);
+      const documentos = document.querySelector('.documentos');
+      if (documentos) documentos.classList.add('nuevoBG3');
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   get f() {
-    return this.f_certificacion.controls;
+    return this.formCertificacion.controls;
   }
-  regresar() {
-    this.router.navigate(['/certificaciones']);
-  }
-  save() {
-    let certificacion: Certificaciones = new Certificaciones();
-    let f = this.f_certificacion.value;
-    certificacion.idcertificacion = this.idcertificacion;
-    certificacion.numero = f.numero;
-    certificacion.valor = f.valor;
-    certificacion.fecha = f.fecha;
-    certificacion.descripcion = f.descripcion;
-    certificacion.numdoc = f.numdoc;
-    certificacion.usucrea = f.usucrea;
-    certificacion.tipo = 2;
-    certificacion.feccrea = f.feccrea;
-    certificacion.beneficiario = f.beneficiario;
-    certificacion.beneficiariores = f.beneficiariore;
-    certificacion.documento = f.documento;
-    this.s_certificaciones.saveCertificacion(certificacion).subscribe({
-      next: (c: any) => {
-        this.swal('success', 'Certificación guardada con exito');
-        this.regresar();
-      },
-      error: (e: any) => {
-        this.authService.mostrarError('error', e.error);
-      },
-    });
-  }
-  getCertificacionById(idcertificacion: number) {
+
+  getCertificacionByIdCertificacion(idcertificacion: number) {
     this.s_certificaciones.getByIdCertificacion(idcertificacion).subscribe({
       next: (certificacion: Certificaciones) => {
-        console.log(certificacion);
-        this.f_certificacion.patchValue({
+        if (certificacion.tipo != 2) {
+          this.swal('warning', 'No es un Reintegro');
+          this.regresar();
+          return;
+        }
+        this._certificacion = certificacion;
+        this.formCertificacion.patchValue({
+          idcertificacion: certificacion.idcertificacion,
           numero: certificacion.numero,
           valor: certificacion.valor,
           fecha: certificacion.fecha?.toString().substring(0, 10),
-          descripcion: certificacion.descripcion,
+          documento: certificacion.documento?.iddocumento,
           numdoc: certificacion.numdoc,
+          beneficiario: certificacion.beneficiario?.nomben,
+          responsable: certificacion.beneficiariores?.nomben,
+          descripcion: certificacion.descripcion,
           usucrea: certificacion.usucrea,
           feccrea: certificacion.feccrea,
-          beneficiario: certificacion.beneficiario,
-          nombene: certificacion.beneficiario?.nomben,
-          beneficiariore: certificacion.beneficiariores,
-          nomresponsable: certificacion.beneficiariores?.nomben,
-          documento: certificacion.documento,
+          usumodi: this.authService.idusuario,
+          fecmodi: this.date,
         });
-      },
-      error: (e: any) => {
-        this.authService.mostrarError('error', e.error);
       },
     });
   }
 
   getAllDocumentos() {
-    this.s_documentos.getListaDocumentos().subscribe({
+    this.docuService.getListaDocumentos().subscribe({
       next: (documentos: Documentos[]) => {
         this._documentos = documentos;
-        this.f_certificacion.patchValue({
-          documento: documentos[0],
-        });
+        this.formCertificacion.patchValue({ documento: 1 });
       },
       error: (e: any) => {
         console.error(e.error);
@@ -182,48 +157,75 @@ export class ModiReintegroComponent {
       },
     });
   }
-  compareDocumento(u1: Documentos, u2: Documentos): boolean {
-    return u1 && u2 ? u1.iddocumento === u2.iddocumento : u1 === u2;
-  }
-  // cada vez que el usuario escribe
-  getBeneficiario(event: any) {
-    const value = event.target.value;
-    // si escribió más de 2 letras, buscar en el backend
-    this.s_beneficiario.findByNomben(value).subscribe({
-      next: (beneficiarios: Beneficiarios[]) => {
-        this._beneficiarios = beneficiarios;
-      },
-      error: (e: any) => console.error(e),
-    });
 
-    // si seleccionó uno exacto de la lista
-    const beneficiario = this._beneficiarios.find((b) => b.nomben === value);
-    if (beneficiario) {
-      this.f_certificacion.patchValue({
-        beneficiario: beneficiario,
-        nombene: beneficiario.nomben,
+  //Datalist de los Beneficiarios
+  beneficiariosxNomben(e: any) {
+    if (e.target.value != '') {
+      this.beneService.findByNomben(e.target.value).subscribe({
+        next: (beneficiarios: Beneficiarios[]) => (this._beneficiarios = beneficiarios),
+        error: (err) => {
+          console.error(err.error);
+          this.authService.mostrarError('Error al buscar los Beneficiarios', err.error);
+        },
       });
     }
   }
-  // cada vez que el usuario escribe
-  getBeneficiariore(event: any) {
-    const value = event.target.value;
-    // si escribió más de 2 letras, buscar en el backend
-    this.s_beneficiario.findByNomben(value).subscribe({
-      next: (beneficiariore: Beneficiarios[]) => {
-        this._responsable = beneficiariore;
-      },
-      error: (e: any) => console.error(e),
-    });
+  onBeneficiarioSelected(e: any) {
+    const selectedOption = this._beneficiarios.find(
+      (x: { nomben: any }) => x.nomben === e.target.value
+    );
+    if (selectedOption) this.idbeneficiario = selectedOption.idbeneficiario;
+    else this.idbeneficiario = null;
+  }
 
-    // si seleccionó uno exacto de la lista
-    const beneficiariore = this._responsable.find((b) => b.nomben === value);
-    if (beneficiariore) {
-      this.f_certificacion.patchValue({
-        beneficiariore: beneficiariore,
-        nomresponsable: beneficiariore.nomben,
+  //Datalist de los Responsables
+  responsablesxNomben(e: any) {
+    if (e.target.value != '') {
+      this.beneService.findByNomben(e.target.value).subscribe({
+        next: (responsables: Beneficiarios[]) => (this._responsables = responsables),
+        error: (err) => {
+          console.error('Error al buscar los Beneficiarios (responsables)', err.error);
+          this.authService.mostrarError('Error al buscar los Responsables', err.error);
+        },
       });
     }
+  }
+  onResponsableSelected(e: any) {
+    const selectedOption = this._responsables.find(
+      (x: { nomben: any }) => x.nomben === e.target.value
+    );
+    if (selectedOption) this.idresponsable = selectedOption.idbeneficiario;
+    else this.idresponsable = null;
+  }
+
+  guardar() {
+    let newCerti: Certificaciones; //Para evitar los mensaje de validacion en el formulario
+    newCerti = this.formCertificacion.value;
+    newCerti.tipo = 2;
+    const docSeleccionado = this._documentos.find(
+      (d) => d.iddocumento === this.formCertificacion.value.documento
+    );
+    newCerti.documento = docSeleccionado!;
+    let beneficiario: Beneficiarios = new Beneficiarios();
+    beneficiario.idbeneficiario = this.idbeneficiario!;
+    newCerti.beneficiario = beneficiario;
+    let responsable: Beneficiarios = new Beneficiarios();
+    responsable.idbeneficiario = this.idresponsable!;
+    newCerti.beneficiariores = responsable;
+    this.s_certificaciones.saveCertificacion(newCerti).subscribe({
+      next: () => {
+        this.swal('success', 'Certificación guardada con exito');
+        this.regresar();
+      },
+      error: (err) => {
+        console.error('Al guardar el Compromiso: ', err.error);
+        this.authService.mostrarError('Error al guardar', err.error);
+      },
+    });
+  }
+
+  regresar() {
+    this.router.navigate(['/reintegros']);
   }
 
   swal(icon: any, mensaje: any) {
@@ -231,16 +233,50 @@ export class ModiReintegroComponent {
       toast: true,
       icon: icon,
       title: mensaje,
-      position: 'top-end',
+      position: 'top',
       showConfirmButton: false,
-      timer: 3000,
+      timer: 2000,
     });
   }
-}
-function maxDateValidator(max: Date) {
-  return (control: AbstractControl): ValidationErrors | null => {
-    if (!control.value) return null;
-    const valueDate = new Date(control.value);
-    return valueDate > max ? { maxDate: true } : null;
-  };
+
+  //Valida el año de la fecha
+  valAño(control: AbstractControl) {
+    const empresa = this.authService.getDatosEmpresa();
+    const año = empresa!.fechap.toString().slice(0, 4);
+    const año1 = control.value.toString().slice(0, 4);
+    if (año != año1) return of({ añoinvalido: true });
+    else return of(null);
+  }
+
+  //Valida que se haya seleccionado un Beneficiario
+  valBeneficiario(control: AbstractControl) {
+    if (this.idbeneficiario == null) return of({ invalido: true });
+    else return of(null);
+  }
+
+  //Valida que se haya seleccionado un Responsable
+  valResponsable(control: AbstractControl) {
+    if (this.idresponsable == null) return of({ invalido: true });
+    else return of(null);
+  }
+  //Valida si el numero ya existe o si es el mismo que tenia para que se pueda modificar ese numero.
+  async valNumero(control: AbstractControl): Promise<any> {
+    const value = control.value;
+    if (!value || value.toString().trim() === '') {
+      return Promise.resolve(null); // no hay error si está vacío
+    }
+    if (this._certificacion.numero === value) {
+      return Promise.resolve(null);
+    }
+    return this.s_certificaciones
+      .isAvailable(2, value)
+      .then((res: boolean) => {
+        let error = res ? null : { existe: true };
+        // Posponer para evitar NG0100
+        setTimeout(() => control.setErrors(error), 0);
+
+        return error;
+      })
+      .catch(() => null);
+  }
 }
