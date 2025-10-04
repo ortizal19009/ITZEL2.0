@@ -1,0 +1,195 @@
+<div class="content">
+   <div class="container-fluid">
+      <div class="row justify-content-center">
+         <div class="col-sm-8 mt-5">
+            <h4 class="font-weight-bold text-center cabecera sombra border py-1">Nuevo Asiento</h4>
+            <div class="card card-body sombra fondo detalle">
+               <form [formGroup]="formAsiento">
+                  <div class="row">
+
+                     <div class="form-group col-md-4">
+                        <div class="input-group mb-1 input-group-sm">
+                           <div class="input-group-prepend">
+                              <label class="input-group-text" for="fecha">Fecha<sup class="green">*</sup></label>
+                           </div>
+                           <input type="date" class="form-control text-center" formControlName="fecha"
+                              [ngClass]="{'is-invalid': f['fecha'].invalid && f['fecha'].touched, 'is-valid': f['fecha'].valid, '': f['fecha'].untouched}">
+                        </div>
+                        <div *ngIf="authService.msgval && f['fecha'].errors && f['fecha'].touched">
+                           <div *ngIf="f['fecha'].errors['required']"
+                              class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                              <strong>Ups!</strong> La Fecha es obligatoria
+                           </div>
+                           <div *ngIf="f['fecha'].errors['añoinvalido']"
+                              class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                              <strong>Ups!</strong> El Período (año) es incorrecto
+                           </div>
+                        </div>
+                     </div>
+
+                     <div class="form-group col-md-4">
+                        <div class="input-group mb-1 input-group-sm">
+                           <div class="input-group-prepend">
+                              <label class="input-group-text" for="tipasi">Tipo<sup class="green">*</sup></label>
+                           </div>
+                           <input type="text" class="form-control" formControlName="nombretipo" readonly tabindex="-1">
+                           <div class="btn-group py-0">
+                              <button type="button" class="btn btn-info btn-xs dropdown-toggle py-0"
+                                 data-toggle="dropdown" aria-expanded="false">
+                              </button>
+                              <div class="dropdown-menu dropdown-menu-left imprimirPop">
+                                 <button class="dropdown-item" type="button" *ngFor="let tipo of tiposAsiento"
+                                    (click)="changeTipo(tipo)">
+                                    <i [class]="tipo.icono"></i>&nbsp; {{ tipo.nombre }}
+                                 </button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+
+                     <div class="form-group col-md-7">
+                        <div class="input-group input-group-sm">
+                           <div class="input-group-prepend">
+                              <label class="input-group-text" for="tipcom">Comprobante<sup class="green">*</sup></label>
+                           </div>
+                           <input type="text" class="form-control" formControlName="nombrecompro" readonly
+                              tabindex="-1">
+                           <div class="btn-group py-0">
+                              <button type="button" class="btn btn-info btn-xs dropdown-toggle py-0"
+                                 data-toggle="dropdown" aria-expanded="false">
+                              </button>
+                              <div class="dropdown-menu dropdown-menu-left imprimirPop">
+                                 <button class="dropdown-item" type="button" *ngFor="let comp of comprobantes"
+                                    (click)="changeComprobante(comp)">
+                                    <i [class]="comp.icono"></i>&nbsp; {{ comp.nombre }}
+                                 </button>
+                              </div>
+                           </div>
+                           <input type="number" class="form-control text-center col-sm-4" formControlName="compro"
+                              min="1" aria-label="Small" aria-describedby="inputGroup-sizing-sm" [ngClass]="{'is-invalid': f['compro'].invalid && f['compro'].touched,
+                           'is-valid': f['compro'].valid, '': f['compro'].untouched}">
+                        </div>
+                        <div *ngIf="authService.msgval && f['compro'].errors && f['compro'].touched">
+                           <div *ngIf="f['compro'].errors['required']"
+                              class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                              <strong>Ups!</strong> Número de Comprobante obligatorio
+                           </div>
+                           <div *ngIf="f['compro'].errors['existe']"
+                              class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                              <strong>Ups!</strong> Ya existe ese número de Comprobante
+                           </div>
+                        </div>
+                     </div>
+
+                     <div class="form-group col-md-8">
+                        <div class="input-group mb-1 input-group-sm">
+                           <div class="input-group-prepend">
+                              <label class="input-group-text" for="tipdoc">Documento<sup class="green">*</sup></label>
+                           </div>
+                           <select class="custom-select robotosmall" formControlName="documento">
+                              <option class="documentos robotosmall" *ngFor="let docu of _documentos"
+                                 [ngValue]="docu.iddocumento">
+                                 {{ docu.nomdoc }}
+                              </option>
+                           </select>
+                           <input type="text" class="form-control text-center" formControlName="numdoc" maxlength="12"
+                              [ngClass]="{'is-invalid': f['numdoc'].invalid && f['numdoc'].touched, 'is-valid': f['numdoc'].valid, '': f['numdoc'].untouched}">
+                        </div>
+                        <div *ngIf="authService.msgval && f['numdoc'].errors && f['numdoc'].touched">
+                           <div *ngIf="f['numdoc'].errors['required']"
+                              class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                              <strong>Ups!</strong> Número de Documento obligatorio
+                           </div>
+                        </div>
+                     </div>
+
+                     <div class="form-group col-md-12 mt-1">
+                        <div class="input-group input-group-sm mb-1 ">
+                           <div class="input-group-prepend">
+                              <span class="input-group-text font-weight-bold robotosmall">Proyecto<sup
+                                    class="green">*</sup></span>
+                           </div>
+                           <input type="text" class="form-control form-control-sm col-sm-3" formControlName="proyecto"
+                              list="proyectoList" (input)="onProyectoSelected($event); proyectoxCodigo($event)"
+                              [ngClass]="{'is-invalid': f['proyecto'].invalid && f['proyecto'].touched,'is-valid': f['proyecto'].valid, '': f['proyecto'].untouched}">
+                           <datalist role="listbox" id="proyectoList">
+                              <option *ngFor="let proyecto of _proyectos" [value]="proyecto.codigo"> {{ proyecto.nombre
+                                 }}
+                              </option>
+                           </datalist>
+                           <input type="text" class="form-control" formControlName="nombre" readonly tabindex="-1">
+                        </div>
+                        <div *ngIf="authService.msgval && f['proyecto'].errors && f['proyecto'].touched">
+                           <div *ngIf="f['proyecto'].errors['required']"
+                              class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                              <strong>Ups!</strong> Código de Proyecto obligatorio
+                           </div>
+                           <div *ngIf="f['proyecto'].errors['invalido']"
+                              class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                              <strong>Ups!</strong> No ha seleccionado un Proyecto
+                           </div>
+                        </div>
+                     </div>
+
+                     <div class="form-group col-md-12">
+                        <div class="input-group input-group-sm">
+                           <div class="input-group-prepend">
+                              <label class="input-group-text" for="beneficarios">Beneficiario<sup
+                                    class="green">*</sup></label>
+                           </div>
+                           <input type="text" class="form-control form-control-sm" formControlName="beneficiario"
+                              list="beneficiarioList"
+                              (input)="onBeneficiarioSelected($event); beneficiariosxNomben($event)"
+                              [ngClass]="{'is-invalid': f['beneficiario'].invalid && f['beneficiario'].touched,'is-valid': f['beneficiario'].valid, '': f['beneficiario'].untouched}">
+                           <datalist role="listbox" id="beneficiarioList">
+                              <option *ngFor="let bene of _beneficiarios" [value]="bene.nomben">
+                              </option>
+                           </datalist>
+                        </div>
+                        <div *ngIf="authService.msgval && f['beneficiario'].errors && f['beneficiario'].touched">
+                           <div *ngIf="f['beneficiario'].errors['required']"
+                              class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                              <strong>Ups!</strong> Beneficiario obligatorio
+                           </div>
+                           <div *ngIf="f['beneficiario'].errors['invalido']"
+                              class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                              <strong>Ups!</strong> No ha seleccionado un Beneficiario
+                           </div>
+                        </div>
+                     </div>
+
+                     <div class="form-group col-md-12">
+                        <div class="input-group mb-0 input-group-sm">
+                           <div class="input-group-prepend">
+                              <label class="input-group-text">Concepto<sup class="green">*</sup></label>
+                           </div>
+                           <textarea class="form-control" formControlName="concepto" rows="3"
+                              [ngClass]="{'is-invalid': f['concepto'].invalid && f['concepto'].touched, 'is-valid': f['concepto'].valid, '': f['concepto'].untouched}"></textarea>
+                        </div>
+                        <div *ngIf="authService.msgval && f['concepto'].errors && f['concepto'].touched">
+                           <div *ngIf="f['concepto'].errors['required']"
+                              class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                              <strong>Ups!</strong> El Concepto es obligatorio
+                           </div>
+                           <div *ngIf="f['concepto'].errors['minlength']"
+                              class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                              <strong>Ups!</strong> El Concepto debe tener al menos 3 caracteres
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+
+                  <div class="text-center">
+                     <button type="submit" class="btn btn-success btn-sm mx-1" (click)="guardar()"
+                        [disabled]="!formAsiento.valid">
+                        <i class="fa fa-check-circle"></i> Aceptar</button>
+                     <button type="button" class="btn btn-outline-success btn-sm mb-0" (click)="regresar()"><i
+                           class="fa fa-times-circle"></i> Cancelar
+                     </button>
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

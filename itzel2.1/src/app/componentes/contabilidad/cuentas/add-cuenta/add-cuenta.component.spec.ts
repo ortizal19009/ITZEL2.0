@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ModiCuenta } from './modi-cuenta';
+import { AddCuentaComponent } from './add-cuenta.component';
 
-describe('ModiCuenta', () => {
-  let component: ModiCuenta;
-  let fixture: ComponentFixture<ModiCuenta>;
+describe('AddCuentaComponent', () => {
+  let component: AddCuentaComponent;
+  let fixture: ComponentFixture<AddCuentaComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ModiCuenta]
+      imports: [AddCuentaComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ModiCuenta);
+    fixture = TestBed.createComponent(AddCuentaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

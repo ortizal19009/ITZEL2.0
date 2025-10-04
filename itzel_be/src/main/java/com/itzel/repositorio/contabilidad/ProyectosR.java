@@ -37,4 +37,6 @@ public interface ProyectosR extends JpaRepository<Proyectos, Short> {
 
     //Encontrar todos los proyectos menos el de codigo 00
     List<Proyectos> findByCodigoNotOrderByCodigoAsc(String codigo);
+    // Proyectos por Código para datalist
+    List<Proyectos> findByMovimientoTrueAndCodigoStartingWithOrderByCodigoAsc(String codigo);
 }

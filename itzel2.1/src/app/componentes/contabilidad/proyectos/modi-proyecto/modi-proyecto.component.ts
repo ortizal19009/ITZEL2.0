@@ -9,12 +9,12 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { EstructuraService } from '../../../servicios/contabilidad/estructura.service';
-import { ProyectoService } from '../../../servicios/contabilidad/proyecto.service';
+import { ProyectosService } from '../../../servicios/contabilidad/proyectos.service';
 import { Estructura } from '../../../modelos/contabilidad/estructura.model';
 import Swal from 'sweetalert2';
 import { ColoresService } from '../../../servicios/administracion/colores.service';
 import { AutorizaService } from '../../../servicios/administracion/autoriza.service';
-import { Proyecto } from '../../../modelos/contabilidad/proyecto.model';
+import { Proyectos } from '../../../modelos/contabilidad/proyectos.model';
 
 @Component({
   selector: 'app-modi-proyecto',
@@ -30,12 +30,12 @@ export class ModiProyectoComponent implements OnInit {
   sw_nombre: boolean = false;
   idproyecto?: number;
   maxLongitud!: number;
-  _proyecto: Proyecto = new Proyecto();
+  _proyecto: Proyectos = new Proyectos();
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private estructuraService: EstructuraService,
-    private proyectoService: ProyectoService,
+    private proyectosService: ProyectosService,
     private _params: ActivatedRoute,
     public authService: AutorizaService,
     private coloresService: ColoresService
@@ -101,7 +101,7 @@ export class ModiProyectoComponent implements OnInit {
     this.router.navigate(['/proyectos']);
   }
   getByIdProyecto(idproyecto: number) {
-    this.proyectoService.proyectoGetById(idproyecto).subscribe({
+    this.proyectosService.proyectoGetById(idproyecto).subscribe({
       next: (_proyecto: any) => {
         this._proyecto = _proyecto;
         this.f_proyecto.patchValue({
@@ -144,7 +144,7 @@ export class ModiProyectoComponent implements OnInit {
     }
 
     // Validación en backend
-    this.proyectoService.validarCodigo(code).subscribe({
+    this.proyectosService.validarCodigo(code).subscribe({
       next: (validador: any) => {
         let f = this.f_proyecto.value;
         let message: string | null = null;
@@ -217,7 +217,7 @@ export class ModiProyectoComponent implements OnInit {
     const nameControl = this.f_proyecto.get('nombre');
 
     // Llamada al backend
-    this.proyectoService.validarNombre(name).subscribe({
+    this.proyectosService.validarNombre(name).subscribe({
       next: (validador: any) => {
         this.sw_nombre = validador;
 
@@ -274,7 +274,7 @@ export class ModiProyectoComponent implements OnInit {
   }
 
   save() {
-    this.proyectoService.proyectosUpdate(this.f_proyecto.value).subscribe({
+    this.proyectosService.proyectosUpdate(this.f_proyecto.value).subscribe({
       next: (request: any) => {
         this.swal('success', 'Datos actualizados');
         this.router.navigate(['/proyectos']);

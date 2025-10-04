@@ -196,4 +196,10 @@ public class ProyectosService {
     public List<Proyectos> findByNameLike(String nombre){
         return dao.buscarPorNombre(nombre);
     }
+
+    // Partidas de ingresos del clasificador para datalist
+    public List<Proyectos> findProyectosPorCodigo(String codigo) {
+        return dao.findByMovimientoTrueAndCodigoStartingWithOrderByCodigoAsc(codigo);
+    }
+
 }

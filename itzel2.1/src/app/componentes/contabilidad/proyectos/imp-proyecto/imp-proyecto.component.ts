@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { EstructuraService } from '../../../servicios/contabilidad/estructura.service';
-import { ProyectoService } from '../../../servicios/contabilidad/proyecto.service';
+import { ProyectosService } from '../../../servicios/contabilidad/proyectos.service';
 import { PdfService } from '../../../servicios/reportes/pdf.service';
 import { CommonModule } from '@angular/common';
 import { Route, Router, RouterLink } from '@angular/router';
@@ -63,7 +63,7 @@ export class ImpProyectoComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private estructuraService: EstructuraService,
-    private proyectoService: ProyectoService,
+    private proyectosService: ProyectosService,
     private pdfService: PdfService,
     private sanitizer: DomSanitizer,
     private jasperService: JasperreportService,
@@ -124,7 +124,7 @@ export class ImpProyectoComponent implements OnInit {
     });
   }
   getAllProyectos(doc: any, header: any) {
-    this.proyectoService.proyectosGetAll().subscribe({
+    this.proyectosService.proyectosGetAll().subscribe({
       next: async (datos: any) => {
         datos.forEach(async (item: any) => {
           await this.datosImprimir.push([
@@ -142,7 +142,7 @@ export class ImpProyectoComponent implements OnInit {
   }
   getProyectosByNivel(doc: any, header: any) {
     let nivel = this.f_reporte.value.nivel;
-    this.proyectoService.getProyectosByNivel(nivel.nivel).subscribe({
+    this.proyectosService.getProyectosByNivel(nivel.nivel).subscribe({
       next: async (datos: any) => {
         datos.forEach(async (item: any) => {
           await this.datosImprimir.push([
@@ -160,7 +160,7 @@ export class ImpProyectoComponent implements OnInit {
   }
   getProyectosByGrupo(doc: any, header: any) {
     let codigo = this.f_reporte.value.grupo;
-    this.proyectoService.getProyectosByGrupo(codigo).subscribe({
+    this.proyectosService.getProyectosByGrupo(codigo).subscribe({
       next: async (datos: any) => {
         datos.forEach(async (item: any) => {
           await this.datosImprimir.push([

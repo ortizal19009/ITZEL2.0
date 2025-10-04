@@ -1,0 +1,195 @@
+<div class="content mt-1 pt-1 pl-0">
+   <div class="container-fluid">
+      <div class="row m-0 px-0 py-1 justify-content-start sombra border cabecera ">
+         <div class="col-sm-11">
+            <form [formGroup]="formBuscar" (ngSubmit)="buscar()">
+               <div class="row mt-0 mb-1">
+
+                  <div class="col-sm-2">
+                     <h5 class="font-weight-bold text-truncate mt-0 my-0"> <i
+                           class="bi bi-calendar3-range-fill text-warning"></i>&nbsp; Asientos</h5>
+                  </div>
+
+                  <div class="input-group col-sm-10">
+                     <input type="text" class="form-control form-control-sm col-sm-4" formControlName="proyecto"
+                        list="proyectoList" (input)="onProyectoSelected($event); proyectoxCodigo($event)"
+                        placeholder="Proyecto">
+                     <datalist role="listbox" id="proyectoList">
+                        <option *ngFor="let proyecto of _proyectos" [value]="proyecto.codigo"> {{ proyecto.nombre }}
+                        </option>
+                     </datalist>
+                     <input type="text" class="form-control form-control-sm" formControlName="nombreProyecto" readonly
+                        tabindex="-1" placeholder="Nombre del Proyecto">
+                  </div>
+
+               </div>
+
+               <div class="row my-0">
+
+                  <div class="form-group col-sm-4 mb-0">
+                     <div class="input-group input-group-sm">
+                        <input type="text" class="form-control" formControlName="nombrecompro" readonly tabindex="-1">
+                        <div class="btn-group py-0">
+                           <button type="button" class="btn btn-info btn-xs dropdown-toggle py-0" data-toggle="dropdown"
+                              aria-expanded="false">
+                           </button>
+                           <div class="dropdown-menu dropdown-menu-left imprimirPop">
+                              <button class="dropdown-item" type="button" *ngFor="let c of comprobantes"
+                                 (click)="changeComprobante(c)">
+                                 <i [class]="c.icono"></i>&nbsp; {{ c.nombre }}
+                              </button>
+                           </div>
+                        </div>
+                        <input type="number" class="form-control form-control-sm text-center" formControlName="desdeNum"
+                           placeholder="Desde" min="1" (change)="changeDesdeHasta()">
+                        <input type="number" class="form-control form-control-sm text-center" formControlName="hastaNum"
+                           placeholder="Hasta" min="1" (change)="changeDesdeHasta()">
+                     </div>
+                  </div>
+
+                  <div class="input-group col-sm-4 mb-0">
+                     <input type="date" class="form-control form-control-sm text-center" formControlName="desdeFecha">
+                     <input type="date" class="form-control form-control-sm text-center" formControlName="hastaFecha">
+                  </div>
+
+                  <div class="input-group col-sm-4 mb-0">
+                     <div>
+                        <button class="btn btn-primary btn-sm" type="submit" (click)="buscar()">
+                           <i *ngIf="swbuscando" class="fa fa-spinner"></i>
+                           <i *ngIf="!swbuscando" class="fa fa-search"></i> {{txtbuscar}}
+                        </button>
+                     </div>
+                     <div *ngIf="_asientos.length" class="input-group-append col-sm-9">
+                        <input type="text" class="form-control form-control-sm text-center"
+                           formControlName="filtroControl" placeholder="Filtrar...">
+                     </div>
+                  </div>
+
+               </div>
+            </form>
+         </div>
+
+         <div class="btn-group ml-auto mt-0 col-sm-1 pb-0 justify-content-end">
+            <button *ngIf="swdesdehasta" class="bg-transparent border-0 mt-0" type="submit" (click)="busquedainicial()"
+               data-toggle="tooltip" title="Ultimos">
+               <i class="bi-skip-end text-white icoRegresar"></i>
+            </button>
+            <button type="button" class="bg-transparent border-0 dropdown-toggle text-white text-right mt-0"
+               data-toggle="dropdown" aria-expanded="false"> <i class="bi-menu-button-wide text-white"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-right bg-dark roboto mt-0 ">
+               <button class="dropdown-item" type="button" (click)="nuevo()">
+                  <i class="bi-file-earmark-plus text-info"></i>&nbsp; Nuevo</button>
+               <button class="dropdown-item" type="button" (click)="imprimir()">
+                  <i class="bi bi-printer text-info"></i>&nbsp; Imprimir / Exportar</button>
+               <button class="dropdown-item" type="button" (click)="cerrar()">
+                  <i class="bi-x-circle text-info"></i>&nbsp; Cerrar</button>
+            </div>
+         </div>
+
+      </div>
+   </div>
+</div>
+
+<div class="container-fluid">
+   <div class="row mb-0">
+      <div class="col-sm-12">
+         <table *ngIf="_asientos.length" class="table table-hover table-bordered table-sm sombra">
+            <thead class="cabecera">
+               <tr class="pad0">
+                  
+                  <th class="cursor text-truncate" (click)="ordenarPor('numero')">Nro.
+                     <i *ngIf="ordenColumna === 'numero'"
+                        [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
+                  </th>
+
+                  <th class="cursor text-truncate col-sm-1" (click)="ordenarPor('comprobante')">Cmprbnt
+                     <i *ngIf="ordenColumna === 'comprobante'"
+                        [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
+                  </th>
+
+                  <th class="cursor text-truncate text-center" (click)="ordenarPor('fecha')">Fecha
+                     <i *ngIf="ordenColumna === 'fecha'"
+                        [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
+                  </th>
+
+                  <th class="cursor col-md-2" (click)="ordenarPor('documentonum')">Documento
+                     <i *ngIf="ordenColumna === 'documentonum'"
+                        [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
+                  </th>
+
+                  <th class="cursor col-md-1 text-right" (click)="ordenarPor('totdeb')">Débito
+                     <i *ngIf="ordenColumna === 'totdeb'"
+                        [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
+                  </th>
+
+                  <th class="cursor col-md-1 text-right" (click)="ordenarPor('totcre')">Crédito
+                     <i *ngIf="ordenColumna === 'totcre'"
+                        [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
+                  </th>
+
+                  <th class="cursor text-center" (click)="ordenarPor('swretencion')">RF
+                     <i *ngIf="ordenColumna === 'swretencion'"
+                        [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
+                  </th>
+
+                  <th class="cursor col-sm-2" (click)="ordenarPor('beneficiario')">Beneficiario
+                     <i *ngIf="ordenColumna === 'beneficiario'"
+                        [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
+                  </th>
+
+                  <th class="cursor col-sm-2" (click)="ordenarPor('concepto')">Concepto
+                     <i *ngIf="ordenColumna === 'concepto'"
+                        [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
+                  </th>
+
+                  <th></th>
+               </tr>
+            </thead>
+            <tbody class="detalle robotosmall">
+               <tr class="fila pad0" *ngFor="let asie of asieFiltrados" (click)="onCellClick($event, asie)">
+                  <td class="text-center">{{ asie.numero }}</td>
+                  <td> {{ comprobante(asie.tipcom, asie.compro)}}</td>
+                  <td class="text-center">{{ asie.fecha | date: 'dd-MM-yyyy' }}</td>
+                  <td [ngClass]="{'transparente': asie.documento.iddocumento == 1}">{{
+                     asie.documento.nomdoc}}&nbsp; {{asie.numdoc}} </td>
+                  <td class="text-right"
+                     [ngClass]="{'text-danger font-weight-bold': asie.totdeb !== asie.totcre, 'transparente': asie.totdeb == 0}">
+                     {{ asie.totdeb | number:'1.2-2' }}</td>
+                  <td class="text-right"
+                     [ngClass]="{'text-danger font-weight-bold': asie.totdeb !== asie.totcre, 'transparente': asie.totcre == 0}">
+                     {{ asie.totcre | number:'1.2-2' }}</td>
+                  <td class="text-center">
+                     <i class="bi-check" *ngIf="asie.swretencion"></i>
+                  </td>
+                  <td [ngClass]="{'transparente': asie.beneficiario.idbeneficiario == 1}"
+                     class="ancho200 text-truncate ">
+                     {{ asie.beneficiario.nomben}}</td>
+                  <td class="text-truncate ancho200" data-toggle="tooltip"
+                     [title]="asie.concepto.length > 24 ? asie.concepto : ''">
+                     {{ asie.concepto }}
+                  </td>
+                  <td class="text-center">
+                     <div class="btn-group py-0">
+                        <button type="button" class="btn btn-warning btn-xs dropdown-toggle py-0" data-toggle="dropdown"
+                           aria-expanded="false">
+                        </button>
+
+                        <div class="dropdown-menu dropdown-menu-right popLista">
+                           <button class="dropdown-item" type="button" (click)="modiAsiento( asie.idasiento )">
+                              <i class="bi bi-pencil"></i>&nbsp; Modificar</button>
+                           <button class="dropdown-item" type="button" data-toggle="modal" data-target="#elimAsiento"
+                              (click)="eliminar( asie )">
+                              <i class="bi bi-file-minus"></i>&nbsp; Eliminar</button>
+                           <button class="dropdown-item" type="button" (click)="retenciones( asie.idasiento )">
+                              <i class="bi bi-scissors"></i>&nbsp; Retenciones</button>
+
+                        </div>
+                     </div>
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+   </div>
+</div>

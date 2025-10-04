@@ -1,6 +1,6 @@
 import { Estructura } from "./estructura.model";
 
-export class Proyecto {
+export class Proyectos {
   idproyecto?: number;
   codigo?: string;
   nombre?: string;

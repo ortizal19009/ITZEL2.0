@@ -3,7 +3,7 @@ import Swal from 'sweetalert2';
 import { ServerConfigService } from '../../../servicios/config/server-config.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { PresupuestoService } from '../../../servicios/contabilidad/presupuesto.service';
-import { ProyectoService } from '../../../servicios/contabilidad/proyecto.service';
+import { ProyectosService } from '../../../servicios/contabilidad/proyectos.service';
 import { CommonModule, Location } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FilterPipe } from '../../../pipes/filter.pipe';
@@ -23,7 +23,7 @@ export class InfoProyectoComponent implements OnInit {
   constructor(
     private serverConfigService: ServerConfigService,
     private _params: ActivatedRoute,
-    private proyectoService: ProyectoService,
+    private proyectosService: ProyectosService,
     private presupuestoService: PresupuestoService,
     private location: Location
   ) {}
@@ -46,7 +46,7 @@ export class InfoProyectoComponent implements OnInit {
   }
 
   getGProyectos(codigo: string) {
-    this.proyectoService.getByCodigoLike(codigo).subscribe({
+    this.proyectosService.getByCodigoLike(codigo).subscribe({
       next: (proyectos: any) => {
         if (proyectos.body) {
           this._gProyectos = proyectos.body;

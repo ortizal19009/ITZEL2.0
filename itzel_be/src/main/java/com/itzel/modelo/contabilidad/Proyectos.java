@@ -18,7 +18,7 @@ public class Proyectos {
     private String nombre;
     private Boolean movimiento;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idestructura")
     private Estructura estructura;
 

@@ -55,4 +55,9 @@ public class CuentasService {
     public Optional<Cuentas> findByCodcue(String codcue){
         return dao.findByCodcue(codcue);
     }
+
+    // Cuentas para datalist
+    public List<Cuentas> recuperaPorTiptranYCodcue(short tiptran, String codcue) {
+        return dao.findByTiptranAndCodcueStartingWithAndMovcueTrueOrderByCodcue(tiptran, codcue);
+    }
 }

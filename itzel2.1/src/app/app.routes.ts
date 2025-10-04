@@ -7,10 +7,10 @@ import { InfoProyectoComponent } from './componentes/contabilidad/proyectos/info
 import { IfinanComponent } from './componentes/contabilidad/ifinan/ifinan/ifinan.component';
 import { AddIfinanComponent } from './componentes/contabilidad/ifinan/add-ifinan/add-ifinan.component';
 import { ModiIfinanComponent } from './componentes/contabilidad/ifinan/modi-ifinan/modi-ifinan.component';
-import { Cuentas } from './componentes/contabilidad/cuentas/cuentas/cuentas';
-import { AddCuenta } from './componentes/contabilidad/cuentas/add-cuenta/add-cuenta';
-import { ModiCuenta } from './componentes/contabilidad/cuentas/modi-cuenta/modi-cuenta';
-import { InfoCuenta } from './componentes/contabilidad/cuentas/info-cuenta/info-cuenta';
+import { CuentasComponent } from './componentes/contabilidad/cuentas/cuentas/cuentas.component';
+import { AddCuentaComponent } from './componentes/contabilidad/cuentas/add-cuenta/add-cuenta.component';
+import { ModiCuentaComponent } from './componentes/contabilidad/cuentas/modi-cuenta/modi-cuenta.component';
+import { InfoCuentaComponent } from './componentes/contabilidad/cuentas/info-cuenta/info-cuenta.component';
 import { Ingresos } from './componentes/contabilidad/presupuestos/ingresos/ingresos/ingresos';
 import { AddIngreso } from './componentes/contabilidad/presupuestos/ingresos/add-ingreso/add-ingreso';
 import { ModiIngreso } from './componentes/contabilidad/presupuestos/ingresos/modi-ingreso/modi-ingreso';
@@ -35,6 +35,12 @@ import { ReintegrosComponent } from './componentes/contabilidad/reintegros/reint
 import { AddReintegroComponent } from './componentes/contabilidad/reintegros/add-reintegro/add-reintegro.component';
 import { ModiReintegroComponent } from './componentes/contabilidad/reintegros/modi-reintegro/modi-reintegro.component';
 import { InfoReintegroComponent } from './componentes/contabilidad/reintegros/info-reintegro/info-reintegro.component';
+import { AsientosComponent } from './componentes/contabilidad/asientos/asientos/asientos.component';
+import { AddAsientoComponent } from './componentes/contabilidad/asientos/add-asiento/add-asiento.component';
+import { AddTransaccionComponent } from './componentes/contabilidad/transacciones/add-transaccion/add-transaccion.component';
+import { ModiTransaccionComponent } from './componentes/contabilidad/transacciones/modi-transaccion/modi-transaccion.component';
+import { info } from 'console';
+import { TransaccionesComponent } from './componentes/contabilidad/transacciones/transacciones/transacciones.component';
 
 export const routes: Routes = [
   { path: 'inicio', component: AppWrapperComponent },
@@ -55,10 +61,10 @@ export const routes: Routes = [
   { path: 'add-ifinan', component: AddIfinanComponent },
   { path: 'modi-ifinan/:idifinan', component: ModiIfinanComponent },
   /* ==========CUENTAS========== */
-  { path: 'cuentas', component: Cuentas },
-  { path: 'add-cuenta/:idcuenta', component: AddCuenta },
-  { path: 'modi-cuenta/:idcuenta', component: ModiCuenta },
-  { path: 'info-cuenta/:idcuenta', component: InfoCuenta },
+  { path: 'cuentas', component: CuentasComponent },
+  { path: 'add-cuenta/:idcuenta', component: AddCuentaComponent },
+  { path: 'modi-cuenta/:idcuenta', component: ModiCuentaComponent },
+  { path: 'info-cuenta/:idcuenta', component: InfoCuentaComponent },
   /* ==========PARTIDAS PRESUPUESTARIAS INGRESOS========== */
   { path: 'ingresos', component: Ingresos },
   { path: 'add-ingresos', component: AddIngreso },
@@ -82,6 +88,13 @@ export const routes: Routes = [
   { path: 'add-reintegro', component: AddReintegroComponent },
   { path: 'modi-reintegro/:idreintegro', component: ModiReintegroComponent },
   { path: 'info-reintegro/:idreintegro', component: InfoReintegroComponent },
+  /* ==========ASIENTOS========== */
+  { path: 'asientos', component: AsientosComponent },
+  { path: 'add-asiento', component: AddAsientoComponent },
+  /* ==========TRANSACCIONES========== */
+  { path: 'transacciones',component: TransaccionesComponent,},
+  { path: 'add-transaccion', component: AddTransaccionComponent },
+  { path: ' modi-transaccion', component: ModiTransaccionComponent },
   /* 
   ======================================================================
   MODULO ROLES

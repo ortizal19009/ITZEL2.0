@@ -1,11 +1,11 @@
-import { Nivel } from "./nivel.model";
+import { Niveles } from "./niveles.model";
 
-export class Cuenta {
+export class Cuentas {
   idcuenta?: number;
   codcue?: string;
   nomcue?: string;
   movcue?: Boolean;
-  nivel?: Nivel;
+  nivel?: Niveles;
   grucue?: string;
   asodebe?: string;
   asohaber?: string;

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
-import { Proyecto } from '../../../modelos/contabilidad/proyecto.model';
-import { ProyectoService } from '../../../servicios/contabilidad/proyecto.service';
+import { Proyectos } from '../../../modelos/contabilidad/proyectos.model';
+import { ProyectosService } from '../../../servicios/contabilidad/proyectos.service';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { AutorizaService } from '../../../servicios/administracion/autoriza.service';
@@ -26,8 +26,8 @@ export class ProyectosComponent implements OnInit {
   options: any = {};
   messageRecived: string = '';
   swAddProject: Boolean = true;
-  _proyecto: Proyecto = new Proyecto();
-  proyectosFiltrados: Proyecto[] = [];
+  _proyecto: Proyectos = new Proyectos();
+  proyectosFiltrados: Proyectos[] = [];
   ordenColumna: keyof ProyectoVisual = 'codigo';
   ordenAscendente: boolean = true;
   estructura: Estructura[] = [];
@@ -37,7 +37,7 @@ export class ProyectosComponent implements OnInit {
   formBuscar: any;
 
   constructor(
-    private proyectosService: ProyectoService,
+    private proyectosService: ProyectosService,
     private router: Router,
     public authService: AutorizaService,
     private coloresService: ColoresService,

@@ -34,13 +34,13 @@ public class ProyectosApi {
 
         List<Proyectos> proyectos = new ArrayList<>();
         if (codigo == null && nombre == null) {
-            proyectos = proyectosService.findByCodigoNotOrderByCodigoAsc("00");
+            proyectos = proyService.findByCodigoNotOrderByCodigoAsc("00");
         }
         if (codigo != null) {
-            proyectos = proyectosService.findByCodigoLike(codigo);
+            proyectos = proyService.findByCodigoLike(codigo);
         }
         if (nombre != null) {
-            proyectos = proyectosService.findByNameLike(nombre.toLowerCase());
+            proyectos = proyService.findByNameLike(nombre.toLowerCase());
         }
         if (proyectos == null || proyectos.isEmpty()) {
             return ResponseEntity.noContent().build();
@@ -51,7 +51,7 @@ public class ProyectosApi {
 
     private static final Logger logger = LoggerFactory.getLogger(ProyectosApi.class);
     @Autowired
-    private ProyectosService proyectosService;
+    private ProyectosService proyService;
 
     @Autowired
     private ReportService jasperReportService;
@@ -60,32 +60,32 @@ public class ProyectosApi {
     private Report_i reportI;
     @PostMapping
     public ResponseEntity<Object> save(@RequestBody Proyectos e){
-        return ResponseEntity.ok(proyectosService.save(e));
+        return ResponseEntity.ok(proyService.save(e));
     }
     @PutMapping
     public ResponseEntity<Proyectos> update(@RequestParam short idproyecto, @RequestBody Proyectos e) {
-        Proyectos _e = proyectosService.findById(idproyecto)
+        Proyectos _e = proyService.findById(idproyecto)
                 .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
 
         // Copiar todas las propiedades excepto las que no deben actualizarse
         BeanUtils.copyProperties(e, _e, "idproyecto", "usucrea", "feccrea");
 
-        Proyectos actualizado = proyectosService.saveOne(_e);
+        Proyectos actualizado = proyService.saveOne(_e);
         return ResponseEntity.ok(actualizado);
     }
     @GetMapping("/validar/codigo")
     public ResponseEntity<Boolean> getByCodigo(@RequestParam String codigo){
-        Proyectos proyectos = proyectosService.findByCodigo(codigo);
+        Proyectos proyectos = proyService.findByCodigo(codigo);
         return ResponseEntity.ok(proyectos != null);
     }
     @GetMapping("/validar/nombre")
     public ResponseEntity<Boolean> getByNombre(@RequestParam String nombre){
-        Proyectos proyectos = proyectosService.findByNombre(nombre);
+        Proyectos proyectos = proyService.findByNombre(nombre);
         return ResponseEntity.ok(proyectos != null);
     }
     @GetMapping("/{idproyecto}")
     public ResponseEntity<Optional<Proyectos>> getById(@PathVariable short idproyecto){
-        Proyectos proyecto = proyectosService.findById(idproyecto).orElse(null);
+        Proyectos proyecto = proyService.findById(idproyecto).orElse(null);
         if(proyecto != null ){
             return ResponseEntity.ok(Optional.of(proyecto));
         }else {
@@ -94,28 +94,28 @@ public class ProyectosApi {
     }
     @DeleteMapping("/{idproyecto}")
     public  ResponseEntity<Object> deleteProyecto(@PathVariable short idproyecto){
-        return ResponseEntity.ok(proyectosService.delete(idproyecto));
+        return ResponseEntity.ok(proyService.delete(idproyecto));
     }
     @GetMapping("/cod-mayor")
     public ResponseEntity<List<Proyectos>> getByCodigoMayor (@RequestParam String codigo){
-        return ResponseEntity.ok(proyectosService.findByCodigoMayor(codigo));
+        return ResponseEntity.ok(proyService.findByCodigoMayor(codigo));
     }
     @GetMapping("/reportes/porniveles")
     public ResponseEntity<List<Proyectos_rep_int>> getByNivel(@RequestParam Long nivel){
-        return ResponseEntity.ok(proyectosService.findByNivel(nivel));
+        return ResponseEntity.ok(proyService.findByNivel(nivel));
     }
     @GetMapping("/reportes/porgrupo")
     public ResponseEntity<List<Proyectos_rep_int>> getByGrupo(@RequestParam String codigo){
-        return ResponseEntity.ok(proyectosService.findByGrupo(codigo));
+        return ResponseEntity.ok(proyService.findByGrupo(codigo));
     }
     @GetMapping("/codnom")
     public ResponseEntity<List<Proyectos>> getByCodNom(@RequestParam String dato){
-        return ResponseEntity.ok(proyectosService.findByCodNom(dato));
+        return ResponseEntity.ok(proyService.findByCodNom(dato));
     }
 
     @GetMapping("/proyectosLike")
     public ResponseEntity<Map<String, Object>> findByCodigoLike(@RequestParam String codigo){
-        List<Proyectos> proyectos = proyectosService.findByCodigoLike(codigo);
+        List<Proyectos> proyectos = proyService.findByCodigoLike(codigo);
         Map<String, Object> response = new HashMap<>();
         if(proyectos.isEmpty()){
             response.put("message", "Datos no encontrados");
@@ -171,6 +171,13 @@ public class ProyectosApi {
 
         return ResponseEntity.ok().header("Content-Disposition", "inline; filename=\"" + dto.getFileName() + "\"")
                 .contentLength(dto.getLength()).contentType(mediaType).body(streamResource);
+    }
+
+    // Proyectos para datalist
+    @GetMapping("/porcodigo")
+    public ResponseEntity<List<Proyectos>> findProyectosPorCodigo(@RequestParam String codigo) {
+        List<Proyectos> proyectos = proyService.findProyectosPorCodigo(codigo);
+        return ResponseEntity.ok(proyectos);
     }
 
 

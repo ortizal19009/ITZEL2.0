@@ -10,7 +10,7 @@ import {
 import { Router, RouterLink } from '@angular/router';
 import Swal from 'sweetalert2';
 import { EstructuraService } from '../../../servicios/contabilidad/estructura.service';
-import { ProyectoService } from '../../../servicios/contabilidad/proyecto.service';
+import { ProyectosService } from '../../../servicios/contabilidad/proyectos.service';
 import { AutorizaService } from '../../../servicios/administracion/autoriza.service';
 import { ColoresService } from '../../../servicios/administracion/colores.service';
 import { forkJoin } from 'rxjs';
@@ -34,7 +34,7 @@ export class AddProyectoComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private estructuraService: EstructuraService,
-    private proyectoService: ProyectoService,
+    private proyectosService: ProyectosService,
     public authService: AutorizaService,
     private coloresService: ColoresService
   ) {}
@@ -114,7 +114,7 @@ export class AddProyectoComponent implements OnInit {
   }
 
   getAllProyectos() {
-    this.proyectoService.proyectosGetAll().subscribe({
+    this.proyectosService.proyectosGetAll().subscribe({
       next: (proyectos: any) => {},
       error: (e: any) => console.error(e),
     });
@@ -163,7 +163,7 @@ export class AddProyectoComponent implements OnInit {
     }
 
     // Validación en backend
-    this.proyectoService.validarCodigo(code).subscribe({
+    this.proyectosService.validarCodigo(code).subscribe({
       next: (validador: any) => {
         let message: string | null = null;
         const longitudInvalida =
@@ -227,7 +227,7 @@ export class AddProyectoComponent implements OnInit {
     const nameControl = this.f_proyecto.get('nombre');
 
     // Llamada al backend
-    this.proyectoService.validarNombre(name).subscribe({
+    this.proyectosService.validarNombre(name).subscribe({
       next: (validador: any) => {
         this.sw_nombre = validador;
 
@@ -284,7 +284,7 @@ export class AddProyectoComponent implements OnInit {
   }
 
   save() {
-    this.proyectoService.proyectoSave(this.f_proyecto.value).subscribe({
+    this.proyectosService.proyectoSave(this.f_proyecto.value).subscribe({
       next: (request: any) => {
         this._request = request.message;
         this.swal(request.status, request.message);

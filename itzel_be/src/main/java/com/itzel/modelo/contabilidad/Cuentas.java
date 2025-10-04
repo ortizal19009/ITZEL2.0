@@ -17,7 +17,7 @@ public class Cuentas {
     private String codcue;
     private String nomcue;
     private Boolean movcue;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idnivel")
     private Niveles nivel;
     private String grucue;

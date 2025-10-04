@@ -16,50 +16,57 @@ import java.util.Optional;
 @CrossOrigin("*")
 public class CuentasApi {
     @Autowired
-    private CuentasService cuentasService;
+    private CuentasService cueService;
 
     @GetMapping
     public ResponseEntity<List<Cuentas>> getAll(){
-        return ResponseEntity.ok(cuentasService.findAll());
+        return ResponseEntity.ok(cueService.findAll());
     }
     @PostMapping
     public ResponseEntity<Object> save(@RequestBody Cuentas c){
-        return ResponseEntity.ok(cuentasService.save(c));
+        return ResponseEntity.ok(cueService.save(c));
     }
     @GetMapping("/byPages")
     public ResponseEntity<Page<Cuentas>> getCuentasPages( @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
-        return ResponseEntity.ok(cuentasService.getCuentasByPage(page, size));
+        return ResponseEntity.ok(cueService.getCuentasByPage(page, size));
     }
     @GetMapping("/bycodOrnom")
     public ResponseEntity<Page<Cuentas>> getByCodOrDenom(@RequestParam String codcue, @RequestParam String nomcue, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
         Page<Cuentas> cuentas = null;
         if(codcue != null){
-            cuentas =cuentasService.findByCod(codcue,page, size);
+            cuentas =cueService.findByCod(codcue,page, size);
         }else if (nomcue != null) {
-            cuentas = cuentasService.findByDenom(nomcue.toLowerCase(),page, size);
+            cuentas = cueService.findByDenom(nomcue.toLowerCase(),page, size);
         }
         return ResponseEntity.ok(cuentas);
 
     }
     @GetMapping("/byId")
     public ResponseEntity<Optional<Cuentas>> getById(@RequestParam Long idcuenta){
-        return ResponseEntity.ok(cuentasService.findById(idcuenta));
+        return ResponseEntity.ok(cueService.findById(idcuenta));
     }
     //buscar una sola cuenta por el codigo cuenta (codcue)
     @GetMapping("/byCodcue")
     public ResponseEntity<Cuentas> getByCodcue(@RequestParam String codcue) {
-        return cuentasService.findByCodcue(codcue)
+        return cueService.findByCodcue(codcue)
                 .map(ResponseEntity::ok)        // Si existe → 200 con la cuenta
                 .orElse(ResponseEntity.noContent().build()); // Si no existe → 404
     }
     @PutMapping
     public ResponseEntity<Cuentas> updateCuentas(@RequestBody Cuentas c) {
-        Cuentas cuenta = cuentasService.findById(c.getIdcuenta())
+        Cuentas cuenta = cueService.findById(c.getIdcuenta())
                 .orElseThrow(() -> new RuntimeException("Cuenta no encontrada"));
         // Copia todos los atributos excepto "idcuenta"
         BeanUtils.copyProperties(c, cuenta, "idcuenta");
 
-        return ResponseEntity.ok(cuentasService.saveOne(cuenta));
+        return ResponseEntity.ok(cueService.saveOne(cuenta));
     }
+
+    // Cuentas por Tiptran para los DataList de Cuentas
+    @GetMapping("/datalist")
+    public List<Cuentas> getByTiptranYCodcue(@RequestParam("tiptran") Short tiptran, @RequestParam("codcue") String codcue) {
+        return cueService.recuperaPorTiptranYCodcue(tiptran, codcue);
+    }
+
 
 }

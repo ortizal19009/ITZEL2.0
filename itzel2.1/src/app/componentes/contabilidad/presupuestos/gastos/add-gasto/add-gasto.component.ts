@@ -5,8 +5,8 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { RouterLink } from '@angular/router';
 import { ClasificadorService } from '../../../../servicios/contabilidad/clasificador.service';
 import { PresupuestoService } from '../../../../servicios/contabilidad/presupuesto.service';
-import { ProyectoService } from '../../../../servicios/contabilidad/proyecto.service';
-import { Proyecto } from '../../../../modelos/contabilidad/proyecto.model';
+import { ProyectosService } from '../../../../servicios/contabilidad/proyectos.service';
+import { Proyectos } from '../../../../modelos/contabilidad/proyectos.model';
 
 @Component({
   selector: 'app-add-gasto',
@@ -30,10 +30,10 @@ export class AddGastoComponent {
     private fb: FormBuilder,
     private s_clasificador: ClasificadorService,
     private s_presupuesto: PresupuestoService,
-    private s_proyecto: ProyectoService
+    private proyectosService: ProyectosService
   ) { }
   ngOnInit(): void {
-    let proyecto: Proyecto = new Proyecto();
+    let proyecto: Proyectos = new Proyectos();
     this.f_pingreso = this.fb.group({
       tippar: 1,
       codpar: ['', Validators.minLength(27)],
@@ -95,13 +95,13 @@ export class AddGastoComponent {
   getProyecto() {
     let f = this.f_proyecto.value;
     if (f == '' || f == null) {
-      this.s_proyecto.proyectosGetAll().subscribe({
+      this.proyectosService.proyectosGetAll().subscribe({
         next: (datos: any) => {
           this._proyectos = datos;
         },
       });
     } else {
-      this.s_proyecto.getByCodNom(f.codnompar).subscribe({
+      this.proyectosService.getByCodNom(f.codnompar).subscribe({
         next: (datos: any) => {
           this._proyectos = datos;
         },

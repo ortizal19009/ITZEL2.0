@@ -1,5 +1,5 @@
 import { Clasificador } from "./clasificador.model";
-import { Proyecto } from "./proyecto.model";
+import { Proyectos } from "./proyectos.model";
 
 export class Presupuesto {
 
@@ -21,6 +21,6 @@ export class Presupuesto {
    usumodi?: number;
    feccmodi?: Date;
 
-   proyecto!: Proyecto;
+   proyecto!: Proyectos;
    clasificador!: Clasificador;
 }
