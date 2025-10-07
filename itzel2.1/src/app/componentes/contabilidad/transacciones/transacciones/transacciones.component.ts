@@ -9,6 +9,9 @@ import { TransaccionesService } from '../../../servicios/contabilidad/transaccio
 import { AsientosService } from '../../../servicios/contabilidad/asientos.service';
 import { Asientos } from '../../../modelos/contabilidad/asientos.model';
 import { Transacciones } from '../../../modelos/contabilidad/transacciones.model';
+import { EliminadosService } from '../../../servicios/administracion/eliminados.service';
+import Swal from 'sweetalert2';
+import { Eliminados } from '../../../modelos/administracion/eliminados.model';
 
 @Component({
   selector: 'app-transacciones.component',
@@ -21,7 +24,6 @@ export class TransaccionesComponent implements OnInit {
    formAsiento!: FormGroup;
    idasiento!: number;
    padre!: string;
-   // iAsiento = {} as interfaceAsiento; //Interface para los datos del Asiento
    _transacciones: any[] = [];
    concepto!: string;
    _ejecucio: any;
@@ -36,7 +38,8 @@ export class TransaccionesComponent implements OnInit {
    actualizar: boolean = false;
 
    constructor(private fb: FormBuilder, private router: Router, private coloresService: ColoresService, public authService: AutorizaService,
-      private asiService: AsientosService, private tranService: TransaccionesService, private ejecuService: EjecucionService) { }
+      private asiService: AsientosService, private tranService: TransaccionesService, private ejecuService: EjecucionService,
+   private elimService: EliminadosService) { }
 
    ngOnInit(): void {
       sessionStorage.setItem('ventana', '/transacciones');
@@ -58,7 +61,7 @@ export class TransaccionesComponent implements OnInit {
       const actuAsiento = sessionStorage.getItem('actuAsiento');  //Regresa de modi-transaccion para actualizar los totales
       sessionStorage.removeItem('actuAsiento');
       if (actuAsiento) { if (actuAsiento == 'true') { this.actualizar = true } else { this.actualizar = false } };
-      this.transacciones(this.actualizar);  //Cuando elimina o modifica (debcre o valor) es true para que actualice totales del asiento
+      this.busca(this.actualizar);  //Cuando elimina o modifica (debcre o valor) es true para que actualice totales del asiento
    }
 
    colocaColor(colores: any) {
@@ -101,11 +104,11 @@ export class TransaccionesComponent implements OnInit {
             });
             this.concepto = asiento.concepto;
          },
-         error: err => {console.error(err.error); this.authService.mostrarError('Error al buscar el Asiento', err.error)}
+         error: err => { console.error(err.error); this.authService.mostrarError('Error al buscar el Asiento', err.error) }
       });
    }
 
-   transacciones(actualizar: boolean) {
+   busca(actualizar: boolean) {
       this.tranService.obtenerPorIdAsiento(this.idasiento).subscribe({
          next: resp => {
             this._transacciones = resp;
@@ -153,7 +156,6 @@ export class TransaccionesComponent implements OnInit {
          idasiento: this.idasiento, totDebe: this.totDebe, totHaber: this.totHaber, tiptran: +this.tiptran, orden: 10 + (this._transacciones.length * 2)
       }
       ));
-// console.log('this.tiptran: ', this.tiptran)
       switch (+this.tiptran) {
          case 0:
             this.router.navigate(['/add-transaccion']);
@@ -161,19 +163,10 @@ export class TransaccionesComponent implements OnInit {
          case 1:
             this.router.navigate(['/add-trandetrami']);
             break;
-         case 2:
-         case 3:
-         case 4:
-         case 5:
-         case 6:
-         case 7:
+         case 2:         case 3:         case 4:         case 5:         case 6:         case 7:
             this.router.navigate(['/add-benextran']);
             break;
-         case 8:
-         case 9:
-         case 10:
-         case 11:
-         case 12:
+         case 8:         case 9:         case 10:         case 11:         case 12:
             this.router.navigate(['/add-liquiacfp']);
             break;
          default:
@@ -188,19 +181,10 @@ export class TransaccionesComponent implements OnInit {
          case 0:
             this.router.navigate(['/modi-transaccion']);
             break;
-         case 2:
-         case 3:
-         case 4:
-         case 5:
-         case 6:
-         case 7:
+         case 2:         case 3:         case 4:         case 5:         case 6:         case 7:
             // this.router.navigate(['/add-benextran']);
             break;
-         case 8:
-         case 9:
-         case 10:
-         case 11:
-         case 12:
+         case 8:         case 9:         case 10:         case 11:         case 12:
             // this.router.navigate(['/add-liquiacfp']);
             break;
          default:
@@ -209,20 +193,69 @@ export class TransaccionesComponent implements OnInit {
 
    }
 
-   eliminar(transa: Transacciones) {
-      if (transa.tiptran == 0) {
-         this.sweliminar = true
-         this.idtransaccion = transa.idtransaccion;
-      }
-      else this.sweliminar = false;
-      this.codcue = transa.codcue;
+   //Datos a eliminar
+   eliminar(transa: Transacciones): void {
+      this.ejecuService.countEjecucionPorPartida(transa.idtransaccion).subscribe({
+         next: (registros:any) => {
+            if (registros > 0) {
+               Swal.fire({
+                  icon: 'error',
+                  title: `No puede eliminar la Cuenta: ${transa.codcue}`,
+                  text: `Tiene registrado ${registros} pagos/cobros`,
+                  confirmButtonText: '<i class="bi-check"></i> Continuar ',
+                  customClass: {
+                     popup: 'noeliminar',
+                     title: 'robotobig',
+                     confirmButton: 'btn btn-info',
+                  },
+               });
+            } else {
+               Swal.fire({
+                  width: '500px',
+                  title: 'Mensaje',
+                  text: `Eliminar la Cuenta: ${transa.codcue} de este Asiento`,
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonText: '<i class="fa fa-check"></i> Aceptar',
+                  cancelButtonText: '<i class="fa fa-times"></i> Cancelar',
+                  customClass: {
+                     popup: 'eliminar',
+                     title: 'robotobig',
+                     confirmButton: 'btn btn-success',
+                     cancelButton: 'btn btn-success'
+                  },
+               }).then((resultado) => {
+                  if (resultado.isConfirmed) this.elimina(transa);
+               });
+            }
+         },
+         error: err => console.error('Al buscar si la Transacción ...: ', err.error),
+      });
    }
 
-   elimina() {
-      // this.tranService.deleteTransaci(this.inttra).subscribe({
-      //    next: () => this.transacciones(true),
-      //    error: err => {console.error('Al eliminar una Transacción: ', err.error); this.authService.mostrarError('Error al eliminar la Transacción', err.error); }
-      // });
+   //Elimina
+   elimina(transa: Transacciones) {
+      this.tranService.deleteTransaccion(transa.idtransaccion).subscribe({
+         next: () => {
+            // this.buscar();
+            let fecha: Date = new Date();
+            let eliminado: Eliminados = new Eliminados();
+            eliminado.idusuario = this.authService.idusuario!;
+            eliminado.modulo = this.authService.moduActual;
+            eliminado.fecha = fecha;
+            eliminado.routerlink = 'transacciones';
+            eliminado.tabla = 'TRANSACCIONES';
+            eliminado.datos = `Cuenta: ${transa.codcue} ${transa.debcre === 1 ? 'Débito' : 'Crédito'} ${transa.valor} Comprobante: ${codcomprobante(transa.asiento.tipcom)}-${transa.asiento.compro}`;
+            this.elimService.save(eliminado).subscribe({
+               next: () => {
+                  Swal.fire('Mensaje', 'La acción fue ejecutada.', 'success');
+                  this.busca(true);
+               },
+               error: err => { console.error(err.error); this.authService.mostrarError('Error al eliminar', err.error); }
+            });
+         },
+         error: err => { console.error(err.error); this.authService.mostrarError('Error al eliminar', err.error); }
+      });
    }
 
    imprimir() {
@@ -231,15 +264,6 @@ export class TransaccionesComponent implements OnInit {
    }
 
 }
-
-// interface interfaceAsiento {
-//    asiento: number;
-//    fecha: Date;
-//    comprobante: string;
-//    documento: String;
-//    beneficiario: String;
-//    concepto: String;
-// }
 
 //Código Tipo de Comprobante
 function codcomprobante(tipcom: number): string {

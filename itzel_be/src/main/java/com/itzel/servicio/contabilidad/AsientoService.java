@@ -60,6 +60,8 @@ public class AsientoService {
 
     // Guarda nuevo
     public <S extends Asientos> S save(S entity) {
+
+
         return dao.save(entity);
     }
 
