@@ -50,7 +50,7 @@ export class TransaccionesService {
   }
 
   //Actualiza
-  update(idtransaccion: number, transaccion: Transacciones): Observable<Object> {
+  updateTransaccion(idtransaccion: number, transaccion: Transacciones): Observable<Object> {
     return this.http.put(baseUrl + '/' + idtransaccion, transaccion);
   }
   deleteTransaccion(idtransaccion: number): Observable<Object> {

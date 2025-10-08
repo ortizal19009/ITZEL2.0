@@ -21,7 +21,7 @@ import { Cuentas } from '../../../modelos/contabilidad/cuentas.model';
 
 @Component({
   selector: 'app-add-transaccion.component',
-   imports: [ReactiveFormsModule, CommonModule, FormsModule],
+   imports: [ReactiveFormsModule, CommonModule, FormsModule, VisualFormatDirective],
   templateUrl: './add-transaccion.component.html',
   styleUrl: './add-transaccion.component.css'
 })
