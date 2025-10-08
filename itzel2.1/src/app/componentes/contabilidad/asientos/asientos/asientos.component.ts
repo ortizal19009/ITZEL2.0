@@ -58,6 +58,8 @@ export class AsientosComponent implements OnInit {
     let coloresJSON = sessionStorage.getItem('/asientos');
     if (coloresJSON) this.colocaColor(JSON.parse(coloresJSON));
     else this.buscaColor();
+    
+    console.log(this.authService.idusuario);
 
     const datos = this.authService.getDatosEmpresa();
     const año = datos!.fechap.toString().slice(0, 4);
