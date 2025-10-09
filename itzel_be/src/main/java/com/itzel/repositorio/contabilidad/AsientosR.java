@@ -45,4 +45,18 @@ public interface AsientosR extends JpaRepository<Asientos, Short> {
     @Query("UPDATE Asientos a SET a.totdeb = :totdeb, a.totcre = :totcre WHERE a.idasiento = :idasiento")
     void updateTotdebAndTotcre(@Param("idasiento") Short idasiento, @Param("totdeb") BigDecimal totdeb, @Param("totcre") BigDecimal totcre);
 
+    public boolean existsById(short idasiento);
+
+
+    @Modifying(clearAutomatically = true) // puedes omitir flushAutomatically
+    @Query("""
+      UPDATE Asientos a
+         SET a.totdeb = :deb, a.totcre = :cre
+       WHERE a.idasiento = :id
+         AND (a.totdeb <> :deb OR a.totcre <> :cre)
+  """)
+    int updateTotalesIfChanged(@Param("id") short id,
+                               @Param("deb") BigDecimal deb,
+                               @Param("cre") BigDecimal cre);
+
 }

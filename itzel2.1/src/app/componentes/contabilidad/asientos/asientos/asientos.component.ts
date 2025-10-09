@@ -227,8 +227,9 @@ export class AsientosComponent implements OnInit {
         )
         .subscribe({
           next: (datos) => {
+          console.log(datos)
             this._asientos = datos;
-            this.asieFiltrados = [...datos];
+            this.asieFiltrados! = [...datos];
             this.swbuscando = false;
             this.txtbuscar = 'Buscar';
           },

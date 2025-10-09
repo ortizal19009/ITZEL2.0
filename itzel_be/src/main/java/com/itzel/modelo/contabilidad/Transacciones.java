@@ -1,5 +1,6 @@
 package com.itzel.modelo.contabilidad;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.itzel.modelo.administracion.Documentos;
 import jakarta.persistence.*;
 import lombok.Getter;

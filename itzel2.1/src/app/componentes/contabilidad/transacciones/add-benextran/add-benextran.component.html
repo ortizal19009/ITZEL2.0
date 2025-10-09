@@ -1,0 +1,228 @@
+<div class="content mt-1 pt-1 pl-0">
+   <div class="container-fluid">
+      <div class="row m-0 px-0 py-1 justify-content-start sombra cabecera border">
+         <div class="col-sm-12 p-0.">
+            <div class="row p-0">
+               <div class="input-group input-group-sm col-sm-3 mb-1 ml-0">
+                  <div class="input-group-prepend">
+                     <span class="input-group-text font-weight-bold" id="inputGroup-sizing-sm">Asiento</span>
+                  </div>
+                  <input type="text" class="form-control text-center" aria-label="Sizing example input"
+                     aria-describedby="inputGroup-sizing-sm" [(ngModel)]="iAsiento.numero" readonly>
+                  <input type="text" class="form-control text-center" aria-label="Sizing example input"
+                     aria-describedby="inputGroup-sizing-sm" [(ngModel)]="iAsiento.comprobante" readonly>
+               </div>
+               <div class="input-group input-group-sm col-sm-2 mb-1 mr-0 ">
+                  <div class="input-group-prepend">
+                     <span class="input-group-text font-weight-bold" id="inputGroup-sizing-sm">Fecha</span>
+                  </div>
+                  <input type="text" class="form-control text-center" aria-label="Sizing example input"
+                     aria-describedby="inputGroup-sizing-sm" [(ngModel)]="iAsiento.fecha" readonly>
+               </div>
+               <div class="input-group input-group-sm col-sm-2 mb-1 ml-0">
+                  <div class="input-group-prepend">
+                     <span class="input-group-text font-weight-bold" id="inputGroup-sizing-sm">Doc</span>
+                  </div>
+                  <input type="text" class="form-control" aria-label="Sizing example input"
+                     aria-describedby="inputGroup-sizing-sm" [(ngModel)]="iAsiento.documento" readonly>
+               </div>
+               <div class="input-group input-group-sm col-sm-5 mb-1 ml-0">
+                  <div class="input-group-prepend">
+                     <span class="input-group-text font-weight-bold" id="inputGroup-sizing-sm">Beneficiario</span>
+                  </div>
+                  <input type="text" class="form-control" aria-label="Sizing example input"
+                     aria-describedby="inputGroup-sizing-sm" [(ngModel)]="iAsiento.beneficiario" readonly>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+<div class="content">
+   <div class="container-fluid">
+      <div class="row">
+         <div class="col-sm-12 mt-0">
+            <div class="card card-body sombra detalle pt-0 px-2">
+               <form [formGroup]="formTransaci" class="pt-1">
+                  <h5 class="font-weight-bold text-center cabecera border mt-0 py-1">{{tiptran.nombre}}</h5>
+                  <div class="row">
+
+                     <div class="form-group col-md-2 mb-1">
+                        <div class="input-group input-group-sm">
+                           <div class="input-group-prepend">
+                              <label class="input-group-text" for="orden">Orden<sup class="green">*</sup></label>
+                           </div>
+                           <input type="number" class="form-control text-center" formControlName="orden"
+                              aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                        </div>
+                     </div>
+
+                     <div class="form-group col-md-8 mb-1">
+                        <div class="input-group input-group-sm">
+                           <div class="input-group-prepend">
+                              <label class="input-group-text" for="fecha">Cuenta<sup class="green">*</sup></label>
+                           </div>
+                           <input type="text" class="form-control form-control-sm col-3" formControlName="cuenta"
+                              list="cuentasList" (input)="onCuentaSelected($event); cuentasxTiptran($event)" [ngClass]="{'is-invalid': f['cuenta'].invalid && f['cuenta'].touched,
+                           'is-valid': f['cuenta'].valid, '': f['cuenta'].untouched}" [type]="'text'">
+                           <datalist role="listbox" id="cuentasList">
+                              <option *ngFor="let cue of _cuentas" value={{cue.codcue}}>
+                                 {{ cue.nomcue}}</option>
+                           </datalist>
+                           <input type="text" class="form-control" formControlName="nomcue" aria-label="Small"
+                              aria-describedby="inputGroup-sizing-sm" readonly tabindex="-1">
+                        </div>
+                     </div>
+
+                     <div class="form-group col-md-2 mb-1">
+                        <div class="input-group mb-1 input-group-sm">
+                           <div class="input-group-prepend">
+                              <label class="input-group-text">{{nomDebcre}}<sup class="green">*</sup></label>
+                           </div>
+                           <input type="text" class="form-control text-right" formControlName="valor" appVisualFormat [minDecimals]="2"
+                           readonly tabindex="-1">
+                        </div>
+                     </div>
+
+                     <div class="form-group col-md-4 mb-1">
+                        <div class="input-group input-group-sm">
+                           <div class="input-group-prepend">
+                              <label class="input-group-text">Documento<sup class="green">*</sup></label>
+                           </div>
+                           <select type="text" class="custom-select" formControlName="documento">
+                              <option *ngFor="let doc of _documentos" [ngValue]="doc.iddocumento"> {{
+                                 doc.nomdoc }}
+                              </option>
+                           </select>
+                           <input type="text" class="form-control text-center col-sm-4" formControlName="numdoc"
+                              [ngClass]="{'is-invalid': f['numdoc'].invalid && f['numdoc'].touched,
+                                       'is-valid': f['numdoc'].valid, '': f['numdoc'].untouched}">
+                        </div>
+                     </div>
+
+                     <div class="form-group col-md-8 mb-2">
+                        <div class="input-group input-group-sm">
+                           <div class="input-group-prepend">
+                              <label class="input-group-text">Concepto</label>
+                           </div>
+                           <textarea class="form-control" formControlName="concepto" rows="1"></textarea>
+                        </div>
+                     </div>
+                  </div>
+
+                  <div class="text-center">
+                     <button type="submit" class="btn btn-success btn-sm mx-1" [disabled]="!formTransaci.valid"
+                        (click)="guardar()">
+                        <i class="fa fa-check-circle"></i> Aceptar</button>
+                     <button type="button" class="btn btn-outline-success btn-sm mx-1" (click)="regresar()"><i
+                           class="fa fa-times-circle"></i> Cancelar
+                     </button>
+                  </div>
+
+                  <!-- Cabecera de benextran -->
+                  <table *ngIf="idcuenta" class="table table-hover table-bordered table-sm my-1">
+                     <thead>
+                        <tr class="pad0 cabecera">
+                           <th class="col-md-3 text-center fantacyblack">Beneficiario<sup>*</sup></th>
+                           <th class="col-md-1 text-center fantacyblack">Documento</th>
+                           <th class="col-md-1 text-center fantacyblack"> #Doc</th>
+                           <th class="col-md-2 text-right fantacyblack">
+                              {{tiptran.cabecera1}}<sup>*</sup>&nbsp;&nbsp;&nbsp;</th>
+                           <th class="col-md-2 text-right fantacyblack">{{tiptran.cabecera2}}&nbsp;&nbsp;&nbsp;</th>
+                           <th class="col-md-2 text-right fantacyblack">Saldo&nbsp;&nbsp;&nbsp;</th>
+                           <th class="text-center">
+                              <i class="bi-plus-circle-fill fantacyblack" data-toggle="tooltip" title="Nuevo"
+                                 (click)="addBenextran()"></i>
+                           </th>
+                        </tr>
+                     </thead>
+                  </table>
+
+                  <div formArrayName="benextran">
+                     <div *ngFor="let bxt of benextran.controls; let i = index" [formGroupName]="i">
+                        <div class="form-row mb-1">
+
+                           <div class="form-group col-md-3 my-0 py-0">
+                              <div class="input-group flex-nowrap input-group-sm">
+                                 <input type="text" class="form-control form-control-sm" formControlName="beneficiario"
+                                    [attr.list]="'beneficiariosList' + i"
+                                    (input)="onBenefiSelected(i, $event); benefixNombre(i, $event)"
+                                    [ngClass]="{'is-invalid': bxt.get('beneficiario')?.invalid && bxt.get('beneficiario')?.touched,
+                                     'is-valid': bxt.get('beneficiario')?.valid,'': bxt.get('beneficiario')?.untouched}">
+                                 <datalist role="listbox" id="beneficiariosList{{ i }}">
+                                    <option *ngFor="let bene of _arrBeneficiarios[i]" value={{bene.nomben}}>
+                                       {{ bene.grupo.nomgru}}</option>
+                                 </datalist>
+                              </div>
+                              <div
+                                 *ngIf="authService.msgval && bxt.get('beneficiario')?.errors && bxt.get('beneficiario')?.touched">
+                                 <div *ngIf="bxt.get('beneficiario')?.errors?.['required']"
+                                    class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                                    <strong>Ups!</strong> El Beneficiario es obligatorio
+                                 </div>
+                                 <div *ngIf="bxt.get('beneficiario')?.errors?.['invalido']"
+                                    class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                                    <strong>Ups!</strong> No ha seleccionado un Beneficiario
+                                 </div>
+                              </div>
+
+                           </div>
+
+                           <div class="form-group col-md-1 my-0 py-0">
+                              <select type="text" class="custom-select  custom-select-sm" formControlName="documento">
+                                 <option *ngFor="let doc of _documentos" [ngValue]="doc.iddocumento"> {{
+                                    doc.nomdoc }}
+                                 </option>
+                              </select>
+                           </div>
+
+                           <div class="col-md-1 pr-1">
+                              <input type="text" class="form-control form-control-sm text-center"
+                                 formControlName="numdoc">
+                           </div>
+
+                           <div class="col-md-2">
+                              <input type="text" class="form-control form-control-sm text-right" formControlName="valor"
+                                 appVisualFormat [minDecimals]="2" [maxDecimals]="2" (blur)="changeValor()"
+                                 [ngClass]="{'is-invalid': bxt.get('valor')?.invalid && bxt.get('valor')?.touched,'is-valid': bxt.get('valor')?.valid && bxt.get('valor')?.touched}">
+
+                              <div *ngIf="authService.msgval && bxt.get('valor')!.errors && bxt.get('valor')!.touched">
+                                 <div *ngIf="bxt.get('valor')?.errors?.['required']"
+                                    class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                                    <strong>Ups!</strong> El Valor es obligatorio
+                                 </div>
+                                 <div *ngIf="bxt.get('valor')?.errors?.['min']"
+                                    class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                                    <strong>Ups!</strong> No puede ser negativo
+                                 </div>
+                              </div>
+                           </div>
+
+                           <div class="col-md-2">
+                              <input type="text" class="form-control form-control-sm text-right"
+                                 formControlName="totpagcob" readonly tabindex="-1">
+                           </div>
+
+                           <div class="col-md-2">
+                              <input type="text" class="form-control form-control-sm text-right" formControlName="saldo"
+                                 readonly tabindex="-1">
+                           </div>
+
+                           <div class="col-md-1 text-center">
+                              <button type="button" class="btn btn-sm text-center" (click)="eliminaBenextran(i)"><i
+                                    class="bi-x-circle-fill text-danger" data-toggle="tooltip"
+                                    title="Quitar"></i></button>
+                           </div>
+
+                        </div>
+                     </div>
+
+                  </div>
+               </form>
+
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
