@@ -43,8 +43,14 @@ public class TransaccionesApi {
     }
 
     // OPCION DE GUARDADO CONTROLANDO LOS ASIENTOS
+
+    /**
+     * ESTE POST saveControlado() ES SOLO DE PRUEBA PARA COMPROBAR EL FUNCIONAMIENTO DE LOS VALORES DE LAS TRANSACCIONES AL GUARDAR
+     *
+     */
     @PostMapping("/save")
     public ResponseEntity<Map<String, Object>> saveControlado(){
+        //BUSCA LA TRANSACCION QUE SE VA A ACTUALIZAR O MODIFICAR--- SOLO DE PRUEBA SE CAMBIA EL IDTRANSACCION
         Transacciones transacciones = tranService.findById(8L).orElseThrow(()-> new RuntimeException("No encontrada"));
 
         Map<String , Object> response = new HashMap<>();
