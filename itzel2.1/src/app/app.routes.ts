@@ -41,6 +41,8 @@ import { AddTransaccionComponent } from './componentes/contabilidad/transaccione
 import { ModiTransaccionComponent } from './componentes/contabilidad/transacciones/modi-transaccion/modi-transaccion.component';
 import { info } from 'console';
 import { TransaccionesComponent } from './componentes/contabilidad/transacciones/transacciones/transacciones.component';
+import { DestinosComponent } from './componentes/existencias/destinos/destinos/destinos.component';
+import { PedidosComponent } from './componentes/existencias/pedidos/pedidos/pedidos.component';
 
 export const routes: Routes = [
   { path: 'inicio', component: AppWrapperComponent },
@@ -92,9 +94,19 @@ export const routes: Routes = [
   { path: 'asientos', component: AsientosComponent },
   { path: 'add-asiento', component: AddAsientoComponent },
   /* ==========TRANSACCIONES========== */
-  { path: 'transacciones',component: TransaccionesComponent,},
+  { path: 'transacciones', component: TransaccionesComponent },
   { path: 'add-transaccion', component: AddTransaccionComponent },
   { path: ' modi-transaccion', component: ModiTransaccionComponent },
+
+  /* ======================================================================
+  MODULO ROLES
+  ====================================================================== */
+  /* ==========DESTINOS========== */
+
+  { path: 'destinos', component: DestinosComponent },
+  /* ==========PEDIDOS========== */
+  { path: 'pedidos', component: PedidosComponent },
+
   /* 
   ======================================================================
   MODULO ROLES
