@@ -158,6 +158,13 @@
                                 <p class="text-warning"> Destinos</p>
                             </a>
                         </li>
+                        <li class="nav-item" routerLinkActive="menu-open">
+                            <a [routerLink]="['/articulos']" class="nav-link" routerLinkActive="active"
+                                [routerLinkActiveOptions]="{ exact: true }">
+                                <i class="bi-person-circle nav-icon"></i>
+                                <p class="text-warning"> Artículos</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li class="nav-item has-treeview" routerLinkActive="menu-open">

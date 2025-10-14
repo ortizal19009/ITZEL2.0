@@ -43,6 +43,9 @@ import { info } from 'console';
 import { TransaccionesComponent } from './componentes/contabilidad/transacciones/transacciones/transacciones.component';
 import { DestinosComponent } from './componentes/existencias/destinos/destinos/destinos.component';
 import { PedidosComponent } from './componentes/existencias/pedidos/pedidos/pedidos.component';
+import { ArticulosComponent } from './componentes/existencias/articulos/articulos/articulos.component';
+import { AddArticuloComponent } from './componentes/existencias/articulos/add-articulo/add-articulo.component';
+import { ModiArticuloComponent } from './componentes/existencias/articulos/modi-articulo/modi-articulo.component';
 
 export const routes: Routes = [
   { path: 'inicio', component: AppWrapperComponent },
@@ -106,6 +109,10 @@ export const routes: Routes = [
   { path: 'destinos', component: DestinosComponent },
   /* ==========PEDIDOS========== */
   { path: 'pedidos', component: PedidosComponent },
+  /* ==========ARTICULOS========== */
+  { path: 'articulos', component: ArticulosComponent },
+  { path: 'add-articulo', component: AddArticuloComponent },
+  { path: 'modi-articulo', component: ModiArticuloComponent },
 
   /* 
   ======================================================================
