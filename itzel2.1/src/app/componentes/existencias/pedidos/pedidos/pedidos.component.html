@@ -1,1 +1,130 @@
-<p>pedidos.component works!</p>
+<div class="content mt-1 pt-1 pl-0">
+   <div class="container-fluid">
+      <div class="row m-0 px-0 py-1 justify-content-start cabecera border sombra">
+         <div class="col-sm-2">
+            <h5 class="font-weight-bold mt-0 my-0"> <i class="bi bi-cart-fill text-warning"></i>&nbsp; Pedidos</h5>
+         </div>
+         <div class="col-sm-10">
+            <form [formGroup]="formBuscar" (ngSubmit)="buscar()">
+               <div class="row my-0">
+
+                  <div class="input-group col-sm-7">
+                     <input type="text" class="form-control form-control-sm text-center col-sm-3"
+                        formControlName="codigo" placeholder="Código">
+                     <input type="text" class="form-control form-control-sm col-sm-3" formControlName="codcue"
+                        placeholder="Cuenta">
+                     <input type="text" class="form-control form-control-sm text-center col-sm-6"
+                        formControlName="nombre" placeholder="Nombre">
+                  </div>
+
+                  <div class="input-group col-sm-2">
+                     <button class="btn btn-primary btn-sm">
+                        <i *ngIf="swbuscando" class="fa fa-spinner"></i>
+                        <i *ngIf="!swbuscando" class="fa fa-search"></i> {{txtbuscar}}
+                     </button>
+                  </div>
+
+                  <div *ngIf="_pedidos?.length" class="input-group col-sm-2">
+                     <input type="text" class="form-control form-control-sm text-center" formControlName="filtroControl"
+                        placeholder="Filtrar...">
+                  </div>
+
+                  <div class="btn-group ml-auto mt-0">
+                     <button type="button" class="bg-transparent border-0 dropdown-toggle text-white text-right"
+                        data-toggle="dropdown" aria-expanded="false"> <i class="bi-menu-button-wide text-white"></i>
+                     </button>
+                     <div class="dropdown-menu dropdown-menu-right bg-dark roboto ">
+                        <button class="dropdown-item popupCabecera" type="button" (click)="nuevo()">
+                           <i class="bi-file-earmark-plus text-info"></i>&nbsp; Nuevo</button>
+                        <button class="dropdown-item" type="button" (click)="imprimir()">
+                           <i class="bi bi-printer text-info"></i>&nbsp; Imprimir / Exportar</button>
+                        <button class="dropdown-item" type="button" (click)="cerrar()">
+                           <i class="bi-x-circle text-info"></i>&nbsp; Cerrar</button>
+                     </div>
+                  </div>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
+
+<div class="container-fluid">
+   <div class="row mb-0">
+      <div class="col-sm-12">
+         <table *ngIf="_pedidos?.length" class="table table-hover table-bordered table-sm sombra">
+            <thead class="cabecera">
+               <tr class="pad0">
+
+                  <th (click)="ordenarPor('total')" style="cursor: pointer">Código
+                     <i *ngIf="ordenColumna === 'total'"
+                        [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
+                  </th>
+                  <th (click)="ordenarPor('total')" style="cursor: pointer">Cuenta
+                     <i *ngIf="ordenColumna === 'total'"
+                        [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
+                  </th>
+                  <th class="col-md-5" (click)="ordenarPor('total')" style="cursor: pointer">Nombre
+                     <i *ngIf="ordenColumna === 'total'"
+                        [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
+                  </th>
+                  <th class="text-right" (click)="ordenarPor('total')" style="cursor: pointer">Inicial
+                     <i *ngIf="ordenColumna === 'total'"
+                        [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
+                  </th>
+                  <th class="text-center" (click)="ordenarPor('total')" style="cursor: pointer">Unidad
+                     <i *ngIf="ordenColumna === 'total'"
+                        [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
+                  </th>
+                  <th class="text-right" (click)="ordenarPor('total')" style="cursor: pointer">Actual
+                     <i *ngIf="ordenColumna === 'total'"
+                        [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
+                  </th>
+                  <th class="text-right" (click)="ordenarPor('total')" style="cursor: pointer">Costo
+                     <i *ngIf="ordenColumna === 'total'"
+                        [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
+                  </th>
+                  <th (click)="ordenarPor('total')" style="cursor: pointer" class="text-right">Total
+                     <i *ngIf="ordenColumna === 'total'"
+                        [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
+                  </th>
+                  <th></th>
+               </tr>
+            </thead>
+            <tbody class="detalle roboto small">
+               <tr *ngFor="let pedido of pedidosFiltrados" class="fila pad0"
+                  (click)="onCellClick($event, pedido.idpedido )">
+                  <td>{{ pedido.numero}}</td>
+                  <td>{{ pedido.fecha}}</td>
+                  <td class="text-left text-truncate ancho200" data-toggle="tooltip"
+                     [title]="pedido.descripcion!.length > 60 ? pedido.descripcion : ''">{{ pedido.descripcion }}</td>
+                  <td class="text-right" [ngClass]="{'transparente': pedido.total == 0}">{{pedido.total |
+                     number:'1.2-2'}} </td>
+                  <td class="text-center">{{pedido.beneficiario?.nomben}}</td>
+      
+
+                  <td class="text-center">
+                     <div class="btn-group py-0">
+                        <button type="button" class="btn btn-warning btn-xs dropdown-toggle py-0" data-toggle="dropdown"
+                           aria-expanded="false">
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right popLista">
+                           <button class="dropdown-item" type="button" (click)="modificar( pedido.idpedido )">
+                              <i class="bi bi-pencil"></i>&nbsp; Modificar</button>
+                           <button class="dropdown-item" type="button" (click)="eliminar( pedido )">
+                              <i class="bi bi-file-minus"></i>&nbsp; Eliminar</button>
+                        </div>
+                     </div>
+                  </td>
+               </tr>
+            </tbody>
+            <tfoot class="font-weight-bold detalle roboto small pad0">
+               <td>TOTAL: {{pedidosFiltrados.length}}&nbsp;&nbsp;</td>
+               <td colspan="7" class="text-right">{{sumTotal | number: '1.4-4'}} </td>
+               <td></td>
+            </tfoot>
+         </table>
+      </div>
+   </div>
+
+</div>

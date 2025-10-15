@@ -46,6 +46,8 @@ import { PedidosComponent } from './componentes/existencias/pedidos/pedidos/pedi
 import { ArticulosComponent } from './componentes/existencias/articulos/articulos/articulos.component';
 import { AddArticuloComponent } from './componentes/existencias/articulos/add-articulo/add-articulo.component';
 import { ModiArticuloComponent } from './componentes/existencias/articulos/modi-articulo/modi-articulo.component';
+import { AddPedidoComponent } from './componentes/existencias/pedidos/add-pedido/add-pedido.component';
+import { ModiPedidoComponent } from './componentes/existencias/pedidos/modi-pedido/modi-pedido.component';
 
 export const routes: Routes = [
   { path: 'inicio', component: AppWrapperComponent },
@@ -99,7 +101,7 @@ export const routes: Routes = [
   /* ==========TRANSACCIONES========== */
   { path: 'transacciones', component: TransaccionesComponent },
   { path: 'add-transaccion', component: AddTransaccionComponent },
-  { path: ' modi-transaccion', component: ModiTransaccionComponent },
+  { path: 'modi-transaccion', component: ModiTransaccionComponent },
 
   /* ======================================================================
   MODULO ROLES
@@ -109,6 +111,8 @@ export const routes: Routes = [
   { path: 'destinos', component: DestinosComponent },
   /* ==========PEDIDOS========== */
   { path: 'pedidos', component: PedidosComponent },
+  { path: 'add-pedido', component: AddPedidoComponent },
+  { path: 'modi-pedido', component: ModiPedidoComponent },
   /* ==========ARTICULOS========== */
   { path: 'articulos', component: ArticulosComponent },
   { path: 'add-articulo', component: AddArticuloComponent },
