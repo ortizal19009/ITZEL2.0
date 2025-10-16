@@ -48,7 +48,7 @@ export class AddProyectoComponent implements OnInit {
       nombre: ['', [Validators.required]],
       movimiento: [false, [Validators.required]],
       estructura: [''],
-      usucrea: [1],
+      usucrea: [this.authService.idusuario],
       feccrea: [this.date],
     });
     if (typeof window !== 'undefined' && typeof sessionStorage !== 'undefined') {

@@ -20,24 +20,24 @@
                                     <label class="input-group-text">Número<sup class="green">*</sup></label>
                                 </div>
                                 <input #inputPrimero type="text" class="form-control text-center"
-                                    formControlName="codigo" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
-                                    maxlength="10" [ngClass]="{'is-invalid': f['codigo'].invalid && f['codigo'].touched,
-                           'is-valid': f['codigo'].valid, '': f['codigo'].untouched}">
+                                    formControlName="numero" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                                    maxlength="10" [ngClass]="{'is-invalid': f['numero'].invalid && f['numero'].touched,
+                           'is-valid': f['numero'].valid, '': f['numero'].untouched}">
                             </div>
-                            <div *ngIf="authService.msgval && f['codigo'].errors && f['codigo'].touched">
-                                <div *ngIf="f['codigo'].errors['required']"
+                            <div *ngIf="authService.msgval && f['numero'].errors && f['numero'].touched">
+                                <div *ngIf="f['numero'].errors['required']"
                                     class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
                                     <strong>Ups!</strong> El código es obligatorio
                                 </div>
-                                <div *ngIf="f['codigo'].errors['minlength']"
+                                <div *ngIf="f['numero'].errors['minlength']"
                                     class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
                                     <strong>Ups!</strong> Mínimo 2 caracteres
                                 </div>
-                                <div *ngIf="f['codigo'].errors['pattern']"
+                                <div *ngIf="f['numero'].errors['pattern']"
                                     class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
                                     <strong>Ups!</strong> Solo mayúsculas y números
                                 </div>
-                                <div *ngIf="f['codigo'].errors['existe']"
+                                <div *ngIf="f['numero'].errors['existe']"
                                     class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
                                     <strong>Ups!</strong> Ese código ya existe
                                 </div>
@@ -49,22 +49,34 @@
                                 <div class="input-group-prepend">
                                     <label class="input-group-text">Fecha<sup class="green">*</sup></label>
                                 </div>
-                                <input type="text" class="form-control" formControlName="nombre" aria-label="Small"
-                                    maxlength="60" aria-describedby="inputGroup-sizing-sm" [ngClass]="{'is-invalid': f['nombre'].invalid && f['nombre'].touched,
-                             'is-valid': f['nombre'].valid, '': f['nombre'].untouched}">
+                                <input type="date" class="form-control" formControlName="fecha" aria-label="Small"
+                                    aria-describedby="inputGroup-sizing-sm" [ngClass]="{'is-invalid': f['fecha'].invalid && f['fecha'].touched,
+                             'is-valid': f['fecha'].valid, '': f['fecha'].untouched}">
                             </div>
-                            <div *ngIf="authService.msgval && f['nombre'].errors && f['nombre'].touched">
-                                <div *ngIf="f['nombre'].errors['required']"
-                                    class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
-                                    <strong>Ups!</strong> El nombre es obligatorio
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text">Beneficiario<sup class="green">*</sup></label>
                                 </div>
-                                <div *ngIf="f['nombre'].errors['minlength']"
+                                <input type="text" class="form-control form-control-sm col-md"
+                                    formControlName="beneficiario" placeholder="Nombre del beneficiario" list="cuentasList"
+                                    (input)="getAllBeneficiarios($event)"
+                                    [ngClass]="{'is-invalid': f['beneficiario'].invalid && f['beneficiario'].touched,'is-valid': f['beneficiario'].valid, '': f['beneficiario'].untouched}">
+                                <datalist role="listbox" id="cuentasList">
+                                    <option *ngFor="let bene of _beneficiarios" value={{bene.nomben}}>{{bene.codben}}
+                                    </option>
+                                </datalist>
+                            </div>
+                            <div *ngIf="authService.msgval && f['beneficiario'].errors && f['beneficiario'].touched">
+                                <div *ngIf="f['beneficiario'].errors['required']"
                                     class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
-                                    <strong>Ups!</strong> El nombre debe tener al menos 3 caracteres
+                                    <strong>Ups!</strong> La Cuenta es obligatorio
                                 </div>
-                                <div *ngIf="f['nombre'].errors['existe']"
+                                <div *ngIf="f['beneficiario'].errors['invalido']"
                                     class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
-                                    <strong>Ups!</strong> Ese nombre ya existe
+                                    <strong>Ups!</strong> No ha seleccionado una Cuenta
                                 </div>
                             </div>
                         </div>
@@ -72,29 +84,7 @@
                         <div class="form-group col-md-4">
                             <div class="input-group input-group-sm">
                                 <div class="input-group-prepend">
-                                    <label class="input-group-text" id="inputGroup-sizing-sm">Beneficiario<sup
-                                            class="green">*</sup></label>
-                                </div>
-                                <input type="text" class="form-control" formControlName="unidad" aria-label="Small"
-                                    maxlength="12" [ngClass]="{'is-invalid': f['unidad'].invalid && f['unidad'].touched,
-                             'is-valid': f['unidad'].valid, '': f['unidad'].untouched}">
-                            </div>
-                            <div *ngIf="authService.msgval && f['unidad'].errors && f['unidad'].touched">
-                                <div *ngIf="f['unidad'].errors['required']"
-                                    class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
-                                    <strong>Ups!</strong> Unidad de medida obligatoria
-                                </div>
-                                <div *ngIf="f['unidad'].errors['minlength']"
-                                    class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
-                                    <strong>Ups!</strong> Mínimo 2 caracteres
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group col-md-4">
-                            <div class="input-group input-group-sm">
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text">Destino</label>
+                                    <label class="input-group-text">Destino<sup class="green">*</sup></label>
                                 </div>
                                 <input type="text" class="form-control text-right" formControlName="minimo"
                                     appVisualFormat [minDecimals]="2" [maxDecimals]="2">
@@ -115,13 +105,11 @@
                                 <div class="input-group-prepend">
                                     <label class="input-group-text">Documento<sup class="green">*</sup></label>
                                 </div>
-                                <input type="text" class="form-control form-control-sm col-md-3"
-                                    formControlName="Numero documento" list="cuentasList"
-                                    (input)="onDocumentoSelected($event)"
-                                    [ngClass]="{'is-invalid': f['cuenta'].invalid && f['cuenta'].touched,'is-valid': f['cuenta'].valid, '': f['cuenta'].untouched}">
-                                <datalist role="listbox" id="cuentasList">
-                                    <option *ngFor="let documento of _documentos" value={{documento.nomdoc}}>{{documento.nomdoc}}</option>
-                                </datalist>
+
+                                <select formControlName="documento" class="form-control col-sm-2 form-control-sm">
+                                    <option *ngFor="let doc of _documentos" [ngValue]=doc>
+                                        {{doc.nomdoc}}</option>
+                                </select>
                                 <input type="text" class="form-control form-control-sm bg-light" [value]="documento"
                                     tabindex="-1">
                             </div>
