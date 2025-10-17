@@ -61,10 +61,10 @@
                                     <label class="input-group-text">Beneficiario<sup class="green">*</sup></label>
                                 </div>
                                 <input type="text" class="form-control form-control-sm col-md"
-                                    formControlName="beneficiario" placeholder="Nombre del beneficiario" list="cuentasList"
-                                    (input)="getAllBeneficiarios($event)"
+                                    formControlName="beneficiario" placeholder="Nombre del beneficiario"
+                                    list="beneficiarioList" (input)="getAllBeneficiarios($event)"
                                     [ngClass]="{'is-invalid': f['beneficiario'].invalid && f['beneficiario'].touched,'is-valid': f['beneficiario'].valid, '': f['beneficiario'].untouched}">
-                                <datalist role="listbox" id="cuentasList">
+                                <datalist role="listbox" id="beneficiarioList">
                                     <option *ngFor="let bene of _beneficiarios" value={{bene.nomben}}>{{bene.codben}}
                                     </option>
                                 </datalist>
@@ -81,23 +81,18 @@
                             </div>
                         </div>
 
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-6">
                             <div class="input-group input-group-sm">
                                 <div class="input-group-prepend">
                                     <label class="input-group-text">Destino<sup class="green">*</sup></label>
                                 </div>
-                                <input type="text" class="form-control text-right" formControlName="minimo"
-                                    appVisualFormat [minDecimals]="2" [maxDecimals]="2">
-                            </div>
-                        </div>
-
-                        <div class="form-group col-md-4">
-                            <div class="input-group input-group-sm">
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text">Stock máximo</label>
-                                </div>
-                                <input type="text" class="form-control text-right" formControlName="maximo"
-                                    appVisualFormat [minDecimals]="2" [maxDecimals]="2">
+                                <input list="destinoList" class="form-control form-control-sm col-md"
+                                    formControlName="destino" placeholder="Ingrese el destino">
+                                <!-- [ngClass]="{'is-invalid': f['destino'].invalid && f['destino'].touched,'is-valid': f['destino'].valid, '': f['beneficiario'].untouched}" -->
+                                <datalist role="listbox" id="destinoList">
+                                    <option *ngFor="let dest of _destinos" value={{dest.nomdestino}}>{{dest.nomdestino}}
+                                    </option>
+                                </datalist>
                             </div>
                         </div>
                         <div class="form-group col-md-12">
@@ -113,12 +108,12 @@
                                 <input type="text" class="form-control form-control-sm bg-light" [value]="documento"
                                     tabindex="-1">
                             </div>
-                            <div *ngIf="authService.msgval && f['cuenta'].errors && f['cuenta'].touched">
-                                <div *ngIf="f['cuenta'].errors['required']"
+                            <div *ngIf="authService.msgval && f['documento'].errors && f['documento'].touched">
+                                <div *ngIf="f['documento'].errors['required']"
                                     class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
                                     <strong>Ups!</strong> La Cuenta es obligatorio
                                 </div>
-                                <div *ngIf="f['cuenta'].errors['invalido']"
+                                <div *ngIf="f['documento'].errors['invalido']"
                                     class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
                                     <strong>Ups!</strong> No ha seleccionado una Cuenta
                                 </div>
@@ -134,71 +129,72 @@
                             </div>
                         </div>
 
-                        <div class="form-group col-md-3">
-                            <div class="input-group input-group-sm">
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text">Inicial<sup class="green">*</sup></label>
-                                </div>
-                                <input type="text" class="form-control text-right" formControlName="inicial"
-                                    appVisualFormat [minDecimals]="2" [maxDecimals]="2" [ngClass]="{'is-invalid': f['inicial'].invalid && f['inicial'].touched,
-                             'is-valid': f['inicial'].valid, '': f['inicial'].untouched}">
-                            </div>
-                            <div *ngIf="authService.msgval && f['inicial'].errors && f['inicial'].touched">
-                                <div *ngIf="f['inicial'].errors['required']"
-                                    class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
-                                    <strong>Ups!</strong> El Inicial es obligatorio
-                                </div>
-                                <div *ngIf="f['inicial'].errors['min']"
-                                    class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
-                                    <strong>Ups!</strong> No puede ser negativo
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group col-md-4">
-                            <div class="input-group input-group-sm">
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text">Costo unitario<sup class="green">*</sup></label>
-                                </div>
-                                <input type="text" class="form-control text-right" formControlName="cosinicial"
-                                    appVisualFormat [minDecimals]="2" [maxDecimals]="2" [ngClass]="{'is-invalid': f['cosinicial'].invalid && f['cosinicial'].touched,
-                             'is-valid': f['cosinicial'].valid, '': f['cosinicial'].untouched}">
-                            </div>
-                            <div *ngIf="authService.msgval && f['cosinicial'].errors && f['cosinicial'].touched">
-                                <div *ngIf="f['cosinicial'].errors['required']"
-                                    class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
-                                    <strong>Ups!</strong> El Costo unitario es obligatorio
-                                </div>
-                                <div *ngIf="f['cosinicial'].errors['min']"
-                                    class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
-                                    <strong>Ups!</strong> No puede ser negativo
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-3 ml-auto">
                             <div class="input-group input-group-sm">
                                 <div class="input-group-prepend">
                                     <label class="input-group-text">Total</label>
                                 </div>
-                                <input type="text" class="form-control text-right" formControlName="calctotal1"
+                                <input type="text" class="form-control text-right" formControlName="total"
                                     appVisualFormat [minDecimals]="2" [maxDecimals]="2" readonly tabindex="-1">
-                            </div>
-                        </div>
-
-                        <div class="form-group col-md-2">
-                            <div class="input-group input-group-sm">
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text">Inmediato </label>
-                                    <div class="input-group-text">
-                                        <input type="checkbox" formControlName="swinmediato">
-                                    </div>
-                                </div>
                             </div>
                         </div>
 
                     </div>
                 </form>
+                <form [formGroup]="formArticulo" class="mb-3">
+                    <div class="form-group col-md-12">
+                        <label for="articulo" class="form-label">
+                            Artículo <sup class="text-success">*</sup>
+                        </label>
+                        <div class="input-group input-group-sm">
+                            <input id="articulo" type="text" autocomplete="off" autocorrect="off" autocapitalize="off"
+                                spellcheck="false" class="form-control form-control-sm"
+                                placeholder="Nombre del artículo, código o cuenta" formControlName="articulo"
+                                list="articulosList" (input)="getArticulos($event)"
+                                (change)="onArticuloSelected($event)" />
+                            <datalist id="articulosList">
+                                <option *ngFor="let s of _suggestions" [value]="s"></option>
+                            </datalist>
+
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Tabla de artículos seleccionados -->
+                <div class="card" *ngIf="_articulosSelected.length > 0">
+                    <div class="card-body p-2">
+                        <table class="table table-sm table-hover table-bordered mb-0 text-center align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th style="width: 5%">#</th>
+                                    <th>Nombre</th>
+                                    <th style="width: 15%">Cantidad</th>
+                                    <th style="width: 10%">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let art of _articulosSelected; let i = index">
+                                    <td>{{ i + 1 }}</td>
+                                    <td>{{ art.nombre }}</td>
+                                    <td>
+                                        <input type="number" class="form-control form-control-sm text-center"
+                                            [(ngModel)]="art.cantidad" min="1" />
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-danger" (click)="removeArticulo(i)">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Mensaje si no hay artículos -->
+                <div *ngIf="_articulosSelected.length === 0" class="text-muted fst-italic text-center">
+                    <small>No hay artículos seleccionados aún.</small>
+                </div>
 
                 <div class="row">
                     <div *ngIf="formPedido" class="col-md-12 text-center">

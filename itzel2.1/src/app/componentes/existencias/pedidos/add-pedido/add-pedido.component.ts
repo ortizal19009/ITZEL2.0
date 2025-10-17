@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { AutorizaService } from '../../../servicios/administracion/autoriza.service';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { VisualFormatDirective } from '../../../directives/visual-format.directive';
 import { Articulos } from '../../../modelos/existencias/articulos.model';
@@ -9,26 +15,41 @@ import { Documentos } from '../../../modelos/administracion/documentos.model';
 import { DocumentosService } from '../../../servicios/administracion/documentos.service';
 import { BeneficiariosService } from '../../../servicios/contabilidad/beneficiarios.service';
 import { Beneficiarios } from '../../../modelos/contabilidad/beneficiarios.model';
+import { DestinosService } from '../../../servicios/existencias/destinos.service';
+import { Destinos } from '../../../modelos/existencias/destinos.model';
+import { Pedidos } from '../../../modelos/existencias/pedidos.model';
+import { PedidosService } from '../../../servicios/existencias/pedidos.service';
+import { ArticulosService } from '../../../servicios/existencias/articulos.service';
+import { debounceTime, distinctUntilChanged, filter, map, tap } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-add-pedido.component',
-  imports: [CommonModule, ReactiveFormsModule, VisualFormatDirective],
+  imports: [CommonModule, ReactiveFormsModule, VisualFormatDirective, FormsModule],
   templateUrl: './add-pedido.component.html',
   styleUrl: './add-pedido.component.css',
 })
 export class AddPedidoComponent implements OnInit {
   formPedido!: FormGroup;
-  _articulos: Articulos[] = [];
+  formArticulo!: FormGroup;
+  _articulos: any[] = [];
+  _articulosSelected: any[] = [];
   _documentos: Documentos[] = [];
   _beneficiarios: Beneficiarios[] = [];
+  _destinos: Destinos[] = [];
   documento: string = '';
   date: Date = new Date();
+  articulo!: string;
+
   constructor(
     public authService: AutorizaService,
     private router: Router,
     private fb: FormBuilder,
     private documentoService: DocumentosService,
-    private beneService: BeneficiariosService
+    private beneService: BeneficiariosService,
+    private destService: DestinosService,
+    private pedidoService: PedidosService,
+    private artService: ArticulosService
   ) {}
   ngOnInit(): void {
     if (!this.authService.sessionlog) {
@@ -49,7 +70,30 @@ export class AddPedidoComponent implements OnInit {
       usucrea: [this.authService.idusuario],
       destino: [''],
     });
+    this.formArticulo = this.fb.group({
+      articulo: [''],
+    });
+    /*     this.formArticulo
+      .get('articulo')!
+      .valueChanges.pipe(
+        map((v) => (v || '').trim()),
+        debounceTime(250),
+        distinctUntilChanged(),
+        tap((v) => {
+          console.log('Input articulo: ', v);
+          if (!v) this._articulos = [];
+        }),
+        filter((v) => !!v)
+      )
+      .subscribe((v) => {
+        this.artService.getByNombreCuentaCodigo(v).subscribe({
+          next: (d: any) => (this._articulos = d),
+          error: (e) => this.authService.mostrarError('error', e.error),
+        });
+      }); */
     this.getAllDocumentos();
+    this.getAllDestinos();
+    this.getLastPedido();
   }
   colocaColor(colores: any) {
     document.documentElement.style.setProperty('--bgcolor1', colores[0]);
@@ -68,6 +112,15 @@ export class AddPedidoComponent implements OnInit {
   }
   guardar() {
     console.log(this.formPedido.value);
+    console.log(this.formArticulo.value);
+    console.log(this._articulosSelected);
+  }
+  getLastPedido() {
+    this.pedidoService.getLastPedido().subscribe({
+      next: (data: number) => {
+        this.formPedido.patchValue({ numero: data + 1 });
+      },
+    });
   }
   getAllDocumentos() {
     this.documentoService.getListaDocumentos().subscribe({
@@ -95,8 +148,115 @@ export class AddPedidoComponent implements OnInit {
       },
     });
   }
-  getAllDestinos() {}
+  getAllDestinos() {
+    this.destService.getListaDestinos().subscribe({
+      next: (data: Destinos[]) => {
+        console.log(data);
+        this._destinos = data;
+      },
+      error: (e) => {
+        this.authService.mostrarError('error', e.error);
+      },
+    });
+  }
+  // Llama a tu servicio mientras se escribe (si quieres mantenerlo así)
+  _suggestions: string[] = [];
+  _suggestMap = new Map<string, Articulos>();
+
+  getArticulos(ev: any) {
+    const term = (ev.target.value || '').trim();
+    if (!term) {
+      this._articulos = [];
+      this._suggestions = [];
+      this._suggestMap.clear();
+      return;
+    }
+
+    this.artService.getByNombreCuentaCodigo(term).subscribe({
+      next: (arts: any) => {
+        this._articulos = arts;
+
+        // reconstruye sugerencias
+        this._suggestions = [];
+        this._suggestMap.clear();
+
+        for (const a of arts) {
+          const s1 = a.nombre?.trim();
+          const s2 = a.codigo != null ? String(a.codigo).trim() : '';
+          const s3 = a.codcue != null ? String(a.codcue).trim() : '';
+
+          // agrega entradas (evita vacíos y duplicados)
+          for (const s of [s2, s3, s1].filter((x) => !!x)) {
+            const label = `${s} | ${a.nombre}`; // lo que verá y seleccionará el usuario
+            if (!this._suggestMap.has(label)) {
+              this._suggestions.push(label);
+              this._suggestMap.set(label, a);
+            }
+          }
+        }
+      },
+      error: (e) => this.authService.mostrarError('error', e.error),
+    });
+  }
+
+  // Se ejecuta cuando el usuario elige un valor del datalist (o pierde foco tras escribir uno)
+  onArticuloSelected(ev: any) {
+    console.log(ev);
+    const key = (ev.target.value || '').trim(); // ej: "ABC123 | Tijera 6''" o "5.2.01 | Tijera 6''" o "Tijera 6'' | ABC123"
+    const art = this._suggestMap.get(key);
+
+    if (art) {
+      // evita duplicados por id
+      const ya = this._articulosSelected.some(
+        (x) => String(x.idarticulo) === String(art.idarticulo)
+      );
+      if (!ya) this._articulosSelected.push({ ...art, cantidad: 1 });
+
+      // limpia input y sugerencias
+      this.formArticulo.get('articulo')?.setValue('');
+      this._suggestions = [];
+      this._suggestMap.clear();
+    } else {
+      // fallback: intenta matchear por la parte antes del " | "
+      const head = key.split('|')[0]?.trim();
+      const maybe = this._articulos.find(
+        (a) => a.nombre === head || String(a.codigo) === head || String(a.codcue) === head
+      );
+      if (maybe) {
+        const ya = this._articulosSelected.some(
+          (x) => String(x.idarticulo) === String(maybe.idarticulo)
+        );
+        if (!ya) this._articulosSelected.push({ ...maybe, cantidad: 1 });
+        this.formArticulo.get('articulo')?.setValue('');
+      } 
+    }
+  }
+
+  setArticulosToList(art: any) {
+    if (!this._articulosSelected.find((a) => a.idarticulo === art.idarticulo)) {
+      this._articulosSelected.push({ ...art, cantidad: 1 });
+    } else {
+      this.swal('info', 'El artículo ya está en la lista');
+    }
+    this.formArticulo.reset(); // limpia el input
+    //this._articulos = []; // opcional: limpia sugerencias
+  }
+
+  removeArticulo(index: number) {
+    this._articulosSelected.splice(index, 1);
+  }
 
   onDocumentoSelected(event: any) {}
   artxPedido(event: any) {}
+
+  swal(icon: any, mensaje: any) {
+    Swal.fire({
+      toast: true,
+      icon: icon,
+      title: mensaje,
+      position: 'top',
+      showConfirmButton: false,
+      timer: 2000,
+    });
+  }
 }

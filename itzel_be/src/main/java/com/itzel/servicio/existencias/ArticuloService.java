@@ -5,8 +5,9 @@ import com.itzel.repositorio.existencias.ArticulosR;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 @Service
@@ -72,6 +73,35 @@ public class ArticuloService {
     //Elimina
     public void deleteById(Short idarticulo) {
         dao.deleteById(idarticulo);
+    }
+    // Buscar por nombre, cuenta o codigo de partida
+    // Buscar por nombre, cuenta o código de partida
+    public List<Articulos> buscarCombinado(String dato) {
+        if (dato == null || dato.isBlank()) {
+            return Collections.emptyList();
+        }
+
+        String query = dato.trim();
+        String queryLower = query.toLowerCase();
+        // Ejecutar búsquedas
+        List<Articulos> resultados = Stream.of(
+                        dao.buscarPorNombre(queryLower),
+                        dao.buscarPorCodigo(query),
+                        dao.buscarPorCodcue(query)
+                )
+                .filter(Objects::nonNull)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toMap(
+                        Articulos::getIdarticulo,      // clave: id único
+                        a -> a,                        // valor: objeto Articulos
+                        (a, b) -> a,                   // si hay duplicado, conserva el primero
+                        LinkedHashMap::new             // mantener el orden (nombre → código → codcue)
+                ))
+                .values()
+                .stream()
+                .collect(Collectors.toList());
+
+        return resultados;
     }
 
 }

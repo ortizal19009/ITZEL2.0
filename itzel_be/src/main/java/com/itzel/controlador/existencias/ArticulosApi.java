@@ -46,7 +46,12 @@ public class ArticulosApi {
         boolean existe = artiService.valCodigo(codigo);
         return ResponseEntity.ok(existe);
     }
-
+    @GetMapping("/data_search")
+    // Buscar por nombre, cuenta o codigo de partida
+    public ResponseEntity<List<Articulos>> buscar(@RequestParam String dato) {
+        return ResponseEntity.ok(artiService.buscarCombinado(dato));
+        // o: service.buscarCombinadoInteligente(dato);
+    }
     // Guarda nuevo
     @PostMapping
     public ResponseEntity<Articulos> saveArticulo(@RequestBody Articulos x) {

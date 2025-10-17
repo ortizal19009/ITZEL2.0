@@ -24,5 +24,10 @@ public class PedidosApi {
     public ResponseEntity<Pedidos> findByIdpedido(@PathVariable short idpedido){
         return ResponseEntity.ok(pedidoService.findById(idpedido));
     }
+    //Encontrar el último numero de los pedidos para generar el secuencial de los pedidos
+    @GetMapping("/last")
+    public ResponseEntity<Integer> findLastNumberOfPedido(){
+        return ResponseEntity.ok(pedidoService.findUltimoNumero());
+    }
 
 }

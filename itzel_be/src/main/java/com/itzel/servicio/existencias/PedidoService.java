@@ -41,4 +41,13 @@ public class PedidoService {
         _p.setDocumento(p.getDocumento());
         return dao.save(_p);
     }
+    //Encontrar el último numero de los pedidos para generar el secuencial de los pedidos
+    public Integer findUltimoNumero(){
+        Integer number = dao.findUltimoNumero();
+        if(number == null || number == 0){
+            number = 0;
+        }
+        return number;
+    }
+
 }
