@@ -143,18 +143,21 @@
                 </form>
                 <form [formGroup]="formArticulo" class="mb-3">
                     <div class="form-group col-md-12">
-                        <label for="articulo" class="form-label">
-                            Artículo <sup class="text-success">*</sup>
-                        </label>
+                     
                         <div class="input-group input-group-sm">
+                                                        <div class="input-group-prepend">
+                                    <label class="input-group-text">Buscar Artículos</label>
+                                </div>
                             <input id="articulo" type="text" autocomplete="off" autocorrect="off" autocapitalize="off"
                                 spellcheck="false" class="form-control form-control-sm"
                                 placeholder="Nombre del artículo, código o cuenta" formControlName="articulo"
                                 list="articulosList" (input)="getArticulos($event)"
                                 (change)="onArticuloSelected($event)" />
+
                             <datalist id="articulosList">
                                 <option *ngFor="let s of _suggestions" [value]="s"></option>
                             </datalist>
+
 
                         </div>
                     </div>
@@ -164,16 +167,16 @@
                 <div class="card" *ngIf="_articulosSelected.length > 0">
                     <div class="card-body p-2">
                         <table class="table table-sm table-hover table-bordered mb-0 text-center align-middle">
-                            <thead class="table-light">
-                                <tr>
+                            <thead class="table-light cabecera">
+                                <tr class="pad0">
                                     <th style="width: 5%">#</th>
                                     <th>Nombre</th>
                                     <th style="width: 15%">Cantidad</th>
                                     <th style="width: 10%">Acción</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr *ngFor="let art of _articulosSelected; let i = index">
+                            <tbody class="detalle roboto small">
+                                <tr class="fila pad0" *ngFor="let art of _articulosSelected; let i = index">
                                     <td>{{ i + 1 }}</td>
                                     <td>{{ art.nombre }}</td>
                                     <td>

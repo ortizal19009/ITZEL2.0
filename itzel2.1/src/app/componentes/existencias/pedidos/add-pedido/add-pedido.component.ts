@@ -73,24 +73,7 @@ export class AddPedidoComponent implements OnInit {
     this.formArticulo = this.fb.group({
       articulo: [''],
     });
-    /*     this.formArticulo
-      .get('articulo')!
-      .valueChanges.pipe(
-        map((v) => (v || '').trim()),
-        debounceTime(250),
-        distinctUntilChanged(),
-        tap((v) => {
-          console.log('Input articulo: ', v);
-          if (!v) this._articulos = [];
-        }),
-        filter((v) => !!v)
-      )
-      .subscribe((v) => {
-        this.artService.getByNombreCuentaCodigo(v).subscribe({
-          next: (d: any) => (this._articulos = d),
-          error: (e) => this.authService.mostrarError('error', e.error),
-        });
-      }); */
+
     this.getAllDocumentos();
     this.getAllDestinos();
     this.getLastPedido();
@@ -112,7 +95,6 @@ export class AddPedidoComponent implements OnInit {
   }
   guardar() {
     console.log(this.formPedido.value);
-    console.log(this.formArticulo.value);
     console.log(this._articulosSelected);
   }
   getLastPedido() {
@@ -125,7 +107,6 @@ export class AddPedidoComponent implements OnInit {
   getAllDocumentos() {
     this.documentoService.getListaDocumentos().subscribe({
       next: (data: Documentos[]) => {
-        console.log(data);
         this._documentos = data;
         this.formPedido.patchValue({
           documento: data[0],
@@ -140,7 +121,6 @@ export class AddPedidoComponent implements OnInit {
     let nombreVal = nombre.target.value;
     this.beneService.findByNomben(nombreVal).subscribe({
       next: (data: Beneficiarios[]) => {
-        console.log(data);
         this._beneficiarios = data;
       },
       error: (e) => {
@@ -151,7 +131,6 @@ export class AddPedidoComponent implements OnInit {
   getAllDestinos() {
     this.destService.getListaDestinos().subscribe({
       next: (data: Destinos[]) => {
-        console.log(data);
         this._destinos = data;
       },
       error: (e) => {
@@ -164,7 +143,9 @@ export class AddPedidoComponent implements OnInit {
   _suggestMap = new Map<string, Articulos>();
 
   getArticulos(ev: any) {
-    const term = (ev.target.value || '').trim();
+    let term = (ev.target.value || '').trim();
+    // si viene del datalist, quedará "CODIGO | Nombre" o "CODCUE | Nombre"
+    if (term.includes('|')) term = term.split('|')[0].trim();
     if (!term) {
       this._articulos = [];
       this._suggestions = [];
@@ -173,27 +154,23 @@ export class AddPedidoComponent implements OnInit {
     }
 
     this.artService.getByNombreCuentaCodigo(term).subscribe({
-      next: (arts: any) => {
+      next: (arts: Articulos[]) => {
         this._articulos = arts;
 
-        // reconstruye sugerencias
-        this._suggestions = [];
         this._suggestMap.clear();
-
         for (const a of arts) {
-          const s1 = a.nombre?.trim();
-          const s2 = a.codigo != null ? String(a.codigo).trim() : '';
-          const s3 = a.codcue != null ? String(a.codcue).trim() : '';
+          const nombre = a.nombre?.trim();
+          const codigo = a.codigo != null ? String(a.codigo).trim() : '';
+          const codcue = a.codcue != null ? String(a.codcue).trim() : '';
 
-          // agrega entradas (evita vacíos y duplicados)
-          for (const s of [s2, s3, s1].filter((x) => !!x)) {
-            const label = `${s} | ${a.nombre}`; // lo que verá y seleccionará el usuario
-            if (!this._suggestMap.has(label)) {
-              this._suggestions.push(label);
-              this._suggestMap.set(label, a);
-            }
+          for (const s of [codigo, codcue, nombre].filter(Boolean)) {
+            const label = `${s} | ${a.nombre}`; // lo que se muestra y matchea al inicio
+            if (!this._suggestMap.has(label)) this._suggestMap.set(label, a);
           }
         }
+
+        // genera el arreglo para el *ngFor del datalist
+        this._suggestions = Array.from(this._suggestMap.keys());
       },
       error: (e) => this.authService.mostrarError('error', e.error),
     });
@@ -201,7 +178,6 @@ export class AddPedidoComponent implements OnInit {
 
   // Se ejecuta cuando el usuario elige un valor del datalist (o pierde foco tras escribir uno)
   onArticuloSelected(ev: any) {
-    console.log(ev);
     const key = (ev.target.value || '').trim(); // ej: "ABC123 | Tijera 6''" o "5.2.01 | Tijera 6''" o "Tijera 6'' | ABC123"
     const art = this._suggestMap.get(key);
 
@@ -228,7 +204,7 @@ export class AddPedidoComponent implements OnInit {
         );
         if (!ya) this._articulosSelected.push({ ...maybe, cantidad: 1 });
         this.formArticulo.get('articulo')?.setValue('');
-      } 
+      }
     }
   }
 
