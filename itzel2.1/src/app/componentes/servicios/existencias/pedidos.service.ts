@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 import { Pedidos } from '../../modelos/existencias/pedidos.model';
 const apiUrl = environment.API_URL;
 const baseUrl = `${apiUrl}/pedidos`;
@@ -18,5 +18,8 @@ export class PedidosService {
   }
   getLastPedido(): Observable<number> {
     return this.http.get<number>(`${baseUrl}/last`);
+  }
+  async savePedido(pedido: Pedidos): Promise<Pedidos> {
+    return firstValueFrom(this.http.post<Pedidos>(`${baseUrl}`, pedido));
   }
 }

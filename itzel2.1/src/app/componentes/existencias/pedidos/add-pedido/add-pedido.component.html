@@ -55,46 +55,48 @@
                             </div>
                         </div>
 
+                        <!-- BENEFICIARIO -->
                         <div class="form-group col-md-12">
                             <div class="input-group input-group-sm">
                                 <div class="input-group-prepend">
                                     <label class="input-group-text">Beneficiario<sup class="green">*</sup></label>
                                 </div>
-                                <input type="text" class="form-control form-control-sm col-md"
-                                    formControlName="beneficiario" placeholder="Nombre del beneficiario"
-                                    list="beneficiarioList" (input)="getAllBeneficiarios($event)"
-                                    [ngClass]="{'is-invalid': f['beneficiario'].invalid && f['beneficiario'].touched,'is-valid': f['beneficiario'].valid, '': f['beneficiario'].untouched}">
+
+                                <input type="text" class="form-control form-control-sm col-md" autocomplete="off"
+                                    autocorrect="off" autocapitalize="off" spellcheck="false"
+                                    formControlName="beneficiarioText" placeholder="Nombre del beneficiario"
+                                    list="beneficiarioList" (input)="onBeneficiarioTyped($event)"
+                                    (blur)="onBeneficiarioSelected($event)">
+
                                 <datalist role="listbox" id="beneficiarioList">
-                                    <option *ngFor="let bene of _beneficiarios" value={{bene.nomben}}>{{bene.codben}}
+                                    <!-- Puedes usar sólo el nombre, o combinar id | nombre para asegurar unicidad -->
+                                    <option *ngFor="let bene of _beneficiarios" [value]="bene.nomben">
+                                        {{ bene.codben }}
                                     </option>
                                 </datalist>
                             </div>
-                            <div *ngIf="authService.msgval && f['beneficiario'].errors && f['beneficiario'].touched">
-                                <div *ngIf="f['beneficiario'].errors['required']"
-                                    class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
-                                    <strong>Ups!</strong> La Cuenta es obligatorio
-                                </div>
-                                <div *ngIf="f['beneficiario'].errors['invalido']"
-                                    class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
-                                    <strong>Ups!</strong> No ha seleccionado una Cuenta
-                                </div>
-                            </div>
                         </div>
 
+                        <!-- DESTINO -->
                         <div class="form-group col-md-6">
                             <div class="input-group input-group-sm">
                                 <div class="input-group-prepend">
                                     <label class="input-group-text">Destino<sup class="green">*</sup></label>
                                 </div>
-                                <input list="destinoList" class="form-control form-control-sm col-md"
-                                    formControlName="destino" placeholder="Ingrese el destino">
-                                <!-- [ngClass]="{'is-invalid': f['destino'].invalid && f['destino'].touched,'is-valid': f['destino'].valid, '': f['beneficiario'].untouched}" -->
+
+                                <input list="destinoList" class="form-control form-control-sm col-md" autocomplete="off"
+                                    autocorrect="off" autocapitalize="off" spellcheck="false"
+                                    formControlName="destinoText" placeholder="Ingrese el destino"
+                                    (input)="onDestinoTyped($event)" (blur)="onDestinoSelected($event)">
+
                                 <datalist role="listbox" id="destinoList">
-                                    <option *ngFor="let dest of _destinos" value={{dest.nomdestino}}>{{dest.nomdestino}}
+                                    <option *ngFor="let dest of _destinos" [value]="dest.nomdestino">
+                                        {{ dest.nomdestino }}
                                     </option>
                                 </datalist>
                             </div>
                         </div>
+
                         <div class="form-group col-md-12">
                             <div class="input-group input-group-sm">
                                 <div class="input-group-prepend">
@@ -134,20 +136,18 @@
                                 <div class="input-group-prepend">
                                     <label class="input-group-text">Total</label>
                                 </div>
-                                <input type="text" class="form-control text-right" formControlName="total"
-                                    appVisualFormat [minDecimals]="2" [maxDecimals]="2" readonly tabindex="-1">
+                                <input type="text" class="form-control text-right" formControlName="total" readonly>
                             </div>
                         </div>
-
                     </div>
                 </form>
                 <form [formGroup]="formArticulo" class="mb-3">
                     <div class="form-group col-md-12">
-                     
+
                         <div class="input-group input-group-sm">
-                                                        <div class="input-group-prepend">
-                                    <label class="input-group-text">Buscar Artículos</label>
-                                </div>
+                            <div class="input-group-prepend">
+                                <label class="input-group-text">Buscar Artículos</label>
+                            </div>
                             <input id="articulo" type="text" autocomplete="off" autocorrect="off" autocapitalize="off"
                                 spellcheck="false" class="form-control form-control-sm"
                                 placeholder="Nombre del artículo, código o cuenta" formControlName="articulo"
@@ -171,6 +171,8 @@
                                 <tr class="pad0">
                                     <th style="width: 5%">#</th>
                                     <th>Nombre</th>
+                                    <th style="width: 10%">Stock</th>
+                                    <th style="width: 10%">Valor Unitario</th>
                                     <th style="width: 15%">Cantidad</th>
                                     <th style="width: 10%">Acción</th>
                                 </tr>
@@ -179,9 +181,12 @@
                                 <tr class="fila pad0" *ngFor="let art of _articulosSelected; let i = index">
                                     <td>{{ i + 1 }}</td>
                                     <td>{{ art.nombre }}</td>
+                                    <td>{{art.actual - art.cantidad}}</td>
+                                    <td>{{art.cosactual}}</td>
                                     <td>
                                         <input type="number" class="form-control form-control-sm text-center"
-                                            [(ngModel)]="art.cantidad" min="1" />
+                                            (change)="calcularTotal()" [(ngModel)]="art.cantidad" min="1"
+                                            max="art.actual" />
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-danger" (click)="removeArticulo(i)">
@@ -202,7 +207,7 @@
                 <div class="row">
                     <div *ngIf="formPedido" class="col-md-12 text-center">
                         <button type="button" class="btn btn-success btn-sm mx-1" (click)="guardar()"
-                            [disabled]="!formPedido.valid">
+                            [disabled]="formPedido.invalid || _articulosSelected.length === 0">
                             <i class="fa fa-check-circle"></i>&nbsp; Aceptar</button>
                         <button class="btn btn-outline-success btn-sm mx-1" (click)="regresar()"><i
                                 class="fa fa-times-circle"></i> Cancelar</button>

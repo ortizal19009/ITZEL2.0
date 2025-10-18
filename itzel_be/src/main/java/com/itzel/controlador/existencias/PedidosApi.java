@@ -29,5 +29,10 @@ public class PedidosApi {
     public ResponseEntity<Integer> findLastNumberOfPedido(){
         return ResponseEntity.ok(pedidoService.findUltimoNumero());
     }
+    //Guardar nuevo pedido
+    @PostMapping
+    public ResponseEntity<Pedidos> savePedido(@RequestBody Pedidos p){
+        return ResponseEntity.ok(pedidoService.save(p));
+    }
 
 }

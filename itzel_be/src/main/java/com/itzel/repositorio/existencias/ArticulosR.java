@@ -14,20 +14,23 @@ public interface ArticulosR extends JpaRepository<Articulos, Short> {
             String codigo, String codcue, String nombre);
     // Buscar artículos por: codigo, codcue o nombre en un solo campo.
     @Query("""
-        SELECT a FROM Articulos a
-        WHERE LOWER(COALESCE(a.nombre, '')) LIKE LOWER(CONCAT('%', :q, '%'))
+    SELECT a FROM Articulos a
+    WHERE a.actual > 0
+      AND LOWER(COALESCE(a.nombre, '')) LIKE LOWER(CONCAT('%', :q, '%'))
     """)
     List<Articulos> buscarPorNombre(@Param("q") String q);
 
     @Query("""
-        SELECT a FROM Articulos a
-        WHERE LOWER(COALESCE(a.codigo, '')) LIKE LOWER(CONCAT('%', :q, '%'))
+    SELECT a FROM Articulos a
+    WHERE a.actual > 0
+      AND LOWER(COALESCE(a.codigo, '')) LIKE LOWER(CONCAT('%', :q, '%'))
     """)
     List<Articulos> buscarPorCodigo(@Param("q") String q);
 
     @Query("""
-        SELECT a FROM Articulos a
-        WHERE COALESCE(a.codcue, '') LIKE CONCAT('%', :q, '%')
+    SELECT a FROM Articulos a
+    WHERE a.actual > 0
+      AND LOWER(COALESCE(a.codcue, '')) LIKE LOWER(CONCAT('%', :q, '%'))
     """)
     List<Articulos> buscarPorCodcue(@Param("q") String q);
 
