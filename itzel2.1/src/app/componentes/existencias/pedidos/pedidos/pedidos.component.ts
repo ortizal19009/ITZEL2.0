@@ -3,6 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Pedidos } from '../../../modelos/existencias/pedidos.model';
+import { PedidosService } from '../../../servicios/existencias/pedidos.service';
+import { AutorizaService } from '../../../servicios/administracion/autoriza.service';
+import { ColoresService } from '../../../servicios/administracion/colores.service';
+import { EliminadosService } from '../../../servicios/administracion/eliminados.service';
 
 @Component({
   selector: 'app-pedidos.component',
@@ -19,16 +23,136 @@ export class PedidosComponent implements OnInit {
   ordenColumna: keyof PedidosVisual = 'numero';
   ordenAscendente: boolean = true;
   sumTotal: number = 0;
-  constructor(public fb: FormBuilder, private router: Router) {}
+  ventana: string = 'pedidos';
+  totalPages: number = 0;
+  constructor(
+    public fb: FormBuilder,
+    private router: Router,
+    private pediService: PedidosService,
+    public authService: AutorizaService,
+    private elimService: EliminadosService,
+    private coloresService: ColoresService
+  ) {}
   ngOnInit(): void {
+    if (!this.authService.sessionlog) {
+      this.router.navigate(['/inicio']);
+    }
+    sessionStorage.setItem('ventana', `/${this.ventana}`);
+    let coloresJSON = sessionStorage.getItem(`/${this.ventana}`);
+    if (coloresJSON) this.colocaColor(JSON.parse(coloresJSON));
+    else this.buscaColor();
+
+    let swbuscar: boolean;
     this.formBuscar = this.fb.group({
-      codigo: '',
-      codcue: '',
-      nombre: '',
+      desde: 0,
+      hasta: 0,
+      beneficiario: '',
+      descripcion: '',
       filtroControl: '',
     });
+    this.getLastPedido();
   }
-  buscar() {}
+
+  colocaColor(colores: any) {
+    document.documentElement.style.setProperty('--bgcolor1', colores[0]);
+    const cabecera = document.querySelector('.cabecera');
+    if (cabecera) cabecera.classList.add('nuevoBG1');
+    document.documentElement.style.setProperty('--bgcolor2', colores[1]);
+    const detalle = document.querySelector('.detalle');
+    if (detalle) detalle.classList.add('nuevoBG2');
+  }
+
+  async buscaColor() {
+    try {
+      const datos = await this.coloresService.setcolor(
+        this.authService.idusuario!,
+        `${this.ventana}`
+      );
+      const coloresJSON = JSON.stringify(datos);
+      sessionStorage.setItem(`/${this.ventana}`, coloresJSON);
+      this.colocaColor(datos);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  buscar() {
+    const f = this.formBuscar.value;
+
+    // Prioridad de búsqueda (puedes cambiar el orden si quieres)
+    if (f.beneficiario && f.beneficiario.trim() !== '') {
+      this.buscarPorBeneficiario(f.beneficiario);
+    }
+    if (f.descripcion && f.descripcion.trim() !== '') {
+      this.buscarPorDescripcion(f.descripcion);
+    }
+    if (f.descripcion == '' && f.beneficiario == '') {
+      this.buscarPorNumero(f.desde, f.hasta);
+    } /* else {
+      this.buscarPageable();
+    } */
+  }
+  buscarPorBeneficiario(beneficiario: string) {
+    this.pediService.getPedidosPorBeneficiario(beneficiario).subscribe({
+      next: (data: Pedidos[]) => {
+        console.log('Pedidos por beneficiario:', data);
+        this._pedidos = data;
+        this.pedidosFiltrados = data;
+        this.calcularTotales();
+      },
+      error: (err) => {
+        console.error('Error al buscar por beneficiario:', err);
+      },
+    });
+  }
+  buscarPorDescripcion(descripcion: string) {
+    this.pediService.getPedidosPorDescripcion(descripcion).subscribe({
+      next: (data: Pedidos[]) => {
+        console.log('Pedidos por descripción:', data);
+        this._pedidos = data;
+        this.pedidosFiltrados = data;
+        this.calcularTotales();
+      },
+      error: (err) => {
+        console.error('Error al buscar por descripción:', err);
+      },
+    });
+  }
+  buscarPorNumero(desde: number, hasta: number) {
+    this.pediService.getPedidosPorNumero(desde, hasta).subscribe({
+      next: (data: Pedidos[]) => {
+        console.log(`Pedidos del número ${desde} al ${hasta}:`, data);
+        this._pedidos = data;
+        this.pedidosFiltrados = data;
+        this.calcularTotales();
+      },
+      error: (err) => {
+        console.error('Error al buscar por número:', err);
+      },
+    });
+  }
+
+  buscarPageable(page: number = 0, size: number = 10) {
+    this.pediService.getPedidosPaginados(page, size, 'idpedido', 'desc').subscribe({
+      next: (data: any) => {
+        console.log('Pedidos paginados:', data);
+        this._pedidos = data.content;
+        this.pedidosFiltrados = data.content;
+        this.totalPages = data.totalPages;
+        this.calcularTotales();
+      },
+      error: (err) => {
+        console.error('Error al obtener pedidos paginados:', err);
+      },
+    });
+  }
+  limpiarDescripcion() {
+    this.formBuscar.get('descripcion')?.patchValue('');
+  }
+
+  limpiarBeneficiario() {
+    this.formBuscar.get('beneficiario')?.patchValue('');
+  }
+
   nuevo() {
     this.router.navigate(['/add-pedido']);
   }
@@ -51,7 +175,8 @@ export class PedidosComponent implements OnInit {
     }
   }
 
-  ordenarPor(campo: keyof PedidosVisual | 'total'): void {
+  ordenarPor(campo: keyof PedidosVisual | 'numero'): void {
+    console.log('Ordenado por campo: ', campo);
     if (this.ordenColumna === campo) {
       this.ordenAscendente = !this.ordenAscendente;
     } else {
@@ -63,7 +188,7 @@ export class PedidosComponent implements OnInit {
       let valorA: number | string;
       let valorB: number | string;
 
-      if (campo === 'total') {
+      if (campo === 'numero') {
         valorA = a.actual * a.cosactual;
         valorB = b.actual * b.cosactual;
       } else {
@@ -85,20 +210,48 @@ export class PedidosComponent implements OnInit {
     });
   }
 
-  onCellClick(event: any, codcue: any) {
+  onCellClick(event: any, idpedido: any) {
     const tagName = event.target.tagName;
     if (tagName === 'TD') {
-      sessionStorage.setItem('codcueToInfo', codcue);
-      this.router.navigate(['info-cuenta']);
+      sessionStorage.setItem('infoToPedido', idpedido);
+      this.router.navigate(['info-pedido']);
     }
   }
-  modificar(idpedido: number) {}
+  modificar(idpedido: number) {
+    sessionStorage.setItem('idpedidoToModi', JSON.stringify(idpedido));
+    this.router.navigate(['/modi-pedido']);
+  }
   eliminar(pedido: Pedidos) {}
+
+  getLastPedido() {
+    this.pediService.getLastPedido().subscribe({
+      next: (data: number) => {
+        if (data > 0) {
+          // Restamos 20 pero nos aseguramos de que no sea menor que 0
+          let des = Math.max(0, data - 20);
+          this.formBuscar.patchValue({
+            desde: des,
+            hasta: data,
+          });
+        }
+      },
+      error: (err) => {
+        console.error('Error al obtener el último pedido:', err);
+      },
+    });
+  }
+  calcularTotales() {
+    this.sumTotal = 0;
+    this.pedidosFiltrados.forEach((pedido) => {
+      this.sumTotal += pedido.total!;
+    });
+  }
 }
 interface PedidosVisual {
   numero: number;
   fecha: Date;
-  beneficiario: string;
-  destino: string;
+  nomben: string;
+  nomdestino: string;
+  descripcion: string;
   total: number;
 }

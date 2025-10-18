@@ -48,6 +48,7 @@ import { AddArticuloComponent } from './componentes/existencias/articulos/add-ar
 import { ModiArticuloComponent } from './componentes/existencias/articulos/modi-articulo/modi-articulo.component';
 import { AddPedidoComponent } from './componentes/existencias/pedidos/add-pedido/add-pedido.component';
 import { ModiPedidoComponent } from './componentes/existencias/pedidos/modi-pedido/modi-pedido.component';
+import { InfoPedidoComponent } from './componentes/existencias/pedidos/info-pedido/info-pedido.component';
 
 export const routes: Routes = [
   { path: 'inicio', component: AppWrapperComponent },
@@ -113,6 +114,7 @@ export const routes: Routes = [
   { path: 'pedidos', component: PedidosComponent },
   { path: 'add-pedido', component: AddPedidoComponent },
   { path: 'modi-pedido', component: ModiPedidoComponent },
+  { path: 'info-pedido', component: InfoPedidoComponent },
   /* ==========ARTICULOS========== */
   { path: 'articulos', component: ArticulosComponent },
   { path: 'add-articulo', component: AddArticuloComponent },
