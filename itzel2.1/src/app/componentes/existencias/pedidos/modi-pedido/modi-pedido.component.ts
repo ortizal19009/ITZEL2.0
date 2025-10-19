@@ -21,8 +21,6 @@ import { DestinosService } from '../../../servicios/existencias/destinos.service
 import { PedidosService } from '../../../servicios/existencias/pedidos.service';
 import { ArticulosService } from '../../../servicios/existencias/articulos.service';
 import { ArtixpedidoService } from '../../../servicios/existencias/artixpedido.service';
-import { Artixpedido } from '../../../modelos/existencias/artixpedido.model';
-import { consumerPollProducersForChange } from '@angular/core/primitives/signals';
 
 @Component({
   selector: 'app-modi-pedido.component',
@@ -35,6 +33,7 @@ export class ModiPedidoComponent {
   formArticulo!: FormGroup;
   _articulos: any[] = [];
   _articulosSelected: any[] = [];
+  _articulosToDelete: any[] = [];
   _documentos: Documentos[] = [];
   _beneficiarios: Beneficiarios[] = [];
   _destinos: Destinos[] = [];
@@ -44,6 +43,7 @@ export class ModiPedidoComponent {
   // Llama a tu servicio mientras se escribe (si quieres mantenerlo así)
   _suggestions: string[] = [];
   _suggestMap = new Map<string, Articulos>();
+  _pedido: Pedidos = new Pedidos();
 
   constructor(
     public authService: AutorizaService,
@@ -372,7 +372,18 @@ export class ModiPedidoComponent {
   }
 
   removeArticulo(index: number) {
+    if (index < 0 || index >= this._articulosSelected.length) return;
+
+    // Obtener el artículo antes de eliminarlo
+    const art = this._articulosSelected[index];
+
+    // Agregar a la lista de artículos a eliminar
+    this._articulosToDelete.push(art);
+
+    // Eliminar del array de seleccionados
     this._articulosSelected.splice(index, 1);
+
+    // Recalcular totales
     this.calcularTotal();
   }
 
@@ -415,7 +426,7 @@ export class ModiPedidoComponent {
           this.authService.mostrarError('Error', 'No se encontró el pedido.');
           return;
         }
-
+        this._pedido = pedido;
         // Convertir fecha si existe
         const fecha = pedido.fecha ? new Date(pedido.fecha).toISOString().substring(0, 10) : null;
 
@@ -496,5 +507,10 @@ export class ModiPedidoComponent {
     if (o1 === null || o2 === null) return o1 === o2;
     // Comparamos por id (o por el campo que identifique al documento)
     return o1.iddocumento === o2.iddocumento;
+  }
+
+  //Actualizar valores de las cantidades al eliminar o modificar los articulos
+  modiArticulos() {
+    this._articulosToDelete.forEach((item: any) => {});
   }
 }

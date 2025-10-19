@@ -60,4 +60,26 @@ public class ArtixpedidoService {
         }
     }
 
+    public String update(short idpedido, Articulos articulo) {
+        // Buscar si existe la relación Artixpedido
+        Artixpedido ap = dao.findByPedido_IdpedidoAndArticulo_Idarticulo(idpedido, articulo.getIdarticulo());
+        if (ap == null) {
+            throw new RuntimeException("No se encontró Artixpedido para el pedido y artículo indicados");
+        }
+
+        // Obtener el artículo desde la base de datos
+        Articulos _articulo = dao_articulo.findById(articulo.getIdarticulo())
+                .orElseThrow(() -> new RuntimeException("Artículo no encontrado"));
+
+        // Actualizar stock sumando la cantidad del pedido
+        BigDecimal cantidadPedido = BigDecimal.valueOf(ap.getCantidad());
+        _articulo.setActual(_articulo.getActual().add(cantidadPedido));
+
+        // Guardar cambios en la base
+        dao_articulo.save(_articulo);
+
+        return "Actualizado correctamente";
+    }
+
+
 }

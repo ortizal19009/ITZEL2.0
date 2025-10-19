@@ -1,5 +1,6 @@
 package com.itzel.controlador.existencias;
 
+import com.itzel.modelo.existencias.Articulos;
 import com.itzel.modelo.existencias.Artixpedido;
 import com.itzel.servicio.existencias.ArtixpedidoService;
 import lombok.RequiredArgsConstructor;
@@ -25,5 +26,9 @@ public class ArtixpedidoApi {
     @PostMapping
     public ResponseEntity<Artixpedido> save(@RequestBody Artixpedido ap){
         return ResponseEntity.ok(artxpedService.save(ap));
+    }
+    @PutMapping("/delete_aritculo")
+    public ResponseEntity<String> updateArtixpedido(@RequestParam short idpedido, @RequestBody Articulos articulo){
+        return ResponseEntity.ok(artxpedService.update(idpedido, articulo));
     }
 }
