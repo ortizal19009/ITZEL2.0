@@ -72,6 +72,10 @@ public class PedidosApi {
         Pedidos nuevo = pedidoService.guardar(pedido);
         return ResponseEntity.ok(nuevo);
     }
+    @PutMapping
+    public ResponseEntity<Pedidos> updatePedido(@RequestBody Pedidos pedido){
+        return ResponseEntity.ok(pedidoService.updatePedido(pedido));
+    }
 
     // Eliminar pedido
     @DeleteMapping("/{id}")
@@ -88,6 +92,10 @@ public class PedidosApi {
             @RequestParam(defaultValue = "asc") String sortDir) {
 
         return ResponseEntity.ok(pedidoService.listarPaginado(page, size, sortBy, sortDir));
+    }
+    @GetMapping("/num_available")
+    public ResponseEntity<Boolean> numAvailable(Long numero){
+        return ResponseEntity.ok(pedidoService.esNumeroDisponible(numero));
     }
 
 

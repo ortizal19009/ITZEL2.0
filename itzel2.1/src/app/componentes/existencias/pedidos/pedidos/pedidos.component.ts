@@ -7,6 +7,8 @@ import { PedidosService } from '../../../servicios/existencias/pedidos.service';
 import { AutorizaService } from '../../../servicios/administracion/autoriza.service';
 import { ColoresService } from '../../../servicios/administracion/colores.service';
 import { EliminadosService } from '../../../servicios/administracion/eliminados.service';
+import { Beneficiarios } from '../../../modelos/contabilidad/beneficiarios.model';
+import { Destinos } from '../../../modelos/existencias/destinos.model';
 
 @Component({
   selector: 'app-pedidos.component',
@@ -51,6 +53,10 @@ export class PedidosComponent implements OnInit {
       filtroControl: '',
     });
     this.getLastPedido();
+    // Escucha cada cambio en el input del filtro
+    this.formBuscar.get('filtroControl')?.valueChanges.subscribe((valor?: any) => {
+      this.filtrar(valor);
+    });
   }
 
   colocaColor(colores: any) {
@@ -91,10 +97,10 @@ export class PedidosComponent implements OnInit {
       this.buscarPageable();
     } */
   }
+
   buscarPorBeneficiario(beneficiario: string) {
     this.pediService.getPedidosPorBeneficiario(beneficiario).subscribe({
       next: (data: Pedidos[]) => {
-        console.log('Pedidos por beneficiario:', data);
         this._pedidos = data;
         this.pedidosFiltrados = data;
         this.calcularTotales();
@@ -107,7 +113,6 @@ export class PedidosComponent implements OnInit {
   buscarPorDescripcion(descripcion: string) {
     this.pediService.getPedidosPorDescripcion(descripcion).subscribe({
       next: (data: Pedidos[]) => {
-        console.log('Pedidos por descripción:', data);
         this._pedidos = data;
         this.pedidosFiltrados = data;
         this.calcularTotales();
@@ -120,7 +125,6 @@ export class PedidosComponent implements OnInit {
   buscarPorNumero(desde: number, hasta: number) {
     this.pediService.getPedidosPorNumero(desde, hasta).subscribe({
       next: (data: Pedidos[]) => {
-        console.log(`Pedidos del número ${desde} al ${hasta}:`, data);
         this._pedidos = data;
         this.pedidosFiltrados = data;
         this.calcularTotales();
@@ -134,7 +138,6 @@ export class PedidosComponent implements OnInit {
   buscarPageable(page: number = 0, size: number = 10) {
     this.pediService.getPedidosPaginados(page, size, 'idpedido', 'desc').subscribe({
       next: (data: any) => {
-        console.log('Pedidos paginados:', data);
         this._pedidos = data.content;
         this.pedidosFiltrados = data.content;
         this.totalPages = data.totalPages;
@@ -163,11 +166,22 @@ export class PedidosComponent implements OnInit {
 
   filtrar(valor: any): void {
     const filtro = String(valor).toLowerCase();
+
     if (!filtro) {
       this.pedidosFiltrados = [...this._pedidos];
     } else {
-      this.pedidosFiltrados = this._pedidos.filter((a) =>
-        [a.codigo, a.codcue, a.nombre, a.unidad, a.inicial, a.actual, a.cosactual].some(
+      this.pedidosFiltrados = this._pedidos.filter((a: PedidosVisual) =>
+        [
+          a.numero,
+          a.fecha,
+          a.nomben,
+          a.beneficiario,
+          a.destino,
+          a.nomdestino,
+          a.descripcion,
+          a.total,
+          a.numdoc,
+        ].some(
           (campo) =>
             campo !== null && campo !== undefined && String(campo).toLowerCase().includes(filtro)
         )
@@ -176,7 +190,6 @@ export class PedidosComponent implements OnInit {
   }
 
   ordenarPor(campo: keyof PedidosVisual | 'numero'): void {
-    console.log('Ordenado por campo: ', campo);
     if (this.ordenColumna === campo) {
       this.ordenAscendente = !this.ordenAscendente;
     } else {
@@ -254,4 +267,7 @@ interface PedidosVisual {
   nomdestino: string;
   descripcion: string;
   total: number;
+  numdoc: string;
+  beneficiario: Beneficiarios;
+  destino: Destinos;
 }

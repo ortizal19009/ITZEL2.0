@@ -78,6 +78,10 @@
                      <i *ngIf="ordenColumna === 'nomdestino'"
                         [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
                   </th>
+                  <th (click)="ordenarPor('numdoc')" style="cursor: pointer">Num. Documento
+                     <i *ngIf="ordenColumna === 'numdoc'"
+                        [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
+                  </th>
                   <th class="col-sm-1" (click)="ordenarPor('total')" style="cursor: pointer">Total
                      <i *ngIf="ordenColumna === 'total'"
                         [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
@@ -89,7 +93,7 @@
                <tr *ngFor="let pedido of pedidosFiltrados" class="fila pad0"
                   (click)="onCellClick($event, pedido.idpedido )">
                   <td class="text-center font-weight-bold ">{{ pedido.numero}}</td>
-                  <td>{{ pedido.fecha | date:'dd/MM/yyyy' }}</td>
+                  <td class="text-center">{{ pedido.fecha | date:'dd/MM/yyyy' }}</td>
                   <td class="text-left text-truncate ancho200" data-toggle="tooltip"
                      [title]="pedido.beneficiario!.nomben!.length > 60 ? pedido.beneficiario!.nomben : ''">{{
                      pedido.beneficiario!.nomben }}</td>
@@ -98,6 +102,10 @@
                   <td class="text-left text-truncate ancho200" data-toggle="tooltip"
                      [title]="pedido.destino!.nomdestino!.length > 60 ? pedido.destino!.nomdestino : ''">{{
                      pedido.destino!.nomdestino }}</td>
+
+                  <td class="text-left text-truncate ancho200" data-toggle="tooltip"
+                     [title]="pedido.numdoc!.length > 60 ? pedido.numdoc : ''">{{
+                     pedido.numdoc }}</td>
                   <td class="text-right" [ngClass]="{'transparente': pedido.total == 0}">{{pedido.total |
                      number:'1.2-2'}} </td>
                   <td class="text-center">
@@ -117,7 +125,7 @@
             </tbody>
             <tfoot class="font-weight-bold detalle roboto small pad0">
                <td>TOTAL: {{pedidosFiltrados.length}}&nbsp;&nbsp;</td>
-               <td colspan="5" class="text-right">{{sumTotal | number: '1.2-2'}} </td>
+               <td colspan="6" class="text-right">{{sumTotal | number: '1.2-2'}} </td>
                <td></td>
             </tfoot>
          </table>

@@ -18,6 +18,11 @@ export class ArtixpedidoService {
   getByIdPedido(idpedido: number): Observable<Artixpedido[]> {
     return this.http.get<Artixpedido[]>(`${baseUrl}/pedido/${idpedido}`);
   }
+
+  //Encontrar por pedido asyncrono
+  async getByIdPedidoAsync(idpedido: number): Promise<Artixpedido[]> {
+    return firstValueFrom(this.http.get<Artixpedido[]>(`${baseUrl}/pedido/${idpedido}`));
+  }
   //Encontrar por articulo
   getByIdArticulo(idarticulo: number): Observable<Artixpedido[]> {
     return this.http.get<Artixpedido[]>(`${baseUrl}/articulos/${idarticulo}`);

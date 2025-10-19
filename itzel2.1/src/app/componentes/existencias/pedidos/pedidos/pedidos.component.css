@@ -1,6 +1,6 @@
 .cabecera {
-   background-color: var(--bgcolor1);
-   color: rgb(252, 169, 75);
+  background-color: var(--bgcolor1);
+  color: white;
 }
 
 .detalle { background-color: var(--bgcolor2); }

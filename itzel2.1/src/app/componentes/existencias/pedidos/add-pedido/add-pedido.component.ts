@@ -5,11 +5,12 @@ import {
   FormBuilder,
   FormGroup,
   FormsModule,
+  MinLengthValidator,
+  MinValidator,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { VisualFormatDirective } from '../../../directives/visual-format.directive';
 import { Articulos } from '../../../modelos/existencias/articulos.model';
 import { Documentos } from '../../../modelos/administracion/documentos.model';
 import { DocumentosService } from '../../../servicios/administracion/documentos.service';
@@ -20,9 +21,9 @@ import { Destinos } from '../../../modelos/existencias/destinos.model';
 import { Pedidos } from '../../../modelos/existencias/pedidos.model';
 import { PedidosService } from '../../../servicios/existencias/pedidos.service';
 import { ArticulosService } from '../../../servicios/existencias/articulos.service';
-import { debounceTime, distinctUntilChanged, filter, map, tap } from 'rxjs';
 import Swal from 'sweetalert2';
 import { ArtixpedidoService } from '../../../servicios/existencias/artixpedido.service';
+import { min } from 'rxjs';
 
 @Component({
   selector: 'app-add-pedido.component',
@@ -41,7 +42,6 @@ export class AddPedidoComponent implements OnInit {
   documento: string = '';
   date: Date = new Date();
   articulo!: string;
-  // Llama a tu servicio mientras se escribe (si quieres mantenerlo así)
   _suggestions: string[] = [];
   _suggestMap = new Map<string, Articulos>();
 
@@ -61,22 +61,26 @@ export class AddPedidoComponent implements OnInit {
       this.router.navigate(['/inicio']);
     }
     sessionStorage.setItem('ventana', '/pedidos');
-    let coloresJSON = sessionStorage.getItem('/articulos');
+    let coloresJSON = sessionStorage.getItem('/pedidos');
     if (coloresJSON) this.colocaColor(JSON.parse(coloresJSON));
     this.formPedido = this.fb.group({
-      numero: [''],
-      numdoc: [''],
+      numero: [
+        0,
+        [
+          Validators.required,
+          Validators.min(1),
+          Validators.pattern(/^[1-9]\d*$/), // Solo números enteros positivos
+        ],
+      ],
+      numdoc: ['', [Validators.required, Validators.minLength(3)]],
       documento: [''],
-      fecha: this.date.toISOString().substring(0, 10),
-      descripcion: [''],
+      fecha: [this.date.toISOString().substring(0, 10), [Validators.required]],
+      descripcion: ['', [Validators.required]],
       total: '',
       feccrea: [this.date],
       usucrea: [this.authService.idusuario],
-      // lo que el usuario teclea/ve
       beneficiarioText: ['', [Validators.required]],
       destinoText: ['', [Validators.required]],
-
-      // el objeto completo que quieres enviar/guardar
       beneficiario: [null],
       destino: [null],
     });
@@ -100,7 +104,6 @@ export class AddPedidoComponent implements OnInit {
   get f() {
     return this.formPedido.controls;
   }
-
   regresar() {
     this.router.navigate(['/pedidos']);
   }
@@ -162,7 +165,6 @@ export class AddPedidoComponent implements OnInit {
       this.authService.mostrarError('Error', error?.error || 'No se pudo guardar el pedido.');
     }
   }
-
   getLastPedido() {
     this.pedidoService.getLastPedido().subscribe({
       next: (data: number) => {
@@ -183,7 +185,6 @@ export class AddPedidoComponent implements OnInit {
       },
     });
   }
-
   getAllDestinos() {
     this.destService.getListaDestinos().subscribe({
       next: (data: Destinos[]) => {
@@ -194,10 +195,8 @@ export class AddPedidoComponent implements OnInit {
       },
     });
   }
-
   getArticulos(ev: any) {
     let term = (ev.target.value || '').trim();
-    // si viene del datalist, quedará "CODIGO | Nombre" o "CODCUE | Nombre"
     if (term.includes('|')) term = term.split('|')[0].trim();
     if (!term) {
       this._articulos = [];
@@ -228,8 +227,6 @@ export class AddPedidoComponent implements OnInit {
       error: (e) => this.authService.mostrarError('error', e.error),
     });
   }
-
-  // Se ejecuta cuando el usuario elige un valor del datalist (o pierde foco tras escribir uno)
   onArticuloSelected(ev: any) {
     const key = (ev.target.value || '').trim(); // ej: "ABC123 | Tijera 6''" o "5.2.01 | Tijera 6''" o "Tijera 6'' | ABC123"
     const art = this._suggestMap.get(key);
@@ -261,9 +258,6 @@ export class AddPedidoComponent implements OnInit {
     }
     this.calcularTotal();
   }
-  // Si los nombres no son únicos, es mejor usar "id | nombre" como value y parsear el id.
-  // Con nombres únicos, puedes matchear por nombre como aquí:
-
   getAllBeneficiarios(query: string, onLoaded?: (lista: Beneficiarios[]) => void) {
     const nombreVal = (query || '').toString().trim();
     if (!nombreVal) {
@@ -284,7 +278,6 @@ export class AddPedidoComponent implements OnInit {
       },
     });
   }
-
   onBeneficiarioTyped(ev: any) {
     const raw = (ev?.target?.value || '').trim();
     const key = raw.toLowerCase();
@@ -301,13 +294,10 @@ export class AddPedidoComponent implements OnInit {
       }
     });
   }
-
   onBeneficiarioSelected(ev: any) {
     const raw = (ev?.target?.value || '').trim();
     const key = raw.toLowerCase();
-    // si ya tenemos lista, intenta matchear sin volver a pedir
     let bene = this._beneficiarios?.find((b) => (b.nomben || '').toLowerCase() === key) || null;
-    // si no está en la lista actual, intenta buscar una vez
     if (!bene) {
       this.getAllBeneficiarios(raw, (lista) => {
         const b = lista.find((x) => (x.nomben || '').toLowerCase() === key) || null;
@@ -327,17 +317,14 @@ export class AddPedidoComponent implements OnInit {
     });
     this.formPedido.get('beneficiario')?.markAsTouched();
   }
-
   onDestinoTyped(ev: any) {
     const key = (ev.target.value || '').trim().toLowerCase();
     const dest = this._destinos?.find((d) => d.nomdestino?.toLowerCase() === key) || null;
     this.formPedido.patchValue({ destino: dest });
   }
-
   onDestinoSelected(ev: any) {
     const key = (ev.target.value || '').trim().toLowerCase();
     const dest = this._destinos?.find((d) => d.nomdestino?.toLowerCase() === key) || null;
-
     if (dest) {
       this.formPedido.patchValue({
         destino: dest,
@@ -346,10 +333,8 @@ export class AddPedidoComponent implements OnInit {
     } else {
       this.formPedido.patchValue({ destino: null });
     }
-
     this.f['destino'].markAsTouched();
   }
-
   setArticulosToList(art: any) {
     if (!this._articulosSelected.find((a) => a.idarticulo === art.idarticulo)) {
       this._articulosSelected.push({ ...art, cantidad: 1 });
@@ -357,17 +342,21 @@ export class AddPedidoComponent implements OnInit {
     } else {
       this.swal('info', 'El artículo ya está en la lista');
     }
-    this.formArticulo.reset(); // limpia el input
+    this.formArticulo.reset();
     //this._articulos = []; // opcional: limpia sugerencias
   }
-
   removeArticulo(index: number) {
     this._articulosSelected.splice(index, 1);
     this.calcularTotal();
   }
-
-  onDocumentoSelected(event: any) {}
-  artxPedido(event: any) {}
+  validarCantidad(art: any) {
+    if (art.cantidad < 1) {
+      art.cantidad = 1;
+    } else if (art.cantidad > art.actual) {
+      art.cantidad = art.actual;
+    }
+    this.calcularTotal();
+  }
   calcularTotal() {
     let total: number = 0;
     if (this._articulosSelected.length > 0) {
@@ -377,7 +366,6 @@ export class AddPedidoComponent implements OnInit {
     }
     this.formPedido.patchValue({ total: total.toFixed(2) });
   }
-
   swal(icon: any, mensaje: any) {
     Swal.fire({
       toast: true,
@@ -386,6 +374,29 @@ export class AddPedidoComponent implements OnInit {
       position: 'top',
       showConfirmButton: false,
       timer: 2000,
+    });
+  }
+  numAvailable(event: any) {
+    const num = event.target.value;
+    if (!num) return;
+
+    this.pedidoService.getNumAvailable(+num!).subscribe({
+      next: (disponible: boolean) => {
+        const numeroControl = this.formPedido.get('numero');
+
+        if (!disponible) {
+          // Si NO está disponible, marcamos error personalizado
+          numeroControl?.setErrors({ notAvailable: true });
+        } else {
+          // Si está disponible, quitamos el error (si lo tenía)
+          if (numeroControl?.hasError('notAvailable')) {
+            numeroControl.setErrors(null);
+          }
+        }
+      },
+      error: (err) => {
+        console.error('Error verificando número:', err);
+      },
     });
   }
 }

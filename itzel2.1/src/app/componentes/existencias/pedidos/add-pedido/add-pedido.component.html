@@ -20,24 +20,24 @@
                                     <label class="input-group-text">Número<sup class="green">*</sup></label>
                                 </div>
                                 <input #inputPrimero type="text" class="form-control text-center"
-                                    formControlName="numero" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
-                                    maxlength="10" [ngClass]="{'is-invalid': f['numero'].invalid && f['numero'].touched,
+                                    formControlName="numero" (change)="numAvailable($event)" aria-label="Small"
+                                    aria-describedby="inputGroup-sizing-sm" maxlength="10" [ngClass]="{'is-invalid': f['numero'].invalid && f['numero'].touched,
                            'is-valid': f['numero'].valid, '': f['numero'].untouched}">
                             </div>
                             <div *ngIf="authService.msgval && f['numero'].errors && f['numero'].touched">
                                 <div *ngIf="f['numero'].errors['required']"
                                     class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
-                                    <strong>Ups!</strong> El código es obligatorio
+                                    <strong>Ups!</strong> El número es obligatorio
                                 </div>
-                                <div *ngIf="f['numero'].errors['minlength']"
+                                <div *ngIf="f['numero'].errors['min']"
                                     class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
-                                    <strong>Ups!</strong> Mínimo 2 caracteres
+                                    <strong>Ups!</strong> El número debe ser mayor que cero.
                                 </div>
                                 <div *ngIf="f['numero'].errors['pattern']"
                                     class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
-                                    <strong>Ups!</strong> Solo mayúsculas y números
+                                    <strong>Ups!</strong> Solo se permiten números enteros positivos.
                                 </div>
-                                <div *ngIf="f['numero'].errors['existe']"
+                                <div *ngIf="f['numero'].errors['notAvailable']"
                                     class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
                                     <strong>Ups!</strong> Ese código ya existe
                                 </div>
@@ -56,7 +56,7 @@
                         </div>
 
                         <!-- BENEFICIARIO -->
-                        <div class="form-group col-md-12">
+                        <div class="form-group col-md-6">
                             <div class="input-group input-group-sm">
                                 <div class="input-group-prepend">
                                     <label class="input-group-text">Beneficiario<sup class="green">*</sup></label>
@@ -66,7 +66,8 @@
                                     autocorrect="off" autocapitalize="off" spellcheck="false"
                                     formControlName="beneficiarioText" placeholder="Nombre del beneficiario"
                                     list="beneficiarioList" (input)="onBeneficiarioTyped($event)"
-                                    (blur)="onBeneficiarioSelected($event)">
+                                    (blur)="onBeneficiarioSelected($event)" [ngClass]="{'is-invalid': f['beneficiarioText'].invalid && f['beneficiarioText'].touched,
+                             'is-valid': f['beneficiarioText'].valid, '': f['beneficiarioText'].untouched}">
 
                                 <datalist role="listbox" id="beneficiarioList">
                                     <!-- Puedes usar sólo el nombre, o combinar id | nombre para asegurar unicidad -->
@@ -74,6 +75,13 @@
                                         {{ bene.codben }}
                                     </option>
                                 </datalist>
+                            </div>
+                            <div
+                                *ngIf="authService.msgval && f['beneficiarioText'].errors && f['beneficiarioText'].touched">
+                                <div *ngIf="f['beneficiarioText'].errors['required']"
+                                    class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                                    <strong>Ups!</strong> El beneficiario es obligatorio
+                                </div>
                             </div>
                         </div>
 
@@ -87,13 +95,20 @@
                                 <input list="destinoList" class="form-control form-control-sm col-md" autocomplete="off"
                                     autocorrect="off" autocapitalize="off" spellcheck="false"
                                     formControlName="destinoText" placeholder="Ingrese el destino"
-                                    (input)="onDestinoTyped($event)" (blur)="onDestinoSelected($event)">
+                                    (input)="onDestinoTyped($event)" (blur)="onDestinoSelected($event)" [ngClass]="{'is-invalid': f['destinoText'].invalid && f['destinoText'].touched,
+                             'is-valid': f['destinoText'].valid, '': f['destinoText'].untouched}">
 
                                 <datalist role="listbox" id="destinoList">
                                     <option *ngFor="let dest of _destinos" [value]="dest.nomdestino">
                                         {{ dest.nomdestino }}
                                     </option>
                                 </datalist>
+                            </div>
+                            <div *ngIf="authService.msgval && f['destinoText'].errors && f['destinoText'].touched">
+                                <div *ngIf="f['destinoText'].errors['required']"
+                                    class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                                    <strong>Ups!</strong> El destino es obligatorio
+                                </div>
                             </div>
                         </div>
 
@@ -107,17 +122,18 @@
                                     <option *ngFor="let doc of _documentos" [ngValue]=doc>
                                         {{doc.nomdoc}}</option>
                                 </select>
-                                <input type="text" class="form-control form-control-sm bg-light" [value]="documento"
-                                    tabindex="-1">
+                                <input type="text" class="form-control form-control-sm bg-light"
+                                    formControlName="numdoc" tabindex="-1" [ngClass]="{'is-invalid': f['numdoc'].invalid && f['numdoc'].touched,
+                             'is-valid': f['numdoc'].valid, '': f['numdoc'].untouched}">
                             </div>
-                            <div *ngIf="authService.msgval && f['documento'].errors && f['documento'].touched">
-                                <div *ngIf="f['documento'].errors['required']"
+                            <div *ngIf="authService.msgval && f['numdoc'].errors && f['numdoc'].touched">
+                                <div *ngIf="f['numdoc'].errors['required']"
                                     class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
-                                    <strong>Ups!</strong> La Cuenta es obligatorio
+                                    <strong>Ups!</strong> El número de documento es obligatorio
                                 </div>
-                                <div *ngIf="f['documento'].errors['invalido']"
+                                <div *ngIf="f['numdoc'].errors['minLength']"
                                     class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
-                                    <strong>Ups!</strong> No ha seleccionado una Cuenta
+                                    <strong>Ups!</strong> Longitud inválida
                                 </div>
                             </div>
                         </div>
@@ -181,12 +197,15 @@
                                 <tr class="fila pad0" *ngFor="let art of _articulosSelected; let i = index">
                                     <td>{{ i + 1 }}</td>
                                     <td>{{ art.nombre }}</td>
-                                    <td>{{art.actual - art.cantidad}}</td>
+                                    <td [ngClass]="{'text-danger': (art.actual - art.cantidad) <= 0}">
+                                        {{ (art.actual - art.cantidad) > 0 ? (art.actual - art.cantidad) : 0 }}
+                                    </td>
                                     <td>{{art.cosactual}}</td>
                                     <td>
+
                                         <input type="number" class="form-control form-control-sm text-center"
-                                            (change)="calcularTotal()" [(ngModel)]="art.cantidad" min="1"
-                                            max="art.actual" />
+                                            [(ngModel)]="art.cantidad" (ngModelChange)="validarCantidad(art)" min="1"
+                                            [max]="art.actual" />
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-sm btn-danger" (click)="removeArticulo(i)">
@@ -201,7 +220,9 @@
 
                 <!-- Mensaje si no hay artículos -->
                 <div *ngIf="_articulosSelected.length === 0" class="text-muted fst-italic text-center">
-                    <small>No hay artículos seleccionados aún.</small>
+                    <div class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                        <strong>Ups!</strong> No hay artículos seleccionados aún.
+                    </div>
                 </div>
 
                 <div class="row">

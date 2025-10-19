@@ -75,7 +75,7 @@ public class PedidoService {
         if (inicio == null || fin == null) {
             throw new IllegalArgumentException("Los números no pueden ser nulos");
         }
-        return dao.findByNumeroBetween(inicio, fin);
+        return dao.findByNumeroBetweenOrderByNumeroAsc(inicio, fin);
     }
 
     /**
@@ -128,6 +128,12 @@ public class PedidoService {
         Sort sort = sortDir.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
         Pageable pageable = PageRequest.of(page, size, sort);
         return dao.findAll(pageable);
+    }
+    /**
+     * Buscar si el número del pedido esta disponible o no
+     */
+    public boolean esNumeroDisponible(Long numero) {
+        return !dao.existsByNumero(numero);
     }
 
 }

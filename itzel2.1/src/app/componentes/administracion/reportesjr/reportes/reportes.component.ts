@@ -45,16 +45,12 @@ export class ReportesComponent implements OnInit {
     this.parametros = [];
     this.reporteSeleccionado = reporte;
     // Convierte el objeto en array [{nombre, tipo}]
-    console.log(reporte.parametros);
     if (reporte.parametros) {
       this.parametros = Object.entries(reporte.parametros).map(([nombre, tipo]) => ({
         nombre,
         tipo,
       }));
     }
-
-    console.log('Parametros procesados:', this.parametros);
-
     this.crearFormulario(this.parametros);
   }
 
@@ -62,8 +58,6 @@ export class ReportesComponent implements OnInit {
     const group: { [key: string]: FormControl } = {};
 
     params.forEach((param) => {
-      console.log('Creando control para:', param);
-
       switch (param.tipo) {
         case 'java.lang.String':
           group[param.nombre] = new FormControl('');

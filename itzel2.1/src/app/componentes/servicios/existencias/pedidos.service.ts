@@ -29,6 +29,9 @@ export class PedidosService {
   async savePedido(pedido: Pedidos): Promise<Pedidos> {
     return firstValueFrom(this.http.post<Pedidos>(`${baseUrl}`, pedido));
   }
+  async updatePedido(pedido: Pedidos): Promise<Pedidos> {
+    return firstValueFrom(this.http.put<Pedidos>(`${baseUrl}`, pedido));
+  }
 
   //Eliminar pedido
   async deletePedido(idpedido: number): Promise<void> {
@@ -72,5 +75,9 @@ export class PedidosService {
       .set('sortBy', sortBy)
       .set('sortDir', sortDir);
     return this.http.get<any>(`${baseUrl}/page`, { params });
+  }
+  //Verificar si el numero esta disponible
+  getNumAvailable(numero: number): Observable<boolean> {
+    return this.http.get<boolean>(`${baseUrl}/num_available?numero=${numero}`);
   }
 }

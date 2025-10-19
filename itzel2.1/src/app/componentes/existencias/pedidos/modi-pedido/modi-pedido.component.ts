@@ -21,6 +21,8 @@ import { DestinosService } from '../../../servicios/existencias/destinos.service
 import { PedidosService } from '../../../servicios/existencias/pedidos.service';
 import { ArticulosService } from '../../../servicios/existencias/articulos.service';
 import { ArtixpedidoService } from '../../../servicios/existencias/artixpedido.service';
+import { Artixpedido } from '../../../modelos/existencias/artixpedido.model';
+import { consumerPollProducersForChange } from '@angular/core/primitives/signals';
 
 @Component({
   selector: 'app-modi-pedido.component',
@@ -60,22 +62,30 @@ export class ModiPedidoComponent {
     }
     sessionStorage.setItem('ventana', '/pedidos');
     let idpedido = sessionStorage.getItem('idpedidoToModi');
-    let coloresJSON = sessionStorage.getItem('/articulos');
+    let coloresJSON = sessionStorage.getItem('/pedidos');
     if (coloresJSON) this.colocaColor(JSON.parse(coloresJSON));
+    this.getPedidoById(+idpedido!);
+    this.getArticulosByPedido(+idpedido!);
+
     this.formPedido = this.fb.group({
-      numero: [''],
-      numdoc: [''],
+      idpedido: '',
+      numero: [
+        0,
+        [
+          Validators.required,
+          Validators.min(1),
+          Validators.pattern(/^[1-9]\d*$/), // Solo números enteros positivos
+        ],
+      ],
+      numdoc: ['', [Validators.required, Validators.minLength(3)]],
       documento: [''],
-      fecha: this.date.toISOString().substring(0, 10),
-      descripcion: [''],
+      fecha: [this.date.toISOString().substring(0, 10), [Validators.required]],
+      descripcion: ['', [Validators.required]],
       total: '',
       feccrea: [this.date],
       usucrea: [this.authService.idusuario],
-      // lo que el usuario teclea/ve
       beneficiarioText: ['', [Validators.required]],
       destinoText: ['', [Validators.required]],
-
-      // el objeto completo que quieres enviar/guardar
       beneficiario: [null],
       destino: [null],
     });
@@ -85,10 +95,8 @@ export class ModiPedidoComponent {
 
     this.getAllDocumentos();
     this.getAllDestinos();
-    this.getLastPedido();
+    //this.getLastPedido();
     this.calcularTotal();
-    this.getPedidoById(+idpedido!);
-    this.getArticulosByPedido(+idpedido!);
   }
   colocaColor(colores: any) {
     document.documentElement.style.setProperty('--bgcolor1', colores[0]);
@@ -120,6 +128,7 @@ export class ModiPedidoComponent {
     // Crear el objeto pedido correctamente tipado
     const pedidoData: Pedidos = new Pedidos();
     Object.assign(pedidoData, {
+      idpedido: f.idpedido,
       numero: f.numero,
       fecha: f.fecha,
       total: +f.total!,
@@ -134,7 +143,7 @@ export class ModiPedidoComponent {
 
     try {
       // Esperar la respuesta del backend (usa await si el servicio devuelve una Promise)
-      const nuevoPedido = await this.pedidoService.savePedido(pedidoData);
+      const nuevoPedido: any = await this.pedidoService.updatePedido(pedidoData);
       // Ahora guarda los artículos relacionados al pedido
       for (const art of this._articulosSelected) {
         const articuloPedido = {
@@ -367,8 +376,14 @@ export class ModiPedidoComponent {
     this.calcularTotal();
   }
 
-  onDocumentoSelected(event: any) {}
-  artxPedido(event: any) {}
+  validarCantidad(art: any) {
+    if (art.cantidad < 1) {
+      art.cantidad = 1;
+    } else if (art.cantidad > art.actual) {
+      art.cantidad = art.actual;
+    }
+    this.calcularTotal();
+  }
   calcularTotal() {
     let total: number = 0;
     if (this._articulosSelected.length > 0) {
@@ -394,38 +409,92 @@ export class ModiPedidoComponent {
 
   getPedidoById(idpedido: number) {
     this.pedidoService.getPedidoById(idpedido).subscribe({
-      next: (_pedido: Pedidos) => {
-        console.log(_pedido);
+      next: (pedido: Pedidos) => {
+        // Validar que el pedido tenga datos
+        if (!pedido) {
+          this.authService.mostrarError('Error', 'No se encontró el pedido.');
+          return;
+        }
+
+        // Convertir fecha si existe
+        const fecha = pedido.fecha ? new Date(pedido.fecha).toISOString().substring(0, 10) : null;
+
+        // Preparar patch del formulario
         this.formPedido.patchValue({
-          numero: _pedido.numero,
-          fecha: _pedido.fecha,
-          beneficiario: _pedido.beneficiario,
-          numdoc: _pedido.numdoc,
-          documento: _pedido.documento,
-          descripcion: _pedido.descripcion,
-          total: _pedido.total,
-          feccrea: _pedido.feccrea,
-          usucrea: _pedido.usucrea,
+          idpedido: pedido.idpedido,
+          numero: pedido.numero ?? '',
+          fecha,
+          beneficiario: pedido.beneficiario ?? null,
+          numdoc: pedido.numdoc ?? '',
+          documento: pedido.documento ?? null,
+          descripcion: pedido.descripcion ?? '',
+          total: pedido.total ?? 0,
+          feccrea: pedido.feccrea ?? null,
+          usucrea: pedido.usucrea ?? '',
           fecmodi: this.date,
           usumodi: this.authService.idusuario,
-          // lo que el usuario teclea/ve
-          beneficiarioText: _pedido.beneficiario!.nomben,
-          destinoText: _pedido.destino!.nomdestino,
-          destino: _pedido.destino,
+          beneficiarioText: pedido.beneficiario?.nomben ?? '',
+          destinoText: pedido.destino?.nomdestino ?? '',
+          destino: pedido.destino ?? null,
         });
+
+        // Si usas compareWith en selects, Angular necesita forzar la detección del cambio
+        this.formPedido.get('documento')?.updateValueAndValidity();
+        this.formPedido.get('beneficiario')?.updateValueAndValidity();
+        this.formPedido.get('destino')?.updateValueAndValidity();
       },
-      error: (e) => {
-        this.authService.mostrarError('error', e.error);
+
+      error: (err) => {
+        console.error('Error al obtener pedido:', err);
+        const msg = err.error?.message || 'Error al cargar el pedido';
+        this.authService.mostrarError('Error', msg);
       },
     });
   }
-  getArticulosByPedido(idpedido: number) {
-    this.artixpedidoService.getByIdPedido(idpedido).subscribe({
-      next: (data: any) => {
-        console.log(data);
-        this._articulosSelected = data;
+
+  async getArticulosByPedido(idpedido: number) {
+    try {
+      this._articulosSelected = []; // limpiar lista antes de cargar
+
+      const data: any[] = await this.artixpedidoService.getByIdPedidoAsync(idpedido);
+
+      this._articulosSelected = data.map((item) => ({
+        ...item.articulo,
+        cantidad: item.cantidad,
+      }));
+    } catch (e: any) {
+      console.error('Error al obtener artículos:', e.error || e);
+    }
+  }
+
+  numAvailable(event: any) {
+    const num = event.target.value;
+    if (!num) return;
+
+    this.pedidoService.getNumAvailable(+num!).subscribe({
+      next: (disponible: boolean) => {
+        const numeroControl = this.formPedido.get('numero');
+
+        if (!disponible) {
+          // Si NO está disponible, marcamos error personalizado
+          numeroControl?.setErrors({ notAvailable: true });
+        } else {
+          // Si está disponible, quitamos el error (si lo tenía)
+          if (numeroControl?.hasError('notAvailable')) {
+            numeroControl.setErrors(null);
+          }
+        }
       },
-      error: (e) => console.error(e.error),
+      error: (err) => {
+        console.error('Error verificando número:', err);
+      },
     });
+  }
+
+  compareDocumentos(o1: Documentos, o2: Documentos): boolean {
+    // Si ambos son null o undefined, se consideran iguales
+    if (o1 === null || o2 === null) return o1 === o2;
+    // Comparamos por id (o por el campo que identifique al documento)
+    return o1.iddocumento === o2.iddocumento;
   }
 }

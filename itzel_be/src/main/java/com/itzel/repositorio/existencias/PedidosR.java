@@ -14,10 +14,12 @@ public interface PedidosR extends JpaRepository<Pedidos, Short> {
     Integer findUltimoNumero();
 
     public Pedidos findTopByOrderByNumeroDesc();
-
+    //Buscar si el numero esta disponible o no
+    Pedidos findByNumero(Long numero);
+    boolean existsByNumero(Long numero);
     List<Pedidos> findByFechaBetween(LocalDate start, LocalDate end);
 
-    List<Pedidos> findByNumeroBetween(Long start, Long end);
+    List<Pedidos> findByNumeroBetweenOrderByNumeroAsc(Long start, Long end);
 
     @Query("SELECT p FROM Pedidos p WHERE LOWER(p.descripcion) LIKE LOWER(CONCAT('%', :descripcion, '%'))")
     List<Pedidos> findByDescripcionIgnoreCase(@Param("descripcion") String descripcion);

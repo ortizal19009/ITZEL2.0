@@ -73,7 +73,6 @@ export class PreingresosComponent implements OnInit {
     });
     // Escucha cada cambio en el input del filtro
     this.formBuscar.get('filtroControl')?.valueChanges.subscribe((valor: any) => {
-      console.log(valor);
       this.filtrar(valor);
     });
 
@@ -142,7 +141,6 @@ export class PreingresosComponent implements OnInit {
   }
 
   filtrar(valor: any): void {
-    console.log('Filtrando', valor);
     const filtro = valor.toLowerCase();
     if (!filtro) {
       if (this.partiFiltradas.length > 0) this.partiFiltradas = [...this._preingresos];

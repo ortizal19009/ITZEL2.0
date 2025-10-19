@@ -8,5 +8,6 @@ import java.util.List;
 public interface ArtixpedidoR extends JpaRepository<Artixpedido, Short> {
     List<Artixpedido> findByPedido_Idpedido(short idpedido);
     List<Artixpedido> findByArticulo_Idarticulo(short idarticulo);
+    Artixpedido findByPedido_IdpedidoAndArticulo_Idarticulo(short idpedido, short idarticulo);
 
 }
