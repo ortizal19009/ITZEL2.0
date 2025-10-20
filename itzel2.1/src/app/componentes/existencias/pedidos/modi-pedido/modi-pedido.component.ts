@@ -21,6 +21,7 @@ import { DestinosService } from '../../../servicios/existencias/destinos.service
 import { PedidosService } from '../../../servicios/existencias/pedidos.service';
 import { ArticulosService } from '../../../servicios/existencias/articulos.service';
 import { ArtixpedidoService } from '../../../servicios/existencias/artixpedido.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-modi-pedido.component',
@@ -113,7 +114,7 @@ export class ModiPedidoComponent {
   regresar() {
     this.router.navigate(['/pedidos']);
   }
-  async guardar() {
+  async _guardar() {
     if (this.formPedido.invalid) {
       this.authService.mostrarError(
         'Formulario incompleto',
@@ -170,6 +171,67 @@ export class ModiPedidoComponent {
       this._articulosSelected = [];
     } catch (error: any) {
       this.authService.mostrarError('Error', error?.error || 'No se pudo guardar el pedido.');
+    }
+  }
+  async guardar() {
+    if (this.formPedido.invalid) {
+      this.authService.mostrarError(
+        'Formulario incompleto',
+        'Por favor llena todos los campos requeridos.'
+      );
+      this.formPedido.markAllAsTouched();
+      return;
+    }
+
+    const f = this.formPedido.value as Pedidos;
+
+    // Armar el objeto del pedido
+    const pedidoData: Pedidos = new Pedidos();
+    Object.assign(pedidoData, {
+      idpedido: f.idpedido,
+      numero: f.numero,
+      fecha: f.fecha,
+      total: +f.total!,
+      descripcion: f.descripcion,
+      usucrea: f.usucrea,
+      feccrea: f.feccrea,
+      numdoc: f.numdoc,
+      documento: f.documento,
+      beneficiario: f.beneficiario,
+      destino: f.destino,
+    });
+
+    try {
+      // 1) Actualizar/guardar el pedido
+      const nuevoPedido: any = await this.pedidoService.updatePedido(pedidoData);
+
+      // Toma el id del pedido (del backend o del form si no cambia)
+      const idpedido: number = nuevoPedido?.idpedido ?? pedidoData.idpedido;
+
+      // 2) Preparar el payload de artículos para updateAll
+      //    Solo envía lo necesario: idarticulo y cantidad
+      const articulosPayload: any = (this._articulosSelected || []).map((a) => ({
+        idarticulo: a.idarticulo, // short en backend -> number en TS
+        cantidad: a.cantidad as number, // Long en backend -> number en TS
+      }));
+
+      // 3) Llamar al endpoint de actualización masiva (upsert + delete + stock)
+      const msg = await firstValueFrom(
+        this.artixpedidoService.updateAll(idpedido, articulosPayload)
+      );
+      // Opcional: console.log(msg);
+
+      // 4) Éxito: feedback y limpieza
+      this.swal('success', 'Pedido guardado correctamente.');
+      this.formPedido.reset();
+      this.regresar();
+      this.getLastPedido();
+      this._articulosSelected = [];
+    } catch (error: any) {
+      this.authService.mostrarError(
+        'Error',
+        error?.error || error?.message || 'No se pudo guardar el pedido.'
+      );
     }
   }
 

@@ -28,7 +28,7 @@ public class ArtixpedidoApi {
         return ResponseEntity.ok(artxpedService.save(ap));
     }
     @PutMapping("/delete_aritculo")
-    public ResponseEntity<String> updateArtixpedido(@RequestParam short idpedido, @RequestBody Articulos articulo){
-        return ResponseEntity.ok(artxpedService.update(idpedido, articulo));
+    public ResponseEntity<String> updateArtixpedido(@RequestParam short idpedido, @RequestBody List<Articulos> articulo){
+        return ResponseEntity.ok(artxpedService.updateAll(idpedido, articulo));
     }
 }

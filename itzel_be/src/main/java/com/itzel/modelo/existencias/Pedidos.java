@@ -14,8 +14,6 @@ import java.sql.Timestamp;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "pedidos")
 public class Pedidos {
     @Id

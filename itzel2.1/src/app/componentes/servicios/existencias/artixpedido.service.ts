@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Artixpedido } from '../../modelos/existencias/artixpedido.model';
-import { firstValueFrom, Observable } from 'rxjs';
+import { catchError, firstValueFrom, Observable, throwError } from 'rxjs';
+import { Articulos } from '../../modelos/existencias/articulos.model';
 const apiUrl = environment.API_URL;
 const baseUrl = `${apiUrl}/artixpedido`;
 @Injectable({
@@ -26,5 +27,23 @@ export class ArtixpedidoService {
   //Encontrar por articulo
   getByIdArticulo(idarticulo: number): Observable<Artixpedido[]> {
     return this.http.get<Artixpedido[]>(`${baseUrl}/articulos/${idarticulo}`);
+  }
+
+  //Update Artixpedido
+  updateAll(idpedido: number, articulos: Articulos[]): Observable<string> {
+    const url = `${baseUrl}/delete_aritculo`;
+    const params = new HttpParams().set('idpedido', String(idpedido));
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+
+    return this.http.put(url, articulos, { params, headers, responseType: 'text' }).pipe(
+      catchError((err) => {
+        // adapta el manejo de errores a tu app
+        const msg = err?.error || 'Error actualizando artículos del pedido';
+        return throwError(() => new Error(msg));
+      })
+    );
   }
 }

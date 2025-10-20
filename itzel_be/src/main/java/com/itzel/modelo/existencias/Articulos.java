@@ -23,7 +23,7 @@ public class Articulos {
     private String unidad;
     private BigDecimal inicial;
     private BigDecimal cosinicial;
-    private BigDecimal actual;
+    private Long actual;
     private BigDecimal cosactual;
     private BigDecimal costotal;
     private String descripcion;
