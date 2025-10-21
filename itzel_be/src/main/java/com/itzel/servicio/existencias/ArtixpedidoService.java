@@ -1,5 +1,6 @@
 package com.itzel.servicio.existencias;
 
+import com.itzel.DTO.existencias.ArticulosDTO;
 import com.itzel.modelo.existencias.Articulos;
 import com.itzel.modelo.existencias.Artixpedido;
 import com.itzel.modelo.existencias.Pedidos;
@@ -11,6 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -88,75 +92,85 @@ public class ArtixpedidoService {
         return "Actualizado correctamente";
     }
     @Transactional
-    public String updateAll(short idpedido, List<Articulos> nuevosArticulos) {
+    public String updateAll(short idpedido, short usumodi, Timestamp fecmodi, List<ArticulosDTO> nuevosArticulos) {
+
         if (nuevosArticulos == null) nuevosArticulos = List.of();
-        Pedidos _p = dao_pedido.findById(idpedido).orElseThrow(()->new RuntimeException("Pedido no encontrado"));
-        // Consolidar duplicados del input: idarticulo -> cantidad (Long)
-        // Usa la CANTIDAD solicitada (no el stock 'actual')
+
+        Pedidos pedido = dao_pedido.findById(idpedido)
+                .orElseThrow(() -> new RuntimeException("Pedido no encontrado"));
+
+        // Consolidar duplicados del input (idarticulo -> cantidad)
         Map<Short, Long> nuevosPorId = nuevosArticulos.stream()
+                .filter(a -> a != null) // evita null keys
                 .collect(Collectors.toMap(
-                        Articulos::getIdarticulo,
-                        a -> safeLong(a.getActual()),      // <-- cantidad pedida
-                        Long::sum                             // si vienen repetidos, suma
+                        ArticulosDTO::getIdarticulo,
+                        a -> safeLong(a.getCantidad()), // cantidad pedida
+                        Long::sum                     // si hay repetidos, suma
                 ));
+
+
 
         // Cargar líneas actuales del pedido
         List<Artixpedido> actuales = dao.findByPedido_Idpedido(idpedido);
         Map<Short, Artixpedido> actualesPorId = actuales.stream()
                 .collect(Collectors.toMap(
                         ap -> ap.getArticulo().getIdarticulo(),
-                        Function.identity()
+                        Function.identity(),
+                        (a1, a2) -> a1  // si hay duplicado, conserva el primero
                 ));
 
-        // 1) Eliminar los que desaparecen y devolver stock
-        Set<Short> idsQueDesaparecen = actualesPorId.keySet().stream()
+
+        // --- 1) Eliminar artículos que ya no están en el pedido ---
+        Set<Short> idsAEliminar = actualesPorId.keySet().stream()
                 .filter(id -> !nuevosPorId.containsKey(id))
                 .collect(Collectors.toSet());
+        for (Short idArt : idsAEliminar) {
+            Artixpedido ap = actualesPorId.get(idArt);
+            if (ap == null) continue; // seguridad
 
-        for (Short artId : idsQueDesaparecen) {
-            Artixpedido ap = actualesPorId.get(artId);
-            Articulos art = getArticuloForUpdate(artId);  // ideal con lock pesimista
-            Long devolver = safeLong(ap.getCantidad());   // cantidad a regresar
-
-            art.setActual(art.getActual()+devolver);
+            Articulos art = getArticuloForUpdate(idArt);
+            long cantidadDevuelta = safeLong(ap.getCantidad());
+            // Devolver stock
+            art.setActual(art.getActual() + cantidadDevuelta);
             dao_articulo.save(art);
+            // Eliminar relación Artixpedido
             dao.delete(ap);
         }
-
-        // 2) Insertar/Actualizar lo que viene (ajustando stock por diferencia)
+        // --- 2) Insertar o actualizar los artículos nuevos ---
         for (Map.Entry<Short, Long> e : nuevosPorId.entrySet()) {
-            Short artId    = e.getKey();
-            Long  cantNueva = safeLong(e.getValue());
-
-            Articulos art = getArticuloForUpdate(artId);
-            Artixpedido existente = actualesPorId.get(artId);
-
+            Short idArt = e.getKey();
+            long cantidadNueva = e.getValue();
+            Articulos art = getArticuloForUpdate(idArt);
+            Artixpedido existente = actualesPorId.get(idArt);
             if (existente == null) {
-                // Nuevo renglón en el pedido
-                validarStock(BigDecimal.valueOf(art.getActual()), cantNueva, artId);
-                Artixpedido apNuevo = new Artixpedido();
-                apNuevo.setPedido(_p);
-                apNuevo.setArticulo(art);
-                apNuevo.setCantidad(cantNueva); // Long
-                dao.save(apNuevo);
-
-                art.setActual(art.getActual() - cantNueva);
+                // Nuevo registro
+                validarStock(BigDecimal.valueOf(art.getActual()), cantidadNueva, idArt);
+                Artixpedido nuevo = new Artixpedido();
+                nuevo.setPedido(pedido);
+                nuevo.setArticulo(art);
+                nuevo.setFeccrea(fecmodi);
+                nuevo.setUsucrea((long) usumodi);
+                nuevo.setCantidad(cantidadNueva);
+                dao.save(nuevo);
+                art.setActual(art.getActual() - cantidadNueva);
                 dao_articulo.save(art);
 
             } else {
-                Long cantAntes = safeLong(existente.getCantidad());
-                long delta = cantNueva - cantAntes; // >0: pide más; <0: devuelve
+                long cantidadAnterior = safeLong(existente.getCantidad());
+                long diferencia = cantidadNueva - cantidadAnterior;
 
-                if (delta != 0L) {
-                    if (delta > 0L) {
-                        validarStock(BigDecimal.valueOf(art.getActual()), delta, artId);
-                        art.setActual(art.getActual() - delta);
-                    } else { // delta < 0
-                        art.setActual(art.getActual()+(-delta));
+                if (diferencia != 0L) {
+                    if (diferencia > 0L) {
+                        // Se pide más cantidad
+                        validarStock(BigDecimal.valueOf(art.getActual()), diferencia, idArt);
+                        art.setActual(art.getActual()-diferencia);
+                    } else {
+                        // Se devuelve parte del stock
+                        art.setActual(art.getActual()+(-diferencia));
                     }
-                    dao_articulo.save(art);
 
-                    existente.setCantidad(cantNueva); // Long
+                    dao_articulo.save(art);
+                    existente.setCantidad(cantidadNueva);
                     dao.save(existente);
                 }
             }
@@ -164,6 +178,7 @@ public class ArtixpedidoService {
 
         return "Artículos del pedido actualizados correctamente";
     }
+
 
     /* ===== Helpers ===== */
 

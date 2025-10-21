@@ -1,5 +1,6 @@
 package com.itzel.controlador.existencias;
 
+import com.itzel.DTO.existencias.ArticulosDTO;
 import com.itzel.modelo.existencias.Articulos;
 import com.itzel.modelo.existencias.Artixpedido;
 import com.itzel.servicio.existencias.ArtixpedidoService;
@@ -7,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -28,7 +31,8 @@ public class ArtixpedidoApi {
         return ResponseEntity.ok(artxpedService.save(ap));
     }
     @PutMapping("/delete_aritculo")
-    public ResponseEntity<String> updateArtixpedido(@RequestParam short idpedido, @RequestBody List<Articulos> articulo){
-        return ResponseEntity.ok(artxpedService.updateAll(idpedido, articulo));
+    public ResponseEntity<String> updateArtixpedido(@RequestParam short idpedido, @RequestParam short usumodi, @RequestParam String fecmodi, @RequestBody List<ArticulosDTO> articulo){
+        Timestamp timestamp = Timestamp.valueOf(fecmodi.replace("T", " ").replace("Z", "").substring(0, 19));
+        return ResponseEntity.ok(artxpedService.updateAll(idpedido, usumodi, timestamp ,articulo));
     }
 }

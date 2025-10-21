@@ -74,7 +74,6 @@ public class ArticuloService {
     public void deleteById(Short idarticulo) {
         dao.deleteById(idarticulo);
     }
-    // Buscar por nombre, cuenta o codigo de partida
     // Buscar por nombre, cuenta o código de partida
     public List<Articulos> buscarCombinado(String dato) {
         if (dato == null || dato.isBlank()) {

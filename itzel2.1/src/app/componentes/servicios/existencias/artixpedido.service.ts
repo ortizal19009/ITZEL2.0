@@ -29,21 +29,30 @@ export class ArtixpedidoService {
     return this.http.get<Artixpedido[]>(`${baseUrl}/articulos/${idarticulo}`);
   }
 
-  //Update Artixpedido
-  updateAll(idpedido: number, articulos: Articulos[]): Observable<string> {
-    const url = `${baseUrl}/delete_aritculo`;
-    const params = new HttpParams().set('idpedido', String(idpedido));
+  // ✅ Update Artixpedido
+updateAll(
+  idpedido: number,
+  usumodi: number,
+  fecmodi: Date,
+  articulos: Articulos[]
+): Observable<string> {
+  const url = `${baseUrl}/delete_aritculo`;
 
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
+  const params = new HttpParams()
+    .set('idpedido', String(idpedido))
+    .set('usumodi', String(usumodi))
+    .set('fecmodi', fecmodi.toISOString()); // importante para Timestamp
 
-    return this.http.put(url, articulos, { params, headers, responseType: 'text' }).pipe(
-      catchError((err) => {
-        // adapta el manejo de errores a tu app
-        const msg = err?.error || 'Error actualizando artículos del pedido';
-        return throwError(() => new Error(msg));
-      })
-    );
-  }
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+  });
+
+  return this.http.put(url, articulos, { params, headers, responseType: 'text' }).pipe(
+    catchError((err) => {
+      const msg = err?.error || 'Error actualizando artículos del pedido';
+      return throwError(() => new Error(msg));
+    })
+  );
+}
+
 }

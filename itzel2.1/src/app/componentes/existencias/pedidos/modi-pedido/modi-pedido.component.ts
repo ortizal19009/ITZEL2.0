@@ -210,14 +210,34 @@ export class ModiPedidoComponent {
 
       // 2) Preparar el payload de artículos para updateAll
       //    Solo envía lo necesario: idarticulo y cantidad
-      const articulosPayload: any = (this._articulosSelected || []).map((a) => ({
+      console.log(this._articulosSelected);
+      const articulosPayload: any = (this._articulosSelected || []).map((a: any) => ({
         idarticulo: a.idarticulo, // short en backend -> number en TS
+        codigo: a.codigo,
+        nombre: a.nombre,
+        codcue: a.codcue,
+        unidad: a.unidad,
+        inicial: a.inicial,
+        cosinicial: a.cosinicial,
+        actual: a.actual,
+        costotal: a.total,
+        descripcion: a.descripcion,
+        minimo: a.minimo,
+        swinmediato: a.swinmediato,
         cantidad: a.cantidad as number, // Long en backend -> number en TS
+        usucrea: a.usucrea,
+        feccrea: a.feccrea,
       }));
+      console.log(articulosPayload);
 
       // 3) Llamar al endpoint de actualización masiva (upsert + delete + stock)
       const msg = await firstValueFrom(
-        this.artixpedidoService.updateAll(idpedido, articulosPayload)
+        this.artixpedidoService.updateAll(
+          idpedido,
+          +this.authService.idusuario!,
+          this.date,
+          articulosPayload
+        )
       );
       // Opcional: console.log(msg);
 
