@@ -2,12 +2,24 @@ package com.itzel.modelo.existencias;
 
 import com.itzel.modelo.administracion.Documentos;
 import com.itzel.modelo.contabilidad.Beneficiarios;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "movimientos")
 public class Movimientos {
-    private Long idmovimiento;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private short idmovimiento;
     private Long tipmov;
     private Long numero;
     private Timestamp fecha;
@@ -23,7 +35,13 @@ public class Movimientos {
     private Timestamp feccrea;
     private Long usumodi;
     private Timestamp fecmodi;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "iddestino")
     private Destinos destino;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idbeneficiario")
     private Beneficiarios beneficiario;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "iddocumento")
     private Documentos documento;
 }

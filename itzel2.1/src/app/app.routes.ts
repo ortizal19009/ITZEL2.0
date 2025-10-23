@@ -39,7 +39,6 @@ import { AsientosComponent } from './componentes/contabilidad/asientos/asientos/
 import { AddAsientoComponent } from './componentes/contabilidad/asientos/add-asiento/add-asiento.component';
 import { AddTransaccionComponent } from './componentes/contabilidad/transacciones/add-transaccion/add-transaccion.component';
 import { ModiTransaccionComponent } from './componentes/contabilidad/transacciones/modi-transaccion/modi-transaccion.component';
-import { info } from 'console';
 import { TransaccionesComponent } from './componentes/contabilidad/transacciones/transacciones/transacciones.component';
 import { DestinosComponent } from './componentes/existencias/destinos/destinos/destinos.component';
 import { PedidosComponent } from './componentes/existencias/pedidos/pedidos/pedidos.component';
@@ -49,6 +48,12 @@ import { ModiArticuloComponent } from './componentes/existencias/articulos/modi-
 import { AddPedidoComponent } from './componentes/existencias/pedidos/add-pedido/add-pedido.component';
 import { ModiPedidoComponent } from './componentes/existencias/pedidos/modi-pedido/modi-pedido.component';
 import { InfoPedidoComponent } from './componentes/existencias/pedidos/info-pedido/info-pedido.component';
+import { IngresosComponent } from './componentes/existencias/movimientos/ingresos/ingresos/ingresos.component';
+import { AddIngresoComponent } from './componentes/existencias/movimientos/ingresos/add-ingreso/add-ingreso.component';
+import { ModiIngresoComponent } from './componentes/existencias/movimientos/ingresos/modi-ingreso/modi-ingreso.component';
+import { SalidasComponent } from './componentes/existencias/movimientos/salidas/salidas/salidas.component';
+import { AddSalidaComponent } from './componentes/existencias/movimientos/salidas/add-salida/add-salida.component';
+import { ModiSalidaComponent } from './componentes/existencias/movimientos/salidas/modi-salida/modi-salida.component';
 
 export const routes: Routes = [
   { path: 'inicio', component: AppWrapperComponent },
@@ -105,7 +110,7 @@ export const routes: Routes = [
   { path: 'modi-transaccion', component: ModiTransaccionComponent },
 
   /* ======================================================================
-  MODULO ROLES
+  MODULO EXISTENCIAS
   ====================================================================== */
   /* ==========DESTINOS========== */
 
@@ -119,7 +124,14 @@ export const routes: Routes = [
   { path: 'articulos', component: ArticulosComponent },
   { path: 'add-articulo', component: AddArticuloComponent },
   { path: 'modi-articulo', component: ModiArticuloComponent },
-
+  /* ==========MOVIMIENTOS========== */
+  { path: 'mov-ingresos', component: IngresosComponent },
+  { path: 'add-mov-ingreso', component: AddIngresoComponent },
+  { path: 'modi-mov-ingreso', component: ModiIngresoComponent },
+  /* ----------------------------------------------------------------- */
+  { path: 'mov-salidas', component: SalidasComponent },
+  { path: 'add-mov-salida', component: AddSalidaComponent },
+  { path: 'modi-mov-salida', component: ModiSalidaComponent },
   /* 
   ======================================================================
   MODULO ROLES

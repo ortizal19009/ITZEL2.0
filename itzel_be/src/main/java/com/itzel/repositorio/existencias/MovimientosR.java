@@ -1,4 +1,7 @@
 package com.itzel.repositorio.existencias;
 
-public interface MovimientosR {
+import com.itzel.modelo.existencias.Movimientos;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface MovimientosR extends JpaRepository<Movimientos, Short> {
 }
