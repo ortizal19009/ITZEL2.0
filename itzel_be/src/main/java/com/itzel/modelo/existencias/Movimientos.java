@@ -20,7 +20,7 @@ public class Movimientos {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private short idmovimiento;
-    private Long tipmov;
+    private Short tipmov;
     private Long numero;
     private Timestamp fecha;
     private Long numentrada;
