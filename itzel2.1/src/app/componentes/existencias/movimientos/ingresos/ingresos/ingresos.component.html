@@ -1,1 +1,54 @@
-<p>ingresos.component works!</p>
+<div class="content mt-1 pt-1 pl-0">
+    <div class="container-fluid">
+        <div class="row m-0 px-0 py-1 justify-content-start cabecera border sombra">
+            <div class="col-sm-2">
+                <h5 class="font-weight-bold mt-0 my-0"> <i class="bi bi-cart-fill text-warning"></i>&nbsp; Ingresos Movimientos</h5>
+            </div>
+            <div class="col-sm-10">
+                <form [formGroup]="formBuscar" (ngSubmit)="buscar()">
+                    <div class="row my-0">
+
+                        <div class="input-group col-sm-7">
+                            <input type="text" class="form-control form-control-sm text-center col-sm-1"
+                                formControlName="desde" placeholder="Número desde">
+                            <input type="text" class="form-control form-control-sm text-center col-sm-1"
+                                formControlName="hasta" placeholder="Número hasta">
+                            <input type="text" class="form-control form-control-sm text-center col-sm"
+                                formControlName="beneficiario" placeholder="Beneficiario">
+                            <input type="text" class="form-control form-control-sm text-center col-sm"
+                                formControlName="descripcion" placeholder="Descripción">
+
+                        </div>
+
+                        <div class="input-group col-sm">
+                            <button class="btn btn-primary btn-sm">
+                                <i *ngIf="swbuscando" class="fa fa-spinner"></i>
+                                <i *ngIf="!swbuscando" class="fa fa-search"></i> {{txtbuscar}}
+                            </button>
+                        </div>
+
+                        <div *ngIf="_movimientos?.length" class="input-group col-sm-2">
+                            <input type="text" class="form-control form-control-sm text-center"
+                                formControlName="filtroControl" placeholder="Filtrar...">
+                        </div>
+
+                        <div class="btn-group ml-auto mt-0">
+                            <button type="button" class="bg-transparent border-0 dropdown-toggle text-white text-right"
+                                data-toggle="dropdown" aria-expanded="false"> <i
+                                    class="bi-menu-button-wide text-white"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right bg-dark roboto ">
+                                <button class="dropdown-item popupCabecera" type="button" (click)="nuevo()">
+                                    <i class="bi-file-earmark-plus text-info"></i>&nbsp; Nuevo</button>
+                                <button class="dropdown-item" type="button" (click)="imprimir()">
+                                    <i class="bi bi-printer text-info"></i>&nbsp; Imprimir / Exportar</button>
+                                <button class="dropdown-item" type="button" (click)="cerrar()">
+                                    <i class="bi-x-circle text-info"></i>&nbsp; Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

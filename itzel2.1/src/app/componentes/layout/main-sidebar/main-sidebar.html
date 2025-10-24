@@ -137,7 +137,7 @@
                 <li class="nav-item has-treeview" routerLinkActive="menu-open">
                     <a href="#" class="nav-link bg-info">
                         <i class="bi-droplet-half nav-icon" style="font-size: 15px;"></i>
-                        <p> EXISTENCIAS
+                        <p> Existencias
                             <i class="fas fa-angle-right right"></i>
                             <span class="badge badge-warning right">1</span>
                         </p>
@@ -164,6 +164,32 @@
                                 <i class="bi-person-circle nav-icon"></i>
                                 <p class="text-warning"> Artículos</p>
                             </a>
+                        </li>
+                        <li class="nav-item has-treeview" routerLinkActive="menu-open">
+                            <a href="#" class="nav-link" routerLinkActive="active">
+                                <i class="fa fa-calculator nav-icon"></i>
+                                <p class="text-warning font-weight-bold"> Movimientos
+                                    <i class="right fas fa-angle-right"></i>
+                                </p>
+                            </a>
+
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a [routerLink]="['/mov-ingresos']" class="nav-link" routerLinkActive="menu-open"
+                                        [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active">
+                                        <i class="fa fa-gavel nav-icon"></i>
+                                        <p class="text-warning"> Ingresos</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a [routerLink]="['/mov-ingresos']" class="nav-link" routerLinkActive="menu-open"
+                                        [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active">
+                                        <i class="fa fa-gift nav-icon"></i>
+                                        <p class="text-warning"> Salidas</p>
+                                    </a>
+                                </li>
+
+                            </ul>
                         </li>
                     </ul>
                 </li>

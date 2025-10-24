@@ -27,7 +27,7 @@ export class PedidosComponent implements OnInit {
   sumTotal: number = 0;
   ventana: string = 'pedidos';
   totalPages: number = 0;
-  constructor(
+  constructor(          
     public fb: FormBuilder,
     private router: Router,
     private pediService: PedidosService,

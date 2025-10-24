@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PedidosService } from '../../../servicios/existencias/pedidos.service';
 import { ArtixpedidoService } from '../../../servicios/existencias/artixpedido.service';
 import { ArticulosService } from '../../../servicios/existencias/articulos.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-info-pedido',
   imports: [CommonModule, ReactiveFormsModule],
@@ -17,10 +18,14 @@ export class InfoPedidoComponent implements OnInit {
   constructor(
     public authService: AutorizaService,
     private pedidoService: PedidosService,
-    private artxpedidService: ArtixpedidoService
+    private artxpedidService: ArtixpedidoService, 
+    private router: Router
   ) {}
 
   ngOnInit(): void {
+      if (!this.authService.sessionlog) {
+      this.router.navigate(['/inicio']);
+    }
     sessionStorage.setItem('ventana', '/pedidos');
 
     const idpedidoStr = sessionStorage.getItem('infoToPedido');

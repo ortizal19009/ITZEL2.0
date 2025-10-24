@@ -1,0 +1,8 @@
+.cabecera {
+  background-color: var(--bgcolor1);
+  color: white;
+}
+
+.detalle {
+  background-color: var(--bgcolor2);
+}
