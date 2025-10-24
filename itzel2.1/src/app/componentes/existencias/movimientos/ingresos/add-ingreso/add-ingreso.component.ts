@@ -1,7 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
+import { ArticulosService } from '../../../../servicios/existencias/articulos.service';
+import { AutorizaService } from '../../../../servicios/administracion/autoriza.service';
 
 @Component({
   selector: 'app-add-ingreso.component',
@@ -11,10 +19,26 @@ import { Router } from '@angular/router';
 })
 export class AddIngresoComponent implements OnInit {
   formMovimiento!: FormGroup;
-  constructor(private router: Router, private fb: FormBuilder) {}
+  today: Date = new Date();
+  constructor(
+    private router: Router,
+    private fb: FormBuilder,
+    public authService: AutorizaService
+  ) {}
   ngOnInit(): void {
+    if (!this.authService.sessionlog) {
+      this.router.navigate(['/inicio']);
+    }
+    sessionStorage.setItem('ventana', '/mov-ingresos');
+
     let coloresJSON = sessionStorage.getItem('/mov-ingresos');
     if (coloresJSON) this.colocaColor(JSON.parse(coloresJSON));
+    this.formMovimiento = this.fb.group({
+      numero: ['', [Validators]],
+      tipmov: 1,
+      fecha: this.today.toISOString().substring(0, 10),
+      numentrada: '',
+    });
   }
   colocaColor(colores: any) {
     document.documentElement.style.setProperty('--bgcolor1', colores[0]);
@@ -25,4 +49,8 @@ export class AddIngresoComponent implements OnInit {
     if (detalle) detalle.classList.add('nuevoBG2');
     this.formMovimiento = this.fb.group({});
   }
+  get f() {
+    return this.formMovimiento.controls;
+  }
+  numAvailable(e: any) {}
 }
