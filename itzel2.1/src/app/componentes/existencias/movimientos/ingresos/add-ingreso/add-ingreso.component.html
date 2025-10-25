@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="row mt-5 justify-content-center text-center">
             <div class="col-sm-9 cabecera sombra border">
-                <h5 class="mt-2 font-weight-bold">Nuevo Móvimientoks</h5>
+                <h5 class="mt-2 font-weight-bold">Nuevo Móvimiento</h5>
             </div>
         </div>
     </div>
@@ -13,7 +13,8 @@
             <div class="card card-body col-sm-9 detalle sombra">
                 <form [formGroup]="formMovimiento">
                     <div class="row roboto">
-                        <div class="form-group col-ml-4">
+                        <!-- NUMERO -->
+                        <div class="form-group col-ml-3">
                             <div class="input-group input-group-sm">
                                 <div class="input-group-prepend">
                                     <label for="" class="input-group-text">Número<sup class="green">*</sup></label>
@@ -30,19 +31,17 @@
                                 </div>
                                 <div *ngIf="f['numero'].errors['min']"
                                     class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
-                                    <strong>Ups!</strong> El número debe ser mayor que cero.
+                                    <strong>Ups!</strong> El número debe ser mayor a cero.
                                 </div>
-                                <div *ngIf="f['numero'].errors['pattern']"
-                                    class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
-                                    <strong>Ups!</strong> Solo se permiten números enteros positivos.
-                                </div>
+
                                 <div *ngIf="f['numero'].errors['notAvailable']"
                                     class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
                                     <strong>Ups!</strong> Ese código ya existe
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group col-md-5">
+                        <!-- FECHA -->
+                        <div class="form-group col-md-4">
                             <div class="input-group input-group-sm">
                                 <div class="input-group-prepend">
                                     <label class="input-group-text">Fecha<sup class="green">*</sup></label>
@@ -52,14 +51,15 @@
                              'is-valid': f['fecha'].valid, '': f['fecha'].untouched}">
                             </div>
                         </div>
-                        <div class="form-group col-ml-5">
+                        <!-- NUM ENTRADA -->
+                        <div class="form-group col-ml-4">
                             <div class="input-group input-group-sm">
                                 <div class="input-group-prepend">
                                     <label for="" class="input-group-text">Num. Entrada<sup
                                             class="green">*</sup></label>
                                 </div>
                                 <input #inputPrimero type="text" class="form-control text-center"
-                                    formControlName="numentrada" (change)="numAvailable($event)" aria-label="Small"
+                                    formControlName="numentrada" aria-label="Small"
                                     aria-describedby="inputGroup-sizing-sm" maxlength="10" [ngClass]="{'is-invalid': f['numentrada'].invalid && f['numentrada'].touched,
                            'is-valid': f['numentrada'].valid, '': f['numentrada'].untouched}">
                             </div>
@@ -70,58 +70,28 @@
                                 </div>
                                 <div *ngIf="f['numentrada'].errors['min']"
                                     class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
-                                    <strong>Ups!</strong> El número debe ser mayor que cero.
+                                    <strong>Ups!</strong> El número debe ser mayor a cero.
                                 </div>
-                                <div *ngIf="f['numentrada'].errors['pattern']"
-                                    class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
-                                    <strong>Ups!</strong> Solo se permiten números enteros positivos.
-                                </div>
+
                                 <div *ngIf="f['numentrada'].errors['notAvailable']"
                                     class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
                                     <strong>Ups!</strong> Ese código ya existe
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group col-ml-5">
-                            <div class="input-group input-group-sm">
-                                <div class="input-group-prepend">
-                                    <label for="" class="input-group-text">Com pegre<sup class="green">*</sup></label>
-                                </div>
-                                <input #inputPrimero type="text" class="form-control text-center"
-                                    formControlName="compegre" (change)="numAvailable($event)" aria-label="Small"
-                                    aria-describedby="inputGroup-sizing-sm" maxlength="10" [ngClass]="{'is-invalid': f['compegre'].invalid && f['compegre'].touched,
-                           'is-valid': f['compegre'].valid, '': f['compegre'].untouched}">
-                            </div>
-                            <div *ngIf="authService.msgval && f['compegre'].errors && f['compegre'].touched">
-                                <div *ngIf="f['compegre'].errors['required']"
-                                    class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
-                                    <strong>Ups!</strong> El número es obligatorio
-                                </div>
-                                <div *ngIf="f['compegre'].errors['min']"
-                                    class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
-                                    <strong>Ups!</strong> El número debe ser mayor que cero.
-                                </div>
-                                <div *ngIf="f['compegre'].errors['pattern']"
-                                    class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
-                                    <strong>Ups!</strong> Solo se permiten números enteros positivos.
-                                </div>
-                                <div *ngIf="f['compegre'].errors['notAvailable']"
-                                    class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
-                                    <strong>Ups!</strong> Ese código ya existe
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group col-ml-5">
+                        <!-- APROBADO -->
+                        <div class="form-group col-ml-2">
                             <div class="input-group input-group-sm">
                                 <div class="input-group-prepend">
                                     <label for="" class="input-group-text">Aprobado</label>
                                 </div>
                                 <input #inputPrimero type="checkbox" class="form-control text-center"
-                                    formControlName="swaprobado" (change)="numAvailable($event)" aria-label="Small"
+                                    formControlName="swaprobado" aria-label="Small"
                                     aria-describedby="inputGroup-sizing-sm">
                             </div>
 
                         </div>
+                        <!-- DOCUMENTOS -->
                         <div class="form-group col-md-12">
                             <div class="input-group input-group-sm">
                                 <div class="input-group-prepend">
@@ -150,20 +120,110 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- BENEFICIARIO -->
+                        <div class="form-group col-md-4">
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text">Beneficiario<sup class="green">*</sup></label>
+                                </div>
+
+                                <input type="text" class="form-control form-control-sm col-md" autocomplete="off"
+                                    autocorrect="off" autocapitalize="off" spellcheck="false"
+                                    formControlName="beneficiarioText" placeholder="Nombre del beneficiario"
+                                    list="beneficiarioList" (input)="onBeneficiarioTyped($event)"
+                                    (blur)="onBeneficiarioSelected($event)" [ngClass]="{'is-invalid': f['beneficiarioText'].invalid && f['beneficiarioText'].touched,
+                             'is-valid': f['beneficiarioText'].valid, '': f['beneficiarioText'].untouched}">
+
+                                <datalist role="listbox" id="beneficiarioList">
+                                    <!-- Puedes usar sólo el nombre, o combinar id | nombre para asegurar unicidad -->
+                                    <option *ngFor="let bene of _beneficiarios" [value]="bene.nomben">
+                                        {{ bene.codben }}
+                                    </option>
+                                </datalist>
+                            </div>
+                            <div
+                                *ngIf="authService.msgval && f['beneficiarioText'].errors && f['beneficiarioText'].touched">
+                                <div *ngIf="f['beneficiarioText'].errors['required']"
+                                    class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                                    <strong>Ups!</strong> El beneficiario es obligatorio
+                                </div>
+                            </div>
+                        </div>
+                        <!-- DESTINO -->
+                        <div class="form-group col-md-4">
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text">Destino<sup class="green">*</sup></label>
+                                </div>
+
+                                <input list="destinoList" class="form-control form-control-sm col-md" autocomplete="off"
+                                    autocorrect="off" autocapitalize="off" spellcheck="false"
+                                    formControlName="destinoText" placeholder="Ingrese el destino"
+                                    (input)="onDestinoTyped($event)" (blur)="onDestinoSelected($event)" [ngClass]="{'is-invalid': f['destinoText'].invalid && f['destinoText'].touched,
+                             'is-valid': f['destinoText'].valid, '': f['destinoText'].untouched}">
+
+                                <datalist role="listbox" id="destinoList">
+                                    <option *ngFor="let dest of _destinos" [value]="dest.nomdestino">
+                                        {{ dest.nomdestino }}
+                                    </option>
+                                </datalist>
+                            </div>
+                            <div *ngIf="authService.msgval && f['destinoText'].errors && f['destinoText'].touched">
+                                <div *ngIf="f['destinoText'].errors['required']"
+                                    class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                                    <strong>Ups!</strong> El destino es obligatorio
+                                </div>
+                            </div>
+                        </div>
+                        <!-- COM PEGRE -->
+                        <div class="form-group col-ml-3">
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-prepend">
+                                    <label for="" class="input-group-text">Com pegre<sup class="green">*</sup></label>
+                                </div>
+                                <input #inputPrimero type="text" class="form-control text-center"
+                                    formControlName="compegre" aria-label="Small"
+                                    aria-describedby="inputGroup-sizing-sm" maxlength="10" [ngClass]="{'is-invalid': f['compegre'].invalid && f['compegre'].touched,
+                           'is-valid': f['compegre'].valid, '': f['compegre'].untouched}">
+                            </div>
+                            <div *ngIf="authService.msgval && f['compegre'].errors && f['compegre'].touched">
+                                <div *ngIf="f['compegre'].errors['required']"
+                                    class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                                    <strong>Ups!</strong> El número es obligatorio
+                                </div>
+                                <div *ngIf="f['compegre'].errors['min']"
+                                    class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                                    <strong>Ups!</strong> El número debe ser mayor a cero.
+                                </div>
+
+                                <div *ngIf="f['compegre'].errors['notAvailable']"
+                                    class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                                    <strong>Ups!</strong> Ese código ya existe
+                                </div>
+                            </div>
+                        </div>
+                        <!-- OBSERVACIONES -->
                         <div class="form-group col-ml-12">
                             <div class="input-group input-group-sm">
                                 <div class="input-group-prepend">
-                                    <label for="" class="input-group-text">Observaciones<sup
-                                            class="green">*</sup></label>
+                                    <label for="observaciones" class="input-group-text">Observaciones</label>
                                 </div>
-                                <textarea #inputPrimero type="text" class="form-control text-center"
-                                    formControlName="compegre" (change)="numAvailable($event)" aria-label="Small"
-                                    aria-describedby="inputGroup-sizing-sm" maxlength="10"></textarea>
+                                <textarea #inputPrimero type="text" id="observaciones" class="form-control text-center"
+                                    formControlName="observaciones" aria-label="Small"></textarea>
                             </div>
 
                         </div>
                     </div>
                 </form>
+                <div class="row">
+                    <div *ngIf="formMovimiento" class="col-md-12 text-center">
+                        <button type="button" class="btn btn-success btn-sm mx-1" (click)="guardar()"
+                            [disabled]="formMovimiento.invalid ">
+                            <i class="fa fa-check-circle"></i>&nbsp; Aceptar</button>
+                        <button class="btn btn-outline-success btn-sm mx-1" (click)="regresar()"><i
+                                class="fa fa-times-circle"></i> Cancelar</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

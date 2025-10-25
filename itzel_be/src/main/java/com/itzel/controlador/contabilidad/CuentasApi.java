@@ -13,7 +13,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/cuentas")
-@CrossOrigin("*")
 public class CuentasApi {
     @Autowired
     private CuentasService cueService;

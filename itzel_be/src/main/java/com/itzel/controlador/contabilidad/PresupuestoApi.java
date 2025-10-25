@@ -14,7 +14,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/presupuesto")
-@CrossOrigin("*")
 public class PresupuestoApi {
     @Autowired
     private PresupuestoService presuService;

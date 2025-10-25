@@ -5,6 +5,7 @@ import com.itzel.servicio.contabilidad.BeneficiariosService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +14,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/beneficiarios")
-@CrossOrigin("*")
 public class BeneficiariosApi {
     @Autowired
     private BeneficiariosService beneServicio;
@@ -28,10 +28,13 @@ public class BeneficiariosApi {
 
     // Busca por Nombre para los datalist
     @GetMapping("/nomben")
-    public List<Beneficiarios> findByNomben(@Param(value = "nomben") String nomben) {
-        return beneServicio.findByNomben(nomben.toLowerCase());
+    public ResponseEntity<?> findByNomben(@RequestParam("nomben") String nomben) {
+        List<Beneficiarios> beneficiarios = beneServicio.findByNomben(nomben.toLowerCase());
+        if (beneficiarios == null || beneficiarios.isEmpty()) {
+            return ResponseEntity.noContent().build(); // ✅ 204 No Content
+        }
+        return ResponseEntity.ok(beneficiarios); // ✅ 200 OK con la lista
     }
-
     // Busca por Nombre y grupo para los datalist
     @GetMapping("/nombengru")
     public List<Beneficiarios> findByGrupoBene(@Param(value = "nomben") String nomben,

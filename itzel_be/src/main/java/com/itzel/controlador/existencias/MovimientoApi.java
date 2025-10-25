@@ -10,8 +10,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping
-@CrossOrigin("/*")
+@RequestMapping("/movimientos")
 public class MovimientoApi {
     private final MovimientoService movimientoService;
 
@@ -25,4 +24,20 @@ public class MovimientoApi {
     public ResponseEntity<List<Movimientos>> findByTipmov(@RequestParam Short tipmov){
         return ResponseEntity.ok(movimientoService.findByTipmov(tipmov));
     }
+    //Encontrar el último numero de los movimientos para generar el secuencial diferenciando ingresos y salidas
+    @GetMapping("/last")
+    public ResponseEntity<Integer> findUltimoNumero(@RequestParam short tipmov){
+        System.out.println("CONSULTANDO ");
+        Integer number = movimientoService.findUltimoNumero(tipmov);
+        if(number == null){
+            number = 0;
+        }
+        return ResponseEntity.ok(number);
+    }
+    //Verificar si existe el numero de movimiento por tipo y numero
+    @GetMapping("/exist")
+    public ResponseEntity<Boolean> existsByTipoAndNumero(@RequestParam short tipmov, @RequestParam Long numero){
+        return ResponseEntity.ok(movimientoService.existsByTipoAndNumero(tipmov, numero));
+    }
+
 }

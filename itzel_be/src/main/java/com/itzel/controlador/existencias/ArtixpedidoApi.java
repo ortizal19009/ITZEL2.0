@@ -15,7 +15,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/artixpedido")
-@CrossOrigin("*")
 public class ArtixpedidoApi {
     private final ArtixpedidoService artxpedService;
     @GetMapping("/pedido/{idpedido}")

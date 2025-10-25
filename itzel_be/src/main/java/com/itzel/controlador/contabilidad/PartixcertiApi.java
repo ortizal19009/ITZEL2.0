@@ -6,6 +6,5 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/partixcerti")
-@CrossOrigin("*")
 public class PartixcertiApi {
 }

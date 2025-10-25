@@ -9,7 +9,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/cargos")
-@CrossOrigin("*")
 public class CargosApi {
 
     private final CargoService cargoService;

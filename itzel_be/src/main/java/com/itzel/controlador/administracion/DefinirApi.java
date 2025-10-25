@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/definir")
-@CrossOrigin("*")
 public class DefinirApi {
     @Autowired
     private DefinirService defService;

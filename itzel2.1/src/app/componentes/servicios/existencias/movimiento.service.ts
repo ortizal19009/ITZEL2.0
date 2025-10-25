@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { Movimientos } from '../../modelos/existencias/movimientos.model';
-import { Observable } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 const apiUrl = environment.API_URL;
 const baseUrl = `${apiUrl}/movimientos`;
 @Injectable({
@@ -15,5 +15,11 @@ export class MovimientoService {
   }
   findByTipMovimiento(tipmov: number): Observable<Movimientos> {
     return this.http.get<Movimientos>(`${baseUrl}/tipmov?tipmov=${tipmov}`);
+  }
+  findUltimo(tipmov: number): Observable<number> {
+    return this.http.get<number>(`${baseUrl}/last?tipmov=${tipmov}`);
+  }
+  getNumAvailable(tipmov: number, numero: number): Observable<boolean> {
+    return this.http.get<boolean>(`${baseUrl}/exist?tipmov=${tipmov}&numero=${numero}`);
   }
 }

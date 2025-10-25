@@ -15,7 +15,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/certificaciones")
-@CrossOrigin("*")
 public class CertificacionesApi {
     @Autowired
     private CertificacionService certificacionService;

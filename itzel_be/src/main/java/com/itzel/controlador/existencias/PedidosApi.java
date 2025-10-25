@@ -14,7 +14,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/pedidos")
-@CrossOrigin("*")
 public class PedidosApi {
     private final PedidoService pedidoService;
     //Obtener los pedidos por IdPedido

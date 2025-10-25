@@ -25,7 +25,6 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/proyectos")
-@CrossOrigin("*")
 public class ProyectosApi {
     @GetMapping
     public ResponseEntity<List<Proyectos>> getAll(

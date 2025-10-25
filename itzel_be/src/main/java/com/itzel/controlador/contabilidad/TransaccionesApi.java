@@ -15,7 +15,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/transacciones")
-@CrossOrigin("*")
 public class TransaccionesApi {
 
     private final TransaccionService tranService;

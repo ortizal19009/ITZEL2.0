@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/ventanas")
-@CrossOrigin("*")
 public class VentanasApi {
     @Autowired
     private VentanaService venServicio;

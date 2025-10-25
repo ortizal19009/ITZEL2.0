@@ -19,4 +19,13 @@ public class MovimientoService {
     public List<Movimientos> findByTipmov(Short tipmov){
         return dao.findByTipmov(tipmov);
     }
+    //Encontrar el último numero de los movimientos para generar el secuencial diferenciando ingresos y salidas
+    public Integer findUltimoNumero(short tipmov){
+        return dao.findUltimoNumero(tipmov);
+    }
+    //Verificar si existe el numero de movimiento por tipo y numero
+    public boolean existsByTipoAndNumero(short tipmov, Long numero){
+        return dao.existsByTipoAndNumero(tipmov, numero);
+    }
+
 }

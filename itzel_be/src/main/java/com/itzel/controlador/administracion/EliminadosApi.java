@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/eliminados")
-@CrossOrigin("*")
 public class EliminadosApi {
     private final EliminadoService elimService;
 

@@ -11,7 +11,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/estructura")
-@CrossOrigin("*")
 public class EstructuraApi {
     @Autowired
     private EstructuraService estructuraService;

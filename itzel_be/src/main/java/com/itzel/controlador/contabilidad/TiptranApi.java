@@ -13,7 +13,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/tiptran")
-@CrossOrigin("*")
 public class TiptranApi {
     @Autowired
     private TiptranService tiptranService;

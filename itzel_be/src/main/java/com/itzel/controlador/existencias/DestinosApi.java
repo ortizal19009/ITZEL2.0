@@ -11,8 +11,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/destinos")
-@CrossOrigin("*")
-
 public class DestinosApi {
 
     private final DestinoService destService;

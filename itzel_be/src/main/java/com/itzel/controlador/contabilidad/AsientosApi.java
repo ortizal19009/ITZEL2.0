@@ -14,7 +14,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/asientos")
-@CrossOrigin("*")
 public class AsientosApi {
 
     private final AsientoService asieService;

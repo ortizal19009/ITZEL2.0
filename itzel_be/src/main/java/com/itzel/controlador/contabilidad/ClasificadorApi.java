@@ -10,7 +10,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/clasificador")
-@CrossOrigin("*")
 public class ClasificadorApi {
     @Autowired
     private ClasificadorService clasiService;

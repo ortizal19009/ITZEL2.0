@@ -11,7 +11,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/gruposbene")
-@CrossOrigin("*")
 public class GruposbeneApi {
     @Autowired
     GrupobeneService grubenServicio;

@@ -34,4 +34,6 @@ public interface BeneficiariosR extends JpaRepository<Beneficiarios, Long> {
 
     @Query(value = "SELECT count(*) FROM beneficiarios where idifinan=?1", nativeQuery = true)
     Long countByIdifinan(Long idifinan);
+
+    List<Beneficiarios> findByCodbenStartingWith(String prefix);
 }

@@ -12,7 +12,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/articulos")
-@CrossOrigin("*")
 public class ArticulosApi {
 
     private final ArticuloService artiService;

@@ -11,7 +11,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/benextran")
-@CrossOrigin("*")
 public class BenextranApi {
 
     private final BenextranService benxtraService;

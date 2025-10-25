@@ -12,7 +12,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/ifinan")
-@CrossOrigin("*")
 public class IfinanApi {
     @Autowired
     IfinanService ifinanServicio;

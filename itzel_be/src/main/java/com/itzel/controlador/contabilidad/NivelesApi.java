@@ -13,7 +13,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/niveles")
-@CrossOrigin("*")
 public class NivelesApi {
     @Autowired
     private NivelesService nivelesService;
