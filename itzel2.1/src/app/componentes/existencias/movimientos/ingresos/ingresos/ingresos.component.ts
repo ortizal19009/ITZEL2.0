@@ -17,7 +17,7 @@ export class IngresosComponent implements OnInit {
   txtbuscar: string = 'Buscar';
   swbuscando?: boolean;
   _movimientos: any[] = [];
-  ventana: string = 'mov-ingreso';
+  ventana: string = 'mov-ingresos';
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -29,6 +29,10 @@ export class IngresosComponent implements OnInit {
     if (!this.authService.sessionlog) {
       this.router.navigate(['/inicio']);
     }
+    sessionStorage.setItem('ventana', `/${this.ventana}`);
+    let coloresJSON = sessionStorage.getItem(`/${this.ventana}`);
+    if (coloresJSON) this.colocaColor(JSON.parse(coloresJSON));
+    else this.buscaColor();
     this.formBuscar = this.fb.group({
       desde: 0,
       hasta: 0,

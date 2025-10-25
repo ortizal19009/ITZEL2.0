@@ -10,6 +10,8 @@ import {
 import { Router } from '@angular/router';
 import { ArticulosService } from '../../../../servicios/existencias/articulos.service';
 import { AutorizaService } from '../../../../servicios/administracion/autoriza.service';
+import { Documentos } from '../../../../modelos/administracion/documentos.model';
+import { DocumentosService } from '../../../../servicios/administracion/documentos.service';
 
 @Component({
   selector: 'app-add-ingreso.component',
@@ -20,12 +22,16 @@ import { AutorizaService } from '../../../../servicios/administracion/autoriza.s
 export class AddIngresoComponent implements OnInit {
   formMovimiento!: FormGroup;
   today: Date = new Date();
+  _documentos: Documentos[] = [];
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    public authService: AutorizaService
+    public authService: AutorizaService,
+    private s_documentos: DocumentosService
   ) {}
   ngOnInit(): void {
+    this.getAllDocumentos();
+
     if (!this.authService.sessionlog) {
       this.router.navigate(['/inicio']);
     }
@@ -36,8 +42,14 @@ export class AddIngresoComponent implements OnInit {
     this.formMovimiento = this.fb.group({
       numero: ['', [Validators]],
       tipmov: 1,
-      fecha: this.today.toISOString().substring(0, 10),
+      fecha: [this.today.toISOString().substring(0, 10), [Validators.required]],
       numentrada: '',
+      total: '',
+      numart: '',
+      numdoc: ['', [Validators.required, Validators.minLength(3)]],
+      documento: '',
+      fecdoc: [this.today.toISOString().substring(0, 10), [Validators.required]],
+      swaprobado: false,
     });
   }
   colocaColor(colores: any) {
@@ -53,4 +65,13 @@ export class AddIngresoComponent implements OnInit {
     return this.formMovimiento.controls;
   }
   numAvailable(e: any) {}
+  getAllDocumentos() {
+    this.s_documentos.getListaDocumentos().subscribe({
+      next: (data: Documentos[]) => {
+        console.log(data);
+        this._documentos = data;
+      },
+      error: (e) => console.error(e.error),
+    });
+  }
 }
