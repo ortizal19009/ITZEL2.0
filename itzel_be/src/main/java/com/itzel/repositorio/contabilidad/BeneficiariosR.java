@@ -36,4 +36,7 @@ public interface BeneficiariosR extends JpaRepository<Beneficiarios, Long> {
     Long countByIdifinan(Long idifinan);
 
     List<Beneficiarios> findByCodbenStartingWith(String prefix);
+
+    List<Beneficiarios> findByCodbenStartingWithIgnoreCaseAndNombenContainingIgnoreCase(String codbenPrefix, String nomben);
+
 }

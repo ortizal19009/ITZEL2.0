@@ -213,7 +213,7 @@ export class AddIngresoComponent implements OnInit {
       return;
     }
 
-    this.beneService.findByNomben(nombreVal).subscribe({
+    this.beneService.findByPrefixAndNombre('P',nombreVal).subscribe({
       next: (data: Beneficiarios[] = []) => {
         this._beneficiarios = Array.isArray(data) ? data : [];
         console.log('✅ Beneficiarios obtenidos:', this._beneficiarios);

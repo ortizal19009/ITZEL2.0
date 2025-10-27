@@ -113,5 +113,20 @@ public class BeneficiariosApi {
         beneServicio.deleteById(idbene);
         return ResponseEntity.ok(!(beneServicio.findById(idbene) != null));
     }
+    //Obtener proveedor o e
+    @GetMapping("/by-prefix")
+    public ResponseEntity<List<Beneficiarios>> findByCodbenStartingWith(@RequestParam String prefix) {
+        List<Beneficiarios> beneficiarios = beneServicio.findByCodbenStartingWith(prefix);
+
+        if (beneficiarios == null || beneficiarios.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(beneficiarios);
+    }
+    @GetMapping("/by-prefix-nombre")
+    public ResponseEntity<List<Beneficiarios>> findByCodbenStartingWithIgnoreCaseAndNombenContainingIgnoreCase(@RequestParam String codbenPrefix, @RequestParam String nomben){
+        return ResponseEntity.ok(beneServicio.findByCodbenStartingWithIgnoreCaseAndNombenContainingIgnoreCase(codbenPrefix, nomben));
+    }
 
 }

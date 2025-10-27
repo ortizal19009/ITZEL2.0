@@ -95,4 +95,12 @@ public class BeneficiariosService {
     public void deleteById(Long id) {
         dao.deleteById(id);
     }
+    public List<Beneficiarios> findByCodbenStartingWith(String prefix){
+        return dao.findByCodbenStartingWith(prefix);
+    }
+
+    public List<Beneficiarios> findByCodbenStartingWithIgnoreCaseAndNombenContainingIgnoreCase(String codbenPrefix, String nomben){
+        return dao.findByCodbenStartingWithIgnoreCaseAndNombenContainingIgnoreCase(codbenPrefix, nomben);
+    }
+
 }
