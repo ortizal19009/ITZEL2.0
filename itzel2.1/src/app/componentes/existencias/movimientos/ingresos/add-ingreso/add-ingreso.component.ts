@@ -17,6 +17,7 @@ import { Beneficiarios } from '../../../../modelos/contabilidad/beneficiarios.mo
 import { BeneficiariosService } from '../../../../servicios/contabilidad/beneficiarios.service';
 import { DestinosService } from '../../../../servicios/existencias/destinos.service';
 import { MovimientoService } from '../../../../servicios/existencias/movimiento.service';
+import { Movimientos } from '../../../../modelos/existencias/movimientos.model';
 
 @Component({
   selector: 'app-add-ingreso.component',
@@ -60,7 +61,7 @@ export class AddIngresoComponent implements OnInit {
         ],
       ],
       fecha: [this.today.toISOString().substring(0, 10), [Validators.required]],
-      numentrada: '',
+      numentrada: ['', Validators.required, Validators.minLength(2)],
       total: '',
       numart: '',
       numdoc: ['', [Validators.required, Validators.minLength(3)]],
@@ -71,7 +72,7 @@ export class AddIngresoComponent implements OnInit {
       destinoText: ['', [Validators.required]],
       beneficiario: [null],
       destino: [null],
-      compegre: [''],
+      compegre: ['',Validators.required],
       observaciones: [''],
     });
   }
@@ -87,7 +88,11 @@ export class AddIngresoComponent implements OnInit {
   get f() {
     return this.formMovimiento.controls;
   }
-  guardar() {}
+  guardar() {
+    let movimiento: Movimientos = new Movimientos();
+    let f = this.formMovimiento.value;
+    console.log(f);
+  }
   regresar() {
     this.router.navigate(['/mov-ingresos']);
   }
@@ -213,14 +218,12 @@ export class AddIngresoComponent implements OnInit {
       return;
     }
 
-    this.beneService.findByPrefixAndNombre('P',nombreVal).subscribe({
+    this.beneService.findByPrefixAndNombre('P', nombreVal).subscribe({
       next: (data: Beneficiarios[] = []) => {
         this._beneficiarios = Array.isArray(data) ? data : [];
-        console.log('✅ Beneficiarios obtenidos:', this._beneficiarios);
         onLoaded?.(this._beneficiarios);
       },
       error: (error) => {
-        console.error('❌ Error al consultar beneficiarios:', error);
         this._beneficiarios = [];
         // Si tienes un servicio de alertas, puedes habilitar esta línea:
         // this.authService.mostrarError('Error', error?.error || 'No se pudieron cargar los beneficiarios');

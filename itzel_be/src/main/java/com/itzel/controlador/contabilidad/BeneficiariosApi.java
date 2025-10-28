@@ -125,8 +125,8 @@ public class BeneficiariosApi {
         return ResponseEntity.ok(beneficiarios);
     }
     @GetMapping("/by-prefix-nombre")
-    public ResponseEntity<List<Beneficiarios>> findByCodbenStartingWithIgnoreCaseAndNombenContainingIgnoreCase(@RequestParam String codbenPrefix, @RequestParam String nomben){
-        return ResponseEntity.ok(beneServicio.findByCodbenStartingWithIgnoreCaseAndNombenContainingIgnoreCase(codbenPrefix, nomben));
+    public ResponseEntity<List<Beneficiarios>> findByCodbenStartingWithIgnoreCaseAndNombenContainingIgnoreCase(@RequestParam String prefix, @RequestParam String nomben){
+        return ResponseEntity.ok(beneServicio.findByCodbenStartingWithIgnoreCaseAndNombenContainingIgnoreCase(prefix, nomben));
     }
 
 }

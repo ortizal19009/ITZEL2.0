@@ -90,4 +90,13 @@ export class BeneficiariosService {
   deleteBeneficiario(idbene: number) {
     return this.http.delete(`${baseUrl}/${idbene}`);
   }
+  //Beneficiarios x prefijo para encontrar el proveedor o el e
+  findByPrefix(prefix: string): Observable<Beneficiarios> {
+    return this.http.get<Beneficiarios>(`${baseUrl}/by-prefix?prefix=${prefix}`);
+  }
+  findByPrefixAndNombre(prefix: string, nombre: string): Observable<Beneficiarios[]> {
+    return this.http.get<Beneficiarios[]>(
+      `${baseUrl}/by-prefix-nombre?prefix=${prefix}&nomben=${nombre}`
+    );
+  }
 }
