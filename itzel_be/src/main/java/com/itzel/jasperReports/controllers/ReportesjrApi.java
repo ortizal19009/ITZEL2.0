@@ -1,7 +1,7 @@
 package com.itzel.jasperReports.controllers;
 
-import com.itzel.jasperReports.modelo.Reportes;
-import com.itzel.jasperReports.services.ReporteService;
+import com.itzel.jasperReports.modelo.Reportesjr;
+import com.itzel.jasperReports.services.ReportejrService;
 import net.sf.jasperreports.engine.JRParameter;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperReport;
@@ -21,23 +21,23 @@ import java.util.Map;
 public class ReportesApi {
 
         @Autowired
-        private ReporteService reportesService;
+        private ReportejrService reportesService;
 
     @PostMapping("/posting")
-    public ResponseEntity<Reportes> _guardarReporte(
+    public ResponseEntity<Reportesjr> _guardarReporte(
             @RequestParam("nombre") String nombre,
             @RequestParam("descripcion") String descripcion,
             @RequestParam("jrxml") MultipartFile jrxml,
             @RequestParam("jasper") MultipartFile jasper
     ) {
         try {
-            Reportes reporte = new Reportes();
+            Reportesjr reporte = new Reportesjr();
             reporte.setNombre(nombre);
             reporte.setDescripcion(descripcion);
             reporte.setArchivoJrxml(jrxml.getBytes());
             reporte.setArchivoJasper(jasper.getBytes());
 
-            Reportes guardado = reportesService.guardar(reporte);
+            Reportesjr guardado = reportesService.guardar(reporte);
             return ResponseEntity.ok(guardado);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
@@ -45,14 +45,14 @@ public class ReportesApi {
     }
 
     @PostMapping(consumes = "multipart/form-data")
-    public ResponseEntity<Reportes> guardarReporte(
+    public ResponseEntity<Reportesjr> guardarReporte(
             @RequestParam("nombre") String nombre,
             @RequestParam("descripcion") String descripcion,
             @RequestParam("jrxml") MultipartFile jrxml,
             @RequestParam("jasper") MultipartFile jasper
     ) {
         try {
-            Reportes reporte = new Reportes();
+            Reportesjr reporte = new Reportesjr();
             reporte.setNombre(nombre);
             reporte.setDescripcion(descripcion);
             reporte.setArchivoJrxml(jrxml.getBytes());
@@ -76,7 +76,7 @@ public class ReportesApi {
             reporte.setParametros(parametrosMap);
 
             // 4️⃣ Guardar en la DB
-            Reportes guardado = reportesService.guardar(reporte);
+            Reportesjr guardado = reportesService.guardar(reporte);
             return ResponseEntity.ok(guardado);
 
         } catch (Exception e) {
@@ -86,12 +86,12 @@ public class ReportesApi {
     }
 
     @GetMapping
-    public ResponseEntity<List<Reportes>> listarTodos() {
+    public ResponseEntity<List<Reportesjr>> listarTodos() {
         return ResponseEntity.ok(reportesService.listarTodos());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Reportes> obtenerPorId(@PathVariable Long id) {
+    public ResponseEntity<Reportesjr> obtenerPorId(@PathVariable Long id) {
         return reportesService.buscarPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
