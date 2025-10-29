@@ -1,114 +1,59 @@
 package com.itzel.jasperReports.modelo;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.Type;
 
-import java.sql.Types;
-import java.time.LocalDateTime;
-import java.util.Map;
+import java.sql.Timestamp;
+
 import com.vladmihalcea.hibernate.type.json.JsonType;
 
-
 @Entity
-@Table(name = "reportes")
+@Table(name = "reportesjr")
 @Getter
 @Setter
-@Builder
-public class Reportes {
+@NoArgsConstructor
+@AllArgsConstructor
+public class Reportesjr {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idreporte;
+    private Short idreporte;
 
-    @Column(nullable = false, unique = true, length = 100)
-    private String nombre;
+    @Column(nullable = false, length = 50, unique = true)
+    private String nomrep;
 
-    @Column(columnDefinition = "TEXT")
-    private String descripcion;
+    @Column(nullable = false, length = 100)
+    private String desrep;
 
-    @JdbcTypeCode(Types.BINARY)
-    @Column(name = "archivo_jasper")
-    private byte[] archivoJasper;
+    @Column(name = "jrxml", nullable = false)
+    private byte[] jrxml;
 
-    @JdbcTypeCode(Types.BINARY)
-    @Column(name = "archivo_jrxml")
-    private byte[] archivoJrxml;
+    @Column(name = "jasper", nullable = false)
+    private byte[] jasper;
 
-    @Type(JsonType.class) // 👈 Esto hace que maneje JSONB correctamente
-    @Column(columnDefinition = "jsonb")
-    private Map<String, Object> parametros;  // O JsonNode si prefieres
+    @Type(JsonType.class)
+    @Column(columnDefinition = "json")
+    private JsonNode parametros;
 
-    @Column(name = "creado", updatable = false)
-    private LocalDateTime creado = LocalDateTime.now();
+    @Column(nullable = false, updatable = false)
+    private Timestamp feccrea;
 
-    public Reportes() {
+    private Timestamp fecmodi;
+
+    @PrePersist
+    protected void onCreate() {
+        feccrea = new Timestamp(System.currentTimeMillis());
     }
 
-    public Reportes(Long idreporte, String nombre, String descripcion, byte[] archivoJasper, byte[] archivoJrxml, Map<String, Object> parametros, LocalDateTime creado) {
-        this.idreporte = idreporte;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.archivoJasper = archivoJasper;
-        this.archivoJrxml = archivoJrxml;
-        this.parametros = parametros;
-        this.creado = creado;
+    @PreUpdate
+    protected void onUpdate() {
+        fecmodi = new Timestamp(System.currentTimeMillis());
     }
 
-    public Long getIdreporte() {
-        return idreporte;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idrepoxopcion")
+    private Repoxopcion repoxopcion;
 
-    public void setIdreporte(Long idreporte) {
-        this.idreporte = idreporte;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public byte[] getArchivoJrxml() {
-        return archivoJrxml;
-    }
-
-    public void setArchivoJrxml(byte[] archivoJrxml) {
-        this.archivoJrxml = archivoJrxml;
-    }
-
-    public byte[] getArchivoJasper() {
-        return archivoJasper;
-    }
-
-    public void setArchivoJasper(byte[] archivoJasper) {
-        this.archivoJasper = archivoJasper;
-    }
-
-    public Map<String, Object> getParametros() {
-        return parametros;
-    }
-
-    public void setParametros(Map<String, Object> parametros) {
-        this.parametros = parametros;
-    }
-
-    public LocalDateTime getCreado() {
-        return creado;
-    }
-
-    public void setCreado(LocalDateTime creado) {
-        this.creado = creado;
-    }
 }

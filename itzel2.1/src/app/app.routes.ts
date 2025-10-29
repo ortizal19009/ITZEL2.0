@@ -24,9 +24,6 @@ import { ClasificadorComponent } from './componentes/contabilidad/clasificador/c
 import { AddClasificadorComponent } from './componentes/contabilidad/clasificador/add-clasificador/add-clasificador.component';
 import { PreingresosComponent } from './componentes/contabilidad/presupuestos/preingresos/preingresos/preingresos.component';
 import { AddPartidaingComponent } from './componentes/contabilidad/presupuestos/preingresos/add-partidaing/add-partidaing.component';
-import { ReporteUpdateComponent } from './componentes/administracion/reportesjr/reporte-update/reporte-update.component';
-import { ReportesjrComponent } from './componentes/administracion/reportesjr/reporte-viewer/reportesjr.component';
-import { ReportesComponent } from './componentes/administracion/reportesjr/reportes/reportes.component';
 import { DefinirComponent } from './componentes/administracion/definir/definir/definir.component';
 import { CertificacionesComponent } from './componentes/contabilidad/certificaciones/certificaciones/certificaciones.component';
 import { AddCertificacionComponent } from './componentes/contabilidad/certificaciones/add-certificacion/add-certificacion.component';
@@ -54,6 +51,9 @@ import { ModiIngresoComponent } from './componentes/existencias/movimientos/ingr
 import { SalidasComponent } from './componentes/existencias/movimientos/salidas/salidas/salidas.component';
 import { AddSalidaComponent } from './componentes/existencias/movimientos/salidas/add-salida/add-salida.component';
 import { ModiSalidaComponent } from './componentes/existencias/movimientos/salidas/modi-salida/modi-salida.component';
+import { ReportesjrComponent } from './componentes/administracion/reportesjr/reportesjr/reportesjr.component';
+import { AddReportejrComponent } from './componentes/administracion/reportesjr/add-reportejr/add-reportejr.component';
+import { ModiReportejrComponent } from './componentes/administracion/reportesjr/modi-reportejr/modi-reportejr.component';
 
 export const routes: Routes = [
   { path: 'inicio', component: AppWrapperComponent },
@@ -145,9 +145,9 @@ export const routes: Routes = [
   ======================================================================
   */
   /* ==========JASPER REPORT========== */
-  { path: 'reportesjr', component: ReportesComponent },
-  { path: 'add-reporte', component: ReporteUpdateComponent },
-  { path: 'viewRepot/:id', component: ReportesjrComponent },
+  { path: 'reportesjr', component: ReportesjrComponent },
+  { path: 'add-reportejr', component: AddReportejrComponent },
+  { path: 'modi-reportejr', component: ModiReportejrComponent },
   /* ==========DEFINIR========== */
   { path: 'definir', component: DefinirComponent },
   //{ path: '', redirectTo: 'inicio', pathMatch: 'full' },
