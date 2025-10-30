@@ -37,6 +37,6 @@ public interface BeneficiariosR extends JpaRepository<Beneficiarios, Long> {
 
     List<Beneficiarios> findByCodbenStartingWith(String prefix);
 
-    List<Beneficiarios> findByCodbenStartingWithIgnoreCaseAndNombenContainingIgnoreCase(String codbenPrefix, String nomben);
+    List<Beneficiarios> findByCodbenStartingWithIgnoreCaseAndSwmodulo2AndNombenContainingIgnoreCase(String codbenPrefix, boolean swmodulo2,  String nomben);
 
 }

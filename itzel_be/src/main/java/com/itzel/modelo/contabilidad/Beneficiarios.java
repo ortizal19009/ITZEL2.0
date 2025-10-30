@@ -3,6 +3,7 @@ package com.itzel.modelo.contabilidad;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 @Entity
 @Getter
@@ -16,26 +17,29 @@ public class Beneficiarios {
     private Long idbeneficiario;
     private String codben;
     private String nomben;
-    private String tpidben;
     private String rucben;
     private String ciben;
     private String tlfben;
     private String dirben;
-    private String mailben;
-    private Long tpcueben;
-    private String cuebanben;
+    private String emailben;
+    private Long tpcuebank;
+    private String cuebank;
+    private boolean swconsufin;
     private String foto;
+    private Long idtpidentifica;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idgrupo")
     private Gruposbene grupo;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idifinan")
     private Ifinan ifinan;
-    private Long swconsufin;
-    private Integer modulo;
+    private boolean swmodulo1;
+    private boolean swmodulo2;
+    private boolean swmodulo3;
+    private boolean swmodulo4;
+    private boolean swmodulo5;
     private Long usucrea;
-    private LocalDate feccrea;
+    private Timestamp feccrea;
     private Long usumodi;
-    private LocalDate fecmodi;
-
+    private Timestamp fecmodi;
 }

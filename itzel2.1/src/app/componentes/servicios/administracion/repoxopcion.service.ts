@@ -1,3 +1,4 @@
+
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
@@ -9,7 +10,7 @@ const baseUrl = `${apiUrl}/repoxopcion`;
 })
 export class RepoxopcionService {
   constructor(private http: HttpClient) {}
-  obtenerPorCodigo(dato: any):Observable<any> {
-    return this.http.get<any>(`${baseUrl}`);
+  obtenerPorCodigo(dato: any): Observable<any> {
+    return this.http.get<any>(`${baseUrl}/codigo?codigo=${dato}`);
   }
 }

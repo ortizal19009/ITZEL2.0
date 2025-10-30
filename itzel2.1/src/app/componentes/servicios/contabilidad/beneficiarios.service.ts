@@ -96,7 +96,7 @@ export class BeneficiariosService {
   }
   findByPrefixAndNombre(prefix: string, nombre: string): Observable<Beneficiarios[]> {
     return this.http.get<Beneficiarios[]>(
-      `${baseUrl}/by-prefix-nombre?prefix=${prefix}&nomben=${nombre}`
+      `${baseUrl}/by-prefix-nombre?prefix=${prefix}&swmodulo2=${true}&nomben=${nombre}`
     );
   }
 }

@@ -99,8 +99,8 @@ public class BeneficiariosService {
         return dao.findByCodbenStartingWith(prefix);
     }
 
-    public List<Beneficiarios> findByCodbenStartingWithIgnoreCaseAndNombenContainingIgnoreCase(String codbenPrefix, String nomben){
-        return dao.findByCodbenStartingWithIgnoreCaseAndNombenContainingIgnoreCase(codbenPrefix, nomben);
+    public List<Beneficiarios> findByCodbenStartingWithIgnoreCaseAndSwmodulo2AndNombenContainingIgnoreCase(String codbenPrefix,boolean swmodulo2, String nomben){
+        return dao.findByCodbenStartingWithIgnoreCaseAndSwmodulo2AndNombenContainingIgnoreCase(codbenPrefix,swmodulo2, nomben);
     }
 
 }

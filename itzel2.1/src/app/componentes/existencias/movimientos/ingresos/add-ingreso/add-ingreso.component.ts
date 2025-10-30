@@ -72,7 +72,7 @@ export class AddIngresoComponent implements OnInit {
       destinoText: ['', [Validators.required]],
       beneficiario: [null],
       destino: [null],
-      compegre: ['',Validators.required],
+      compegre: ['', Validators.required],
       observaciones: [''],
     });
   }
@@ -220,6 +220,7 @@ export class AddIngresoComponent implements OnInit {
 
     this.beneService.findByPrefixAndNombre('P', nombreVal).subscribe({
       next: (data: Beneficiarios[] = []) => {
+        console.log(data);
         this._beneficiarios = Array.isArray(data) ? data : [];
         onLoaded?.(this._beneficiarios);
       },

@@ -1,16 +1,11 @@
 package com.itzel.jasperReports.controllers;
 
-// import java.io.ByteArrayInputStream;
-// import java.util.LinkedHashMap;
 import java.util.List;
-// import java.util.Map;
 
 import com.itzel.jasperReports.modelo.Reportesjr;
 import com.itzel.jasperReports.services.ReportejrService;
 import org.springframework.http.HttpStatus;
-// import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -4,6 +4,7 @@ import com.itzel.modelo.contabilidad.Beneficiarios;
 import com.itzel.servicio.contabilidad.BeneficiariosService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -125,8 +126,8 @@ public class BeneficiariosApi {
         return ResponseEntity.ok(beneficiarios);
     }
     @GetMapping("/by-prefix-nombre")
-    public ResponseEntity<List<Beneficiarios>> findByCodbenStartingWithIgnoreCaseAndNombenContainingIgnoreCase(@RequestParam String prefix, @RequestParam String nomben){
-        return ResponseEntity.ok(beneServicio.findByCodbenStartingWithIgnoreCaseAndNombenContainingIgnoreCase(prefix, nomben));
+    public ResponseEntity<List<Beneficiarios>> findByCodbenStartingWithIgnoreCaseAndSwmodulo2AndNombenContainingIgnoreCase(@RequestParam String prefix, @RequestParam @DefaultValue(value = "true") boolean swmodulo2, @RequestParam String nomben){
+        return ResponseEntity.ok(beneServicio.findByCodbenStartingWithIgnoreCaseAndSwmodulo2AndNombenContainingIgnoreCase(prefix, swmodulo2, nomben));
     }
 
 }
