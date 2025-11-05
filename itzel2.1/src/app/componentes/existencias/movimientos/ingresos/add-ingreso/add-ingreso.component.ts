@@ -8,7 +8,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ArticulosService } from '../../../../servicios/existencias/articulos.service';
 import { AutorizaService } from '../../../../servicios/administracion/autoriza.service';
 import { Documentos } from '../../../../modelos/administracion/documentos.model';
 import { DocumentosService } from '../../../../servicios/administracion/documentos.service';
