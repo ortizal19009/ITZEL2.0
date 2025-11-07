@@ -27,7 +27,6 @@ public class MovimientoApi {
     //Encontrar el último numero de los movimientos para generar el secuencial diferenciando ingresos y salidas
     @GetMapping("/last")
     public ResponseEntity<Integer> findUltimoNumero(@RequestParam short tipmov){
-        System.out.println("CONSULTANDO ");
         Integer number = movimientoService.findUltimoNumero(tipmov);
         if(number == null){
             number = 0;
@@ -38,6 +37,14 @@ public class MovimientoApi {
     @GetMapping("/exist")
     public ResponseEntity<Boolean> existsByTipoAndNumero(@RequestParam short tipmov, @RequestParam Long numero){
         return ResponseEntity.ok(movimientoService.existsByTipoAndNumero(tipmov, numero));
+    }
+    @GetMapping
+    public ResponseEntity<List<Movimientos>> getAllMovimientos(){
+        List<Movimientos> movimientos = movimientoService.getAllMovimientos();
+        if(movimientos.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
+        return  ResponseEntity.ok(movimientos);
     }
 
 }

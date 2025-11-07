@@ -52,3 +52,85 @@
         </div>
     </div>
 </div>
+
+<div class="container-fluid">
+   <div class="row mb-0">
+      <div class="col-sm-12">
+         <table *ngIf="_movimientos?.length" class="table table-hover table-bordered table-sm sombra">
+            <thead class="cabecera text-center roboto">
+               <tr class="pad0">
+                  <th class="col-sm-1" (click)="ordenarPor('numero')" style="cursor: pointer">N°
+                     <i *ngIf="ordenColumna === 'numero'"
+                        [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
+                  </th>
+                  <th class="col-sm-1" (click)="ordenarPor('fecha')" style="cursor: pointer">Fecha
+                     <i *ngIf="ordenColumna === 'fecha'"
+                        [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
+                  </th>
+                  <th class="" (click)="ordenarPor('nomben')" style="cursor: pointer">Beneficiario
+                     <i *ngIf="ordenColumna === 'nomben'"
+                        [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
+                  </th>
+                  <th (click)="ordenarPor('descripcion')" style="cursor: pointer">Descripción
+                     <i *ngIf="ordenColumna === 'descripcion'"
+                        [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
+                  </th>
+                  <th (click)="ordenarPor('nomdestino')" style="cursor: pointer">Destino
+                     <i *ngIf="ordenColumna === 'nomdestino'"
+                        [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
+                  </th>
+                  <th (click)="ordenarPor('numdoc')" style="cursor: pointer">Num. Documento
+                     <i *ngIf="ordenColumna === 'numdoc'"
+                        [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
+                  </th>
+                  <th class="col-sm-1" (click)="ordenarPor('total')" style="cursor: pointer">Total
+                     <i *ngIf="ordenColumna === 'total'"
+                        [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
+                  </th>
+                  <th></th>
+               </tr>
+            </thead>
+            <tbody class="detalle roboto small">
+               <tr *ngFor="let pedido of movFiltrados" class="fila pad0"
+                  (click)="onCellClick($event, pedido.idpedido )">
+                  <td class="text-center font-weight-bold ">{{ pedido.numero}}</td>
+                  <td class="text-center">{{ pedido.fecha | date:'dd/MM/yyyy' }}</td>
+                  <td class="text-left text-truncate ancho200" data-toggle="tooltip"
+                     [title]="pedido.beneficiario!.nomben!.length > 60 ? pedido.beneficiario!.nomben : ''">{{
+                     pedido.beneficiario!.nomben }}</td>
+                  <td class="text-left text-truncate ancho200" data-toggle="tooltip"
+                     [title]="pedido.descripcion!.length > 60 ? pedido.descripcion : ''">{{ pedido.descripcion }}</td>
+                  <td class="text-left text-truncate ancho200" data-toggle="tooltip"
+                     [title]="pedido.destino!.nomdestino!.length > 60 ? pedido.destino!.nomdestino : ''">{{
+                     pedido.destino!.nomdestino }}</td>
+
+                  <td class="text-left text-truncate ancho200" data-toggle="tooltip"
+                     [title]="pedido.numdoc!.length > 60 ? pedido.numdoc : ''">{{
+                     pedido.numdoc }}</td>
+                  <td class="text-right" [ngClass]="{'transparente': pedido.total == 0}">{{pedido.total |
+                     number:'1.2-2'}} </td>
+                  <td class="text-center">
+                     <div class="btn-group py-0">
+                        <button type="button" class="btn btn-warning btn-xs dropdown-toggle py-0" data-toggle="dropdown"
+                           aria-expanded="false">
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right popLista">
+                           <button class="dropdown-item" type="button" (click)="modificar( pedido.idpedido )">
+                              <i class="bi bi-pencil"></i>&nbsp; Modificar</button>
+                           <button class="dropdown-item" type="button" (click)="eliminar( pedido )">
+                              <i class="bi bi-file-minus"></i>&nbsp; Eliminar</button>
+                        </div>
+                     </div>
+                  </td>
+               </tr>
+            </tbody>
+            <tfoot class="font-weight-bold detalle roboto small pad0">
+               <td>TOTAL: {{movFiltrados.length}}&nbsp;&nbsp;</td>
+               <td colspan="6" class="text-right">{{sumTotal | number: '1.2-2'}} </td>
+               <td></td>
+            </tfoot>
+         </table>
+      </div>
+   </div>
+
+</div>

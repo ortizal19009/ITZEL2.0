@@ -9,7 +9,7 @@ const baseUrl = `${apiUrl}/movimientos`;
   providedIn: 'root',
 })
 export class MovimientoService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
   saveMovimiento(movimiento: Movimientos): Observable<Movimientos> {
     return this.http.post<Movimientos>(`${baseUrl}`, movimiento);
   }
@@ -21,5 +21,8 @@ export class MovimientoService {
   }
   getNumAvailable(tipmov: number, numero: number): Observable<boolean> {
     return this.http.get<boolean>(`${baseUrl}/exist?tipmov=${tipmov}&numero=${numero}`);
+  }
+  getAllMovimientos(): Observable<Movimientos[]> {
+    return this.http.get<Movimientos[]>(`${baseUrl}`);
   }
 }

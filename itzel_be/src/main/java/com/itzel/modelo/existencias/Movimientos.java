@@ -26,7 +26,7 @@ public class Movimientos {
     private Long numentrada;
     private BigDecimal total;
     private Long numart;
-    private Long numdoc;
+    private String numdoc;
     private Timestamp fecdoc;
     private String compegre;
     private Boolean swaprobado;
@@ -39,7 +39,7 @@ public class Movimientos {
     @JoinColumn(name = "iddestino")
     private Destinos destino;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idbeneficiario")
+    @JoinColumn(name = "idbeneficiario", nullable = false)
     private Beneficiarios beneficiario;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "iddocumento")

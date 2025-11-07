@@ -27,5 +27,9 @@ public class MovimientoService {
     public boolean existsByTipoAndNumero(short tipmov, Long numero){
         return dao.existsByTipoAndNumero(tipmov, numero);
     }
+    //GetAllMovimientos
+    public List<Movimientos> getAllMovimientos(){
+        return dao.findAll();
+    }
 
 }

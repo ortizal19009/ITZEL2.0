@@ -15,7 +15,7 @@ export class Movimientos {
   compegre?: string;
   swaprobado?: boolean;
   observaciones?: string;
-  usucrea!: number;
+  usucrea?: number;
   feccrea!: Date;
   usumodi?: number;
   fecmodi?: number;

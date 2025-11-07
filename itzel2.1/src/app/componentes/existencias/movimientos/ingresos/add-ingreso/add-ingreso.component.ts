@@ -39,7 +39,7 @@ export class AddIngresoComponent implements OnInit {
     private beneService: BeneficiariosService,
     private destService: DestinosService,
     private movService: MovimientoService
-  ) {}
+  ) { }
   ngOnInit(): void {
     if (!this.authService.sessionlog) {
       this.router.navigate(['/inicio']);
@@ -56,24 +56,26 @@ export class AddIngresoComponent implements OnInit {
         [
           Validators.required,
           Validators.min(1),
-          Validators.pattern(/^[1-9]\d*$/), // Solo números enteros positivos
+          Validators.pattern(/^[1-9]\d*$/), // Solo enteros positivos
         ],
       ],
       fecha: [this.today.toISOString().substring(0, 10), [Validators.required]],
-      numentrada: ['', Validators.required, Validators.minLength(2)],
-      total: '',
-      numart: '',
+      // 👇 corregido: todos los sync validators al 2º argumento
+      numentrada: ['', [Validators.required, Validators.minLength(2)]],
+      total: [''],
+      numart: [''],
       numdoc: ['', [Validators.required, Validators.minLength(3)]],
-      documento: '',
+      documento: [''],
       fecdoc: [this.today.toISOString().substring(0, 10), [Validators.required]],
-      swaprobado: false,
+      swaprobado: [false],
       beneficiarioText: ['', [Validators.required]],
       destinoText: ['', [Validators.required]],
-      beneficiario: [null],
-      destino: [null],
+      beneficiario: [null, Validators.required],
+      destino: [null, Validators.required],
       compegre: ['', Validators.required],
       observaciones: [''],
     });
+
   }
   colocaColor(colores: any) {
     document.documentElement.style.setProperty('--bgcolor1', colores[0]);
@@ -91,6 +93,29 @@ export class AddIngresoComponent implements OnInit {
     let movimiento: Movimientos = new Movimientos();
     let f = this.formMovimiento.value;
     console.log(f);
+    movimiento.tipmov = this.tipmov;
+    movimiento.numero = f.numero;
+    movimiento.fecha = f.fecha;
+    movimiento.numentrada = f.numentrada;
+    movimiento.total = 0;
+    movimiento.numart = 0;
+    movimiento.documento = f.documento;
+    movimiento.numdoc = f.numdoc;
+    movimiento.fecdoc = f.fecdoc;
+    movimiento.swaprobado = f.swaprobado;
+    movimiento.beneficiario = f.beneficiario;
+    movimiento.destino = f.destino;
+    movimiento.compegre = f.compegre;
+    movimiento.observaciones = f.observaciones;
+    movimiento.feccrea = new Date();
+    movimiento.usucrea = this.authService.idusuario;
+    console.log('MOVIMIENTO A GUARDAR: ', movimiento);
+    this.movService.saveMovimiento(movimiento).subscribe({
+      next: (data) => {
+        console.log(data);
+        this.router.navigate(['/mov-ingresos']);
+      }, error: (e) => console.error(e)
+    });
   }
   regresar() {
     this.router.navigate(['/mov-ingresos']);
@@ -167,11 +192,14 @@ export class AddIngresoComponent implements OnInit {
       // intenta atar automáticamente si el texto coincide exactamente con un nombre
       const bene = lista.find((b) => (b.nomben || '').toLowerCase() === key) || null;
       if (bene) {
-        this.formMovimiento.patchValue({
-          beneficiario: bene,
-          beneficiarioText: bene.nomben,
+        setTimeout(() => {
+          this.formMovimiento.patchValue({
+            beneficiario: bene,
+            beneficiarioText: bene.nomben,
+          });
         });
       }
+
     });
   }
   getAllDestinos() {

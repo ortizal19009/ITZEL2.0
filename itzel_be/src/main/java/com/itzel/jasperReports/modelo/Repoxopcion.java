@@ -19,7 +19,6 @@ public class Repoxopcion {
     private String codigo;
     private String opcion;
     private String nombre;
-
     private short usucrea;
     private Timestamp feccrea;
     private Short usumodi;
