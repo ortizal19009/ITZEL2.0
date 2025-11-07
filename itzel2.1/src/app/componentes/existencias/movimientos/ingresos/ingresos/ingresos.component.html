@@ -27,7 +27,7 @@
                             </button>
                         </div>
 
-                        <div *ngIf="_movimientos?.length" class="input-group col-sm-2">
+                        <div *ngIf="_movimientos.length" class="input-group col-sm-2">
                             <input type="text" class="form-control form-control-sm text-center"
                                 formControlName="filtroControl" placeholder="Filtrar...">
                         </div>
@@ -56,7 +56,7 @@
 <div class="container-fluid">
    <div class="row mb-0">
       <div class="col-sm-12">
-         <table *ngIf="_movimientos?.length" class="table table-hover table-bordered table-sm sombra">
+         <table *ngIf="_movimientos.length" class="table table-hover table-bordered table-sm sombra">
             <thead class="cabecera text-center roboto">
                <tr class="pad0">
                   <th class="col-sm-1" (click)="ordenarPor('numero')" style="cursor: pointer">N°
@@ -71,8 +71,8 @@
                      <i *ngIf="ordenColumna === 'nomben'"
                         [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
                   </th>
-                  <th (click)="ordenarPor('descripcion')" style="cursor: pointer">Descripción
-                     <i *ngIf="ordenColumna === 'descripcion'"
+                  <th (click)="ordenarPor('numentrada')" style="cursor: pointer">Num. Entrada
+                     <i *ngIf="ordenColumna === 'numentrada'"
                         [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
                   </th>
                   <th (click)="ordenarPor('nomdestino')" style="cursor: pointer">Destino
@@ -91,23 +91,23 @@
                </tr>
             </thead>
             <tbody class="detalle roboto small">
-               <tr *ngFor="let pedido of movFiltrados" class="fila pad0"
-                  (click)="onCellClick($event, pedido.idpedido )">
-                  <td class="text-center font-weight-bold ">{{ pedido.numero}}</td>
-                  <td class="text-center">{{ pedido.fecha | date:'dd/MM/yyyy' }}</td>
+               <tr *ngFor="let mov of movFiltrados" class="fila pad0"
+                  (click)="onCellClick($event, mov.idmov )">
+                  <td class="text-center font-weight-bold ">{{ mov.numero}}</td>
+                  <td class="text-center">{{ mov.fecha | date:'dd/MM/yyyy' }}</td>
                   <td class="text-left text-truncate ancho200" data-toggle="tooltip"
-                     [title]="pedido.beneficiario!.nomben!.length > 60 ? pedido.beneficiario!.nomben : ''">{{
-                     pedido.beneficiario!.nomben }}</td>
+                     [title]="mov.beneficiario!.nomben!.length > 60 ? mov.beneficiario!.nomben : ''">{{
+                     mov.beneficiario!.nomben }}</td>
                   <td class="text-left text-truncate ancho200" data-toggle="tooltip"
-                     [title]="pedido.descripcion!.length > 60 ? pedido.descripcion : ''">{{ pedido.descripcion }}</td>
+                     [title]="mov.numentrada!.length > 60 ? mov.numentrada : ''">{{ mov.numentrada }}</td>
                   <td class="text-left text-truncate ancho200" data-toggle="tooltip"
-                     [title]="pedido.destino!.nomdestino!.length > 60 ? pedido.destino!.nomdestino : ''">{{
-                     pedido.destino!.nomdestino }}</td>
+                     [title]="mov.destino!.nomdestino!.length > 60 ? mov.destino!.nomdestino : ''">{{
+                     mov.destino!.nomdestino }}</td>
 
                   <td class="text-left text-truncate ancho200" data-toggle="tooltip"
-                     [title]="pedido.numdoc!.length > 60 ? pedido.numdoc : ''">{{
-                     pedido.numdoc }}</td>
-                  <td class="text-right" [ngClass]="{'transparente': pedido.total == 0}">{{pedido.total |
+                     [title]="mov.numdoc!.length > 60 ? mov.numdoc : ''">{{
+                     mov.numdoc }}</td>
+                  <td class="text-right" [ngClass]="{'transparente': mov.total == 0}">{{mov.total |
                      number:'1.2-2'}} </td>
                   <td class="text-center">
                      <div class="btn-group py-0">
@@ -115,9 +115,9 @@
                            aria-expanded="false">
                         </button>
                         <div class="dropdown-menu dropdown-menu-right popLista">
-                           <button class="dropdown-item" type="button" (click)="modificar( pedido.idpedido )">
+                           <button class="dropdown-item" type="button" (click)="modificar( mov.idmov )">
                               <i class="bi bi-pencil"></i>&nbsp; Modificar</button>
-                           <button class="dropdown-item" type="button" (click)="eliminar( pedido )">
+                           <button class="dropdown-item" type="button" (click)="eliminar( mov )">
                               <i class="bi bi-file-minus"></i>&nbsp; Eliminar</button>
                         </div>
                      </div>

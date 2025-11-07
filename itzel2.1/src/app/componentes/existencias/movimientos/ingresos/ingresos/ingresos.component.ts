@@ -81,8 +81,12 @@ export class IngresosComponent implements OnInit {
     const detalle = document.querySelector('.detalle');
     if (detalle) detalle.classList.add('nuevoBG2');
   }
-  modificar(id: number) { }
-  eliminar(id: number) { }
+  modificar(id: number) {
+    sessionStorage.setItem('idToModIngMovimientos', id.toString());
+    this.router.navigate(['mod-mov-ingreso']);
+
+  }
+  eliminar(mov: any) { }
   async buscaColor() {
     try {
       const datos = await this.coloresService.setcolor(
@@ -143,11 +147,9 @@ interface MovimientoVisual {
   numero: number;
   fecha: string;
   beneficiario: string;
-  descripcion: string;
-  actual: number;
-  cosactual: number;
   nomben: string;
   total: number;
   numdoc: string;
   nomdestino: string;
+  numentrada: number;
 }
