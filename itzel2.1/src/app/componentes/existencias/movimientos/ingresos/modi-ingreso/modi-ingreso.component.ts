@@ -14,12 +14,12 @@ import { Movimientos } from '../../../../modelos/existencias/movimientos.model';
 
 @Component({
   selector: 'app-modi-ingreso.component',
-    imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './modi-ingreso.component.html',
   styleUrl: './modi-ingreso.component.css'
 })
-export class ModiIngresoComponent implements OnInit{
-formMovimiento!: FormGroup;
+export class ModiIngresoComponent implements OnInit {
+  formMovimiento!: FormGroup;
   today: Date = new Date();
   _documentos: Documentos[] = [];
   _destinos: Destinos[] = [];
@@ -39,6 +39,8 @@ formMovimiento!: FormGroup;
       this.router.navigate(['/inicio']);
     }
     sessionStorage.setItem('ventana', '/mov-ingresos');
+    let idmov = sessionStorage.getItem('idToModIngMovimientos')
+    console.log(idmov)
     this.getAllDocumentos();
     this.getAllDestinos();
     this.getLastNumeroMovimiento();
