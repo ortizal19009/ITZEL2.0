@@ -11,7 +11,7 @@ export class Movimientos {
   total?: number;
   numart?: number;
   numdoc!: string;
-  fecdoc?: Date;
+  fecdoc!: Date;
   compegre?: string;
   swaprobado?: boolean;
   observaciones?: string;

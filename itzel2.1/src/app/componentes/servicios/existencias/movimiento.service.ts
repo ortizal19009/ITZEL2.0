@@ -25,4 +25,7 @@ export class MovimientoService {
   getAllMovimientos(): Observable<Movimientos[]> {
     return this.http.get<Movimientos[]>(`${baseUrl}`);
   }
+  getMovimientoById(id: number): Observable<Movimientos> {
+    return this.http.get<Movimientos>(`${baseUrl}/${id}`);
+  }
 }

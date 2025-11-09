@@ -1,136 +1,135 @@
 <div class="content mt-1 pt-1 pl-0">
-    <div class="container-fluid">
-        <div class="row m-0 px-0 py-1 justify-content-start cabecera border sombra">
-            <div class="col-sm-2">
-                <h5 class="font-weight-bold mt-0 my-0"> <i class="bi bi-cart-fill text-warning"></i>&nbsp; Ingresos Movimientos</h5>
+  <div class="container-fluid">
+    <div class="row m-0 px-0 py-1 justify-content-start cabecera border sombra">
+      <div class="col-sm-2">
+        <h5 class="font-weight-bold mt-0 my-0"> <i class="bi bi-cart-fill text-warning"></i>&nbsp; Ingresos Movimientos
+        </h5>
+      </div>
+      <div class="col-sm-10">
+        <form [formGroup]="formBuscar" (ngSubmit)="buscar()">
+          <div class="row my-0">
+
+            <div class="input-group col-sm-7">
+              <input type="text" class="form-control form-control-sm text-center col-sm-1" formControlName="desde"
+                placeholder="Número desde">
+              <input type="text" class="form-control form-control-sm text-center col-sm-1" formControlName="hasta"
+                placeholder="Número hasta">
+              <input type="text" class="form-control form-control-sm text-center col-sm" formControlName="beneficiario"
+                placeholder="Beneficiario">
+              <input type="text" class="form-control form-control-sm text-center col-sm" formControlName="descripcion"
+                placeholder="Descripción">
+
             </div>
-            <div class="col-sm-10">
-                <form [formGroup]="formBuscar" (ngSubmit)="buscar()">
-                    <div class="row my-0">
 
-                        <div class="input-group col-sm-7">
-                            <input type="text" class="form-control form-control-sm text-center col-sm-1"
-                                formControlName="desde" placeholder="Número desde">
-                            <input type="text" class="form-control form-control-sm text-center col-sm-1"
-                                formControlName="hasta" placeholder="Número hasta">
-                            <input type="text" class="form-control form-control-sm text-center col-sm"
-                                formControlName="beneficiario" placeholder="Beneficiario">
-                            <input type="text" class="form-control form-control-sm text-center col-sm"
-                                formControlName="descripcion" placeholder="Descripción">
-
-                        </div>
-
-                        <div class="input-group col-sm">
-                            <button class="btn btn-primary btn-sm">
-                                <i *ngIf="swbuscando" class="fa fa-spinner"></i>
-                                <i *ngIf="!swbuscando" class="fa fa-search"></i> {{txtbuscar}}
-                            </button>
-                        </div>
-
-                        <div *ngIf="_movimientos.length" class="input-group col-sm-2">
-                            <input type="text" class="form-control form-control-sm text-center"
-                                formControlName="filtroControl" placeholder="Filtrar...">
-                        </div>
-
-                        <div class="btn-group ml-auto mt-0">
-                            <button type="button" class="bg-transparent border-0 dropdown-toggle text-white text-right"
-                                data-toggle="dropdown" aria-expanded="false"> <i
-                                    class="bi-menu-button-wide text-white"></i>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-right bg-dark roboto ">
-                                <button class="dropdown-item popupCabecera" type="button" (click)="nuevo()">
-                                    <i class="bi-file-earmark-plus text-info"></i>&nbsp; Nuevo</button>
-                                <button class="dropdown-item" type="button" (click)="imprimir()">
-                                    <i class="bi bi-printer text-info"></i>&nbsp; Imprimir / Exportar</button>
-                                <button class="dropdown-item" type="button" (click)="cerrar()">
-                                    <i class="bi-x-circle text-info"></i>&nbsp; Cerrar</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
+            <div class="input-group col-sm">
+              <button class="btn btn-primary btn-sm">
+                <i *ngIf="swbuscando" class="fa fa-spinner"></i>
+                <i *ngIf="!swbuscando" class="fa fa-search"></i> {{txtbuscar}}
+              </button>
             </div>
-        </div>
+
+            <div *ngIf="_movimientos.length" class="input-group col-sm-2">
+              <input type="text" class="form-control form-control-sm text-center" formControlName="filtroControl"
+                placeholder="Filtrar...">
+            </div>
+
+            <div class="btn-group ml-auto mt-0">
+              <button type="button" class="bg-transparent border-0 dropdown-toggle text-white text-right"
+                data-toggle="dropdown" aria-expanded="false"> <i class="bi-menu-button-wide text-white"></i>
+              </button>
+              <div class="dropdown-menu dropdown-menu-right bg-dark roboto ">
+                <button class="dropdown-item popupCabecera" type="button" (click)="nuevo()">
+                  <i class="bi-file-earmark-plus text-info"></i>&nbsp; Nuevo</button>
+                <button class="dropdown-item" type="button" (click)="imprimir()">
+                  <i class="bi bi-printer text-info"></i>&nbsp; Imprimir / Exportar</button>
+                <button class="dropdown-item" type="button" (click)="cerrar()">
+                  <i class="bi-x-circle text-info"></i>&nbsp; Cerrar</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
 
 <div class="container-fluid">
-   <div class="row mb-0">
-      <div class="col-sm-12">
-         <table *ngIf="_movimientos.length" class="table table-hover table-bordered table-sm sombra">
-            <thead class="cabecera text-center roboto">
-               <tr class="pad0">
-                  <th class="col-sm-1" (click)="ordenarPor('numero')" style="cursor: pointer">N°
-                     <i *ngIf="ordenColumna === 'numero'"
-                        [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
-                  </th>
-                  <th class="col-sm-1" (click)="ordenarPor('fecha')" style="cursor: pointer">Fecha
-                     <i *ngIf="ordenColumna === 'fecha'"
-                        [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
-                  </th>
-                  <th class="" (click)="ordenarPor('nomben')" style="cursor: pointer">Beneficiario
-                     <i *ngIf="ordenColumna === 'nomben'"
-                        [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
-                  </th>
-                  <th (click)="ordenarPor('numentrada')" style="cursor: pointer">Num. Entrada
-                     <i *ngIf="ordenColumna === 'numentrada'"
-                        [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
-                  </th>
-                  <th (click)="ordenarPor('nomdestino')" style="cursor: pointer">Destino
-                     <i *ngIf="ordenColumna === 'nomdestino'"
-                        [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
-                  </th>
-                  <th (click)="ordenarPor('numdoc')" style="cursor: pointer">Num. Documento
-                     <i *ngIf="ordenColumna === 'numdoc'"
-                        [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
-                  </th>
-                  <th class="col-sm-1" (click)="ordenarPor('total')" style="cursor: pointer">Total
-                     <i *ngIf="ordenColumna === 'total'"
-                        [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
-                  </th>
-                  <th></th>
-               </tr>
-            </thead>
-            <tbody class="detalle roboto small">
-               <tr *ngFor="let mov of movFiltrados" class="fila pad0"
-                  (click)="onCellClick($event, mov.idmov )">
-                  <td class="text-center font-weight-bold ">{{ mov.numero}}</td>
-                  <td class="text-center">{{ mov.fecha | date:'dd/MM/yyyy' }}</td>
-                  <td class="text-left text-truncate ancho200" data-toggle="tooltip"
-                     [title]="mov.beneficiario!.nomben!.length > 60 ? mov.beneficiario!.nomben : ''">{{
-                     mov.beneficiario!.nomben }}</td>
-                  <td class="text-left text-truncate ancho200" data-toggle="tooltip"
-                     [title]="mov.numentrada!.length > 60 ? mov.numentrada : ''">{{ mov.numentrada }}</td>
-                  <td class="text-left text-truncate ancho200" data-toggle="tooltip"
-                     [title]="mov.destino!.nomdestino!.length > 60 ? mov.destino!.nomdestino : ''">{{
-                     mov.destino!.nomdestino }}</td>
+  <div class="row mb-0">
+    <div class="col-sm-12">
+      <table *ngIf="_movimientos.length" class="table table-hover table-bordered table-sm sombra">
+        <thead class="cabecera text-center roboto">
+          <tr class="pad0">
+            <th class="col-sm-1" (click)="ordenarPor('numero')" style="cursor: pointer">N°
+              <i *ngIf="ordenColumna === 'numero'"
+                [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
+            </th>
+            <th class="col-sm-1" (click)="ordenarPor('fecha')" style="cursor: pointer">Fecha
+              <i *ngIf="ordenColumna === 'fecha'"
+                [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
+            </th>
+            <th class="" (click)="ordenarPor('nomben')" style="cursor: pointer">Beneficiario
+              <i *ngIf="ordenColumna === 'nomben'"
+                [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
+            </th>
+            <th (click)="ordenarPor('numentrada')" style="cursor: pointer">Num. Entrada
+              <i *ngIf="ordenColumna === 'numentrada'"
+                [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
+            </th>
+            <th (click)="ordenarPor('nomdestino')" style="cursor: pointer">Destino
+              <i *ngIf="ordenColumna === 'nomdestino'"
+                [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
+            </th>
+            <th (click)="ordenarPor('numdoc')" style="cursor: pointer">Num. Documento
+              <i *ngIf="ordenColumna === 'numdoc'"
+                [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
+            </th>
+            <th class="col-sm-1" (click)="ordenarPor('total')" style="cursor: pointer">Total
+              <i *ngIf="ordenColumna === 'total'"
+                [ngClass]="{'bi bi-caret-up-fill force-warning': ordenAscendente,'bi bi-caret-down-fill text-warning': !ordenAscendente}"></i>
+            </th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody class="detalle roboto small">
+          <tr *ngFor="let mov of movFiltrados" class="fila pad0" (click)="onCellClick($event, mov.idmov )">
+            <td class="text-center font-weight-bold ">{{ mov.numero}}</td>
+            <td class="text-center">{{ mov.fecha | date:'dd/MM/yyyy' }}</td>
+            <td class="text-left text-truncate ancho200" data-toggle="tooltip"
+              [title]="mov.beneficiario!.nomben!.length > 60 ? mov.beneficiario!.nomben : ''">{{
+              mov.beneficiario!.nomben }}</td>
+            <td class="text-left text-truncate ancho200" data-toggle="tooltip"
+              [title]="mov.numentrada!.length > 60 ? mov.numentrada : ''">{{ mov.numentrada }}</td>
+            <td class="text-left text-truncate ancho200" data-toggle="tooltip"
+              [title]="mov.destino!.nomdestino!.length > 60 ? mov.destino!.nomdestino : ''">{{
+              mov.destino!.nomdestino }}</td>
 
-                  <td class="text-left text-truncate ancho200" data-toggle="tooltip"
-                     [title]="mov.numdoc!.length > 60 ? mov.numdoc : ''">{{
-                     mov.numdoc }}</td>
-                  <td class="text-right" [ngClass]="{'transparente': mov.total == 0}">{{mov.total |
-                     number:'1.2-2'}} </td>
-                  <td class="text-center">
-                     <div class="btn-group py-0">
-                        <button type="button" class="btn btn-warning btn-xs dropdown-toggle py-0" data-toggle="dropdown"
-                           aria-expanded="false">
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right popLista">
-                           <button class="dropdown-item" type="button" (click)="modificar( mov.idmov )">
-                              <i class="bi bi-pencil"></i>&nbsp; Modificar</button>
-                           <button class="dropdown-item" type="button" (click)="eliminar( mov )">
-                              <i class="bi bi-file-minus"></i>&nbsp; Eliminar</button>
-                        </div>
-                     </div>
-                  </td>
-               </tr>
-            </tbody>
-            <tfoot class="font-weight-bold detalle roboto small pad0">
-               <td>TOTAL: {{movFiltrados.length}}&nbsp;&nbsp;</td>
-               <td colspan="6" class="text-right">{{sumTotal | number: '1.2-2'}} </td>
-               <td></td>
-            </tfoot>
-         </table>
-      </div>
-   </div>
+            <td class="text-left text-truncate ancho200" data-toggle="tooltip"
+              [title]="mov.numdoc!.length > 60 ? mov.numdoc : ''">{{
+              mov.numdoc }}</td>
+            <td class="text-right" [ngClass]="{'transparente': mov.total == 0}">{{mov.total |
+              number:'1.2-2'}} </td>
+            <td class="text-center">
+              <div class="btn-group py-0">
+                <button type="button" class="btn btn-warning btn-xs dropdown-toggle py-0" data-toggle="dropdown"
+                  aria-expanded="false">
+                </button>
+                <div class="dropdown-menu dropdown-menu-right popLista">
+                  <button class="dropdown-item" type="button" (click)="modificar( mov.idmovimiento )">
+                    <i class="bi bi-pencil"></i>&nbsp; Modificar</button>
+                  <button class="dropdown-item" type="button" (click)="eliminar( mov )">
+                    <i class="bi bi-file-minus"></i>&nbsp; Eliminar</button>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot class="font-weight-bold detalle roboto small pad0">
+          <td>TOTAL: {{movFiltrados.length}}&nbsp;&nbsp;</td>
+          <td colspan="6" class="text-right">{{sumTotal | number: '1.2-2'}} </td>
+          <td></td>
+        </tfoot>
+      </table>
+    </div>
+  </div>
 
 </div>

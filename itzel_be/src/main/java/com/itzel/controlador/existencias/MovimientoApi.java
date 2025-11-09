@@ -46,5 +46,9 @@ public class MovimientoApi {
         }
         return  ResponseEntity.ok(movimientos);
     }
-
+    //Find by Idmovimiento
+    @GetMapping("/{idmovimiento}")
+    public ResponseEntity<Movimientos> getByIdMovimiento(@PathVariable short idmovimiento){
+        return ResponseEntity.ok(movimientoService.findByIdMovimiento(idmovimiento));
+    }
 }

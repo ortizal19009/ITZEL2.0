@@ -31,5 +31,9 @@ public class MovimientoService {
     public List<Movimientos> getAllMovimientos(){
         return dao.findAll();
     }
+    //GetMovimientoById
+    public Movimientos findByIdMovimiento(Short idmov){
+        return dao.findById(idmov).orElseThrow(()->new RuntimeException("Movimiento no encontrado"));
+    }
 
 }

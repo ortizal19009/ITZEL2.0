@@ -40,7 +40,6 @@ export class ModiIngresoComponent implements OnInit {
     }
     sessionStorage.setItem('ventana', '/mov-ingresos');
     let idmov = sessionStorage.getItem('idToModIngMovimientos')
-    console.log(idmov)
     this.getAllDocumentos();
     this.getAllDestinos();
     this.getLastNumeroMovimiento();
@@ -57,6 +56,7 @@ export class ModiIngresoComponent implements OnInit {
       ],
       fecha: [this.today.toISOString().substring(0, 10), [Validators.required]],
       // 👇 corregido: todos los sync validators al 2º argumento
+      idmovimiento: [''],
       numentrada: ['', [Validators.required, Validators.minLength(2)]],
       total: [''],
       numart: [''],
@@ -71,8 +71,9 @@ export class ModiIngresoComponent implements OnInit {
       compegre: ['', Validators.required],
       observaciones: [''],
     });
-
+    this.getMovimientoById(Number(idmov));
   }
+
   colocaColor(colores: any) {
     document.documentElement.style.setProperty('--bgcolor1', colores[0]);
     const cabecera = document.querySelector('.cabecera');
@@ -256,6 +257,39 @@ export class ModiIngresoComponent implements OnInit {
       complete: () => {
         console.debug('ℹ️ Consulta de beneficiarios finalizada.');
       },
+    });
+  }
+  compareDocumentos(o1: Documentos, o2: Documentos): boolean {
+    // Si ambos son null o undefined, se consideran iguales
+    if (o1 === null || o2 === null) return o1 === o2;
+    // Comparamos por id (o por el campo que identifique al documento)
+    return o1.iddocumento === o2.iddocumento;
+  }
+
+  getMovimientoById(id: number) {
+    this.movService.getMovimientoById(id).subscribe({
+      next: (data: Movimientos) => {
+        console.log(data);
+        this.formMovimiento.setValue({
+          idmovimiento: data.idmovimiento,
+          numero: data.numero,
+          fecha: new Date(data.fecha).toISOString().substring(0, 10),
+          numentrada: data.numentrada,
+          total: data.total,
+          numart: data.numart,
+          documento: data.documento,
+          numdoc: data.numdoc,
+          fecdoc: new Date(data.fecdoc).toISOString().substring(0, 10),
+          swaprobado: data.swaprobado,
+          beneficiario: data.beneficiario,
+          destino: data.destino,
+          compegre: data.compegre,
+          observaciones: data.observaciones,
+          beneficiarioText: data.beneficiario ? data.beneficiario.nomben : '',
+          destinoText: data.destino ? data.destino.nomdestino : '',
+        });
+      },
+      error: (e) => console.error(e)
     });
   }
 }

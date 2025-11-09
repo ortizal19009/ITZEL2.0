@@ -81,9 +81,10 @@ export class IngresosComponent implements OnInit {
     const detalle = document.querySelector('.detalle');
     if (detalle) detalle.classList.add('nuevoBG2');
   }
-  modificar(id: number) {
+  modificar(id: any) {
+    console.log(id)
     sessionStorage.setItem('idToModIngMovimientos', id.toString());
-    this.router.navigate(['mod-mov-ingreso']);
+    this.router.navigate(['/modi-mov-ingreso']);
 
   }
   eliminar(mov: any) { }
