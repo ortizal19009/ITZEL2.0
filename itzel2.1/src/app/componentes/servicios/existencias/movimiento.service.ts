@@ -28,4 +28,7 @@ export class MovimientoService {
   getMovimientoById(id: number): Observable<Movimientos> {
     return this.http.get<Movimientos>(`${baseUrl}/${id}`);
   }
+  updateMovimiento(movimiento: Movimientos): Observable<Movimientos> {
+    return this.http.put<Movimientos>(`${baseUrl}`, movimiento);
+  }
 }

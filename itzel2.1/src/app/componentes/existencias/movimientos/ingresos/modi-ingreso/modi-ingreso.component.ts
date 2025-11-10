@@ -89,7 +89,7 @@ export class ModiIngresoComponent implements OnInit {
   guardar() {
     let movimiento: Movimientos = new Movimientos();
     let f = this.formMovimiento.value;
-    console.log(f);
+    movimiento.idmovimiento = f.idmovimiento;
     movimiento.tipmov = this.tipmov;
     movimiento.numero = f.numero;
     movimiento.fecha = f.fecha;
@@ -106,8 +106,7 @@ export class ModiIngresoComponent implements OnInit {
     movimiento.observaciones = f.observaciones;
     movimiento.feccrea = new Date();
     movimiento.usucrea = this.authService.idusuario;
-    console.log('MOVIMIENTO A GUARDAR: ', movimiento);
-    this.movService.saveMovimiento(movimiento).subscribe({
+    this.movService.updateMovimiento(movimiento).subscribe({
       next: (data) => {
         console.log(data);
         this.router.navigate(['/mov-ingresos']);

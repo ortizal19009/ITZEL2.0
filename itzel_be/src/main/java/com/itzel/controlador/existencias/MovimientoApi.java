@@ -51,4 +51,10 @@ public class MovimientoApi {
     public ResponseEntity<Movimientos> getByIdMovimiento(@PathVariable short idmovimiento){
         return ResponseEntity.ok(movimientoService.findByIdMovimiento(idmovimiento));
     }
+    //Update movimiento
+    @PutMapping
+    public ResponseEntity<Movimientos> updateMovimiento(@RequestBody Movimientos m){
+        return ResponseEntity.ok(movimientoService.updateMovimiento(m));
+    }
+
 }

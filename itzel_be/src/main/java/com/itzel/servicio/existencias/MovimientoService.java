@@ -35,5 +35,28 @@ public class MovimientoService {
     public Movimientos findByIdMovimiento(Short idmov){
         return dao.findById(idmov).orElseThrow(()->new RuntimeException("Movimiento no encontrado"));
     }
+    //Actualizar movimientos
+    public Movimientos updateMovimiento(Movimientos m){
+        Movimientos _m = dao.findById(m.getIdmovimiento()).orElseThrow(()->new RuntimeException("Movimiento no encontrado"));
+        _m.setTipmov(m.getTipmov());
+        _m.setNumero(m.getNumero());
+        _m.setFecha(m.getFecha());
+        _m.setNumentrada(m.getNumentrada());
+        _m.setTotal(m.getTotal());
+        _m.setNumart(m.getNumart());
+        _m.setNumdoc(m.getNumdoc());
+        _m.setFecdoc(m.getFecdoc());
+        _m.setCompegre(m.getCompegre());
+        _m.setSwaprobado(m.getSwaprobado());
+        _m.setObservaciones(m.getObservaciones());
+        _m.setUsucrea(m.getUsucrea());
+        _m.setFeccrea(m.getFeccrea());
+        _m.setUsumodi(m.getUsumodi());
+        _m.setFecmodi(m.getFecmodi());
+        _m.setDestino(m.getDestino());
+        _m.setDocumento(m.getDocumento());
+        _m.setBeneficiario(m.getBeneficiario());
+        return dao.save(_m);
+    }
 
 }
