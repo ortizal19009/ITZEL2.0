@@ -22,7 +22,7 @@
                 <input #inputPrimero type="text" class="form-control text-center" formControlName="numero"
                   (change)="numAvailable($event)" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
                   maxlength="10" [ngClass]="{'is-invalid': f['numero'].invalid && f['numero'].touched,
-                           'is-valid': f['numero'].valid, '': f['numero'].untouched}">
+                          'is-valid': f['numero'].valid, '': f['numero'].untouched}">
               </div>
               <div *ngIf="authService.msgval && f['numero'].errors && f['numero'].touched">
                 <div *ngIf="f['numero'].errors['required']"
@@ -94,8 +94,8 @@
                   <option *ngFor="let doc of _documentos" [ngValue]=doc>
                     {{doc.nomdoc}}</option>
                 </select>
-                <input type="text" class="form-control form-control-sm bg-light" formControlName="numdoc" placeholder="DOC-123" tabindex="-1"
-                  [ngClass]="{'is-invalid': f['numdoc'].invalid && f['numdoc'].touched,
+                <input type="text" class="form-control form-control-sm bg-light" formControlName="numdoc"
+                  placeholder="DOC-123" tabindex="-1" [ngClass]="{'is-invalid': f['numdoc'].invalid && f['numdoc'].touched,
                              'is-valid': f['numdoc'].valid, '': f['numdoc'].untouched}">
                 <input type="date" class="form-control form-control-sm bg-light" formControlName="fecdoc" tabindex="-1"
                   [ngClass]="{'is-invalid': f['fecdoc'].invalid && f['fecdoc'].touched,
