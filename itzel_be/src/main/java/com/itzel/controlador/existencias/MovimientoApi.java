@@ -57,4 +57,14 @@ public class MovimientoApi {
         return ResponseEntity.ok(movimientoService.updateMovimiento(m));
     }
 
+    //Encontrar por tipo movimiento y nombre beneficiario
+    @GetMapping("(/tipmov-nombene?")
+    public ResponseEntity<List<Movimientos>> buscar(
+            @RequestParam Long tipmov,
+            @RequestParam String nombene) {
+        List<Movimientos> resultados = movimientoService.buscarPorTipoYNombre(tipmov, nombene);
+        return ResponseEntity.ok(resultados);
+    }
+
+
 }

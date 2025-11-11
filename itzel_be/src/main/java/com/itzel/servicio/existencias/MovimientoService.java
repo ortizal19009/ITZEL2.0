@@ -58,5 +58,12 @@ public class MovimientoService {
         _m.setBeneficiario(m.getBeneficiario());
         return dao.save(_m);
     }
+    //Encontrar por tipo movimiento y nombre beneficiario
+    public List<Movimientos> buscarPorTipoYNombre(Long tipmov, String nombene) {
+        // Agrega los comodines para el LIKE si es necesario
+        String nombreFormateado = "%" + nombene + "%";
+        return dao.findByTipmovAndNombene(tipmov, nombreFormateado);
+    }
+
 
 }

@@ -6,6 +6,7 @@ import { AutorizaService } from '../../../../servicios/administracion/autoriza.s
 import { EliminadosService } from '../../../../servicios/administracion/eliminados.service';
 import { ColoresService } from '../../../../servicios/administracion/colores.service';
 import { MovimientoService } from '../../../../servicios/existencias/movimiento.service';
+import { Movimientos } from '../../../../modelos/existencias/movimientos.model';
 
 @Component({
   selector: 'app-salidas.component',
@@ -23,6 +24,7 @@ export class SalidasComponent {
   sumTotal: number = 0;
   ordenColumna: keyof MovimientoVisual = 'numero';
   ordenAscendente: boolean = true;
+  tipmov: number = 2; // Tipo de movimiento para salidas
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -48,14 +50,14 @@ export class SalidasComponent {
     });
   }
   nuevo() {
-    this.router.navigate(['/add-mov-ingreso']);
+    this.router.navigate(['/add-mov-salida']);
   }
   imprimir() { }
   buscar() {
     this.swbuscando = true;
     this.txtbuscar = 'Buscando...';
-    this.movService.getAllMovimientos().subscribe({
-      next: (data) => {
+    this.movService.findByTipMovimiento(this.tipmov).subscribe({
+      next: (data:Movimientos[]) => {
         console.log(data);
         this._movimientos = data;
         this.movFiltrados = data;
@@ -84,7 +86,7 @@ export class SalidasComponent {
   modificar(id: any) {
     console.log(id)
     sessionStorage.setItem('idToModIngMovimientos', id.toString());
-    this.router.navigate(['/modi-mov-ingreso']);
+    this.router.navigate(['/modi-mov-salida']);
 
   }
   eliminar(mov: any) { }
@@ -139,8 +141,8 @@ export class SalidasComponent {
   onCellClick(event: any, idpedido: any) {
     const tagName = event.target.tagName;
     if (tagName === 'TD') {
-      sessionStorage.setItem('infoToIngMovimientos', idpedido);
-      this.router.navigate(['info-ing-movimientos']);
+      sessionStorage.setItem('infoToslMovimientos', idpedido);
+      this.router.navigate(['info-salida-movimientos']);
     }
   }
 }

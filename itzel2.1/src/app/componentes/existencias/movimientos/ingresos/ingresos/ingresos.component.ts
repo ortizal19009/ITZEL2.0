@@ -23,6 +23,7 @@ export class IngresosComponent implements OnInit {
   sumTotal: number = 0;
   ordenColumna: keyof MovimientoVisual = 'numero';
   ordenAscendente: boolean = true;
+  tipmov: number = 1; // Tipo de movimiento para salidas
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -46,6 +47,7 @@ export class IngresosComponent implements OnInit {
       descripcion: '',
       filtroControl: '',
     });
+    this.getLastMovimiento()
   }
   nuevo() {
     this.router.navigate(['/add-mov-ingreso']);
@@ -54,7 +56,7 @@ export class IngresosComponent implements OnInit {
   buscar() {
     this.swbuscando = true;
     this.txtbuscar = 'Buscando...';
-    this.movService.getAllMovimientos().subscribe({
+    this.movService.findByTipMovimiento(this.tipmov).subscribe({
       next: (data) => {
         console.log(data);
         this._movimientos = data;
@@ -101,7 +103,6 @@ export class IngresosComponent implements OnInit {
       console.error(error);
     }
   }
-
   ordenarPor(campo: keyof MovimientoVisual | 'numero'): void {
     if (this.ordenColumna === campo) {
       this.ordenAscendente = !this.ordenAscendente;
@@ -135,13 +136,27 @@ export class IngresosComponent implements OnInit {
         : Number(valorB) - Number(valorA);
     });
   }
-
   onCellClick(event: any, idpedido: any) {
     const tagName = event.target.tagName;
     if (tagName === 'TD') {
       sessionStorage.setItem('infoToIngMovimientos', idpedido);
       this.router.navigate(['info-ing-movimientos']);
     }
+  }
+  getLastMovimiento() {
+    this.movService.findUltimo(this.tipmov).subscribe({
+      next: (data) => {
+        let d = data - 10
+        if (d < 0) d = 0
+        this.formBuscar.patchValue({
+          desde: d,
+          hasta: data
+        });
+      },
+      error: (e) => {
+        console.error(e);
+      }
+    });
   }
 }
 interface MovimientoVisual {

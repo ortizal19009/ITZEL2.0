@@ -13,8 +13,8 @@ export class MovimientoService {
   saveMovimiento(movimiento: Movimientos): Observable<Movimientos> {
     return this.http.post<Movimientos>(`${baseUrl}`, movimiento);
   }
-  findByTipMovimiento(tipmov: number): Observable<Movimientos> {
-    return this.http.get<Movimientos>(`${baseUrl}/tipmov?tipmov=${tipmov}`);
+  findByTipMovimiento(tipmov: number): Observable<Movimientos[]> {
+    return this.http.get<Movimientos[]>(`${baseUrl}/tipmov?tipmov=${tipmov}`);
   }
   findUltimo(tipmov: number): Observable<number> {
     return this.http.get<number>(`${baseUrl}/last?tipmov=${tipmov}`);
@@ -30,5 +30,8 @@ export class MovimientoService {
   }
   updateMovimiento(movimiento: Movimientos): Observable<Movimientos> {
     return this.http.put<Movimientos>(`${baseUrl}`, movimiento);
+  }
+  getMovByTipMovAndNombene(tipmov: number, nombene: string): Observable<Movimientos[]> {
+    return this.http.get<Movimientos[]>(`${baseUrl}/tipmov-nombene?tipmov=${tipmov}&nombene=${nombene}`);
   }
 }
