@@ -44,7 +44,6 @@ export class IngresosComponent implements OnInit {
       desde: 0,
       hasta: 0,
       beneficiario: '',
-      descripcion: '',
       filtroControl: '',
     });
     this.getLastMovimiento()
@@ -56,20 +55,43 @@ export class IngresosComponent implements OnInit {
   buscar() {
     this.swbuscando = true;
     this.txtbuscar = 'Buscando...';
-    this.movService.findByTipMovimiento(this.tipmov).subscribe({
-      next: (data) => {
-        console.log(data);
-        this._movimientos = data;
-        this.movFiltrados = data;
-        this.swbuscando = false;
-        this.txtbuscar = 'Buscar';
-      },
-      error: (e) => {
-        console.error(e);
-        this.swbuscando = false;
-        this.txtbuscar = 'Buscar';
-      }
-    });
+    let f = this.formBuscar.value;
+
+    if (f.beneficiario && f.beneficiario.trim() !== '') {
+      this.movService.getMovByTipMovAndNombene(this.tipmov, f.beneficiario).subscribe({
+        next: (data) => {
+          console.log(data);
+          this._movimientos = data;
+          this.movFiltrados = data;
+          this.swbuscando = false;
+          this.txtbuscar = 'Buscar';
+        },
+        error: (e) => {
+          console.error(e);
+          this.swbuscando = false;
+          this.txtbuscar = 'Buscar';
+        }
+      });
+
+      /*       this.movFiltrados = this.movFiltrados.filter(mov =>
+              mov.beneficiario.toLowerCase().includes(f.beneficiario.trim().toLowerCase())
+            ); */
+    } else {
+      this.movService.getMovByNumBetween(this.tipmov, f.desde, f.hasta).subscribe({
+        next: (data) => {
+          console.log(data);
+          this._movimientos = data;
+          this.movFiltrados = data;
+          this.swbuscando = false;
+          this.txtbuscar = 'Buscar';
+        },
+        error: (e) => {
+          console.error(e);
+          this.swbuscando = false;
+          this.txtbuscar = 'Buscar';
+        }
+      });
+    }
 
   }
   cerrar() {

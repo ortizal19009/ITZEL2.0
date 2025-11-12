@@ -57,13 +57,19 @@ public class MovimientoApi {
         return ResponseEntity.ok(movimientoService.updateMovimiento(m));
     }
 
-    //Encontrar por tipo movimiento y nombre beneficiario
-    @GetMapping("(/tipmov-nombene?")
+    // Encontrar por tipo de movimiento y nombre beneficiario
+    @GetMapping("/tipmov-nombene")
     public ResponseEntity<List<Movimientos>> buscar(
-            @RequestParam Long tipmov,
-            @RequestParam String nombene) {
-        List<Movimientos> resultados = movimientoService.buscarPorTipoYNombre(tipmov, nombene);
+            @RequestParam("tipmov") short tipmov,
+            @RequestParam("nomben") String nomben) {
+
+        List<Movimientos> resultados = movimientoService.buscarPorTipoYNombre(tipmov, nomben);
         return ResponseEntity.ok(resultados);
+    }
+    //Encontrar movimientos de tipo entre numeros de movimientos
+    @GetMapping("/num-between")
+    public ResponseEntity<List<Movimientos>>findByTipmovAndNumeroBetween(@RequestParam Long tipmov,@RequestParam Long desde,@RequestParam Long hasta){
+        return ResponseEntity.ok(movimientoService.findByTipmovAndNumeroBetween(tipmov, desde, hasta));
     }
 
 

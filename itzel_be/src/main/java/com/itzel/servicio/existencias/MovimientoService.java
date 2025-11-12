@@ -59,10 +59,15 @@ public class MovimientoService {
         return dao.save(_m);
     }
     //Encontrar por tipo movimiento y nombre beneficiario
-    public List<Movimientos> buscarPorTipoYNombre(Long tipmov, String nombene) {
+    public List<Movimientos> buscarPorTipoYNombre(short tipmov, String nomben) {
         // Agrega los comodines para el LIKE si es necesario
-        String nombreFormateado = "%" + nombene + "%";
-        return dao.findByTipmovAndNombene(tipmov, nombreFormateado);
+        String nombreFormateado = "%" + nomben + "%";
+        return dao.findByTipmovAndNomben(tipmov, nombreFormateado);
+    }
+
+    //Encontrar movimientos de tipo entre numeros de movimientos
+    public List<Movimientos>findByTipmovAndNumeroBetween(Long tipmov, Long num1, Long num2){
+        return dao.findByTipmovAndNumeroBetween(tipmov, num1, num2);
     }
 
 

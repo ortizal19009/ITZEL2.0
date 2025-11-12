@@ -19,6 +19,8 @@ public interface MovimientosR extends JpaRepository<Movimientos, Short> {
     @Query("SELECT CASE WHEN COUNT(m) > 0 THEN true ELSE false END FROM Movimientos m WHERE m.tipmov = :tipmov AND m.numero = :numero")
     boolean existsByTipoAndNumero(@Param("tipmov") short tipmov, @Param("numero") Long numero);
     //Encontrar por tipo movimiento y nombre beneficiario
-    @Query("SELECT m FROM Movimientos m JOIN m.beneficiario b WHERE m.tipmov = :tipmov AND b.nomben LIKE :nombene")
-    List<Movimientos> findByTipmovAndNombene(@Param("tipmov") Long tipmov, @Param("nombene") String nombene);
+    @Query("SELECT m FROM Movimientos m JOIN m.beneficiario b WHERE m.tipmov = :tipmov AND LOWER(b.nomben) LIKE LOWER(:nomben)")
+    List<Movimientos> findByTipmovAndNomben(@Param("tipmov") short tipmov, @Param("nomben") String nomben);
+    //Encontrar movimientos de tipo entre numeros de movimientos
+    List<Movimientos> findByTipmovAndNumeroBetween(Long tipmov, Long num1, Long num2);
 }

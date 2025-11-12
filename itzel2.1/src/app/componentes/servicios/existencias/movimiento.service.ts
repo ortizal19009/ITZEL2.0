@@ -32,6 +32,9 @@ export class MovimientoService {
     return this.http.put<Movimientos>(`${baseUrl}`, movimiento);
   }
   getMovByTipMovAndNombene(tipmov: number, nombene: string): Observable<Movimientos[]> {
-    return this.http.get<Movimientos[]>(`${baseUrl}/tipmov-nombene?tipmov=${tipmov}&nombene=${nombene}`);
+    return this.http.get<Movimientos[]>(`${baseUrl}/tipmov-nombene?tipmov=${tipmov}&nomben=${nombene}`);
+  }
+  getMovByNumBetween(tipmov: number, desde: number, hasta: number): Observable<Movimientos[]> {
+    return this.http.get<Movimientos[]>(`${baseUrl}/num-between?tipmov=${tipmov}&desde=${desde}&hasta=${hasta}`);
   }
 }

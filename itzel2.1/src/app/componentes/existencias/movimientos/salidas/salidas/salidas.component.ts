@@ -45,9 +45,9 @@ export class SalidasComponent {
       desde: 0,
       hasta: 0,
       beneficiario: '',
-      descripcion: '',
       filtroControl: '',
     });
+    this.getLastMovimiento()
   }
   nuevo() {
     this.router.navigate(['/add-mov-salida']);
@@ -56,20 +56,43 @@ export class SalidasComponent {
   buscar() {
     this.swbuscando = true;
     this.txtbuscar = 'Buscando...';
-    this.movService.findByTipMovimiento(this.tipmov).subscribe({
-      next: (data:Movimientos[]) => {
-        console.log(data);
-        this._movimientos = data;
-        this.movFiltrados = data;
-        this.swbuscando = false;
-        this.txtbuscar = 'Buscar';
-      },
-      error: (e) => {
-        console.error(e);
-        this.swbuscando = false;
-        this.txtbuscar = 'Buscar';
-      }
-    });
+    let f = this.formBuscar.value;
+
+    if (f.beneficiario && f.beneficiario.trim() !== '') {
+      this.movService.getMovByTipMovAndNombene(this.tipmov, f.beneficiario).subscribe({
+        next: (data) => {
+          console.log(data);
+          this._movimientos = data;
+          this.movFiltrados = data;
+          this.swbuscando = false;
+          this.txtbuscar = 'Buscar';
+        },
+        error: (e) => {
+          console.error(e);
+          this.swbuscando = false;
+          this.txtbuscar = 'Buscar';
+        }
+      });
+
+      /*       this.movFiltrados = this.movFiltrados.filter(mov =>
+              mov.beneficiario.toLowerCase().includes(f.beneficiario.trim().toLowerCase())
+            ); */
+    } else {
+      this.movService.getMovByNumBetween(this.tipmov, f.desde, f.hasta).subscribe({
+        next: (data) => {
+          console.log(data);
+          this._movimientos = data;
+          this.movFiltrados = data;
+          this.swbuscando = false;
+          this.txtbuscar = 'Buscar';
+        },
+        error: (e) => {
+          console.error(e);
+          this.swbuscando = false;
+          this.txtbuscar = 'Buscar';
+        }
+      });
+    }
 
   }
   cerrar() {
@@ -103,7 +126,6 @@ export class SalidasComponent {
       console.error(error);
     }
   }
-
   ordenarPor(campo: keyof MovimientoVisual | 'numero'): void {
     if (this.ordenColumna === campo) {
       this.ordenAscendente = !this.ordenAscendente;
@@ -137,13 +159,27 @@ export class SalidasComponent {
         : Number(valorB) - Number(valorA);
     });
   }
-
   onCellClick(event: any, idpedido: any) {
     const tagName = event.target.tagName;
     if (tagName === 'TD') {
-      sessionStorage.setItem('infoToslMovimientos', idpedido);
+      sessionStorage.setItem('infoToSalidaMovimientos', idpedido);
       this.router.navigate(['info-salida-movimientos']);
     }
+  }
+  getLastMovimiento() {
+    this.movService.findUltimo(this.tipmov).subscribe({
+      next: (data) => {
+        let d = data - 10
+        if (d < 0) d = 0
+        this.formBuscar.patchValue({
+          desde: d,
+          hasta: data
+        });
+      },
+      error: (e) => {
+        console.error(e);
+      }
+    });
   }
 }
 interface MovimientoVisual {
