@@ -18,6 +18,7 @@ import { DestinosService } from '../../../../servicios/existencias/destinos.serv
 import { MovimientoService } from '../../../../servicios/existencias/movimiento.service';
 import { Movimientos } from '../../../../modelos/existencias/movimientos.model';
 import { Articulos } from '../../../../modelos/existencias/articulos.model';
+import { ArticulosService } from '../../../../servicios/existencias/articulos.service';
 
 @Component({
   selector: 'app-add-ingreso.component',
@@ -46,7 +47,8 @@ export class AddIngresoComponent implements OnInit {
     private s_documentos: DocumentosService,
     private beneService: BeneficiariosService,
     private destService: DestinosService,
-    private movService: MovimientoService
+    private movService: MovimientoService,
+    private artService: ArticulosService
   ) { }
   ngOnInit(): void {
     if (!this.authService.sessionlog) {
@@ -283,8 +285,31 @@ export class AddIngresoComponent implements OnInit {
       this._suggestMap.clear();
       return;
     }
+
+    this.artService.getByNombreCuentaCodigo(term).subscribe({
+      next: (arts: Articulos[]) => {
+        this._articulos = arts;
+
+        this._suggestMap.clear();
+        for (const a of arts) {
+          const nombre = a.nombre?.trim();
+          const codigo = a.codigo != null ? String(a.codigo).trim() : '';
+          const codcue = a.codcue != null ? String(a.codcue).trim() : '';
+
+          for (const s of [codigo, codcue, nombre].filter(Boolean)) {
+            const label = `${s} | ${a.nombre}`; // lo que se muestra y matchea al inicio
+            if (!this._suggestMap.has(label)) this._suggestMap.set(label, a);
+          }
+        }
+
+        // genera el arreglo para el *ngFor del datalist
+        this._suggestions = Array.from(this._suggestMap.keys());
+      },
+      error: (e) => this.authService.mostrarError('error', e.error),
+    });
   }
   onArticuloSelected(ev: any) {
+    console.log(ev.target.value)
     const key = (ev.target.value || '').trim(); // ej: "ABC123 | Tijera 6''" o "5.2.01 | Tijera 6''" o "Tijera 6'' | ABC123"
     const art = this._suggestMap.get(key);
 
