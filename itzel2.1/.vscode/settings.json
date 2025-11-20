@@ -2,6 +2,15 @@
     "workbench.colorCustomizations": {
         "terminal.background": "#00000000",
         "minimap.background": "#00000000",
-        "scrollbar.shadow": "#00000000"
-    }
+        "scrollbar.shadow": "#00000000",
+        "activityBar.activeBackground": "#f758a5",
+        "activityBar.background": "#f758a5",
+        "sash.hoverBorder": "#f758a5",
+        "statusBar.background": "#f5278b",
+        "statusBarItem.hoverBackground": "#f758a5",
+        "statusBarItem.remoteBackground": "#f5278b",
+        "titleBar.activeBackground": "#f5278b",
+        "titleBar.inactiveBackground": "#f5278b99"
+    },
+    "peacock.color": "#F5278B"
 }

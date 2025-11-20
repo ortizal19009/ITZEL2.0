@@ -17,6 +17,7 @@ import { BeneficiariosService } from '../../../../servicios/contabilidad/benefic
 import { DestinosService } from '../../../../servicios/existencias/destinos.service';
 import { MovimientoService } from '../../../../servicios/existencias/movimiento.service';
 import { Movimientos } from '../../../../modelos/existencias/movimientos.model';
+import { Articulos } from '../../../../modelos/existencias/articulos.model';
 
 @Component({
   selector: 'app-add-ingreso.component',
@@ -26,11 +27,18 @@ import { Movimientos } from '../../../../modelos/existencias/movimientos.model';
 })
 export class AddIngresoComponent implements OnInit {
   formMovimiento!: FormGroup;
+  formArticulo!: FormGroup;
   today: Date = new Date();
   _documentos: Documentos[] = [];
   _destinos: Destinos[] = [];
   _beneficiarios: Beneficiarios[] = [];
   tipmov: number = 1; // DEFIMIR MOVIMIENTOS DE INGRESO
+  _articulos: any[] = [];
+  _suggestions: string[] = [];
+  _suggestMap = new Map<string, Articulos>();
+  _articulosSelected: any[] = [];
+
+
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -75,7 +83,10 @@ export class AddIngresoComponent implements OnInit {
       compegre: ['', Validators.required],
       observaciones: [''],
     });
-
+    this.formArticulo = this.fb.group({
+      articulo: [''],
+    });
+    this.calcularTotal();
   }
   colocaColor(colores: any) {
     document.documentElement.style.setProperty('--bgcolor1', colores[0]);
@@ -261,5 +272,68 @@ export class AddIngresoComponent implements OnInit {
         console.debug('ℹ️ Consulta de beneficiarios finalizada.');
       },
     });
+  }
+  /* OPCIONES PARA BUSCAR Y GENERAR ARTICULOS */
+  getArticulos(ev: any) {
+    let term = (ev.target.value || '').trim();
+    if (term.includes('|')) term = term.split('|')[0].trim();
+    if (!term) {
+      this._articulos = [];
+      this._suggestions = [];
+      this._suggestMap.clear();
+      return;
+    }
+  }
+  onArticuloSelected(ev: any) {
+    const key = (ev.target.value || '').trim(); // ej: "ABC123 | Tijera 6''" o "5.2.01 | Tijera 6''" o "Tijera 6'' | ABC123"
+    const art = this._suggestMap.get(key);
+
+    if (art) {
+      // evita duplicados por id
+      const ya = this._articulosSelected.some(
+        (x) => String(x.idarticulo) === String(art.idarticulo)
+      );
+      if (!ya) this._articulosSelected.push({ ...art, cantidad: 1 });
+
+      // limpia input y sugerencias
+      this.formArticulo.get('articulo')?.setValue('');
+      this._suggestions = [];
+      this._suggestMap.clear();
+    } else {
+      // fallback: intenta matchear por la parte antes del " | "
+      const head = key.split('|')[0]?.trim();
+      const maybe = this._articulos.find(
+        (a) => a.nombre === head || String(a.codigo) === head || String(a.codcue) === head
+      );
+      if (maybe) {
+        const ya = this._articulosSelected.some(
+          (x) => String(x.idarticulo) === String(maybe.idarticulo)
+        );
+        if (!ya) this._articulosSelected.push({ ...maybe, cantidad: 1 });
+        this.formArticulo.get('articulo')?.setValue('');
+      }
+    }
+    this.calcularTotal();
+  }
+  calcularTotal() {
+    let total: number = 0;
+    if (this._articulosSelected.length > 0) {
+      this._articulosSelected.forEach((art: any) => {
+        total += art.cantidad * art.cosactual;
+      });
+    }
+    this.formMovimiento.patchValue({ total: total.toFixed(2) });
+  }
+  validarCantidad(art: any) {
+    if (art.cantidad < 1) {
+      art.cantidad = 1;
+    } else if (art.cantidad > art.actual) {
+      art.cantidad = art.actual;
+    }
+    this.calcularTotal();
+  }
+  removeArticulo(index: number) {
+    this._articulosSelected.splice(index, 1);
+    this.calcularTotal();
   }
 }

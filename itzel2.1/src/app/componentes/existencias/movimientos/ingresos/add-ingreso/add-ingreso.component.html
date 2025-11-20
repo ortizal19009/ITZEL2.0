@@ -48,7 +48,7 @@
                 </div>
                 <input type="date" class="form-control" formControlName="fecha" aria-label="Small"
                   aria-describedby="inputGroup-sizing-sm" [ngClass]="{'is-invalid': f['fecha'].invalid && f['fecha'].touched,
-                             'is-valid': f['fecha'].valid, '': f['fecha'].untouched}">
+                            'is-valid': f['fecha'].valid, '': f['fecha'].untouched}">
               </div>
             </div>
             <!-- NUM ENTRADA -->
@@ -204,6 +204,72 @@
             </div>
           </div>
         </form>
+
+        <!-- BUSCAR ARTICULOS -->
+        <form [formGroup]="formArticulo" class="mb-3">
+          <div class="form-group col-md-12">
+            <div class="input-group input-group-sm">
+              <div class="input-group-prepend">
+                <label class="input-group-text">Buscar Artículos</label>
+              </div>
+              <input id="articulo" type="text" autocomplete="off" autocorrect="off" autocapitalize="off"
+                spellcheck="false" class="form-control form-control-sm"
+                placeholder="Nombre del artículo, código o cuenta" formControlName="articulo" list="articulosList"
+                (input)="getArticulos($event)" (change)="onArticuloSelected($event)" />
+
+              <datalist id="articulosList">
+                <option *ngFor="let s of _suggestions" [value]="s"></option>
+              </datalist>
+
+
+            </div>
+          </div>
+        </form>
+
+        <!-- Tabla de artículos seleccionados -->
+        <div class="card" *ngIf="_articulosSelected.length > 0">
+          <div class="card-body p-2">
+            <table class="table table-sm table-hover table-bordered mb-0 text-center align-middle">
+              <thead class="table-light cabecera">
+                <tr class="pad0">
+                  <th style="width: 5%">#</th>
+                  <th>Nombre</th>
+                  <th style="width: 10%">Stock</th>
+                  <th style="width: 10%">Valor Unitario</th>
+                  <th style="width: 15%">Cantidad</th>
+                  <th style="width: 10%">Acción</th>
+                </tr>
+              </thead>
+              <tbody class="detalle roboto small">
+                <tr class="fila pad0" *ngFor="let art of _articulosSelected; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ art.nombre }}</td>
+                  <td [ngClass]="{'text-danger': (art.actual - art.cantidad) <= 0}">
+                    {{ (art.actual - art.cantidad) > 0 ? (art.actual - art.cantidad) : 0 }}
+                  </td>
+                  <td>{{art.cosactual}}</td>
+                  <td>
+
+                    <input type="number" class="form-control form-control-sm text-center" [(ngModel)]="art.cantidad"
+                      (ngModelChange)="validarCantidad(art)" min="1" [max]="art.actual" />
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-sm btn-danger" (click)="removeArticulo(i)">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Mensaje si no hay artículos -->
+        <div *ngIf="_articulosSelected.length === 0" class="text-muted fst-italic text-center">
+          <div class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+            <strong>Ups!</strong> No hay artículos seleccionados aún.
+          </div>
+        </div>
         <div class="row">
           <div *ngIf="formMovimiento" class="col-md-12 text-center">
             <button type="button" class="btn btn-success btn-sm mx-1" (click)="guardar()"

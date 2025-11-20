@@ -22,7 +22,7 @@
                                 <input #inputPrimero type="text" class="form-control text-center"
                                     formControlName="numero" (change)="numAvailable($event)" aria-label="Small"
                                     aria-describedby="inputGroup-sizing-sm" maxlength="10" [ngClass]="{'is-invalid': f['numero'].invalid && f['numero'].touched,
-                           'is-valid': f['numero'].valid, '': f['numero'].untouched}">
+                          'is-valid': f['numero'].valid, '': f['numero'].untouched}">
                             </div>
                             <div *ngIf="authService.msgval && f['numero'].errors && f['numero'].touched">
                                 <div *ngIf="f['numero'].errors['required']"
@@ -51,7 +51,7 @@
                                 </div>
                                 <input type="date" class="form-control" formControlName="fecha" aria-label="Small"
                                     aria-describedby="inputGroup-sizing-sm" [ngClass]="{'is-invalid': f['fecha'].invalid && f['fecha'].touched,
-                             'is-valid': f['fecha'].valid, '': f['fecha'].untouched}">
+                            'is-valid': f['fecha'].valid, '': f['fecha'].untouched}">
                             </div>
                         </div>
 
@@ -67,7 +67,7 @@
                                     formControlName="beneficiarioText" placeholder="Nombre del beneficiario"
                                     list="beneficiarioList" (input)="onBeneficiarioTyped($event)"
                                     (blur)="onBeneficiarioSelected($event)" [ngClass]="{'is-invalid': f['beneficiarioText'].invalid && f['beneficiarioText'].touched,
-                             'is-valid': f['beneficiarioText'].valid, '': f['beneficiarioText'].untouched}">
+                            'is-valid': f['beneficiarioText'].valid, '': f['beneficiarioText'].untouched}">
 
                                 <datalist role="listbox" id="beneficiarioList">
                                     <!-- Puedes usar sólo el nombre, o combinar id | nombre para asegurar unicidad -->
