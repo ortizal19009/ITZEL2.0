@@ -76,7 +76,7 @@ export class AddPedidoComponent implements OnInit {
       documento: [''],
       fecha: [this.date.toISOString().substring(0, 10), [Validators.required]],
       descripcion: ['', [Validators.required]],
-      total: '',
+      total: 0.00,
       feccrea: [this.date],
       usucrea: [this.authService.idusuario],
       beneficiarioText: ['', [Validators.required]],
