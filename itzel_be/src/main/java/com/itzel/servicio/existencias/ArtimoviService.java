@@ -1,5 +1,6 @@
 package com.itzel.servicio.existencias;
 
+import com.itzel.DTO.existencias.ArtimoviDTO;
 import com.itzel.modelo.existencias.Articulos;
 import com.itzel.modelo.existencias.Artimovi;
 import com.itzel.modelo.existencias.Movimientos;
@@ -22,31 +23,27 @@ public class ArtimoviService {
     public List<Artimovi> findByIdMovimiento(Long idmovimiento){
         return dao.findByIdMovimiento(idmovimiento);
     }
+
     @Transactional
-    public String save(List<Articulos> articulos, Movimientos movimiento) {
+    public void guardarMovimiento(ArtimoviDTO dto) {
 
-        List<Artimovi> detalle = articulos.stream()
-                .map(art -> {
-                    Artimovi am = new Artimovi();
-                    am.setMovimiento(movimiento);  // FK movimiento
-                    am.setArticulo(art);           // FK artículo
+        for (Articulos art : dto.getArticulos()) {
 
-                    // Valores que puedes setear según tu lógica
-                    am.setCantidad(1); // ejemplo
-                    am.setTotal(BigDecimal.ZERO);
-                    am.setCosprom(BigDecimal.ZERO);
-                    //am.setUsucrea(movimiento.getUsucrea());
-                    am.setFeccrea(new Timestamp(System.currentTimeMillis()));
+            Artimovi entidad = new Artimovi();
 
-                    return am;
-                })
-                .toList();
+            entidad.setTipmov(dto.getTipmov());
+            entidad.setCantidad(dto.getCantidad());
+            entidad.setTotal(dto.getTotal());
+            entidad.setCosprom(dto.getCosprom());
+            entidad.setUsucrea(dto.getUsucrea());
+            entidad.setFeccrea(dto.getFeccrea());
+            entidad.setUsumodi(dto.getUsumodi());
+            entidad.setFecmodi(dto.getFecmodi());
 
-        dao.saveAll(detalle);
+            entidad.setMovimiento(dto.getMovimiento());
+            entidad.setArticulo(art);
 
-        // Retornar mensaje personalizado
-        int totalArticulos = detalle.size();
-        return "Se registraron " + totalArticulos + " artículos en el movimiento #"
-                + movimiento.getIdmovimiento();
+            dao.save(entidad);
+        }
     }
 }
