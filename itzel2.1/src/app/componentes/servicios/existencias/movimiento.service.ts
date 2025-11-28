@@ -13,6 +13,9 @@ export class MovimientoService {
   saveMovimiento(movimiento: Movimientos): Observable<Movimientos> {
     return this.http.post<Movimientos>(`${baseUrl}`, movimiento);
   }
+  async saveMovimientoAsync(movimiento: Movimientos): Promise<Movimientos> {
+    return await firstValueFrom(this.http.post<Movimientos>(`${baseUrl}`, movimiento));
+  }
   findByTipMovimiento(tipmov: number): Observable<Movimientos[]> {
     return this.http.get<Movimientos[]>(`${baseUrl}/tipmov?tipmov=${tipmov}`);
   }

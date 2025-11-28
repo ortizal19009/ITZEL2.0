@@ -6,10 +6,7 @@ import com.itzel.modelo.existencias.Artimovi;
 import com.itzel.servicio.existencias.ArtimoviService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -38,6 +35,11 @@ public class ArtimoviApi {
         });
         artimoviService.guardarMovimiento(dto);
         return ResponseEntity.ok("Recibido");
+    }
+    @GetMapping("/by-movimiento")
+    public ResponseEntity<List<Artimovi>> getByIdMovimiento(@RequestParam Long idMovimiento){
+        return ResponseEntity.ok(artimoviService.findByIdMovimiento(idMovimiento));
+
     }
 
 }

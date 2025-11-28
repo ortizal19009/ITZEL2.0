@@ -19,10 +19,7 @@ public class ArtimoviDTO {
     private Timestamp feccrea;
     private short usumodi;
     private Timestamp fecmodi;
-
     private Movimientos movimiento;
-
-    // Ahora acepta varios artículos
     private List<Articulos> articulos;
 }
 

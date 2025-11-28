@@ -21,7 +21,7 @@ public class ArtimoviService {
         return dao.save(am);
     }
     public List<Artimovi> findByIdMovimiento(Long idmovimiento){
-        return dao.findByIdMovimiento(idmovimiento);
+        return dao.findByMovimiento_Idmovimiento(idmovimiento);
     }
 
     @Transactional

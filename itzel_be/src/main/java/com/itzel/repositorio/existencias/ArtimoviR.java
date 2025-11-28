@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface ArtimoviR extends JpaRepository<Artimovi, Short> {
-    List<Artimovi> findByIdMovimiento(Long idMovimiento);
+    List<Artimovi> findByMovimiento_Idmovimiento(Long idmovimiento);
 }

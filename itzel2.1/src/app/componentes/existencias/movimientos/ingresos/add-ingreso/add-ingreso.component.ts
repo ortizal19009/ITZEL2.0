@@ -19,6 +19,8 @@ import { MovimientoService } from '../../../../servicios/existencias/movimiento.
 import { Movimientos } from '../../../../modelos/existencias/movimientos.model';
 import { Articulos } from '../../../../modelos/existencias/articulos.model';
 import { ArticulosService } from '../../../../servicios/existencias/articulos.service';
+import { ArtimoviService } from '../../../../servicios/existencias/artimovi.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-add-ingreso.component',
@@ -39,7 +41,6 @@ export class AddIngresoComponent implements OnInit {
   _suggestMap = new Map<string, Articulos>();
   _articulosSelected: any[] = [];
 
-
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -48,7 +49,8 @@ export class AddIngresoComponent implements OnInit {
     private beneService: BeneficiariosService,
     private destService: DestinosService,
     private movService: MovimientoService,
-    private artService: ArticulosService
+    private artService: ArticulosService,
+    private artimoviService: ArtimoviService
   ) { }
   ngOnInit(): void {
     if (!this.authService.sessionlog) {
@@ -123,11 +125,25 @@ export class AddIngresoComponent implements OnInit {
     movimiento.feccrea = new Date();
     movimiento.usucrea = this.authService.idusuario;
     console.log('MOVIMIENTO A GUARDAR: ', movimiento);
-    this.movService.saveMovimiento(movimiento).subscribe({
-      next: (data) => {
-        console.log(data);
-        this.router.navigate(['/mov-ingresos']);
-      }, error: (e) => console.error(e)
+    this.movService.saveMovimientoAsync(movimiento).then((movimientoGuardado) => {
+      console.log('MOVIMIENTO GUARDADO: ', movimientoGuardado);
+      console.log('ARTICULOS A GUARDAR: ', this._articulosSelected);
+      const artimovi: any = {
+        tipmov: this.tipmov,
+        total: f.total,
+        usucrea: this.authService.idusuario,
+        feccrea: new Date(),
+        idmovimiento: movimientoGuardado,
+        articulos: this._articulosSelected,
+      };
+      this.artimoviService.saveArtimoviAsync(artimovi).then((artimoviGuardado) => {
+        console.log('ARTICULOS GUARDADOS: ', artimoviGuardado);
+        this.swal(
+          'success',
+          `El ingreso N° ${movimientoGuardado.numero} se ha guardado correctamente.`
+        );
+        this.regresar();
+      });
     });
   }
   regresar() {
@@ -157,6 +173,8 @@ export class AddIngresoComponent implements OnInit {
       },
     });
   }
+
+
   getLastNumeroMovimiento() {
     this.movService.findUltimo(this.tipmov).subscribe({
       next: (data: number) => {
@@ -212,7 +230,6 @@ export class AddIngresoComponent implements OnInit {
           });
         });
       }
-
     });
   }
   getAllDestinos() {
@@ -309,7 +326,7 @@ export class AddIngresoComponent implements OnInit {
     });
   }
   onArticuloSelected(ev: any) {
-    console.log(ev.target.value)
+    console.log(ev.target.value);
     const key = (ev.target.value || '').trim(); // ej: "ABC123 | Tijera 6''" o "5.2.01 | Tijera 6''" o "Tijera 6'' | ABC123"
     const art = this._suggestMap.get(key);
 
@@ -360,5 +377,15 @@ export class AddIngresoComponent implements OnInit {
   removeArticulo(index: number) {
     this._articulosSelected.splice(index, 1);
     this.calcularTotal();
+  }
+  swal(icon: any, mensaje: any) {
+    Swal.fire({
+      toast: true,
+      icon: icon,
+      title: mensaje,
+      position: 'top',
+      showConfirmButton: false,
+      timer: 2000,
+    });
   }
 }
