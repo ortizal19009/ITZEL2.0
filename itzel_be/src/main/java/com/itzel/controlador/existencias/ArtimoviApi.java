@@ -14,9 +14,9 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/artimovi ")
+@RequestMapping("/artimovi")
 public class ArtimoviApi {
-    private ArtimoviService artimoviService;
+    private final ArtimoviService artimoviService;
     @PostMapping
     public ResponseEntity<Object> saveArtmovi(@RequestBody Artimovi am){
         Map<String, Object> response = new HashMap<>();

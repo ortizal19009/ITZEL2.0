@@ -58,8 +58,8 @@
                   <label for="" class="input-group-text">Num. Entrada<sup class="green">*</sup></label>
                 </div>
                 <input #inputPrimero type="text" class="form-control text-center" formControlName="numentrada"
-                  aria-label="Small" aria-describedby="inputGroup-sizing-sm" [ngClass]="{'is-invalid': f['numentrada'].invalid && f['numentrada'].touched,
-                           'is-valid': f['numentrada'].valid, '': f['numentrada'].untouched}">
+                  aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="12345" [ngClass]="{'is-invalid': f['numentrada'].invalid && f['numentrada'].touched,
+                          'is-valid': f['numentrada'].valid, '': f['numentrada'].untouched}">
               </div>
               <div *ngIf="authService.msgval && f['numentrada'].errors && f['numentrada'].touched">
                 <div *ngIf="f['numentrada'].errors['required']"
@@ -208,8 +208,8 @@
                 <div class="input-group-prepend">
                   <label for="" class="input-group-text">Total<sup class="green">*</sup></label>
                 </div>
-                <input type="text" class="form-control text-center" formControlName="total"
-                  aria-label="Small" aria-describedby="inputGroup-sizing-sm" readonly>
+                <input type="text" class="form-control text-center" formControlName="total" aria-label="Small"
+                  aria-describedby="inputGroup-sizing-sm" readonly>
               </div>
             </div>
           </div>

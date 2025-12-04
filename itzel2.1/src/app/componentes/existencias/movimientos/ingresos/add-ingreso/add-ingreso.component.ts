@@ -128,6 +128,13 @@ export class AddIngresoComponent implements OnInit {
     this.movService.saveMovimientoAsync(movimiento).then((movimientoGuardado) => {
       console.log('MOVIMIENTO GUARDADO: ', movimientoGuardado);
       console.log('ARTICULOS A GUARDAR: ', this._articulosSelected);
+      let cantidad = 0;
+      if (this._articulosSelected && this._articulosSelected.length > 0) {
+        for (let art of this._articulosSelected){
+          cantidad += art.cantidad;
+        }
+        //cantidad += this._articulosSelected.cantidad;
+      }
       const artimovi: any = {
         tipmov: this.tipmov,
         total: f.total,
@@ -135,7 +142,25 @@ export class AddIngresoComponent implements OnInit {
         feccrea: new Date(),
         idmovimiento: movimientoGuardado,
         articulos: this._articulosSelected,
+        cantidad: cantidad,
+        cosprom: 0,
+        usmodi: 0,
+        fecmodi: null,
       };
+
+      /**
+    -private short tipmov;
+    -private float cantidad;
+    -private BigDecimal total;
+    private BigDecimal cosprom;
+    private Short usucrea;
+    private Timestamp feccrea;
+    private short usumodi;
+    private Timestamp fecmodi;
+    private Movimientos movimiento;
+    private List<Articulos> articulos;
+       *
+       */
       this.artimoviService.saveArtimoviAsync(artimovi).then((artimoviGuardado) => {
         console.log('ARTICULOS GUARDADOS: ', artimoviGuardado);
         this.swal(

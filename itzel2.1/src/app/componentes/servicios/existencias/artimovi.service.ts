@@ -17,7 +17,8 @@ export class ArtimoviService {
     return this.http.get<any>(`${baseUrl}/by-movimiento?idmovimiento=${idmovimiento}`);
   }
   async saveArtimoviAsync(artimovi: any): Promise<any> {
-    return await firstValueFrom(this.http.post<any>(`${baseUrl}/guardar-artimovi`, artimovi));
+    console.log(artimovi);
+    return firstValueFrom(this.http.post<any>(`${baseUrl}/guardar-artimovi`, artimovi));
   }
 
 }
