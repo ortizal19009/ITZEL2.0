@@ -22,88 +22,73 @@ import { Reportesjr } from '../../../modelos/administracion/reportesjr.model';
   styleUrl: './modi-reportejr.component.css',
 })
 export class ModiReportejrComponent implements OnInit {
+
   idreporte!: number;
   formReportejr!: FormGroup;
-  idrepoxopcion?: number | null = null;
+  idrepoxopcion: number | null = null;
+  reportejr!: any;
   _repoxopcion: any[] = [];
   jrxmlFile: File | null = null;
   jasperFile: File | null = null;
-  // jrxmlFileName: string | null = null;
   fileLabel!: string;
+  nomrep!: string;
+  antnomrep!: string;
 
-  constructor(
-    public router: Router,
-    public fb: FormBuilder,
-    public authService: AutorizaService,
-    private repoxopService: RepoxopcionService,
-    private repojrService: ReportesjrService
-  ) {}
+  constructor(public router: Router, public fb: FormBuilder, public authService: AutorizaService,
+    private repoxopService: RepoxopcionService, private repojrService: ReportesjrService) { }
 
   ngOnInit(): void {
-    if (!this.authService.sessionlog) {
-      this.router.navigate(['/inicio']);
-    }
+    if (!this.authService.sessionlog) { this.router.navigate(['/inicio']); }
     sessionStorage.setItem('ventana', '/reportesjr');
     let coloresJSON = sessionStorage.getItem('/reportesjr');
     if (coloresJSON) this.colocaColor(JSON.parse(coloresJSON));
 
-    this.idreporte = +sessionStorage.getItem('idreporteToModi')!;
-    // sessionStorage.removeItem("idreporteToModi") //
+    const reportejrJSON = sessionStorage.getItem('reportejrToModi');
+    if (reportejrJSON) {
+      this.reportejr = JSON.parse(reportejrJSON);
+      this.idreporte = this.reportejr.idreporte!;
+      this.nomrep = this.reportejr.nomrep;
+      this.antnomrep = this.nomrep;
 
-    const fechaObj: Date = new Date();
-    const fecha = fechaObj.toISOString().substring(0, 10);
-    this.formReportejr = this.fb.group(
-      {
-        repoxopcion: ['', [Validators.required], [this.valRepoxopcion.bind(this)]],
-        nombre: ['', Validators.required],
-        // archivos: [null, this.validaArchivos.bind(this)],
+      const jrxmlBase64 = this.reportejr.jrxml!;
+      const xmlString = decodeBase64ToXml(jrxmlBase64);
+      const nombreReporte = extractReportNameFromJrxml(xmlString);
+
+      this.idrepoxopcion = this.reportejr.repoxopcion!.idrepoxopcion;
+      this.formReportejr = this.fb.group({
+        repoxopcion: [this.reportejr.repoxopcion.codigo, [Validators.required], [this.valRepoxopcion.bind(this)]],
+        nombre: [this.reportejr.repoxopcion?.nombre, Validators.required],
+        jrxml: nombreReporte,
         archivos: [null],
-        // nomrep: ['', [Validators.required], [this.valNomrep.bind(this)]],
-        nomrep: [''],
-        desrep: ['', Validators.required],
+        nomrep: [this.reportejr.nomrep, Validators.required, [this.valNomrep.bind(this)]],
+        metodo: this.reportejr.metodo,
+        desrep: [this.reportejr.desrep, Validators.required],
 
         usumodi: this.authService.idusuario,
-        fecmodi: fechaObj,
+        fecmodi: new Date(),
       },
-      { updateOn: 'blur' }
-    );
-    this.buscaReportejr();
+        { updateOn: "blur" }
+      );
+    }
   }
 
   colocaColor(colores: any) {
     document.documentElement.style.setProperty('--bgcolor1', colores[0]);
     const cabecera = document.querySelector('.cabecera');
-    if (cabecera) cabecera.classList.add('nuevoBG1');
+    if (cabecera) cabecera.classList.add('nuevoBG1')
     document.documentElement.style.setProperty('--bgcolor2', colores[1]);
     const detalle = document.querySelector('.detalle');
     if (detalle) detalle.classList.add('nuevoBG2');
   }
 
-  get f() {
-    return this.formReportejr.controls;
-  }
-
-  buscaReportejr() {
-    this.repojrService.getById(this.idreporte).subscribe({
-      next: (repojr: Reportesjr) => {
-        this.idrepoxopcion = repojr.repoxopcion!.idrepoxopcion;
-        this.formReportejr.patchValue({
-          nombre: repojr.repoxopcion?.nombre,
-          repoxopcion: repojr.repoxopcion?.codigo,
-          nomrep: repojr.nomrep,
-          desrep: repojr.desrep,
-        });
-      },
-      error: (err) => console.error(err.error),
-    });
-  }
+  get f() { return this.formReportejr.controls; }
 
   //Datalist de Repoxopcion
-  repoxopcionxCodigo(e: any) {
+  datalistRepoxopcion(e: any) {
     if (e.target.value != '') {
-      this.repoxopService.obtenerPorCodigo(e.target.value).subscribe({
-        next: (datos) => (this._repoxopcion = datos),
-        error: (err) => {
+      this.repoxopService.datalist(e.target.value).subscribe({
+        next: datos => this._repoxopcion = datos,
+        error: err => {
           console.error(err.error);
           this.authService.mostrarError('Error al buscar en Repoxopcion', err.error);
         },
@@ -111,13 +96,10 @@ export class ModiReportejrComponent implements OnInit {
     }
   }
   onRepoxopcionSelected(e: any) {
-    // console.log(e)
-    const selectedOption = this._repoxopcion.find(
-      (x: { codigo: any }) => x.codigo === e.target.value
-    );
+    const selectedOption = this._repoxopcion.find((x: { codigo: any; }) => x.codigo === e.target.value);
     if (selectedOption) {
       this.idrepoxopcion = selectedOption.idrepoxopcion;
-      console.log('this.idrepoxopcion: ', this.idrepoxopcion);
+      console.log('this.idrepoxopcion: ', this.idrepoxopcion)
       this.formReportejr.controls['nombre'].setValue(selectedOption.nombre);
     } else {
       this.formReportejr.controls['nombre'].setValue('');
@@ -139,33 +121,33 @@ export class ModiReportejrComponent implements OnInit {
       if (ext === 'jrxml') {
         this.jrxmlFile = file;
 
-        // 🧠 Extraer nombre base sin extensión
+        // Extrae nombre base sin extensión
         const nomrepSinExtension = file.name.replace(/\.[^/.]+$/, '');
 
-        // 🧩 Asignar automáticamente al campo nomrep
+        // Asigna automáticamente al campo nomrep
         const control = this.formReportejr.get('nomrep');
         control?.setValue(nomrepSinExtension, { emitEvent: true });
         control?.markAsTouched();
         control?.updateValueAndValidity({ onlySelf: true });
-      } else if (ext === 'jasper') {
+      }
+
+      else if (ext === 'jasper') {
         this.jasperFile = file;
       }
     }
 
     this.fileLabel = selectedNames.join(', ');
 
-    // 🧩 Actualizar el control 'archivos' con ambos archivos
+    // Actualiza el control 'archivos' con ambos archivos
     this.formReportejr.get('archivos')?.setValue({
       jrxml: this.jrxmlFile,
-      jasper: this.jasperFile,
+      jasper: this.jasperFile
     });
     this.formReportejr.get('archivos')?.markAsTouched();
     this.formReportejr.get('archivos')?.updateValueAndValidity();
   }
 
-  regresar() {
-    this.router.navigate(['/reportesjr']);
-  }
+  regresar() { this.router.navigate(['/reportesjr']); }
 
   actualizar() {
     if (this.jrxmlFile == null || this.jasperFile == null) {
@@ -177,60 +159,48 @@ export class ModiReportejrComponent implements OnInit {
 
   // A actualiza solo los metadatos, sin archivos
   actualizarMetadatos() {
-    this.repojrService
-      .actualizarMetadatos(this.idreporte, {
-        idrepoxopcion: this.idrepoxopcion!,
-        nomrep: this.formReportejr.value.nomrep,
-        desrep: this.formReportejr.value.desrep,
-      })
-      .subscribe({
-        next: () => {
-          this.swal('success', 'Reporte actualizado con exito');
-          this.regresar();
-        },
-        error: (err) => {
-          console.error('Error al actualizar metadatos', err);
-          this.authService.mostrarError('Error al actualizar metadatos', err.error);
-        },
-      });
+    console.log('this.formReportejr.value.metodo: ', this.formReportejr.value.metodo)
+    this.repojrService.actualizarMetadatos(this.idreporte, {
+      idrepoxopcion: this.idrepoxopcion!,
+      nomrep: this.formReportejr.value.nomrep,
+      metodo: this.formReportejr.value.metodo,
+      desrep: this.formReportejr.value.desrep
+    }).subscribe({
+      next: (actualizado: Reportesjr) => {
+        this.authService.swal('success', `Datos del Reporte ${actualizado.nomrep} modificados con éxito`);
+        this.regresar();
+      },
+      error: (err) => {
+        console.error('Error al actualizar metadatos', err);
+        this.authService.mostrarError('Error al actualizar metadatos', err.error);
+      }
+    });
   }
 
-  // A actualiza todo, incluidos los archivos
+  // Actualiza todo, incluidos los archivos
   axtualizarCompleto(): void {
-    this.repojrService
-      .actualizarCompleto(this.idreporte, {
-        idrepoxopcion: this.idrepoxopcion!,
-        nomrep: this.formReportejr.value.nomrep,
-        desrep: this.formReportejr.value.desrep,
-        jrxml: this.jrxmlFile!,
-        jasper: this.jasperFile!,
-      })
-      .subscribe({
-        next: () => {
-          this.swal('success', 'Archivos del reporte actualizados con exito');
-          this.regresar();
-        },
-        error: (err) => {
-          console.error('Error al actualizar metadatos', err);
-          this.authService.mostrarError('Error al actualizar metadatos', err.error);
-        },
-      });
-  }
-
-  swal(icon: any, mensaje: any) {
-    Swal.fire({
-      toast: true,
-      icon: icon,
-      title: mensaje,
-      position: 'top',
-      showConfirmButton: false,
-      timer: 2000,
+    this.repojrService.actualizarCompleto(this.idreporte, {
+      idrepoxopcion: this.idrepoxopcion!,
+      nomrep: this.formReportejr.value.nomrep,
+      metodo: this.formReportejr.value.metodo,
+      desrep: this.formReportejr.value.desrep,
+      jrxml: this.jrxmlFile!,
+      jasper: this.jasperFile!,
+    }).subscribe({
+      next: (actualizado: Reportesjr) => {
+        this.authService.swal('success', `Archivos del reporte ${actualizado.nomrep} modificados con éxito`);
+        this.regresar();
+      },
+      error: (err) => {
+        console.error('Error al actualizar metadatos', err);
+        this.authService.mostrarError('Error al actualizar metadatos', err.error);
+      }
     });
   }
 
   //Valida que se haya seleccionado una Opción
   valRepoxopcion(control: AbstractControl) {
-    if (this.idrepoxopcion == null) return of({ invalido: true });
+    if (this.idrepoxopcion == null) return of({ 'invalido': true });
     else return of(null);
   }
 
@@ -238,31 +208,41 @@ export class ModiReportejrComponent implements OnInit {
   validaArchivos(control: AbstractControl): ValidationErrors | null {
     const files = control.value;
     // Validación 1: existencia del objeto
-    if (!files || typeof files !== 'object') {
-      return { archivosIncompletos: true };
-    }
+    if (!files || typeof files !== 'object') { return { archivosIncompletos: true }; }
     const { jrxml, jasper } = files;
     // Validación 2: presencia de ambos archivos
-    if (!jrxml || !jasper) {
-      return { archivosIncompletos: true };
-    }
+    if (!jrxml || !jasper) { return { archivosIncompletos: true }; }
     // Validación 3: exceso de archivos (si se pasó un array por error)
-    if (Array.isArray(files) && files.length > 2) {
-      return { excesoArchivos: true };
-    }
+    if (Array.isArray(files) && files.length > 2) { return { excesoArchivos: true }; }
     // Validación 4: coincidencia de nombre base
     const baseJrxml = jrxml.name.replace(/\.jrxml$/i, '');
     const baseJasper = jasper.name.replace(/\.jasper$/i, '');
-    if (baseJrxml !== baseJasper) {
-      return { nombresNoCoinciden: true };
-    }
+    if (baseJrxml !== baseJasper) { return { nombresNoCoinciden: true }; }
     return null;
   }
 
   //Valida nomrep
   valNomrep(control: AbstractControl) {
-    return this.repojrService
-      .valNomrep(control.value)
-      .pipe(map((result) => (result ? { existe: true } : null)));
+    return this.repojrService.valNomrep(control.value).pipe(
+      map(result => this.antnomrep != control.value && result ? { existe: true } : null)
+    );
   }
+
+}
+
+function decodeBase64ToXml(base64: string): string {
+  const binary = atob(base64); // decodifica Base64 a string binario
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) {
+    bytes[i] = binary.charCodeAt(i);
+  }
+  const decoder = new TextDecoder('utf-8');
+  return decoder.decode(bytes);
+}
+
+function extractReportNameFromJrxml(xmlString: string): string | null {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(xmlString, 'application/xml');
+  const jasperReport = doc.getElementsByTagName('jasperReport')[0];
+  return jasperReport?.getAttribute('name') ?? null;
 }

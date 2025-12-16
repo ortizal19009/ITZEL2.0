@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Reportesjr } from '../../../modelos/administracion/reportesjr.model';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AutorizaService } from '../../../servicios/administracion/autoriza.service';
 import { EjecucionService } from '../../../servicios/contabilidad/ejecucion.service';
@@ -18,56 +18,47 @@ import { RepoxopcionService } from '../../../servicios/administracion/repoxopcio
   templateUrl: './reportesjr.component.html',
   styleUrl: './reportesjr.component.css',
 })
+
 export class ReportesjrComponent implements OnInit {
-  formBuscar: any;
+
+  formBuscar!: FormGroup;
   swbuscando?: boolean;
   txtbuscar: string = 'Buscar';
-  buscarReportesjr = { codigo: String, nomrep: String, desrep: String }; //codigo es repoxopcion.codigo
-  _repoxopcion: any[] = [];
-  _reportesjr: any[] = [];
+  repoxopcion: any[] = [];
+  reportesjr: any[] = [];
   suminicial = 0;
   sumreforma = 0;
   sumcodificado = 0;
-  // iRepojr = {} as interfaceReportesjr; //Interface para los datos del Reportejr a eliminar
   sweliminar: boolean = false;
   repojrFiltrados: Reportesjr[] = [];
   ordenColumna: keyof ReportesjrVisual = 'codigo';
   ordenAscendente: boolean = true;
   totalParametros: number[] = [];
+  ultIdSelec: number = -1;
 
-  constructor(
-    public fb: FormBuilder,
-    private router: Router,
-    public authService: AutorizaService,
-    private coloresService: ColoresService,
-    private ejecuService: EjecucionService,
-    private repoxopService: RepoxopcionService,
-    private repojrService: ReportesjrService,
-    private elimService: EliminadosService
-  ) {}
+  constructor(public fb: FormBuilder, private router: Router, public authService: AutorizaService,
+    private coloresService: ColoresService, private ejecuService: EjecucionService, private repoxopService: RepoxopcionService,
+    private repojrService: ReportesjrService, private elimService: EliminadosService) { }
 
   ngOnInit(): void {
-    if (!this.authService.sessionlog) {
-      this.router.navigate(['/inicio']);
-    }
+    if (!this.authService.sessionlog) { this.router.navigate(['/inicio']); }
     sessionStorage.setItem('ventana', '/reportesjr');
     let coloresJSON = sessionStorage.getItem('/reportesjr');
     if (coloresJSON) this.colocaColor(JSON.parse(coloresJSON));
     else this.buscaColor();
 
-    let swbuscar: boolean;
     //Campos guardados o ''
-    let codigo: string;
-    let nomrep: string;
-    let desrep: string;
-    const buscarPregastosJSON = sessionStorage.getItem('buscarReportesjr');
-    // console.log('buscarPregastosJSON:', buscarPregastosJSON);
-    if (buscarPregastosJSON) {
+    this.ultIdSelec = sessionStorage.getItem('ultidreporte') ? Number(sessionStorage.getItem('ultidreporte')) : 0;
+    // console.log('ultIdSelec en ngOnInit Reportesjr:', this.ultIdSelec);
+    let swbuscar: boolean;
+    let codigo: string; let nomrep: string;; let desrep: string;
+    const buscarReportesjrJSON = sessionStorage.getItem('buscarReportesjr');
+    if (buscarReportesjrJSON) {
       swbuscar = true;
-      const buscaPartidas = JSON.parse(buscarPregastosJSON);
-      codigo = buscaPartidas.codigo;
-      nomrep = buscaPartidas.nomrep;
-      desrep = buscaPartidas.desrep;
+      const buscarReportesjr = JSON.parse(buscarReportesjrJSON);
+      codigo = buscarReportesjr.codigo;
+      nomrep = buscarReportesjr.nomrep;
+      desrep = buscarReportesjr.desrep;
     } else {
       swbuscar = false;
       codigo = '';
@@ -76,22 +67,20 @@ export class ReportesjrComponent implements OnInit {
     }
 
     this.formBuscar = this.fb.group({
-      repoxopcion: '',
+      repoxopcion: codigo,
       nomrep: nomrep,
       desrep: desrep,
       filtroControl: '',
     });
 
-    this.formBuscar.get('filtroControl')?.valueChanges.subscribe((valor: any) => {
-      this.filtrar(valor);
-    });
+    this.formBuscar.get('filtroControl')?.valueChanges.subscribe((valor: any) => { this.filtrar(valor) });
     if (swbuscar) this.buscar();
   }
 
   colocaColor(colores: any) {
     document.documentElement.style.setProperty('--bgcolor1', colores[0]);
     const cabecera = document.querySelector('.cabecera');
-    if (cabecera) cabecera.classList.add('nuevoBG1');
+    if (cabecera) cabecera.classList.add('nuevoBG1')
     document.documentElement.style.setProperty('--bgcolor2', colores[1]);
     const detalle = document.querySelector('.detalle');
     if (detalle) detalle.classList.add('nuevoBG2');
@@ -109,14 +98,11 @@ export class ReportesjrComponent implements OnInit {
   }
 
   //Datalist de las opciones (repoxopcion)
-  repoxopcion(e: any) {
+  datalistRepoxopcion(e: any) {
     if (e.target.value != '') {
-      this.repoxopService.obtenerPorCodigo(e.target.value).subscribe({
-        next: (datos) => (this._repoxopcion = datos),
-        error: (err) => {
-          console.error(err.error);
-          this.authService.mostrarError('Error al buscar Repoxopcion', err.error);
-        },
+      this.repoxopService.datalist(e.target.value).subscribe({
+        next: (datos:any) => this.repoxopcion = datos,
+        error: (err:any) => { console.error(err.error); this.authService.mostrarError('Error al buscar Repoxopcion', err.error); },
       });
     }
   }
@@ -128,39 +114,36 @@ export class ReportesjrComponent implements OnInit {
     let codigo = this.formBuscar.value.repoxopcion;
     let nomrep = this.formBuscar.value.nomrep;
     let desrep = this.formBuscar.value.desrep;
-    // console.log('Busca: ', codigo, codpar, nompar);
     this.repojrService.getByOpcionNomrepyDesrep(codigo, nomrep, desrep).subscribe({
-      next: (datos) => {
-        this._reportesjr = datos;
-        this.calcCantidadPorRegistro();
-        this.repojrFiltrados = [...datos];
+      next: (reportesjr: Reportesjr[]) => {
+        this.reportesjr = reportesjr;
+        this.calcCantidadPorRegistro()
+        this.repojrFiltrados = [...reportesjr];
         //Guarda los campos de búsqueda
-        this.buscarReportesjr = {
+        const buscarReportesjr = {
           codigo: this.formBuscar.value.repoxopcion,
           nomrep: this.formBuscar.value.nomrep,
           desrep: this.formBuscar.value.desrep,
         };
         // Verifica si hay al menos un campo con valor para guardar en session
-        const camposBusca = Object.values(this.buscarReportesjr).some(
-          (valor) => valor !== null && valor !== undefined && valor.toString().trim() !== ''
-        );
-        if (camposBusca)
-          sessionStorage.setItem('buscarReportesjr', JSON.stringify(this.buscarReportesjr));
+        const camposBusca = Object.values(buscarReportesjr)
+          .some(valor => valor !== null && valor !== undefined && valor.toString().trim() !== '');
+        if (camposBusca) sessionStorage.setItem('buscarReportesjr', JSON.stringify(buscarReportesjr));
         else sessionStorage.removeItem('buscarReportesjr');
         this.swbuscando = false;
         this.txtbuscar = 'Buscar';
       },
-      error: (err) => {
-        console.error('❌ Error al buscar las Opciones:', err.error);
+      error: err => {
+        console.error('Error al buscar las Opciones:', err.error)
         this.authService.mostrarError('Error al buscar las Opciones', err.error);
-      },
+      }
     });
   }
 
   calcCantidadPorRegistro(): void {
     this.totalParametros = []; // reiniciar el arreglo
 
-    for (const r of this._reportesjr) {
+    for (const r of this.reportesjr) {
       try {
         const safeParametros = JSON.parse(r.parametros || '{}');
 
@@ -179,11 +162,11 @@ export class ReportesjrComponent implements OnInit {
   filtrar(valor: any): void {
     const filtro = valor.toLowerCase();
     if (!filtro) {
-      if (this.repojrFiltrados.length > 0) this.repojrFiltrados = [...this._reportesjr];
+      if (this.repojrFiltrados.length > 0) this.repojrFiltrados = [...this.reportesjr];
       return;
     }
-    this.repojrFiltrados = this._reportesjr.filter((a) => {
-      return [a.codigo, a.nomrep, a.desrep].some((campo) =>
+    this.repojrFiltrados = this.reportesjr.filter(a => {
+      return [a.codigo, a.nomrep, a.desrep].some(campo =>
         String(campo).toLowerCase().includes(filtro)
       );
     });
@@ -230,23 +213,24 @@ export class ReportesjrComponent implements OnInit {
     });
   }
 
-  onCellClick(event: any, repo: any) {
+  onCellClick(event: any, reportejr: Reportesjr) {
     const tagName = event.target.tagName;
+    this.ultIdSelec = reportejr.idreporte!;
+    sessionStorage.setItem('ultidreporte', this.ultIdSelec.toString());
     if (tagName === 'TD') {
-      sessionStorage.setItem('reportejrToImpExp', repo.idreporte.toString());
+      const reportejrJson = JSON.stringify(reportejr);
+      sessionStorage.setItem('reportejrToImpExp', reportejrJson);
       this.router.navigate(['imp-reportejr']);
     }
   }
 
-  nuevo() {
-    this.router.navigate(['/add-reportejr']);
-  }
+  nuevo() { this.router.navigate(['/add-reportejr']); }
 
   parametros(repo: Reportesjr) {
     let parametros = repo.parametros;
 
     // Asegura que parametros sea un objeto antes de usar Object.entries
-    const safeParametros = parametros && typeof parametros === 'object' ? parametros : {};
+    const safeParametros = (parametros && typeof parametros === 'object') ? parametros : {};
 
     // Construir filas de la tabla
     const filas = Object.entries(safeParametros)
@@ -275,56 +259,39 @@ export class ReportesjrComponent implements OnInit {
         confirmButton: 'btn btn-success',
         popup: 'swaInfo',
         title: 'swafantacyblack',
-      },
+      }
     });
   }
 
-  modificar(idreporte: number) {
-    sessionStorage.setItem('idreporteToModi', idreporte.toString());
+  modificar(reportejr: Reportesjr): void {
+    this.ultIdSelec = reportejr.idreporte!;
+    sessionStorage.setItem('ultidreporte', this.ultIdSelec.toString());
+    const reportejrJson = JSON.stringify(reportejr);
+    sessionStorage.setItem('reportejrToModi', reportejrJson);
     this.router.navigate(['/modi-reportejr']);
   }
 
   //Datos a eliminar
   eliminar(repo: Reportesjr): void {
-    this.ejecuService.countEjecucionPorPartida(repo.idreporte!).subscribe({
-      next: (registros: any) => {
-        if (registros > 0) {
-          Swal.fire({
-            icon: 'error',
-            title:
-              'No puede eliminar el Reporte:\n ' + repo.repoxopcion!.codigo + ' ' + repo.nomrep,
-            text: 'Tiene registrado ' + registros + ' movimientos',
-            confirmButtonText: '<i class="bi-check"></i> Continuar ',
-            customClass: {
-              popup: 'noeliminar',
-              title: 'robotobig',
-              confirmButton: 'btn btn-warning',
-            },
-          });
-        } else {
-          Swal.fire({
-            width: '500px',
-            title: 'Mensaje',
-            text: 'Eliminar el Reporte:\n ' + repo.repoxopcion!.codigo + ' ' + repo.nomrep + ' ?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: '<i class="fa fa-check"></i> Aceptar',
-            cancelButtonText: '<i class="fa fa-times"></i> Cancelar',
-            customClass: {
-              popup: 'eliminar',
-              title: 'robotobig',
-              confirmButton: 'btn btn-info',
-              cancelButton: 'btn btn-info',
-            },
-          }).then((resultado) => {
-            if (resultado.isConfirmed) this.elimina(repo);
-          });
-        }
+    this.ultIdSelec = repo.idreporte!;
+    sessionStorage.setItem('ultidreporte', this.ultIdSelec.toString());
+    Swal.fire({
+      // width: '500px',
+      // title: 'Mensaje',
+      icon: 'warning',
+      title: `Eliminar el Reporte:\n${repo.repoxopcion!.codigo} ${repo.nomrep} ?`,
+      // text: 'Eliminar el Reporte:\n ' + repo.repoxopcion!.codigo + ' ' + repo.nomrep + ' ?',
+      showCancelButton: true,
+      confirmButtonText: '<i class="fa fa-check"></i> Aceptar',
+      cancelButtonText: '<i class="fa fa-times"></i> Cancelar',
+      customClass: {
+        popup: 'eliminar',
+        title: 'robotobig',
+        confirmButton: 'btn btn-info',
+        cancelButton: 'btn btn-info'
       },
-      error: (err) => {
-        console.error('Al buscar si el Reporte tiene registros: ', err.error);
-        this.authService.mostrarError('Error al buscar si tiene registros', err.error);
-      },
+    }).then((resultado) => {
+      if (resultado.isConfirmed) this.elimina(repo);
     });
   }
 
@@ -343,32 +310,47 @@ export class ReportesjrComponent implements OnInit {
         eliminado.datos = `${repo.repoxopcion!.codigo} ${repo.nomrep}`;
         this.elimService.save(eliminado).subscribe({
           next: () => {
-            Swal.fire('Mensaje', 'La acción fue ejecutada.', 'success');
+            this.authService.swal('success', `Reporte ${repo.repoxopcion!.codigo} eliminado con éxito`);
             this.buscar();
           },
-          error: (err) => {
+          error: err => {
             console.error(err.error);
             this.authService.mostrarError('Error al eliminar', err.error);
-          },
+          }
         });
       },
-      error: (err) => {
+      error: err => {
         console.error(err.error);
         this.authService.mostrarError('Error al eliminar', err.error);
-      },
+      }
     });
   }
 
-  imprimir() {}
+  imprimir() {
 
-  cerrar() {
-    this.router.navigate(['/inicio']);
   }
+
+  cerrar() { this.router.navigate(['/inicio']); }
+
+  nombreMetodo(metodo: number) {
+    if (metodo == 1) return 'SQL Directo';
+    if (metodo == 2) return 'Colección de Beans';
+    if (metodo == 3) return 'Desde el Frontend';
+    return ''
+  }
+
+
 }
 
 interface ReportesjrVisual {
   codigo: string;
   opcion: string;
+  nomrep: string;
+  desrep: string;
+}
+
+interface BuscarReportesjr {
+  codigo: string;
   nomrep: string;
   desrep: string;
 }

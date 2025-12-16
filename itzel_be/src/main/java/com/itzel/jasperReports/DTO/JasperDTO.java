@@ -4,10 +4,12 @@ import lombok.Data;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 @Data
 public class JasperDTO {
     private String reportName;
-    private List<ReportParameterDTO> parameters;
+
+    private List<ReportParameterDTOant> parameters;
     private String extension;
 
     public Long getReporteId() {
@@ -36,11 +38,12 @@ public class JasperDTO {
         this.extension = extension;
     }
 
-    public List<ReportParameterDTO> getParameters() {
+    public List<ReportParameterDTOant> getParameters() {
         return parameters;
     }
 
-    public void setParameters(List<ReportParameterDTO> parameters) {
+    public void setParameters(List<ReportParameterDTOant> parameters) {
         this.parameters = parameters;
     }
+
 }

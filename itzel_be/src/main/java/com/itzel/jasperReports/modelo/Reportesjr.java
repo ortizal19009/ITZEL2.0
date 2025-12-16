@@ -51,9 +51,10 @@ public class Reportesjr {
     protected void onUpdate() {
         fecmodi = new Timestamp(System.currentTimeMillis());
     }
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idrepoxopcion")
     private Repoxopcion repoxopcion;
+
+
 
 }

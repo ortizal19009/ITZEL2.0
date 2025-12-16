@@ -3,7 +3,6 @@ package com.itzel.servicio.existencias;
 import com.itzel.DTO.existencias.ArtimoviDTO;
 import com.itzel.modelo.existencias.Articulos;
 import com.itzel.modelo.existencias.Artimovi;
-import com.itzel.modelo.existencias.Movimientos;
 import com.itzel.repositorio.existencias.ArtimoviR;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

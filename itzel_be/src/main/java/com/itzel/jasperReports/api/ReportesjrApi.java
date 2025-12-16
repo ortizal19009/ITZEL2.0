@@ -1,27 +1,20 @@
-package com.itzel.jasperReports.controllers;
-
-import java.util.List;
+package com.itzel.jasperReports.api;
 
 import com.itzel.jasperReports.modelo.Reportesjr;
 import com.itzel.jasperReports.services.ReportejrService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-
-import lombok.RequiredArgsConstructor;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/reportesjr")
+@CrossOrigin("*")
+
 public class ReportesjrApi {
 
     private final ReportejrService repojrService;
@@ -68,71 +61,25 @@ public class ReportesjrApi {
         return ResponseEntity.ok(reportes);
     }
 
-    // @PostMapping(consumes = "multipart/form-data")
-    // public ResponseEntity<Reportesjr> guardarReporte(
-    // @RequestParam("idrepoxopcion") Short idrepoxopcion,
-    // // @RequestParam("codrep") String codrep,
-    // @RequestParam("nomrep") String nomrep,
-    // @RequestParam("desrep") String desrep,
-    // @RequestParam("jrxml") MultipartFile jrxml,
-    // @RequestParam("jasper") MultipartFile jasper) {
-    // try {
-    // Reportesjr reporte = new Reportesjr();
-    // // Genera la entidad relacionada Repoxopcion
-    // Repoxopcion repoxopcion = new Repoxopcion();
-    // repoxopcion.setIdrepoxopcion(idrepoxopcion);
-    // reporte.setRepoxopcion(repoxopcion);
-
-    // reporte.setNomrep(nomrep);
-    // reporte.setDesrep(desrep);
-    // reporte.setJrxml(jrxml.getBytes());
-    // reporte.setJasper(jasper.getBytes());
-
-    // // 1️⃣ Compilar el JRXML (Ok para poder obtener los parametros del jrxml)
-    // JasperReport jasperReport = JasperCompileManager.compileReport(
-    // new ByteArrayInputStream(jrxml.getBytes()));
-
-    // // 2️⃣ Obtener los parámetros del reporte, tipo y la propiedad anchoCampo
-    // Map<String, Object> parametrosMap = new LinkedHashMap<>();
-
-    // for (JRParameter param : jasperReport.getParameters()) {
-    // if (!param.isSystemDefined()) {
-    // String nomvar = param.getName();
-    // String tipo = param.getValueClassName();
-
-    // String anchoCampo = param.getPropertiesMap().getProperty("anchoCampo");
-    // if (anchoCampo == null || anchoCampo.trim().isEmpty()) {
-    // anchoCampo = "12";
-    // }
-    // String valorFinal = tipo + "|" + anchoCampo;
-
-    // parametrosMap.put(nomvar, valorFinal);
-    // }
-    // }
-
-    // // 3️⃣ Guardamos los parámetros en la columna JSONB
-    // reporte.setParametros(parametrosMap);
-
-    // // 4️⃣ Guardar en la DB
-    // Reportesjr guardado = repojrService.guardar(reporte);
-    // return ResponseEntity.ok(guardado);
-
-    // } catch (Exception e) {
-    // e.printStackTrace();
-    // return ResponseEntity.badRequest().build();
-    // }
-    // }
+    // Conteo por idrepoxopcion
+    @GetMapping("/countidrepoxopcion/{idrepoxopcion}")
+    public ResponseEntity<Short> cuentaPorRepoxopcion(@PathVariable short idrepoxopcion) {
+        short cantidad = repojrService.cuentaPorRepoxopcion(idrepoxopcion);
+        return ResponseEntity.ok(cantidad);
+    }
 
     // Nuevo reporte
     @PostMapping(consumes = "multipart/form-data")
     public ResponseEntity<Reportesjr> crearReporte(
             @RequestParam("idrepoxopcion") Short idrepoxopcion,
             @RequestParam("nomrep") String nomrep,
+            @RequestParam("metodo") Short metodo,
             @RequestParam("desrep") String desrep,
             @RequestParam("jrxml") MultipartFile jrxml,
             @RequestParam("jasper") MultipartFile jasper) {
         try {
-            Reportesjr nuevo = repojrService.crearReporte(idrepoxopcion, nomrep, desrep, jrxml, jasper);
+            System.out.println("metodo: " + metodo);
+            Reportesjr nuevo = repojrService.crearReporte(idrepoxopcion, nomrep, metodo, desrep, jrxml, jasper);
             return ResponseEntity.ok(nuevo);
         } catch (Exception e) {
             e.printStackTrace();
@@ -145,35 +92,24 @@ public class ReportesjrApi {
     public ResponseEntity<Reportesjr> actualizarMetadatos(@PathVariable Short id,
                                                           @RequestParam("idrepoxopcion") Short idrepoxopcion,
                                                           @RequestParam("nomrep") String nomrep,
+                                                          @RequestParam("metodo") Short metodo,
                                                           @RequestParam("desrep") String desrep) {
-        Reportesjr actualizado = repojrService.actualizarSoloCampos(id, idrepoxopcion, nomrep, desrep);
+
+        Reportesjr actualizado = repojrService.actualizarSoloCampos(id, idrepoxopcion, nomrep, metodo, desrep);
         return ResponseEntity.ok(actualizado);
     }
-
-    // Para actualizar archivos (jrxml y jasper)
-    // @PutMapping(value = "/{id}/archivos", consumes = "multipart/form-data")
-    // public ResponseEntity<Reportesjr> actualizarArchivos(@PathVariable Short id,
-    //       @RequestParam("jrxml") MultipartFile jrxml,
-    //       @RequestParam("jasper") MultipartFile jasper) {
-    //    try {
-    //       Reportesjr actualizado = repojrService.actualizarSoloArchivos(id, jrxml, jasper);
-    //       return ResponseEntity.ok(actualizado);
-    //    } catch (Exception e) { // Handles JRException, IOException, etc.
-    //       e.printStackTrace();
-    //       return ResponseEntity.badRequest().build();
-    //    }
-    // }
 
     // Actualizar todo (metadatos y archivos)
     @PutMapping(value = "/{id}", consumes = "multipart/form-data")
     public ResponseEntity<Reportesjr> actualizarCompleto(@PathVariable Short id,
                                                          @RequestParam("idrepoxopcion") Short idrepoxopcion,
                                                          @RequestParam("nomrep") String nomrep,
+                                                         @RequestParam("metodo") Short  metodo,
                                                          @RequestParam("desrep") String desrep,
                                                          @RequestParam("jrxml") MultipartFile jrxml,
                                                          @RequestParam("jasper") MultipartFile jasper) {
         try {
-            Reportesjr actualizado = repojrService.actualizarCompleto(id, idrepoxopcion, nomrep, desrep, jrxml, jasper);
+            Reportesjr actualizado = repojrService.actualizarCompleto(id, idrepoxopcion, nomrep, metodo, desrep, jrxml, jasper);
             return ResponseEntity.ok(actualizado);
         } catch (Exception e) {
             e.printStackTrace();
