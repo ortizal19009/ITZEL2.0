@@ -2,6 +2,7 @@ package com.itzel.jasperReports.controllers;
 
 
 import com.itzel.jasperReports.DTO.JasperBeanDTO;
+import com.itzel.jasperReports.DTO.JasperSqlDTO;
 import com.itzel.jasperReports.services.ReporteBeanService;
 import com.itzel.jasperReports.services.ReporteExportService;
 import com.itzel.jasperReports.services.ReporteSqlService;

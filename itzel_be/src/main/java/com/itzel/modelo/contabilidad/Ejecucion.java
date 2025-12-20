@@ -39,15 +39,16 @@ public class Ejecucion {
     @JoinColumn(name = "idtramite")
     private Long tramite;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idpartixcer")
+    @JoinColumn(name = "idpartxcer")
     private Partixcerti partixcerti;
     @JoinColumn(name = "idasiento")
-    private Long asiento;
+    private Long idasiento;
     @JoinColumn(name = "idtransaccion")
     private Long transaccion;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idpresupuesto")
     private Presupuesto presupuesto;
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idcompromiso")
-    private Long compromisos;
+    private Compromisos compromiso;
 }

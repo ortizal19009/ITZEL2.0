@@ -11,10 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ProyectosService {
@@ -150,7 +147,7 @@ public class ProyectosService {
     }
     public Map<String, Object> delete(short idProyecto) {
         Map<String, Object> response = new HashMap<>();
-    List<Presupuesto> presupuestos = daoP.findByIdPresupuesto(idProyecto);
+    List<Presupuesto> presupuestos = Collections.singletonList(daoP.findById(idProyecto).orElseThrow(() -> new RuntimeException("Error al ")));
     if(presupuestos.isEmpty()) {
         Optional<Proyectos> optionalProject = dao.findById(idProyecto);
 

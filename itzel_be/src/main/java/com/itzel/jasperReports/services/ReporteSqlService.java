@@ -1,5 +1,6 @@
 package com.itzel.jasperReports.services;
 
+import com.itzel.jasperReports.DTO.JasperSqlDTO;
 import com.itzel.jasperReports.DTO.ReportParameterDTO;
 import com.itzel.jasperReports.modelo.Reportesjr;
 import lombok.RequiredArgsConstructor;

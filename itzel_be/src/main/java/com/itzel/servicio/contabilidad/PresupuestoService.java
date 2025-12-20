@@ -1,67 +1,74 @@
 package com.itzel.servicio.contabilidad;
 
 import com.itzel.modelo.contabilidad.Presupuesto;
+import com.itzel.repositorio.contabilidad.EjecucionR;
+import com.itzel.repositorio.contabilidad.PartixcertiR;
 import com.itzel.repositorio.contabilidad.PresupuestoR;
+import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
+@RequiredArgsConstructor
 @Service
 public class PresupuestoService {
-    @Autowired
-    private PresupuestoR dao;
-    public Page<Presupuesto> findAllByPage(int page, int size){
-        Pageable pageable = PageRequest.of(page, size);
-        return dao.findAll(pageable);
+
+    private final PresupuestoR dao;
+    private final PartixcertiR daoparxcer;
+    private final EjecucionR daoejecu;
+
+    // Busca por proyecto.codigo, tippar, codpar Y nompar
+    public List<Presupuesto> buscarPartidasPorCampos(String codigo, short tippar, String codpar, String nompar) {
+        return dao
+                .findByProyecto_CodigoStartingWithAndTipparAndCodparStartingWithAndNomparContainingIgnoreCaseOrderByCodparAsc(
+                        codigo, tippar, codpar, nompar);
     }
 
-    public Page<Presupuesto> findByTipparPageable(int tippar, int page, int size){
-        Pageable pageable= PageRequest.of(page, size);
-        return dao.findByTipparPageable(tippar, pageable);
-
-    }
-    public Page<Presupuesto> findByParDenom(String dato,int tippar, int page, int size){
-        Pageable pageable= PageRequest.of(page, size);
-        return dao.findByParDenom(dato, tippar, pageable);
-
-    }
-    public Presupuesto findByCodPar(String codpar){
-        return dao.findByCodpar(codpar);
-    }
-    public Optional<Presupuesto> findById(Short idpresupuesto){
-        return dao.findById(idpresupuesto);
-    }
-    public List<Presupuesto>findByCodigoProyectoLike(String codigo){
-        return dao.findByCodigoProyectoLike(codigo);
-    }
-    public List<Presupuesto> findTipparAndCodpar(int tippar , String codpar){
-        return dao.findByTipparAndCodparContainingOrderByCodpar(tippar, codpar);
+    // Valida codpar por proyecto
+    public boolean valCodparPorProyecto(String codpar, Short idproyecto) {
+        return dao.existsByCodparAndProyecto_Idproyecto(codpar, idproyecto);
     }
 
-
-    // Busca por tippar, codpar Y nompar
-    public List<Presupuesto> buscarPartidasPorCampos(short tippar, String codpar, String nompar) {
-        return dao.findByTipparAndCodparStartingWithAndNomparContainingIgnoreCaseOrderByCodparAsc(tippar, codpar, nompar);
+    // Valida nompar por proyecto
+    public boolean valNomparPorProyecto(String nompar, Short idproyecto) {
+        return dao.existsByNomparIgnoreCaseAndProyecto_Idproyecto(nompar, idproyecto);
     }
 
-    // Valida codpar
-    public boolean valCodpar(String codpar) {
-        return dao.existsByCodpar(codpar);
-    }
-
-    // Validar nompar
-    public boolean valNompar(String nompar) {
-        return dao.existsByNomparIgnoreCase(nompar);
-    }
-
-    // Cuenta las partidas del clasificador por idclasificador
+    // Cuenta por idclasificador
     public short cuentaPartidasPorClasificador(short idclasificador) {
         return dao.countByClasificador_Idclasificador(idclasificador);
+    }
+
+    // Cuenta por idproyecto
+    public short cuentaPorProyecto(short idproyecto) {
+        return dao.countByProyecto_Idproyecto(idproyecto);
+    }
+
+    // Partidas para datalist
+    public List<Presupuesto> obtenerPresupuestosPorTipoyCodigo(Short tippar, String codpar) {
+        return dao.findByTipparAndCodparStartingWithOrderByCodparAscProyecto_CodigoAsc(tippar, codpar);
+    }
+
+    // Partidas para ng-select
+    public List<Presupuesto> obtenerPresupuestoPorTipo(Short tippar) {
+        return dao.findByTipparOrderByCodparAscProyecto_CodigoAsc(tippar);
+    }
+
+    // Busca por idproyecto y codpar
+    public Optional<Presupuesto> buscarPorProyectoYCodpar(Short idproyecto, String codpar) {
+        return dao.findByProyecto_IdproyectoAndCodpar(idproyecto, codpar);
+    }
+
+    // Verifica existencia por codpar
+    public boolean existePorCodpar(String codpar) {
+        return dao.existsByCodpar(codpar);
     }
 
     // Guarda nuevo
@@ -107,4 +114,32 @@ public class PresupuestoService {
     public void deleteById(Short idpresupuesto) {
         dao.deleteById(idpresupuesto);
     }
+
+    // Actualiza presupuesto.totcerti sumando partixcerti.valor
+    public void actualizaTotcerti(Short idpresupuesto) {
+        Presupuesto presu = dao.findById(idpresupuesto)
+                .orElseThrow(() -> new EntityNotFoundException("Partida no encontrada con ID: " + idpresupuesto));
+        BigDecimal totalCerti = daoparxcer.sumaValorPorPartida(idpresupuesto);
+        presu.setTotcerti(totalCerti);
+        dao.save(presu);
+    }
+
+    // Actualiza presupuesto.totmisos sumando ejecucio.prmiso (se necesita ??)
+    public void actualizaTotmisos(Short idpresupuesto) {
+        Presupuesto presu = dao.findById(idpresupuesto)
+                .orElseThrow(() -> new EntityNotFoundException("Partida no encontrada con ID: " + idpresupuesto));
+        BigDecimal totalPrmisos = daoejecu.sumaPrmisoPorPartida(idpresupuesto);
+        presu.setTotmisos(totalPrmisos);
+        dao.save(presu);
+    }
+
+    // Actualiza presupuesto.totdeven sumando ejecucio.devengado
+    public void actualizaTotdeven(Short idpresupuesto) {
+        Presupuesto presu = dao.findById(idpresupuesto)
+                .orElseThrow(() -> new EntityNotFoundException("Partida no encontrada con ID: " + idpresupuesto));
+        BigDecimal totalDevengado = daoejecu.sumaDevengadoPorPartida(idpresupuesto);
+        presu.setTotdeven(totalDevengado);
+        dao.save(presu);
+    }
+
 }

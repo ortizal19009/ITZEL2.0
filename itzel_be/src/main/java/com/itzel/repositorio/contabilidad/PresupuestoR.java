@@ -8,35 +8,45 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PresupuestoR extends JpaRepository<Presupuesto, Short> {
-    @Query(value = "SELECT * FROM presupuesto p WHERE p.tippar = ?1 ORDER BY p.codpar",nativeQuery = true)
-    public Page<Presupuesto> findByTipparPageable(int tippar, Pageable pageable);
-    @Query(value = "SELECT * FROM presupuesto p WHERE (p.codpar like %?1% or LOWER(p.nompar) like %?1%) and p.tippar = ?2 ORDER BY p.codpar",nativeQuery = true)
-    public Page<Presupuesto> findByParDenom(String dato, int tippar, Pageable pageable);
-    @Query(value = "SELECT * FROM presupuesto p WHERE p.codpar = ?1 ORDER BY p.codpar",nativeQuery = true)
-    public Presupuesto findByCodpar(String codpar);
-    @Query(value = "SELECT * FROM presupuesto where idproyecto = ?1", nativeQuery = true)
-    public List<Presupuesto> findByIdPresupuesto(short idpresupuesto);
-    @Query("""
-    SELECT p
-    FROM Presupuesto p
-    WHERE p.proyecto.codigo LIKE CONCAT(:codigo, '%')
-    """)
-    List<Presupuesto> findByCodigoProyectoLike(@Param("codigo") String codigo);
-
-
-    List<Presupuesto> findByTipparAndCodparContainingOrderByCodpar(int tippar, String codpar);
 
     // Busca por tippar y codpar o nompar ordenado por codpar
-    List<Presupuesto> findByTipparAndCodparStartingWithAndNomparContainingIgnoreCaseOrderByCodparAsc(short tippar, String codpar,
+    List<Presupuesto> findByTipparAndCodparStartingWithAndNomparContainingIgnoreCaseOrderByCodparAsc(short tippar,
+                                                                                                     String codpar,
                                                                                                      String nompar);
-    // Valida codpar
+
+    // Busca por proyecto.codigo, tippar, codpar o nompar ordenado por codpar
+    List<Presupuesto> findByProyecto_CodigoStartingWithAndTipparAndCodparStartingWithAndNomparContainingIgnoreCaseOrderByCodparAsc(
+            String codigo, short tippar, String codpar, String nompar);
+
+    // Busca todas por tippar (para usar en ng-select)
+    List<Presupuesto> findByTipparOrderByCodparAscProyecto_CodigoAsc(short tippar);
+
+    // Valida codpar por proyecto
+    boolean existsByCodparAndProyecto_Idproyecto(String codpar, Short idproyecto);
+
+    // Valida nompar por proyecto
+    boolean existsByNomparIgnoreCaseAndProyecto_Idproyecto(String nompar, Short idproyecto);
+
+    // Conteo por idclasificador
+    short countByClasificador_Idclasificador(short idclasificador);
+
+    // Conteo por idproyecto
+    short countByProyecto_Idproyecto(short idproyecto);
+
+    // Partidas para datalist
+    List<Presupuesto> findByTipparAndCodparStartingWithOrderByCodparAscProyecto_CodigoAsc(Short tippar,
+                                                                                          String codpar);
+
+    // Presupuesto findByCodpar(String codpar);
+    // Optional<Presupuesto> findByCodpar(String codpar);
+
+    // Busca por proyecto y codpar
+    Optional<Presupuesto> findByProyecto_IdproyectoAndCodpar(short idproyecto, String codpar);
+
+    // Existe codpar
     boolean existsByCodpar(String codpar);
 
-    // Valida nompar
-    boolean existsByNomparIgnoreCase(String nompar);
-
-    // Cuenta las partidas del clasificador por idclasificador
-    short countByClasificador_Idclasificador(short idclasificador);
 }

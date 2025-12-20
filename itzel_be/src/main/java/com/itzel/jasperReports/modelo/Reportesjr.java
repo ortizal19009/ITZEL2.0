@@ -54,6 +54,7 @@ public class Reportesjr {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idrepoxopcion")
     private Repoxopcion repoxopcion;
+    private short metodo;
 
 
 

@@ -54,4 +54,5 @@ public class CertificacionService {
     public Certificaciones findByTipoAndNumero(int tipo, int numero){
         return certificacionesR.findByTipoAndNumero(tipo, numero);
     }
+
 }

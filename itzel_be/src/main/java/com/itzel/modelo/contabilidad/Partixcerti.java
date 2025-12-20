@@ -12,31 +12,34 @@ import java.sql.Timestamp;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "partixcerti")
 public class Partixcerti {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Short idparxcer;
+    private long idparxcer;
     private BigDecimal valor;
     private BigDecimal reintegro;
     private String descripcion;
     private BigDecimal totprmisos;
     private BigDecimal saldo;
+
+    @ManyToOne(optional = true) // por defecto es true
     @JoinColumn(name = "idejecucion")
-    private Short ejecucion;
-    private Short usucrea;
+    private Ejecucion ejecucion;
+
+    private Long idparxcer_;
+
+    private short usucrea;
     private Timestamp feccrea;
-    private short usumodi;
+    private Short usumodi;
     private Timestamp fecmodi;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idcertificacion")
     private Certificaciones certificacion;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idpresupuesto")
     private Presupuesto presupuesto;
-    private Short idparxcer_;
-
 
 }
