@@ -67,5 +67,10 @@ public class CuentasApi {
         return cueService.recuperaPorTiptranYCodcue(tiptran, codcue);
     }
 
+    @GetMapping("/existencias")
+    public ResponseEntity<Optional<Cuentas>> existencias(@RequestParam("codcue") String codcue) {
+        return ResponseEntity.ok(cueService.findByCodcue(codcue));
+    }
+
 
 }

@@ -7,234 +7,241 @@
     </div>
   </div>
 </div>
+
 <div class="content">
   <div class="container-fluid">
     <div class="row justify-content-center">
       <div class="card card-body col-sm-9 detalle sombra">
+
+        <!-- FORM MOVIMIENTO -->
         <form [formGroup]="formMovimiento">
           <div class="row roboto">
+
             <!-- NUMERO -->
-            <div class="form-group col-ml-3">
+            <div class="form-group col-md-3">
               <div class="input-group input-group-sm">
                 <div class="input-group-prepend">
-                  <label for="" class="input-group-text">Número<sup class="green">*</sup></label>
+                  <label class="input-group-text">Número<sup class="green">*</sup></label>
                 </div>
-                <input #inputPrimero type="text" class="form-control text-center" formControlName="numero"
-                  (change)="numAvailable($event)" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
-                  maxlength="10" [ngClass]="{'is-invalid': f['numero'].invalid && f['numero'].touched,
-                          'is-valid': f['numero'].valid, '': f['numero'].untouched}">
+                <input type="text" class="form-control text-center" formControlName="numero"
+                  (change)="numAvailable($event)" maxlength="10" [ngClass]="{
+                    'is-invalid': f['numero'].invalid && f['numero'].touched,
+                    'is-valid': f['numero'].valid && f['numero'].touched
+                  }">
               </div>
+
               <div *ngIf="authService.msgval && f['numero'].errors && f['numero'].touched">
                 <div *ngIf="f['numero'].errors['required']"
-                  class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                  class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border">
                   <strong>Ups!</strong> El número es obligatorio
                 </div>
-                <div *ngIf="f['numero'].errors['min']" class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border"
-                  role="alert">
+                <div *ngIf="f['numero'].errors['min']"
+                  class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border">
                   <strong>Ups!</strong> El número debe ser mayor a cero.
                 </div>
-
                 <div *ngIf="f['numero'].errors['notAvailable']"
-                  class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                  class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border">
                   <strong>Ups!</strong> Ese código ya existe
                 </div>
               </div>
             </div>
+
             <!-- FECHA -->
             <div class="form-group col-md-4">
               <div class="input-group input-group-sm">
                 <div class="input-group-prepend">
                   <label class="input-group-text">Fecha<sup class="green">*</sup></label>
                 </div>
-                <input type="date" class="form-control" formControlName="fecha" aria-label="Small"
-                  aria-describedby="inputGroup-sizing-sm" [ngClass]="{'is-invalid': f['fecha'].invalid && f['fecha'].touched,
-                            'is-valid': f['fecha'].valid, '': f['fecha'].untouched}">
+                <input type="date" class="form-control" formControlName="fecha" [ngClass]="{
+                    'is-invalid': f['fecha'].invalid && f['fecha'].touched,
+                    'is-valid': f['fecha'].valid && f['fecha'].touched
+                  }">
               </div>
             </div>
+
             <!-- NUM ENTRADA -->
-            <div class="form-group col-ml-3">
+            <div class="form-group col-md-3">
               <div class="input-group input-group-sm">
                 <div class="input-group-prepend">
-                  <label for="" class="input-group-text">Num. Entrada<sup class="green">*</sup></label>
+                  <label class="input-group-text">Num. Entrada<sup class="green">*</sup></label>
                 </div>
-                <input #inputPrimero type="text" class="form-control text-center" formControlName="numentrada"
-                  aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="12345" [ngClass]="{'is-invalid': f['numentrada'].invalid && f['numentrada'].touched,
-                          'is-valid': f['numentrada'].valid, '': f['numentrada'].untouched}">
+                <input type="text" class="form-control text-center" formControlName="numentrada" placeholder="12345"
+                  [ngClass]="{
+                    'is-invalid': f['numentrada'].invalid && f['numentrada'].touched,
+                    'is-valid': f['numentrada'].valid && f['numentrada'].touched
+                  }">
               </div>
+
               <div *ngIf="authService.msgval && f['numentrada'].errors && f['numentrada'].touched">
                 <div *ngIf="f['numentrada'].errors['required']"
-                  class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                  class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border">
                   <strong>Ups!</strong> El número es obligatorio
                 </div>
                 <div *ngIf="f['numentrada'].errors['min']"
-                  class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                  class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border">
                   <strong>Ups!</strong> El número debe ser mayor a cero.
                 </div>
-
               </div>
             </div>
+
             <!-- APROBADO -->
-            <div class="form-group col-ml-2 ml-2">
+            <div class="form-group col-md-2">
               <div class="input-group input-group-sm">
                 <div class="input-group-prepend">
-                  <label for="" class="input-group-text">Aprobado</label>
+                  <label class="input-group-text">Aprobado</label>
                 </div>
-                <input #inputPrimero type="checkbox" class="form-control text-center" formControlName="swaprobado"
-                  aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                <div class="form-control d-flex justify-content-center align-items-center">
+                  <input type="checkbox" formControlName="swaprobado">
+                </div>
               </div>
             </div>
+
             <!-- DOCUMENTOS -->
-            <div class="form-group col-md-12">
+            <div class="form-group col-md-12 mt-2">
               <div class="input-group input-group-sm">
                 <div class="input-group-prepend">
                   <label class="input-group-text">Documento<sup class="green">*</sup></label>
                 </div>
 
                 <select formControlName="documento" class="form-control col-sm-2 form-control-sm">
-                  <option *ngFor="let doc of _documentos" [ngValue]=doc>
-                    {{doc.nomdoc}}</option>
+                  <option *ngFor="let doc of _documentos" [ngValue]="doc">
+                    {{ doc.nomdoc }}
+                  </option>
                 </select>
+
                 <input type="text" class="form-control form-control-sm bg-light" formControlName="numdoc"
-                  placeholder="DOC-123" tabindex="-1" [ngClass]="{'is-invalid': f['numdoc'].invalid && f['numdoc'].touched,
-                             'is-valid': f['numdoc'].valid, '': f['numdoc'].untouched}">
-                <input type="date" class="form-control form-control-sm bg-light" formControlName="fecdoc" tabindex="-1"
-                  [ngClass]="{'is-invalid': f['fecdoc'].invalid && f['fecdoc'].touched,
-                             'is-valid': f['fecdoc'].valid, '': f['fecdoc'].untouched}">
+                  placeholder="DOC-123" [ngClass]="{
+                    'is-invalid': f['numdoc'].invalid && f['numdoc'].touched,
+                    'is-valid': f['numdoc'].valid && f['numdoc'].touched
+                  }">
+
+                <input type="date" class="form-control form-control-sm bg-light" formControlName="fecdoc" [ngClass]="{
+                    'is-invalid': f['fecdoc'].invalid && f['fecdoc'].touched,
+                    'is-valid': f['fecdoc'].valid && f['fecdoc'].touched
+                  }">
               </div>
+
               <div *ngIf="authService.msgval && f['numdoc'].errors && f['numdoc'].touched">
                 <div *ngIf="f['numdoc'].errors['required']"
-                  class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                  class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border">
                   <strong>Ups!</strong> El número de documento es obligatorio
                 </div>
                 <div *ngIf="f['numdoc'].errors['minLength']"
-                  class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                  class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border">
                   <strong>Ups!</strong> Longitud inválida
                 </div>
               </div>
             </div>
+
             <!-- BENEFICIARIO -->
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-4 mt-2">
               <div class="input-group input-group-sm">
                 <div class="input-group-prepend">
                   <label class="input-group-text">Beneficiario<sup class="green">*</sup></label>
                 </div>
 
-                <input type="text" class="form-control form-control-sm col-md" autocomplete="off" autocorrect="off"
-                  autocapitalize="off" spellcheck="false" formControlName="beneficiarioText"
-                  placeholder="Nombre del beneficiario" list="beneficiarioList" (input)="onBeneficiarioTyped($event)"
-                  (blur)="onBeneficiarioSelected($event)" [ngClass]="{'is-invalid': f['beneficiarioText'].invalid && f['beneficiarioText'].touched,
-                             'is-valid': f['beneficiarioText'].valid, '': f['beneficiarioText'].untouched}">
+                <input type="text" class="form-control form-control-sm" autocomplete="off" spellcheck="false"
+                  formControlName="beneficiarioText" placeholder="Nombre del beneficiario" list="beneficiarioList"
+                  (input)="onBeneficiarioTyped($event)" (blur)="onBeneficiarioSelected($event)" [ngClass]="{
+                    'is-invalid': f['beneficiarioText'].invalid && f['beneficiarioText'].touched,
+                    'is-valid': f['beneficiarioText'].valid && f['beneficiarioText'].touched
+                  }">
 
-                <datalist role="listbox" id="beneficiarioList">
-                  <!-- Puedes usar sólo el nombre, o combinar id | nombre para asegurar unicidad -->
+                <datalist id="beneficiarioList">
                   <option *ngFor="let bene of _beneficiarios" [value]="bene.nomben">
                     {{ bene.codben }}
                   </option>
                 </datalist>
               </div>
+
               <div *ngIf="authService.msgval && f['beneficiarioText'].errors && f['beneficiarioText'].touched">
                 <div *ngIf="f['beneficiarioText'].errors['required']"
-                  class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                  class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border">
                   <strong>Ups!</strong> El beneficiario es obligatorio
                 </div>
               </div>
             </div>
+
             <!-- DESTINO -->
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-4 mt-2">
               <div class="input-group input-group-sm">
                 <div class="input-group-prepend">
                   <label class="input-group-text">Destino<sup class="green">*</sup></label>
                 </div>
 
-                <input list="destinoList" class="form-control form-control-sm col-md" autocomplete="off"
-                  autocorrect="off" autocapitalize="off" spellcheck="false" formControlName="destinoText"
-                  placeholder="Ingrese el destino" (input)="onDestinoTyped($event)" (blur)="onDestinoSelected($event)"
-                  [ngClass]="{'is-invalid': f['destinoText'].invalid && f['destinoText'].touched,
-                             'is-valid': f['destinoText'].valid, '': f['destinoText'].untouched}">
+                <input list="destinoList" class="form-control form-control-sm" autocomplete="off" spellcheck="false"
+                  formControlName="destinoText" placeholder="Ingrese el destino" (input)="onDestinoTyped($event)"
+                  (blur)="onDestinoSelected($event)" [ngClass]="{
+                    'is-invalid': f['destinoText'].invalid && f['destinoText'].touched,
+                    'is-valid': f['destinoText'].valid && f['destinoText'].touched
+                  }">
 
-                <datalist role="listbox" id="destinoList">
+                <datalist id="destinoList">
                   <option *ngFor="let dest of _destinos" [value]="dest.nomdestino">
                     {{ dest.nomdestino }}
                   </option>
                 </datalist>
               </div>
+
               <div *ngIf="authService.msgval && f['destinoText'].errors && f['destinoText'].touched">
                 <div *ngIf="f['destinoText'].errors['required']"
-                  class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                  class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border">
                   <strong>Ups!</strong> El destino es obligatorio
                 </div>
               </div>
             </div>
+
             <!-- COM PEGRE -->
-            <div class="form-group col-ml-3">
+            <div class="form-group col-md-4 mt-2">
               <div class="input-group input-group-sm">
                 <div class="input-group-prepend">
-                  <label for="" class="input-group-text">Com pegre<sup class="green">*</sup></label>
+                  <label class="input-group-text">Com pegre<sup class="green">*</sup></label>
                 </div>
-                <input #inputPrimero type="text" class="form-control text-center" formControlName="compegre"
-                  aria-label="Small" aria-describedby="inputGroup-sizing-sm" maxlength="10" [ngClass]="{'is-invalid': f['compegre'].invalid && f['compegre'].touched,
-                           'is-valid': f['compegre'].valid, '': f['compegre'].untouched}">
+                <input type="text" class="form-control text-center" formControlName="compegre" maxlength="10" [ngClass]="{
+                    'is-invalid': f['compegre'].invalid && f['compegre'].touched,
+                    'is-valid': f['compegre'].valid && f['compegre'].touched
+                  }">
               </div>
+
               <div *ngIf="authService.msgval && f['compegre'].errors && f['compegre'].touched">
                 <div *ngIf="f['compegre'].errors['required']"
-                  class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
+                  class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border">
                   <strong>Ups!</strong> El número es obligatorio
-                </div>
-                <div *ngIf="f['compegre'].errors['min']"
-                  class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
-                  <strong>Ups!</strong> El número debe ser mayor a cero.
-                </div>
-
-                <div *ngIf="f['compegre'].errors['notAvailable']"
-                  class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
-                  <strong>Ups!</strong> Ese código ya existe
                 </div>
               </div>
             </div>
+
             <!-- OBSERVACIONES -->
-            <div class="form-group col-sm-12">
+            <div class="form-group col-md-12 mt-2">
               <div class="input-group input-group-sm">
                 <div class="input-group-prepend">
                   <label for="observaciones" class="input-group-text">Observaciones</label>
                 </div>
-                <textarea #inputPrimero type="text" id="observaciones" class="form-control"
-                  formControlName="observaciones" aria-label="Small"></textarea>
+                <textarea id="observaciones" class="form-control" formControlName="observaciones" rows="2"></textarea>
               </div>
-
             </div>
+
             <!-- TOTAL -->
-            <div class="form-group col-ml-3">
+            <div class="form-group col-md-3 mt-2">
               <div class="input-group input-group-sm">
                 <div class="input-group-prepend">
-                  <label for="" class="input-group-text">Total<sup class="green">*</sup></label>
+                  <label class="input-group-text">Total</label>
                 </div>
-                <input type="text" class="form-control text-center" formControlName="total" aria-label="Small"
-                  aria-describedby="inputGroup-sizing-sm" readonly>
+
+                <!-- Si en TS pusiste total disabled, aquí lo muestras con readonly igual -->
+                <input type="text" class="form-control text-center" formControlName="total" readonly>
               </div>
             </div>
+
           </div>
         </form>
 
-        <!-- BUSCAR ARTICULOS -->
-        <form [formGroup]="formArticulo" class="mb-3">
-          <div class="form-group col-md-12">
-            <div class="input-group input-group-sm">
-              <div class="input-group-prepend">
-                <label class="input-group-text">Buscar Artículos</label>
-              </div>
-              <input id="articulo" type="text" autocomplete="off" autocorrect="off" autocapitalize="off"
-                spellcheck="false" class="form-control form-control-sm"
-                placeholder="Nombre del artículo, código o cuenta" formControlName="articulo" list="articulosList"
-                (input)="getArticulos($event)" (change)="onArticuloSelected($event)" />
-
-              <datalist id="articulosList">
-                <option *ngFor="let s of _suggestions" [value]="s"></option>
-              </datalist>
-
-
-            </div>
-          </div>
-        </form>
+        <!-- AGREGAR ARTICULOS -->
+        <div class="d-flex justify-content-start my-2">
+          <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modalArticulo">
+            <i class="bi bi-plus-circle"></i>&nbsp; Agregar artículo
+          </button>
+        </div>
 
         <!-- Tabla de artículos seleccionados -->
         <div class="card" *ngIf="_articulosSelected.length > 0">
@@ -250,19 +257,24 @@
                   <th style="width: 10%">Acción</th>
                 </tr>
               </thead>
-              <tbody class="detalle roboto small">
-                <tr class="fila pad0" *ngFor="let art of _articulosSelected; let i = index">
-                  <td>{{ i + 1 }}</td>
-                  <td>{{ art.nombre }}</td>
-                  <td [ngClass]="{'text-danger': (art.actual - art.cantidad) <= 0}">
-                    {{ (art.actual - art.cantidad) > 0 ? (art.actual - art.cantidad) : 0 }}
-                  </td>
-                  <td>{{art.cosactual}}</td>
-                  <td>
 
-                    <input type="number" class="form-control form-control-sm text-center" [(ngModel)]="art.cantidad"
-                      (ngModelChange)="validarCantidad(art)" min="1" [max]="art.actual" />
+              <tbody class="detalle roboto small">
+                <tr *ngFor="let row of _articulosSelected; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td class="text-start">{{ row.articulo.nombre }}</td>
+
+                  <td [ngClass]="{ 'text-danger': (row.articulo.actual - row.cantidad) <= 0 }">
+                    {{ (row.articulo.actual - row.cantidad) > 0 ? (row.articulo.actual - row.cantidad) : 0 }}
                   </td>
+
+                  <td>{{ row.articulo.cosactual }}</td>
+
+                  <td>
+                    <input type="number" class="form-control form-control-sm text-center" [(ngModel)]="row.cantidad"
+                      [ngModelOptions]="{ standalone: true }" (ngModelChange)="validarCantidadRow(row)" min="1"
+                      [max]="row.articulo.actual" />
+                  </td>
+
                   <td>
                     <button type="button" class="btn btn-sm btn-danger" (click)="removeArticulo(i)">
                       <i class="bi bi-trash"></i>
@@ -270,25 +282,270 @@
                   </td>
                 </tr>
               </tbody>
+
             </table>
           </div>
         </div>
 
         <!-- Mensaje si no hay artículos -->
         <div *ngIf="_articulosSelected.length === 0" class="text-muted fst-italic text-center">
-          <div class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border" role="alert">
-            <strong>Ups!</strong> No hay artículos seleccionados aún.
+          <div class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border">
+            <strong>Ups!</strong> No hay artículos añadidos aún.
           </div>
         </div>
-        <div class="row">
-          <div *ngIf="formMovimiento" class="col-md-12 text-center">
+
+        <!-- BOTONES -->
+        <div class="row mt-2">
+          <div class="col-md-12 text-center">
             <button type="button" class="btn btn-success btn-sm mx-1" (click)="guardar()"
-              [disabled]="formMovimiento.invalid ">
-              <i class="fa fa-check-circle"></i>&nbsp; Aceptar</button>
-            <button class="btn btn-outline-success btn-sm mx-1" (click)="regresar()"><i class="fa fa-times-circle"></i>
-              Cancelar</button>
+              [disabled]="formMovimiento.invalid">
+              <i class="fa fa-check-circle"></i>&nbsp; Aceptar
+            </button>
+
+            <button type="button" class="btn btn-outline-success btn-sm mx-1" (click)="regresar()">
+              <i class="fa fa-times-circle"></i> Cancelar
+            </button>
           </div>
         </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- MODAL AGREGAR ARTICULO -->
+<div class="modal fade" id="modalArticulo" data-backdrop="static" tabindex="-1" aria-labelledby="modalArticuloLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header cabecera">
+        <h5 class="modal-title" id="modalArticuloLabel">Agregar Artículo</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body detalle">
+        <form [formGroup]="formArticuloAdd">
+          <div class="row roboto">
+
+            <!-- CÓDIGO -->
+            <div class="form-group col-md-4">
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <label class="input-group-text">Código<sup class="green">*</sup></label>
+                </div>
+                <input type="text" class="form-control text-center" formControlName="codigo" [ngClass]="{
+            'is-invalid': formArticuloAddControls['codigo'].invalid && formArticuloAddControls['codigo'].touched,
+            'is-valid': formArticuloAddControls['codigo'].valid && formArticuloAddControls['codigo'].touched
+          }">
+              </div>
+
+              <div
+                *ngIf="authService.msgval && formArticuloAddControls['codigo'].errors && formArticuloAddControls['codigo'].touched">
+                <div *ngIf="formArticuloAddControls['codigo'].errors['required']"
+                  class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border">
+                  <strong>Ups!</strong> El código es obligatorio
+                </div>
+              </div>
+            </div>
+
+            <!-- CÓDIGO CUENTA -->
+            <!-- CÓDIGO CUENTA -->
+            <div class="form-group col-md-7">
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <label class="input-group-text">Cod. Cuenta<sup class="green">*</sup></label>
+                </div>
+
+                <!-- CODIGO -->
+                <input type="text" class="form-control text-center" formControlName="codcue"
+                  (input)="getCuentaByCodigo($event)" [ngClass]="{
+        'is-invalid': (a['codcue'].touched && a['codcue'].errors),
+        'is-valid': (a['codcue'].touched && a['codcue'].valid)
+      }">
+
+                <!-- NOMBRE CUENTA -->
+                <input type="text" class="form-control bg-light" formControlName="nomcue" readonly>
+              </div>
+
+              <!-- MENSAJES -->
+              <div *ngIf="authService.msgval && a['codcue'].touched">
+                <div *ngIf="a['codcue'].errors?.['required']"
+                  class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border">
+                  <strong>Ups!</strong> El código de cuenta es obligatorio
+                </div>
+
+                <div *ngIf="a['codcue'].errors?.['cuentaNoExiste']"
+                  class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border">
+                  <strong>Ups!</strong> La cuenta ingresada no existe
+                </div>
+              </div>
+            </div>
+
+
+            <!-- UNIDAD -->
+            <div class="form-group col-md-4">
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <label class="input-group-text">Unidad</label>
+                </div>
+                <input type="text" class="form-control text-center" formControlName="unidad">
+              </div>
+            </div>
+
+            <!-- NOMBRE -->
+            <div class="form-group col-md-12 mt-2">
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <label class="input-group-text">Nombre<sup class="green">*</sup></label>
+                </div>
+                <input type="text" class="form-control" formControlName="nombre" [ngClass]="{
+            'is-invalid': formArticuloAddControls['nombre'].invalid && formArticuloAddControls['nombre'].touched,
+            'is-valid': formArticuloAddControls['nombre'].valid && formArticuloAddControls['nombre'].touched
+          }">
+              </div>
+
+              <div
+                *ngIf="authService.msgval && formArticuloAddControls['nombre'].errors && formArticuloAddControls['nombre'].touched">
+                <div *ngIf="formArticuloAddControls['nombre'].errors['required']"
+                  class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border">
+                  <strong>Ups!</strong> El nombre es obligatorio
+                </div>
+                <div *ngIf="formArticuloAddControls['nombre'].errors['minlength']"
+                  class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border">
+                  <strong>Ups!</strong> Longitud mínima inválida
+                </div>
+              </div>
+            </div>
+
+            <!-- INICIAL -->
+            <div class="form-group col-md-4 mt-2">
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <label class="input-group-text">Inicial</label>
+                </div>
+                <input type="number" class="form-control text-center" formControlName="inicial" min="0">
+              </div>
+            </div>
+
+            <!-- COSTO INICIAL -->
+            <div class="form-group col-md-4 mt-2">
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <label class="input-group-text">Costo Inicial</label>
+                </div>
+                <input type="number" class="form-control text-center" formControlName="cosinicial" min="0" step="0.01">
+              </div>
+            </div>
+
+            <!-- STOCK ACTUAL -->
+            <div class="form-group col-md-4 mt-2">
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <label class="input-group-text">Actual<sup class="green">*</sup></label>
+                </div>
+                <input type="number" class="form-control text-center" formControlName="actual" min="0" [ngClass]="{
+            'is-invalid': formArticuloAddControls['actual'].invalid && formArticuloAddControls['actual'].touched,
+            'is-valid': formArticuloAddControls['actual'].valid && formArticuloAddControls['actual'].touched
+          }">
+              </div>
+
+              <div
+                *ngIf="authService.msgval && formArticuloAddControls['actual'].errors && formArticuloAddControls['actual'].touched">
+                <div *ngIf="formArticuloAddControls['actual'].errors['required']"
+                  class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border">
+                  <strong>Ups!</strong> El stock actual es obligatorio
+                </div>
+                <div *ngIf="formArticuloAddControls['actual'].errors['min']"
+                  class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border">
+                  <strong>Ups!</strong> Debe ser mayor o igual a cero
+                </div>
+              </div>
+            </div>
+
+            <!-- COSTO ACTUAL -->
+            <div class="form-group col-md-4 mt-2">
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <label class="input-group-text">Costo Actual<sup class="green">*</sup></label>
+                </div>
+                <input type="number" class="form-control text-center" formControlName="cosactual" min="0" step="0.01"
+                  [ngClass]="{
+            'is-invalid': formArticuloAddControls['cosactual'].invalid && formArticuloAddControls['cosactual'].touched,
+            'is-valid': formArticuloAddControls['cosactual'].valid && formArticuloAddControls['cosactual'].touched
+          }">
+              </div>
+
+              <div
+                *ngIf="authService.msgval && formArticuloAddControls['cosactual'].errors && formArticuloAddControls['cosactual'].touched">
+                <div *ngIf="formArticuloAddControls['cosactual'].errors['required']"
+                  class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border">
+                  <strong>Ups!</strong> El costo actual es obligatorio
+                </div>
+                <div *ngIf="formArticuloAddControls['cosactual'].errors['min']"
+                  class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border">
+                  <strong>Ups!</strong> Debe ser mayor o igual a cero
+                </div>
+              </div>
+            </div>
+
+            <!-- CANTIDAD -->
+            <div class="form-group col-md-4 mt-2">
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <label class="input-group-text">Cantidad<sup class="green">*</sup></label>
+                </div>
+                <input type="number" class="form-control text-center" formControlName="cantidad" min="1" [ngClass]="{
+            'is-invalid': (formArticuloAddControls['cantidad'].invalid && formArticuloAddControls['cantidad'].touched) || formArticuloAdd.errors?.['cantidadMayorAStock'],
+            'is-valid': formArticuloAddControls['cantidad'].valid && formArticuloAddControls['cantidad'].touched && !formArticuloAdd.errors?.['cantidadMayorAStock']
+          }">
+              </div>
+
+              <div *ngIf="authService.msgval && (formArticuloAddControls['cantidad'].touched)">
+                <div *ngIf="formArticuloAddControls['cantidad'].errors?.['required']"
+                  class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border">
+                  <strong>Ups!</strong> La cantidad es obligatoria
+                </div>
+                <div *ngIf="formArticuloAddControls['cantidad'].errors?.['min']"
+                  class="alert alert-warning m-0 py-0 px-1 pr-0 robotosmall border">
+                  <strong>Ups!</strong> Debe ser mayor a cero
+                </div>
+              </div>
+            </div>
+
+            <!-- TOTAL (readonly) -->
+            <div class="form-group col-md-4 mt-2">
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <label class="input-group-text">Total</label>
+                </div>
+                <input type="text" class="form-control text-center bg-light" formControlName="costotal" readonly>
+              </div>
+            </div>
+
+            <!-- DESCRIPCIÓN -->
+            <div class="form-group col-md-12 mt-2">
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <label class="input-group-text">Descripción</label>
+                </div>
+                <input type="text" class="form-control" formControlName="descripcion">
+              </div>
+            </div>
+
+          </div>
+        </form>
+
+      </div>
+      <div class="modal-footer detalle">
+        <button type="button" class="btn btn-outline-success btn-sm" data-dismiss="modal">Cancelar</button>
+
+        <!-- Importante: cerrar modal + agregar -->
+        <button type="button" class="btn btn-success btn-sm" [disabled]="formArticuloAdd.invalid"
+          (click)="addArticuloFromModal()" data-bs-dismiss="modal">
+          <i class="bi bi-check2-circle"></i>&nbsp; Agregar
+        </button>
       </div>
     </div>
   </div>

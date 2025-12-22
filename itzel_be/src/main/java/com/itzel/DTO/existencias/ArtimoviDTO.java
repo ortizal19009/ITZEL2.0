@@ -1,8 +1,8 @@
 package com.itzel.DTO.existencias;
-
 import com.itzel.modelo.existencias.Articulos;
 import com.itzel.modelo.existencias.Movimientos;
-import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -11,15 +11,32 @@ import java.util.List;
 
 @Data
 public class ArtimoviDTO {
-    private short tipmov;
-    private float cantidad;
+    @NotNull
+    private Short tipmov;
+
+    @NotNull @Positive
+    private Float cantidad;
+
+    @NotNull
     private BigDecimal total;
+
+    @NotNull
     private BigDecimal cosprom;
+
+    @NotNull
     private Short usucrea;
+
     private Timestamp feccrea;
-    private short usumodi;
+
+    @NotNull
+    private Short usumodi;
+
     private Timestamp fecmodi;
+
+    @NotNull @Valid
     private Movimientos movimiento;
-    private List<Articulos> articulos;
+
+    @NotEmpty
+    private List<@Valid Articulos> articulos;
 }
 
