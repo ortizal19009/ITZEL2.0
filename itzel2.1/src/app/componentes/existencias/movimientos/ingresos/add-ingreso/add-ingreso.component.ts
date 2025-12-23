@@ -237,21 +237,17 @@ export class AddIngresoComponent implements OnInit {
           movimientoGuardado?.idmovimiento ??
           movimientoGuardado?.id ??
           movimientoGuardado;
-
+        console.log(this.formMovimiento.get('total')?.value);
         // 2) Payload para /artimovi/guardar-artimovi (lo que TU backend valida)
         const artimoviPayload: any = {
           tipmov: this.tipmov,
           total: totalDetalle,
           cantidad: cantidadTotal,
           cosprom: 0,
-
+          costo: this.formMovimiento.get('total')?.value || 0,
           usucrea: this.authService.idusuario,
           feccrea: new Date(),
-
-          // ✅ nombre correcto: movimiento
           movimiento: { idmovimiento: idMovimiento },
-
-          // ✅ nombre correcto: articulos
           articulos: this._articulosSelected.map((x) => ({
             // artículos nuevos SIN id
             codigo: x.articulo?.codigo,
@@ -267,17 +263,10 @@ export class AddIngresoComponent implements OnInit {
             minimo: x.articulo?.minimo,
             maximo: x.articulo?.maximo,
             swinmediato: x.articulo?.swinmediato,
-            // ✅ CLAVE:
             cuenta: this.cuenta,
-            // campos auditoría (evita null / 0)
             usucrea: this.authService.idusuario,
             feccrea: new Date(),
-
-            // si corresponde (mejor mandar id, no objeto):
-            // idcuenta: x.articulo?.cuenta?.idcuenta
           })),
-
-          // ✅ NO mandar 0 si backend exige >0
           usumodi: this.authService.idusuario,
           fecmodi: null,
         };
