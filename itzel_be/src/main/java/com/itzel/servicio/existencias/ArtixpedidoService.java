@@ -48,17 +48,17 @@ public class ArtixpedidoService {
         );
 
         // Calcular la diferencia de cantidad (para ajustar inventario correctamente)
-        Long cantidadAnterior = 0L;
-        if (existente != null) {
-            cantidadAnterior = existente.getCantidad();
-        }
+        //Long cantidadAnterior = 0L;
+        //if (existente != null) {
+        //    cantidadAnterior = existente.getCantidad();
+        //}
 
-        Long cantidadNueva =ap.getCantidad();
-        Long diferencia = cantidadNueva - cantidadAnterior;
+        //Long cantidadNueva =ap.getCantidad();
+        //Long diferencia = cantidadNueva - cantidadAnterior;
 
         // Actualizar el stock del artículo (restar si es salida, sumar si se reduce cantidad)
-        articulo.setActual(articulo.getActual()-(diferencia));
-        dao_articulo.save(articulo);
+        //articulo.setActual(articulo.getActual()-(diferencia));
+        //dao_articulo.save(articulo);
 
         // Guardar nuevo o actualizar existente
         if (existente == null) {

@@ -50,8 +50,8 @@ public class ArtimoviApi {
 
 
     @GetMapping("/by-movimiento")
-    public ResponseEntity<List<Artimovi>> getByIdMovimiento(@RequestParam Long idMovimiento){
-        return ResponseEntity.ok(artimoviService.findByIdMovimiento(idMovimiento));
+    public ResponseEntity<List<Artimovi>> getByIdMovimiento(@RequestParam Long idmovimiento){
+        return ResponseEntity.ok(artimoviService.findByIdMovimiento(idmovimiento));
 
     }
     @DeleteMapping("/por-movimiento/{idmovimiento}")

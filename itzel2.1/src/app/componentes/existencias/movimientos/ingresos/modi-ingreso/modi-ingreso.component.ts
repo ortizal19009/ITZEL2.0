@@ -57,7 +57,7 @@ export class ModiIngresoComponent implements OnInit {
     private movService: MovimientoService,
     private cueService: CuentasService,
     private artimoviService: ArtimoviService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     if (!this.authService.sessionlog) {
@@ -103,6 +103,10 @@ export class ModiIngresoComponent implements OnInit {
 
       compegre: ['', Validators.required],
       observaciones: [''],
+      usucrea: [''],
+      feccrea: [''],
+      usumodi: [''],
+      fecmodi: [''],
     });
 
     // ✅ Form modal artículo
@@ -113,7 +117,9 @@ export class ModiIngresoComponent implements OnInit {
       codcue: ['', [Validators.required, Validators.minLength(2)]],
       nomcue: [{ value: '', disabled: false }],
       cuenta: [null],
-
+      inicial: [0],
+      cosinicial: [0],
+      costotal: [0],
       unidad: [''],
       actual: [0, [Validators.required, Validators.min(0)]],
       cosactual: [0, [Validators.required, Validators.min(0)]],
@@ -139,7 +145,7 @@ export class ModiIngresoComponent implements OnInit {
   get a() {
     return this.formArticuloAdd.controls;
   }
-    get formArticuloAddControls() {
+  get formArticuloAddControls() {
     return this.formArticuloAdd.controls;
   }
 
@@ -212,6 +218,10 @@ export class ModiIngresoComponent implements OnInit {
 
           compegre: data.compegre,
           observaciones: data.observaciones ?? '',
+          usucrea: data.usucrea,
+          feccrea: data.feccrea,
+          usumodi: this.authService.idusuario,
+          fecmodi: new Date().toISOString().substring(0, 10),
         });
       },
       error: (e) => console.error(e?.error || e),
@@ -225,12 +235,12 @@ export class ModiIngresoComponent implements OnInit {
   getArtiMoviByIdMovimiento(idmovimiento: number) {
     this.artimoviService.getByIdMovimiento(idmovimiento).subscribe({
       next: (data: any[] = []) => {
+        console.log('Detalle artimovi cargado:', data);
         // Esperado: [{ articulo: {...}, cantidad: X, costo: Y, total: Z, ... }, ...]
         this._articulosSelected = (data || []).map((d: any) => {
           const art: Articulos = d.articulo ?? d.articulos ?? d.articuloDTO ?? d;
           const cantidad = Number(d.cantidad ?? 0);
           const cosUnit = Number(art?.cosactual ?? d.costo ?? 0);
-
           return {
             articulo: art,
             cantidad,
@@ -323,6 +333,13 @@ export class ModiIngresoComponent implements OnInit {
     });
   }
 
+  compareDocumentos(o1: Documentos, o2: Documentos): boolean {
+    // Si ambos son null o undefined, se consideran iguales
+    if (o1 === null || o2 === null) return o1 === o2;
+    // Comparamos por id (o por el campo que identifique al documento)
+    return o1.iddocumento === o2.iddocumento;
+  }
+
   // ======================
   // Tabla detalle: total, add, remove, validar
   // ======================
@@ -392,8 +409,8 @@ export class ModiIngresoComponent implements OnInit {
   }
 
   validarCantidadRow(row: ArticuloMovimiento): void {
-    if (row.cantidad < 1) row.cantidad = 1;
-    if (row.cantidad > row.articulo.actual) row.cantidad = row.articulo.actual;
+/*     if (row.cantidad < 1) row.cantidad = 1;
+    if (row.cantidad > row.articulo.actual) row.cantidad = row.articulo.actual; */
 
     row.costotal = Number(row.articulo.cosactual ?? 0) * Number(row.cantidad);
     this.recalcularTotalMovimiento();
@@ -455,27 +472,27 @@ export class ModiIngresoComponent implements OnInit {
   }
 
   numAvailable(event: any) {
-  const num = event?.target?.value;
-  if (!num) return;
+    const num = event?.target?.value;
+    if (!num) return;
 
-  // Si estás editando, no marques error si el número es el mismo del movimiento actual
-  const actual = this.formMovimiento.get('numero')?.value;
-  if (+num === +actual) return;
+    // Si estás editando, no marques error si el número es el mismo del movimiento actual
+    const actual = this.formMovimiento.get('numero')?.value;
+    if (+num === +actual) return;
 
-  this.movService.getNumAvailable(this.tipmov, +num).subscribe({
-    next: (disponible: boolean) => {
-      const numeroControl = this.formMovimiento.get('numero');
-      if (!disponible) {
-        numeroControl?.setErrors({ notAvailable: true });
-      } else {
-        if (numeroControl?.hasError('notAvailable')) {
-          numeroControl.setErrors(null);
+    this.movService.getNumAvailable(this.tipmov, +num).subscribe({
+      next: (disponible: boolean) => {
+        const numeroControl = this.formMovimiento.get('numero');
+        if (!disponible) {
+          numeroControl?.setErrors({ notAvailable: true });
+        } else {
+          if (numeroControl?.hasError('notAvailable')) {
+            numeroControl.setErrors(null);
+          }
         }
-      }
-    },
-    error: (err) => console.error('Error verificando número:', err),
-  });
-}
+      },
+      error: (err) => console.error('Error verificando número:', err),
+    });
+  }
 
 
   // ======================
@@ -523,6 +540,8 @@ export class ModiIngresoComponent implements OnInit {
 
     movimiento.compegre = f.compegre;
     movimiento.observaciones = f.observaciones;
+    movimiento.usucrea = f.usucrea;
+    movimiento.feccrea = f.feccrea;
 
     movimiento.usumodi = this.authService.idusuario;
     movimiento.fecmodi = new Date();

@@ -23,7 +23,6 @@ import { PedidosService } from '../../../servicios/existencias/pedidos.service';
 import { ArticulosService } from '../../../servicios/existencias/articulos.service';
 import Swal from 'sweetalert2';
 import { ArtixpedidoService } from '../../../servicios/existencias/artixpedido.service';
-import { min } from 'rxjs';
 
 @Component({
   selector: 'app-add-pedido.component',

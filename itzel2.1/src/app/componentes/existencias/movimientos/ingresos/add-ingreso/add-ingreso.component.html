@@ -251,7 +251,6 @@
                 <tr class="pad0">
                   <th style="width: 5%">#</th>
                   <th>Nombre</th>
-                  <th style="width: 10%">Stock</th>
                   <th style="width: 10%">Valor Unitario</th>
                   <th style="width: 15%">Cantidad</th>
                   <th style="width: 10%">Acción</th>
@@ -262,13 +261,7 @@
                 <tr *ngFor="let row of _articulosSelected; let i = index">
                   <td>{{ i + 1 }}</td>
                   <td class="text-start">{{ row.articulo.nombre }}</td>
-
-                  <td [ngClass]="{ 'text-danger': (row.articulo.actual - row.cantidad) <= 0 }">
-                    {{ (row.articulo.actual - row.cantidad) > 0 ? (row.articulo.actual - row.cantidad) : 0 }}
-                  </td>
-
                   <td>{{ row.articulo.cosactual }}</td>
-
                   <td>
                     <input type="number" class="form-control form-control-sm text-center" [(ngModel)]="row.cantidad"
                       [ngModelOptions]="{ standalone: true }" (ngModelChange)="validarCantidadRow(row)" min="1"

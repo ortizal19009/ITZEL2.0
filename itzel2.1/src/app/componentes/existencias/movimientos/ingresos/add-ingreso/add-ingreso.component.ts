@@ -505,8 +505,8 @@ export class AddIngresoComponent implements OnInit {
   }
 
   validarCantidadRow(row: ArticuloMovimiento): void {
-    if (row.cantidad < 1) row.cantidad = 1;
-    if (row.cantidad > row.articulo.actual) row.cantidad = row.articulo.actual;
+    /* if (row.cantidad < 1) row.cantidad = 1;
+    if (row.cantidad > row.articulo.actual) row.cantidad = row.articulo.actual; */
 
     row.costotal = Number(row.articulo.cosactual) * Number(row.cantidad);
     this.recalcularTotalMovimiento();

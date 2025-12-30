@@ -99,7 +99,7 @@
                   <label class="input-group-text">Documento<sup class="green">*</sup></label>
                 </div>
 
-                <select formControlName="documento" class="form-control col-sm-2 form-control-sm">
+                <select formControlName="documento" [compareWith]="compareDocumentos" class="form-control col-sm-2 form-control-sm">
                   <option *ngFor="let doc of _documentos" [ngValue]="doc">
                     {{ doc.nomdoc }}
                   </option>
@@ -213,7 +213,6 @@
                 <tr class="pad0">
                   <th style="width: 5%">#</th>
                   <th>Nombre</th>
-                  <th style="width: 10%">Stock</th>
                   <th style="width: 10%">Valor Unitario</th>
                   <th style="width: 15%">Cantidad</th>
                   <th style="width: 10%">Acción</th>
@@ -224,9 +223,6 @@
                 <tr *ngFor="let row of _articulosSelected; let i = index">
                   <td>{{ i + 1 }}</td>
                   <td class="text-start">{{ row.articulo.nombre }}</td>
-
-                  <!-- ✅ Para INGRESO: stock actual del artículo (no restar) -->
-                  <td>{{ row.articulo.actual }}</td>
 
                   <td>{{ row.articulo.cosactual }}</td>
 
@@ -288,7 +284,7 @@
       </div>
 
       <div class="modal-body detalle">
-           <form [formGroup]="formArticuloAdd">
+          <form [formGroup]="formArticuloAdd">
           <div class="row roboto">
 
             <!-- CÓDIGO -->
