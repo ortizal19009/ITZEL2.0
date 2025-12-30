@@ -1,8 +1,6 @@
 package com.itzel.controlador.existencias;
 
-import com.itzel.DTO.existencias.ArtimoviDTO;
 import com.itzel.DTO.existencias.ArtimoviRequestDTO;
-import com.itzel.modelo.existencias.Articulos;
 import com.itzel.modelo.existencias.Artimovi;
 import com.itzel.repositorio.existencias.ArticulosR;
 import com.itzel.servicio.existencias.ArtimoviService;
@@ -32,7 +30,7 @@ public class ArtimoviApi {
 
     @PostMapping("/guardar-artimovi")
     public ResponseEntity<?> save(@Valid @RequestBody ArtimoviRequestDTO dto, BindingResult br) {
-
+    System.out.println(dto.getCosto());
         if (br.hasErrors()) {
             var errores = br.getFieldErrors().stream()
                     .collect(Collectors.toMap(
@@ -56,5 +54,11 @@ public class ArtimoviApi {
         return ResponseEntity.ok(artimoviService.findByIdMovimiento(idMovimiento));
 
     }
+    @DeleteMapping("/por-movimiento/{idmovimiento}")
+    public ResponseEntity<?> deleteByMovimiento(@PathVariable Short idmovimiento) {
+        artimoviService.eliminarPorMovimiento(idmovimiento);
+        return ResponseEntity.ok(Map.of("mensaje", "Detalle eliminado"));
+    }
+
 
 }

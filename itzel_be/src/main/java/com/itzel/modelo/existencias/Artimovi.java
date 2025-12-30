@@ -20,6 +20,7 @@ public class Artimovi {
     private Short idartimovi;
     private short tipmov;
     private float cantidad;
+    private BigDecimal costo;
     private BigDecimal total;
     private BigDecimal cosprom;
     private Short usucrea;

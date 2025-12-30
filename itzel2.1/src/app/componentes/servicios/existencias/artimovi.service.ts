@@ -8,17 +8,26 @@ const baseUrl = `${apiUrl}/artimovi`;
   providedIn: 'root'
 })
 export class ArtimoviService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   saveArtimovi(artimovi: any) {
     return this.http.post(`${baseUrl}/guardar-artimovi`, artimovi);
   }
+
   getByIdMovimiento(idmovimiento: number) {
     return this.http.get<any>(`${baseUrl}/by-movimiento?idmovimiento=${idmovimiento}`);
   }
+
   async saveArtimoviAsync(artimovi: any): Promise<any> {
-    console.log(artimovi);
     return firstValueFrom(this.http.post<any>(`${baseUrl}/guardar-artimovi`, artimovi));
   }
 
+  // ✅ NUEVO: borrar detalle por movimiento
+  deleteByMovimiento(idmovimiento: number) {
+    return this.http.delete(`${baseUrl}/por-movimiento/${idmovimiento}`);
+  }
+
+  async deleteByMovimientoAsync(idmovimiento: number): Promise<any> {
+    return firstValueFrom(this.http.delete<any>(`${baseUrl}/por-movimiento/${idmovimiento}`));
+  }
 }

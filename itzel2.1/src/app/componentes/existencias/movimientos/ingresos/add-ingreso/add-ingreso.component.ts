@@ -237,14 +237,14 @@ export class AddIngresoComponent implements OnInit {
           movimientoGuardado?.idmovimiento ??
           movimientoGuardado?.id ??
           movimientoGuardado;
-        console.log(this.formMovimiento.get('total')?.value);
         // 2) Payload para /artimovi/guardar-artimovi (lo que TU backend valida)
+        let _costo: number = +this.formMovimiento.get('total')?.value || 0;
         const artimoviPayload: any = {
           tipmov: this.tipmov,
           total: totalDetalle,
           cantidad: cantidadTotal,
           cosprom: 0,
-          costo: this.formMovimiento.get('total')?.value || 0,
+          costo: +_costo!,
           usucrea: this.authService.idusuario,
           feccrea: new Date(),
           movimiento: { idmovimiento: idMovimiento },

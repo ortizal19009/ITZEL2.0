@@ -16,6 +16,8 @@ public class ArtimoviDTO {
 
     @NotNull @Positive
     private Float cantidad;
+    @NotNull @Positive
+    private BigDecimal costo;
 
     @NotNull
     private BigDecimal total;

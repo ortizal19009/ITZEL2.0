@@ -9,26 +9,26 @@ const baseUrl = `${apiUrl}/ventanas`;
   providedIn: 'root'
 })
 export class VentanasService {
-   constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-     // getByIdusuarioyNombre(idusuario: number, nombre: String) {
-   //   return this.http.get<Ventanas>(`${this.Url}?idusuario=${idusuario}&nombre=${nombre}`);
-   // }
-   async getByIdusuarioyNombre(idusuario: number, nombre: String): Promise<Ventanas> {
-      const observable = this.http.get<Ventanas>(`${baseUrl}?idusuario=${idusuario}&nombre=${nombre}`);
-      return await firstValueFrom(observable);
-   }
+  // getByIdusuarioyNombre(idusuario: number, nombre: String) {
+  //   return this.http.get<Ventanas>(`${this.Url}?idusuario=${idusuario}&nombre=${nombre}`);
+  // }
+  async getByIdusuarioyNombre(idusuario: number, nombre: String): Promise<Ventanas> {
+    const observable = this.http.get<Ventanas>(`${baseUrl}?idusuario=${idusuario}&nombre=${nombre}`);
+    return await firstValueFrom(observable);
+  }
 
-   // saveVentana(ventana: Ventanas): Observable<Object> {
-   //    return this.http.post(this.Url, ventana);
-   // }
-   async saveVentana(ventana: Ventanas): Promise<Object> {
-      const observable = this.http.post(baseUrl, ventana);
-      return await firstValueFrom(observable);
-   }
+  // saveVentana(ventana: Ventanas): Observable<Object> {
+  //    return this.http.post(this.Url, ventana);
+  // }
+  async saveVentana(ventana: Ventanas): Promise<Object> {
+    const observable = this.http.post(baseUrl, ventana);
+    return await firstValueFrom(observable);
+  }
 
-   updateVentana(idventana: number, ventana: Ventanas): Observable<Object> {
-      return this.http.put(baseUrl + "/" + idventana, ventana);
-   }
+  updateVentana(idventana: number, ventana: Ventanas): Observable<Object> {
+    return this.http.put(baseUrl + "/" + idventana, ventana);
+  }
 
 }

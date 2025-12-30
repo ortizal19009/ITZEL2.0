@@ -18,7 +18,7 @@ export class Movimientos {
   usucrea?: number;
   feccrea!: Date;
   usumodi?: number;
-  fecmodi?: number;
+  fecmodi?: Date;
   destino!: Destinos;
   beneficiario!: Beneficiarios;
   documento!: Documentos;

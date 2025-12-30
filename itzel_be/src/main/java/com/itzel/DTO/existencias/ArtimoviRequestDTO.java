@@ -17,6 +17,9 @@ public class ArtimoviRequestDTO {
     @NotNull(message = "cantidad es obligatoria")
     @Positive(message = "cantidad debe ser mayor a 0")
     private Float cantidad;
+    @NotNull(message = "costo es obligatorio")
+    @DecimalMin(value = "0.00", inclusive = false, message = "costo debe ser mayor a 0")
+    private BigDecimal costo;
 
     @NotNull(message = "total es obligatorio")
     @DecimalMin(value = "0.00", inclusive = false, message = "total debe ser mayor a 0")

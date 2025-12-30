@@ -100,12 +100,11 @@ public class ArtimoviService {
 
             am.setTipmov(dto.getTipmov());
             am.setCantidad(dto.getCantidad());
+            am.setCosto(dto.getCosto());
             am.setTotal(dto.getTotal());
             am.setCosprom(dto.getCosprom());
-
             am.setUsucrea(dto.getUsucrea());
             am.setFeccrea(dto.getFeccrea() != null ? dto.getFeccrea() : ahora);
-
             am.setUsumodi(dto.getUsumodi());
             am.setFecmodi(dto.getFecmodi() != null ? dto.getFecmodi() : ahora);
 
@@ -117,5 +116,9 @@ public class ArtimoviService {
 
         dao.saveAll(lista);
         return idMov;
+    }
+    @Transactional
+    public void eliminarPorMovimiento(Short idmovimiento) {
+        dao.deleteByMovimiento(idmovimiento);
     }
 }

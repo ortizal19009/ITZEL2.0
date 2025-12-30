@@ -46,12 +46,9 @@ export class AutorizaService {
     else {
       const modulos = sessionStorage.getItem('efg');
       // const modulos1 = JSON.parse(atob(sessionStorage.getItem('abc')!));
-      console.log('modulosGuardados: ', modulos)
       if (modulos) {
         this.enabled = JSON.parse(modulos!);
         // console.log('m: ', m)
-        // this.enabled = [m.swmodulo1, m.swmodulo2, m.swmodulo3, m.swmodulo4, m.swmodulo5];
-        console.log('this.enabled: ', this.enabled)
       }
       else this.enabled = [this.swmodulo1, this.swmodulo2, this.swmodulo3, this.swmodulo4, this.swmodulo5, this.swmodulo6];
     }
